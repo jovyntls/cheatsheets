@@ -1,0 +1,155 @@
+\documentclass[11pt,landscape]{article}
+\usepackage[scaled=0.92]{helvet}
+\usepackage{multicol}
+\usepackage{calc}
+\usepackage{ifthen}
+\usepackage[a4paper,margin=1cm,landscape]{geometry}
+\usepackage{amsmath,amsthm,amsfonts,amssymb}
+\usepackage{color,graphicx,overpic}
+\usepackage{hyperref}
+\usepackage{newtxtext} 
+
+\pdfinfo{
+  /Title (MA1521.pdf)
+  /Creator (TeX)
+  /Producer (pdfTeX 1.40.0)
+  /Author (Seamus)
+  /Subject (Example)
+  /Keywords (pdflatex, latex,pdftex,tex)}
+
+% This sets page margins to .5 inch if using letter paper, and to 1cm
+% if using A4 paper. (This probably isn't strictly necessary.)
+% If using another size paper, use default 1cm margins.
+\ifthenelse{\lengthtest { \paperwidth = 11in}}
+    { \geometry{top=.5in,left=.5in,right=.5in,bottom=.5in} }
+    {\ifthenelse{ \lengthtest{ \paperwidth = 297mm}}
+        {\geometry{top=1cm,left=1cm,right=1cm,bottom=1cm} }
+        {\geometry{top=1cm,left=1cm,right=1cm,bottom=1cm} }
+    }
+
+% Turn off header and footer
+\pagestyle{empty}
+
+% Redefine section commands to use less space
+\makeatletter
+\renewcommand{\section}{\@startsection{section}{1}{0mm}%
+                                {-1ex plus -.5ex minus -.2ex}%
+                                {0.5ex plus .2ex}%x
+                                {\normalfont\large\bfseries}}
+\renewcommand{\subsection}{\@startsection{subsection}{2}{0mm}%
+                                {-1explus -.5ex minus -.2ex}%
+                                {0.5ex plus .2ex}%
+                                {\normalfont\normalsize\bfseries}}
+\renewcommand{\subsubsection}{\@startsection{subsubsection}{3}{0mm}%
+                                {-1ex plus -.5ex minus -.2ex}%
+                                {1ex plus .2ex}%
+                                {\normalfont\small\bfseries}}%
+\renewcommand{\familydefault}{\sfdefault}
+\renewcommand\rmdefault{\sfdefault}
+\makeatother
+\definecolor{myblue}{cmyk}{1,.72,0,.38}
+\everymath\expandafter{\the\everymath \color{myblue}}
+% Define BibTeX command
+\def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
+    T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
+
+% Don't print section numbers
+\setcounter{secnumdepth}{0}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0pt plus 0.5ex}
+
+
+%My Environments
+\newtheorem{example}[section]{Example}
+% -----------------------------------------------------------------------
+
+\begin{document}
+\raggedright
+\footnotesize
+\begin{multicols}{4}
+
+
+% multicol parameters
+% These lengths are set only within the two main columns
+\setlength{\columnseprule}{0.25pt}
+\setlength{\premulticols}{1pt}
+\setlength{\postmulticols}{1pt}
+\setlength{\multicolsep}{1pt}
+\setlength{\columnsep}{2pt}
+
+\begin{center}
+    %
+     \Large{\textbf{MA1521 Cheatsheet}} \\
+     \fbox{\small{AY20/21 Sem 1 | Chapter 1-3}}
+    %  
+\end{center}
+
+\vbox{
+    \section{Estimation}
+    first order estimate: 
+    $y' \approx y + \Delta x \times \frac{dy}{dx} \Bigr|_{x=2}$
+    \\* second order estimate: 
+    $y' \approx \text{1st estimate } + (\frac{(\triangle x)^2}{2}\times\frac{d^2y}{dx^2}\Bigr|_{x=2})$
+}
+
+\vbox{
+    \section{Stats}
+    pop. variance:
+    $\sigma ^2=\frac{\sum x^2-\frac{(\sum x)^2}{n}}{n}$
+    \\* pop. covariance: 
+    $\text{cov}(x, y) =\frac{\sum xy^2 - \frac{\sum x \sum y}{n}}{n}$
+    \\* pop. correlation: 
+    $\frac{\text{cov}(x, y)}{\sigma_x \times \sigma_y}$
+}
+
+\vbox{
+    \section{Differentiation}
+    extreme values:
+    \begin{itemize}
+        \item $f'(x)=0$
+        \item $f'(x)$ does not exist
+        \item end points of the domain of $f$
+    \end{itemize}
+    parametric differentiaton: $\frac{d^2y}{dx^2} = \frac{d}{dx}(\frac{dy}{dx}) = \frac{\frac{d}{dt}(\frac{dy}{dx})}{\frac{dx}{dt}}$
+}
+\vbox{
+    \subsection{L'Hospital's Rule}
+    \begin{itemize}
+        \item for indeterminate forms ($\frac{0}{0}$ or $\frac{\infty}{\infty}$), cannot directly substitute $x=a$. \\*
+        \item for other forms: convert to ($\frac{0}{0}$ or $\frac{\infty}{\infty}$) then apply L'Hospital's rule \\*
+        \item for exponents: use $\ln$, then sub into $e^{f(x)}$
+    \end{itemize}
+
+    $\lim\limits_{x\to x_0}\frac{f(x)}{g(x)}=\lim\limits_{x\to x_0}\frac{f'(x)}{g'(x)}$
+}
+
+\vbox{
+    \subsection{Rules of Limits}
+    \begin{enumerate}
+        \item $\lim\limits_{x\to{a}}(f\pm g)(x) = L \pm L'$
+        \item $\lim\limits_{x\to{a}}(fg)(x) = LL'$
+        \item $\lim\limits_{x\to{a}}\frac{f}{g}(x) = \frac{L}{L'}$, provided $L'\neq 0$
+        \item $\lim\limits_{x\to{a}}kf(x) = kL${ for any real number }$k.$
+    \end{enumerate}
+}
+
+\vbox{
+    \section{Integration}
+    $\frac{d}{dx}\int^x_af(t)dt = f(x)$
+    \begin{itemize}
+        \item \textbf{indefinite integral} — the integral of the function without any limits
+        \item \textbf{antiderivative} — any function whose derivative will be the same as the original function
+    \end{itemize}
+    substitution: $\int^b_af\big (g(x)\big )g'(x)dx = \int^{g(b)}_{g(a)}f(u)du$ \\*
+    by parts: $\int uv'\ dx = uv - \int u'v\ dx$ \\*
+    revolution (x-axis), $V = \pi\int^b_a [f(x)]^2 - [g(x)]^2dx$
+}
+
+% You can even have references
+\rule{0.3\linewidth}{0.25pt}
+\scriptsize
+\bibliographystyle{abstract}
+\bibliography{refFile}
+\end{multicols}
+\end{document}

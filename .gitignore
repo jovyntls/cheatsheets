@@ -1,0 +1,15 @@
+# ignore everything
+*
+
+# except:
+!.gitignore
+!README.md
+!*.pdf
+!*.latex
+!*.tex
+
+# even if they are in subdirectories:
+!*/
+
+# exception: ignore this
+*/\_\_latexindent\_temp.tex
