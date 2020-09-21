@@ -1,15 +1,13 @@
-# ignore everything
-*
 
-# except:
-!.gitignore
-!README.md
-!*.pdf
-!*.latex
-!*.tex
 
-# even if they are in subdirectories:
-!*/
+.DS_Store
+**.aux
+**.fdb_latexmk
+**.fls
+**.log
+**.out
+**.synctex.gz
+
 
 # exception: ignore this
 */\_\_latexindent\_temp.tex
