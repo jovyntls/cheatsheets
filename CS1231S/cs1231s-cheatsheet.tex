@@ -195,19 +195,20 @@
 
 \subsection{Proof by Induction}
 \begin{enumerate}
-    \item For each $n \in \mathbb{Z}_{\geq 1}$, let $P(n)$ be the proposition \dots
+    \item For each $n \in \mathbb{Z}_{\geq 1}$, let $P(n)$ be the proposition "$\dots$"
     \item (base step) $P(1)$ is true because <manual method>
     \item (induction step) 
     \begin{enumerate}
         \item let $k \in \mathbb{Z}_{\geq 1}$ s.t. $P(k)$ is true
         \item Then \dots
-        \item <proof that $P(k + 1)$ is true
+        \item proof that $P(k + 1)$ is true - e.g. $P(k+1) = P(k) + term_{k+1}$
         \item So $P(k + 1)$ is true.
     \end{enumerate}
     \item Hence $\forall n \in \mathbb{Z}_{\geq 1} P(n)$ is true by MI.
 \end{enumerate}
 
-\subsection{Proof for Equality of Sets (A=B)}
+\subsection{Proofs for Sets}
+\bf{Equality of Sets (A=B)}
 \begin{enumerate}
     \item $(\Rightarrow)$
         \begin{enumerate}
@@ -220,6 +221,29 @@
         \item Take any $z \in B$.
         \item $\dots$
         \item $\therefore z \in A$.
+    \end{enumerate}
+\end{enumerate}
+
+\bf{Element Method}
+\begin{enumerate}
+    \item $A \land (B \cap C) = \{ x : x \in A \land x \in (B \backslash C) \}$ (by def. of $\cap$)
+    \item $= \{ x : x \in A \land (x \in B \land x \notin C)\}$ (by def. of $\backslash$)
+    \item $\dots$
+    \item $= (A \cap B) \backslash C$ (by def. of $\backslash$)
+\end{enumerate}
+
+\subsection{Other Proofs}
+\bf{iff ($A \iff B$)}
+\begin{enumerate}
+    \item ($\Rightarrow$) Suppose $A$.
+    \begin{enumerate}
+        \item $\dots$ <proof> $\dots$
+        \item Hence $A \then B$
+    \end{enumerate}
+    \item ($\Leftarrow$) Suppose $B$.
+    \begin{enumerate}
+        \item $\dots$ <proof> $\dots$
+        \item Hence $B \then A$
     \end{enumerate}
 \end{enumerate}
 
@@ -319,7 +343,10 @@
 \subsection{definitions}
 \begin{itemize}
     \item \bf{equal sets} : $A = B \iff \forall x (x \in A \then x \in B)$ 
-    \item \bf{empty set}, $\emptyset$ : 
+    \begin{itemize}
+        \item $A = B \iff (A \subseteq B) \land (A \supseteq B)$
+    \end{itemize}
+    \item \bf{empty set}, $\emptyset$ : $\emptyset \subseteq $ all sets
     \item \bf{subset} : $A \subseteq B \iff \forall x(x \in A \then x \in B)$
     \item \bf{proper subset} : $A \subsetneq B \iff (A \subseteq B) \land (A \neq B)$
     \item \bf{power set} of A : $\mathcal{P}(A) = \{X \mid X \subseteq A\}$
@@ -331,12 +358,22 @@
     \item \bf{disjoint} : $A \cap B = \emptyset$
 \end{itemize}
 
+\subsubsection{methods of proof for sets}
+\begin{itemize}
+    \item direct proof
+    \item element method
+    \item truth table
+\end{itemize}
+
 \subsubsection{boolean operations}
 \begin{itemize}
     \item \bf{union:} $A \cup B = \{x : x \in A \lor x \in B\}$
     \item \bf{intersection: } $A \cap B = \{x : x \in A \land x \in B\}$
     \item \bf{complement} (of B in A): $A \backslash B = \{x : x \in A \land x \notin B\}$
     \item \bf{complement} (of B): $\bar{B}$ or $B^c = U \backslash B$
+    \begin{itemize}
+        \item set difference law: $A \backslash B = A \cap \bar{B}$
+    \end{itemize}
 \end{itemize}
 
 \subsection{ordered pairs and cartesian products}
