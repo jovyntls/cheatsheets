@@ -193,6 +193,13 @@
     \item $\therefore p \then q$
 \end{enumerate}
 
+\subsection{Proof by Construction}
+\begin{enumerate}
+    \item Let $x = 3, y=4, z=5$.
+    \item Then $x, y, z \in \mathbb{Z}_{\geq 1}$ and $x^2 + y^2 = 3^2 + 4^2 = 9 + 16 = 25 = 5^2$.
+    \item Thus $\exists x, y, z \in \mathbb{Z}_{\geq 1}$ such that $x^2 + y^2 = z^2$.
+\end{enumerate}
+
 \subsection{Proof by Induction}
 \begin{enumerate}
     \item For each $n \in \mathbb{Z}_{\geq 1}$, let $P(n)$ be the proposition "$\dots$"
@@ -226,7 +233,7 @@
 
 \bf{Element Method}
 \begin{enumerate}
-    \item $A \land (B \cap C) = \{ x : x \in A \land x \in (B \backslash C) \}$ (by def. of $\cap$)
+    \item $A \cap (B \backslash C) = \{ x : x \in A \land x \in (B \backslash C) \}$ (by def. of $\cap$)
     \item $= \{ x : x \in A \land (x \in B \land x \notin C)\}$ (by def. of $\backslash$)
     \item $\dots$
     \item $= (A \cap B) \backslash C$ (by def. of $\backslash$)
@@ -342,7 +349,7 @@
 
 \subsection{definitions}
 \begin{itemize}
-    \item \bf{equal sets} : $A = B \iff \forall x (x \in A \then x \in B)$ 
+    \item \bf{equal sets} : $A = B \iff \forall x (x \in A \iff x \in B)$ 
     \begin{itemize}
         \item $A = B \iff (A \subseteq B) \land (A \supseteq B)$
     \end{itemize}
@@ -425,11 +432,11 @@
 for $f:A \to B$
 \begin{itemize}
     \item if $X \subseteq A$, \bf{image} of X, $f(X) = \{y \in B : y = f(x) \text{ for some } x \in X\}$
-    \item if $Y \subseteq B$, \bf{pre-image} of X, $f^{-1}(Y) = \{x \in A : y=f(x) \text{ for some } y \in Y \}$
+    \item if $Y \subseteq B$, \bf{pre-image} of Y, $f^{-1}(Y) = \{x \in A : y=f(x) \text{ for some } y \in Y \}$
 \end{itemize}
 \subsection{injection \& surjection}
 \begin{itemize}
-    \item \bf{surjective} : codomain = range
+    \item \bf{surjective} (onto) : codomain = range
     \begin{itemize}
         \item $\forall y \in B, \exists x \in A \ (y = f(x))$
     \end{itemize}
