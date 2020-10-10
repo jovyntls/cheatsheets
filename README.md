@@ -4,8 +4,7 @@ A compilation of cheatsheets I made for NUS Computer Science modules (may be app
 ---
 
 ### Current progress: 
-Updated to scope of AY20/21 midterms
-* **CS1231S** [chapters 1 to 7]
+* **CS1231S** [chapters 1 to 8]
 * **MA1521** [chapters 1 to 3]
 
 

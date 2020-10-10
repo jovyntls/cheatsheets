@@ -1,7 +1,7 @@
 \documentclass[10pt, landscape]{article}
 \usepackage[scaled=0.92]{helvet}
-\usepackage{multicol}
 \usepackage{calc}
+\usepackage{multicol}
 \usepackage{ifthen}
 \usepackage[a4paper,margin=3mm,landscape]{geometry}
 \usepackage{amsmath,amsthm,amsfonts,amssymb}
@@ -11,6 +11,7 @@
 \usepackage{enumitem}
 \usepackage{amssymb}
 \usepackage[table]{xcolor}
+\usepackage{vwcol}
 \setlist{nosep}
 
 \pdfinfo{
@@ -47,6 +48,7 @@
 %  for logical not operator
 \renewcommand{\lnot}{\mathord{\sim}}
 \renewcommand{\bf}[1]{\textbf{#1}}
+\newcommand{\Mod}[1]{\ \mathrm{mod}\ #1}
 
 \makeatother
 \definecolor{myblue}{cmyk}{1,.72,0,.38}
@@ -137,7 +139,7 @@
     \\* $n \text{ is composite} \iff n>1 \text{ and } \exists r, s \in \mathbb{Z}^+ s.t. n = rs \text{ and } 1<r<n \text{ and } 1<s<n$
 
     divisibility ($d$ divides $n$)
-    \\* $n \mid d \iff \exists k \in \mathbb{Z} \mid n = kd$
+    \\* $d \mid n \iff \exists k \in \mathbb{Z} \mid n = kd$
 
     rationality
     \\* $r \text{ is rational} \iff \exists a, b \in \mathbb{Z} \mid r = \frac{a}{b} \text{ and } b \neq 0$
@@ -285,6 +287,13 @@
 \begin{itemize}
     \item \textbf{vacuously true} : hypothesis is false
     \item \textbf{implication law} : $p \then q \equiv \lnot p \lor q$
+    \item common if/then statements:
+    \begin{itemize}
+        \item if p then q: $p \then q$
+        \item p if q:
+        \item p only if q:
+        \item p iff q: $p \iff q$
+    \end{itemize}
 \end{itemize}
 
 \setlength{\tabcolsep}{0.3em}
@@ -439,10 +448,12 @@ for $f:A \to B$
     \item \bf{surjective} (onto) : codomain = range
     \begin{itemize}
         \item $\forall y \in B, \exists x \in A \ (y = f(x))$
+        \item surjective test: $\forall Y \subseteq B, Y \subseteq f(f^{-1}(Y))$
     \end{itemize}
     \item \bf{injective} : one-to-one
     \begin{itemize}
         \item $\forall x, x'\in A (f(x) = f(x') \Rightarrow x = x')$
+        \item injective test: $\forall X \subseteq A, X \subseteq f^{-1}(f(X))$
     \end{itemize}
     \item \bf{bijective} : both surjective \& injective
     \begin{itemize}
@@ -511,6 +522,83 @@ define the set of WFF($\Sigma$) as follows
     \item (recursion clause) if $x, y$ are in WFF($\Sigma$), then $\lnot x$ and $(x \land y)$ and $(x \lor y)$ are in WFF($\Sigma$)
     \item (minimality clause) Membership for WFF($\Sigma$) can be demonstrated by (finitely many) successive applications of the clauses above
 \end{enumerate}
+
+\section{08. Number Theory}
+\subsection{divisibility}
+\begin{itemize}
+    \item $n \mod{d}$ is always non-negative.
+\end{itemize}
+\begin{center}
+    transitivity of divisibility
+    \\* If $a \mid b$ and $b \mid c$, then $a \mid c$.
+
+    closure lemma (non-standard name)
+    \\* Let $a, b, d, m, n \in \mathbb{Z}$. If $d \mid m$ and $d \mid n$, then $d \mid am + bn$.
+
+    division theorem
+    \\* $\forall n \in \mathbb{Z}$ and $d \in \mathbb{Z}^+$, $\exists ! q, r \in \mathbb{Z}$ s.t.
+    \\* $n = dq + r$ and $0 \leq r < d$
+    \\* $q = n\ div\ d = \lfloor n/d \rfloor$ 
+    \\* $r = n\ mod\ d = n - dq$
+\end{center}
+
+\subsection{base-b representation}
+\begin{center} 
+    of positive integer $n$ is
+    $(a_\ell a_{\ell - 1} \dots a_0)_b$ 
+    \\* where $\ell \in \mathbb{Z}_{\geq 0}$ and $a_0, a_1, \dots, a_\ell \in \{0, 1, \dots, b - 1\}$ 
+    \\* s.t. $n = a_\ell b^\ell + a_{\ell - 1} b^{\ell - 1} + \dots + a_0 b^0$ and $a_\ell \neq 0$
+\end{center}
+
+\subsection{greatest common divisor}
+\begin{itemize}
+    \item $m\ mod\ n$
+    \item if $m \neq 0$ and $n \neq 0$, then gcd(m, n) exists and is positive.
+    \item \bf{Euclidean Algorithm} for finding gcd
+\end{itemize}
+\begin{center}
+    Bezout's Lemma: 
+    \\* For all $m, n \in \mathbb{Z}$ with $n \neq 0$, there exist $s, t \in \mathbb{Z}$ such that $gcd(m, n) = ms + nt$.
+    \\ Euclid's Lemma: 
+    \\* Let $m, n \in Z^+$. If $p$ is prime and $p \mid mn$, then $p \mid m$ or $p \mid n$.
+\end{center}
+
+\subsection{prime factorization}
+\begin{itemize}
+    \item \bf{Fundamental Theorem of Arithmetic}: 
+    Every integer $n \geq 2$ has a unique prime factorization in which the prime factors are arranged in nondecreasing order.
+    \begin{itemize}
+        \item aka Prime Factorisation Theorem
+    \end{itemize}
+\end{itemize}
+
+\subsection{modular arithmetic}
+\begin{center}
+    Let $a,b,c \in \mathbb{Z}$ and $n \in \mathbb{Z}^+$.
+    \\ {congruence}
+        \\* $a \equiv b \ (\Mod{n}) \Iff a \Mod{n} = b \Mod{n}$
+        \\* Then $\exists k \in \mathbb{Z} \mid a = nk + b$ and $n \mid (a - b)$
+    \\ {reflexivity}
+        \\* $a \equiv a \ (\Mod{n})$
+    \\ {symmetry}
+        \\* $a \equiv b \ (\Mod{n}) \then b \equiv a \ (\Mod{n})$
+    \\ {transitivity} 
+        \\* $a \equiv b \ (\Mod{n}) \land b \equiv c \ (\Mod{n}) \then a \equiv c \ (\Mod n)$
+    \\ {additive inverse}
+        \\* $b$ is an \textit{additive inverse of} $a \Mod n \Iff a + b \equiv 0 \ (\Mod n)$.
+        \\* $b$ is an additive inverse of $a \Mod n \Iff b \equiv -a \ (\Mod n)$.
+    \\ {multiplicative inverse} 
+        \\* $b$ is a multiplicative inverse of $a \Mod n \Iff ab \equiv 1 \ (\Mod n)$.
+        \\* If $b, b'$ are multiplicative inverses of $a$, then $b \equiv b' \ (\Mod n)$.
+\end{center}
+\subsubsection{multiplicative inverse}
+\begin{itemize}
+    \item $a$ has a multiplicative inverse modulo $n \Iff \gcd(a, n) = 1$.
+    \begin{itemize}
+        \item $a, n$ are coprime
+    \end{itemize}
+\end{itemize}
+
 
 \end{multicols}
 
@@ -633,17 +721,36 @@ define the set of WFF($\Sigma$) as follows
         \begin{itemize}
             \item If $g, g'$ are inverses of $f: A \to B$, then $g = g'$.
         \end{itemize} 
-        \item L6E6.1.24 - $f \circ \text{id}_\text{A} = f$ and $\text{id}_\text{A} \circ f = f$
-        \item L6T6.2.18 - bijective $\Iff$ has an inverse
-        \item L7L7.3.19 - If $x \in \text{WFF}^+(\Sigma)$, then assigning false to all elements of $\Sigma$ makes $x$ evaluate to false.
-        \item L7T7.3.20 - $\lnot( \forall x \in \text{WFF}(\Sigma), \exists y \in \text{WFF}^+(\Sigma) \ \ y \equiv x ) \equiv$
+        \item E6.1.24 - $f \circ \text{id}_\text{A} = f$ and $\text{id}_\text{A} \circ f = f$
+        \item T6.2.18 - bijective $\Iff$ has an inverse
+        \item L7.3.19 - If $x \in \text{WFF}^+(\Sigma)$, then assigning false to all elements of $\Sigma$ makes $x$ evaluate to false.
+        \item T7.3.20 - $\lnot( \forall x \in \text{WFF}(\Sigma), \exists y \in \text{WFF}^+(\Sigma) \ \ y \equiv x ) \equiv$
             $\exists x \in \text{WFF}(\Sigma) \ \ \forall y \in \text{WFF}^+(\Sigma) \ \ y \not\equiv x$
             aka $\lnot$ (not) must be included in the definition of WFF.
+        \item L8.1.5 - Let $d, n \in \mathbb{Z}$ with $d \neq 0$. Then $d \mid n \Iff n/d \in \mathbb{Z}$ 
+        \item L8.1.9 - Let $d, n \in \mathbb{Z}$. If $d \mid n$, then $-d \mid n$ and $d \mid -n$ and $-d \mid -n$ 
+        \item L8.1.10 - Let $d, n \in \mathbb{Z}$. If $d \mid n$ and $d \neq 0$, then $\vert d \vert \leq \vert n \vert$ 
+        \item L8.2.5 - \bf{Prime Divisor Lemma} (non-standard name):
+        \begin{itemize}
+            \item Let $n \in \mathbb{Z}_{\geq 2}$. Then $n$ has a prime divisor.
+        \end{itemize}
+        \item P8.2.6 - \bf{sizes of prime divisors}: 
+        \begin{itemize}
+            \item Let $n$ be a composite positive integer. Then $n$ has a prime divisor $p \leq \sqrt{n}$.
+        \end{itemize}
+        \item T8.2.8 - there are infinitely many prime numbers
+        \item T8.3.13 - $\forall n \in \mathbb{Z}^+, \exists ! \ell \in \mathbb{Z}_{\geq 0}$ and $a_0, a_1, \dots, a_\ell \in \{0, 1, \dots, b - 1\}$ 
+        such that <the definition of base-b representation> holds.
+        \item L8.4.11 - If $x, y, r \in \mathbb{Z}$ such that $x \ mod \ y = r$, then $gcd(x, y) = gcd(y, r)$.
+        \item Let $a, b, c, d \in \mathbb{Z}$ and $n \in \mathbb{Z}^+$ s.t. $a \equiv b \ (\Mod{n})$ and $c \equiv d \ (\Mod{n})$. 
+        \begin{itemize}
+            \item P8.6.6 - \bf{addition: } Then $a + c \equiv b + d \ (\Mod n)$
+            \item P8.6.13 - \bf{multiplication: } Then $ac \equiv bd \ (\Mod n)$
+        \end{itemize}
     \end{itemize}
 
     \subsection{abbreviations}
     \begin{itemize}
-        \item L - lecture
         \item L - lemma
         \item E - example
         \item P - proposition
