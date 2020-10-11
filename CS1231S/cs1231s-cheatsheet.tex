@@ -277,12 +277,12 @@
 \end{itemize}
 
 \subsection{conditional statements}
-    \begin{equation}
+    \begin{equation*}
         \begin{split}
             \text{hypothesis} &\then \text{conclusion} \\
             antecedent &\then consequent
         \end{split}
-    \end{equation}
+    \end{equation*}
 
 \begin{itemize}
     \item \textbf{vacuously true} : hypothesis is false
@@ -290,8 +290,8 @@
     \item common if/then statements:
     \begin{itemize}
         \item if p then q: $p \then q$
-        \item p if q:
-        \item p only if q:
+        \item p if q: $q \then p$
+        \item p only if q: $p \then q$
         \item p iff q: $p \iff q$
     \end{itemize}
 \end{itemize}
@@ -523,7 +523,7 @@ define the set of WFF($\Sigma$) as follows
     \item (minimality clause) Membership for WFF($\Sigma$) can be demonstrated by (finitely many) successive applications of the clauses above
 \end{enumerate}
 
-\section{08. Number Theory}
+\section{08. NUMBER THEORY}
 \subsection{divisibility}
 \begin{itemize}
     \item $n \mod{d}$ is always non-negative.
@@ -584,19 +584,21 @@ define the set of WFF($\Sigma$) as follows
         \\* $a \equiv b \ (\Mod{n}) \then b \equiv a \ (\Mod{n})$
     \\ {transitivity} 
         \\* $a \equiv b \ (\Mod{n}) \land b \equiv c \ (\Mod{n}) \then a \equiv c \ (\Mod n)$
-    \\ {additive inverse}
-        \\* $b$ is an \textit{additive inverse of} $a \Mod n \Iff a + b \equiv 0 \ (\Mod n)$.
-        \\* $b$ is an additive inverse of $a \Mod n \Iff b \equiv -a \ (\Mod n)$.
-    \\ {multiplicative inverse} 
-        \\* $b$ is a multiplicative inverse of $a \Mod n \Iff ab \equiv 1 \ (\Mod n)$.
-        \\* If $b, b'$ are multiplicative inverses of $a$, then $b \equiv b' \ (\Mod n)$.
 \end{center}
+
+\subsubsection{additive inverse}
+$b$ is an \textit{additive inverse} of $a \Mod n \Iff a + b \equiv 0 \ (\Mod n)$.
+$b$ is an \textit{additive inverse} of $a \Mod n \Iff b \equiv -a \ (\Mod n)$.
+
 \subsubsection{multiplicative inverse}
+$b$ is a multiplicative inverse of $a \Mod n \Iff ab \equiv 1 \ (\Mod n)$.
 \begin{itemize}
-    \item $a$ has a multiplicative inverse modulo $n \Iff \gcd(a, n) = 1$.
+    \item If $b, b'$ are multiplicative inverses of $a$, then $b \equiv b' \ (\Mod n)$.
+    \item exists $\Iff \gcd(a, n) = 1$.
     \begin{itemize}
         \item $a, n$ are coprime
     \end{itemize}
+    \item to find multiplicative inverse: \textbf{Euclidean Algorithm}
 \end{itemize}
 
 
