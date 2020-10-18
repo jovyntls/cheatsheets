@@ -12,6 +12,9 @@
 \usepackage{amssymb}
 \usepackage[table]{xcolor}
 \usepackage{vwcol}
+% for relations
+\usepackage{cancel}
+\usepackage{ mathrsfs }
 \setlist{nosep}
 
 \pdfinfo{
@@ -601,6 +604,97 @@ $b$ is a multiplicative inverse of $a \Mod n \Iff ab \equiv 1 \ (\Mod n)$.
     \item to find multiplicative inverse: \textbf{Euclidean Algorithm}
 \end{itemize}
 
+\section{09. EQUIVALENCE RELATIONS}
+\subsection{relations}
+\begin{center}
+    Let $R$ be a relation from $A$ to $B$ and $(x, y) \in A \times B$. Then:
+    \\* $x R y$ for $(x, y) \in R$ and $x \cancel{R} y$ for $(x, y) \notin R$
+\end{center}
+\begin{itemize}
+    \item A relation from $A$ to $B$ is a subset of $A \times B$.
+    \item A \textbf{(binary) relation} on set A is a relation from A to A.
+    \begin{itemize}
+        \item subset of $A^2$
+    \end{itemize}
+\end{itemize}
+\subsubsection{reflexivity, symmetry, transitivity}
+Let $A$ be a set and $R$ be a relation on $A$.
+\begin{center}
+    reflexive
+    \\* $\forall x \in A \ (x R x)$
+    \\ symmetric
+    \\* $\forall x, y \in A \ (xRy \Then y R x)$
+    \\ transitive
+    \\* $\forall x, y, z \in A \ (xRy \land yRz \Then xRz)$
+\end{center}
+
+\begin{itemize}
+    \item \textbf{equivalence relation}: a relation that is reflexive, symmetric and transitive
+    \item \textbf{equivalence class}: the set of all things equivalent to x
+\end{itemize}
+
+\subsection{equivalence classes}
+Let $A$ be a set and $R$ be an equivalence relation on $A$.
+\begin{itemize}
+    \item $[x]_R$ : \textbf{equivalence class} of $x$ with respect to $R$
+    \begin{itemize}
+        \item $\forall x \in A, [x]_R = \{y \in A : x R y\}$
+    \end{itemize}
+    \item $A / R$ : The set of all equivalent classes
+    \begin{itemize}
+        \item $A / R = \{[x]_R : x \in A\}$
+    \end{itemize}
+\end{itemize}
+$xRy \Then [x] = [y] \Then [x] \cap [y] \neq \emptyset$
+
+\subsection{partitions}
+\begin{itemize}
+    \item a \textbf{partition} of a set $A$ is a set $\mathscr{C}$ of \textit{non-empty subsets} of $A$ such that
+        \\* $(\geq 1) \ \ \forall x \in A, \ \exists S \in \mathscr{C} (x \in S)$
+        \\* $(\leq 1) \ \ \forall x \in A, \ \forall S, S \in \mathscr{C} (x \in S \land x \in S' \Then S = S')$
+    \item \textbf{components} : elements of a partition
+    \item every partition comes from an equivalence relation
+\end{itemize}
+
+\subsection{partial orders}
+Let $A$ be a set and $R$ be a relation on $A$.
+\begin{itemize}
+    \item $R$ is \bf{antisymmetric} if $\forall x, y \in A \ (x R y \land y R x \then x = y)$
+    \begin{itemize}
+        \item includes vacuously true cases (e.g. $xRy \Iff x < y$)
+    \end{itemize}
+    \item $x$ and $y$ are \bf{comparable} if $\forall x, y \in A \ (xRy \lor yRx)$
+    \item $R$ is a \bf{(non-strict) partial order} if $R$ is reflexive, antisymmetric and transitive.
+    \begin{itemize}
+        \item $\preccurlyeq$ - partial order
+        \item $x \prec y \Iff x \preccurlyeq y \land x \neq y$ (NOT a partial order)
+        \item Hasse diagram
+    \end{itemize}
+    \item $R$ is a \bf{(non-strict) total order} if $R$ is a partial order and $x$ and $y$ are comparable
+\end{itemize}
+
+\subsection{min and max}
+Let $\preccurlyeq$ be a partial order on a set $A$, and $c \in A$.
+\begin{itemize}
+    \item $c$ is a \bf{minimal element} if $\forall x \in A \ (x \preccurlyeq c \Then c = x)$
+    \begin{itemize}
+        \item nothing is strictly below it
+    \end{itemize}
+    \item $c$ is a \bf{maximal element} if $\forall x \in A \ (c \preccurlyeq x \Then c = x)$
+    \begin{itemize}
+        \item nothing is strictly above it
+    \end{itemize}
+    \item $c$ is the \bf{smallest element} or \bf{minimum element} if $\forall x \in a \ (c \preccurlyeq x)$.
+    \item $c$ is the \bf{largest element} or \bf{maximum element} if $\forall x \in a \ (x \preccurlyeq c)$.
+\end{itemize}
+
+\subsubsection{linearization}
+\begin{center}
+    Let $A$ be a set and $\preccurlyeq$ be a partial order on $A$. 
+    \\* Then there exists a total order $\preccurlyeq^*$ on $A$ such that 
+    \\* $\forall x, y \in A \ (x \preccurlyeq y \Then x \preccurlyeq^* y)$
+\end{center}
+
 
 \end{multicols}
 
@@ -748,6 +842,13 @@ $b$ is a multiplicative inverse of $a \Mod n \Iff ab \equiv 1 \ (\Mod n)$.
         \begin{itemize}
             \item P8.6.6 - \bf{addition: } Then $a + c \equiv b + d \ (\Mod n)$
             \item P8.6.13 - \bf{multiplication: } Then $ac \equiv bd \ (\Mod n)$
+        \end{itemize}
+        \item T9.3.4 - Let $R$ be an equivalence relation on a set $A$. Then $A / R$ is a partition of A.
+        \item T9.3.5 - If $\mathscr{C}$ is a partition of $A$, then there is an equivalence relation of $R$ on $A$ such that $A/R = \mathscr{C}$.
+        \item L9.5.5 - Consider a partial order $\preccurlyeq$ on set $A$. 
+        \begin{itemize}
+            \item A smallest element is minimal.
+            \item There is at most one smallest element.
         \end{itemize}
     \end{itemize}
 
