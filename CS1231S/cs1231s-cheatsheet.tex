@@ -51,6 +51,7 @@
 %  for logical not operator
 \renewcommand{\lnot}{\mathord{\sim}}
 \renewcommand{\bf}[1]{\textbf{#1}}
+\newcommand{\abs}[1]{\vert #1 \vert}
 \newcommand{\Mod}[1]{\ \mathrm{mod}\ #1}
 
 \makeatother
@@ -637,13 +638,13 @@ Let $A$ be a set and $R$ be a relation on $A$.
 Let $A$ be a set and $R$ be an equivalence relation on $A$.
 \begin{itemize}
     \item $[x]_R$ : \textbf{equivalence class} of $x$ with respect to $R$
-    \begin{itemize}
-        \item $\forall x \in A, [x]_R = \{y \in A : x R y\}$
-    \end{itemize}
+
+        \centerline{$\forall x \in A, [x]_R = \{y \in A : x R y\}$}
+
     \item $A / R$ : The set of all equivalent classes
-    \begin{itemize}
-        \item $A / R = \{[x]_R : x \in A\}$
-    \end{itemize}
+
+        \centerline{$A / R = \{[x]_R : x \in A\}$}
+
 \end{itemize}
 $xRy \Then [x] = [y] \Then [x] \cap [y] \neq \emptyset$
 
@@ -651,7 +652,7 @@ $xRy \Then [x] = [y] \Then [x] \cap [y] \neq \emptyset$
 \begin{itemize}
     \item a \textbf{partition} of a set $A$ is a set $\mathscr{C}$ of \textit{non-empty subsets} of $A$ such that
         \\* $(\geq 1) \ \ \forall x \in A, \ \exists S \in \mathscr{C} (x \in S)$
-        \\* $(\leq 1) \ \ \forall x \in A, \ \forall S, S \in \mathscr{C} (x \in S \land x \in S' \Then S = S')$
+        \\* $(\leq 1) \ \ \forall x \in A, \ \forall S, S' \in \mathscr{C} (x \in S \land x \in S' \Then S = S')$
     \item \textbf{components} : elements of a partition
     \item every partition comes from an equivalence relation
 \end{itemize}
@@ -695,6 +696,50 @@ Let $\preccurlyeq$ be a partial order on a set $A$, and $c \in A$.
     \\* $\forall x, y \in A \ (x \preccurlyeq y \Then x \preccurlyeq^* y)$
 \end{center}
 
+\section{10. COUNTING \& PROBABILITY}
+\subsection{permutations}
+\begin{center}
+    $P(n, r) = \frac{n!}{(n-r)!}$ \ \ (also $_nP_r, P^n_r$)
+\end{center}
+\begin{itemize}
+    \item \textbf{multiplication/product rule:} An operation of $k$ steps can be performed in $n_1 \times n_2 \times \dots \times n_k$ ways.
+
+    \item \textbf{addition/sum rule:} Suppose a finite set $A$ equals the union of 
+    $k$ distinct mutually disjoint subsets $A_1, A_2, \dots, A_k$. Then 
+    
+    \centerline{$\abs{A} = \abs{A_1} + \abs{A_2} + \dots + \abs{A_k}$}
+
+    \item \textbf{difference rule:} if $A$ is a finite set and $B \subseteq A$, then
+
+    \centerline{$\abs{A \backslash B} = \abs{A} = \abs{B}$}
+
+    \item \textbf{complement:} $P(\bar{A}) = 1 - P(A)$
+    \item \textbf{inclusion/exclusion rule: } $\abs{A \cup B \cup C} = \abs{A} + \abs{B} + \abs{C} - \abs{A \cap B} - \abs{B \cap C} - \abs{C \cap A} + \abs{A \cap B \cap C}$
+\end{itemize}
+
+\subsubsection{permutations with indistinguishable objects}
+\begin{center}
+    For $n$ objects with $n_k$ of type $k$ indistinguishable from each other, the total number of distinguishable permutations
+    \\* $= \frac{n!}{n_1!n_2!\dots n_k!}$
+\end{center}
+
+\subsection{pigeonhole principle}
+\begin{center}
+    For any function $f$ from a finite set $X$ with $n$ elements to a finite set $Y$ with $m$ elements 
+and for any positive integer $k$, if $k < \frac{n}{m}$, then there is some $y \in Y$ 
+such that $y$ is the image of at least $k + 1$ distinct elements of $X$.
+\end{center}
+\begin{itemize}
+    \item A function from a finite set to a smaller finite set cannot be injective.
+\end{itemize}
+
+\subsection{combinations}
+\begin{center}
+    $\binom{n}{r} = \frac{n!}{r! (n-r)!}$ (also $C(n, r)$, $_nC_r$, $C_{n,r}$, $^nC_r$)
+    
+    \textit{r}-combinations from a set of $n$ elements with \textbf{repetition}
+    \\* $= \binom{r + n - 1}{r}$
+\end{center}
 
 \end{multicols}
 
