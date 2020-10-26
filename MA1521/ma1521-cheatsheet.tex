@@ -1,14 +1,21 @@
-\documentclass[11pt,landscape]{article}
+\documentclass[10pt, landscape]{article}
 \usepackage[scaled=0.92]{helvet}
-\usepackage{multicol}
 \usepackage{calc}
+\usepackage{multicol}
 \usepackage{ifthen}
-\usepackage[a4paper,margin=1cm,landscape]{geometry}
+\usepackage[a4paper,margin=3mm,landscape]{geometry}
 \usepackage{amsmath,amsthm,amsfonts,amssymb}
 \usepackage{color,graphicx,overpic}
 \usepackage{hyperref}
 \usepackage{newtxtext} 
+\usepackage{enumitem}
+\usepackage{amssymb}
 \usepackage[table]{xcolor}
+\usepackage{vwcol}
+% for relations
+\usepackage{cancel}
+\usepackage{ mathrsfs }
+\setlist{nosep}
 
 \pdfinfo{
   /Title (MA1521.pdf)
@@ -18,20 +25,10 @@
   /Subject (Example)
   /Keywords (pdflatex, latex,pdftex,tex)}
 
-% This sets page margins to .5 inch if using letter paper, and to 1cm
-% if using A4 paper. (This probably isn't strictly necessary.)
-% If using another size paper, use default 1cm margins.
-\ifthenelse{\lengthtest { \paperwidth = 11in}}
-    { \geometry{top=.5in,left=.5in,right=.5in,bottom=.5in} }
-    {\ifthenelse{ \lengthtest{ \paperwidth = 297mm}}
-        {\geometry{top=1cm,left=1cm,right=1cm,bottom=1cm} }
-        {\geometry{top=1cm,left=1cm,right=1cm,bottom=1cm} }
-    }
-
 % Turn off header and footer
 \pagestyle{empty}
 
-% Redefine section commands to use less space
+% redefine section commands to use less space
 \makeatletter
 \renewcommand{\section}{\@startsection{section}{1}{0mm}%
                                 {-1ex plus -.5ex minus -.2ex}%
@@ -46,21 +43,38 @@
                                 {1ex plus .2ex}%
                                 {\normalfont\small\bfseries}}%
 \renewcommand{\familydefault}{\sfdefault}
-\renewcommand{\arraystretch}{1.5}
 \renewcommand\rmdefault{\sfdefault}
+% makes nested numbering (e.g. 1.1.1, 1.1.2, etc)
+\renewcommand{\labelenumii}{\theenumii}
+\renewcommand{\theenumii}{\theenumi.\arabic{enumii}.}
+\renewcommand\labelitemii{•}
+%  for logical not operator
+\renewcommand{\lnot}{\mathord{\sim}}
+\renewcommand{\bf}[1]{\textbf{#1}}
+\newcommand{\abs}[1]{\vert #1 \vert}
+\newcommand{\Mod}[1]{\ \mathrm{mod}\ #1}
+
 \makeatother
 \definecolor{myblue}{cmyk}{1,.72,0,.38}
 \everymath\expandafter{\the\everymath \color{myblue}}
 % Define BibTeX command
 \def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
     T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
+\let\iff\leftrightarrow
+\let\Iff\Leftrightarrow
+\let\then\rightarrow
+\let\Then\Rightarrow
 
 % Don't print section numbers
 \setcounter{secnumdepth}{0}
 
 \setlength{\parindent}{0pt}
 \setlength{\parskip}{0pt plus 0.5ex}
-
+%% this changes all items (enumerate and itemize)
+\setlength{\leftmargini}{0.5cm}
+\setlength{\leftmarginii}{0.5cm}
+\setlist[itemize,1]{leftmargin=2mm,labelindent=1mm,labelsep=1mm}
+\setlist[itemize,2]{leftmargin=4mm,labelindent=1mm,labelsep=1mm}
 
 %My Environments
 \newtheorem{example}[section]{Example}
@@ -87,7 +101,43 @@
     %  
 \end{center}
 
-\section{Differentiation Techniques}
+\section{01. FUNCTIONS \& LIMITS}
+\subsection{Rules of Limits}
+\begin{enumerate}
+    \item $\lim\limits_{x\to{a}}(f\pm g)(x) = L \pm L'$
+    \item $\lim\limits_{x\to{a}}(fg)(x) = LL'$
+    \item $\lim\limits_{x\to{a}}\frac{f}{g}(x) = \frac{L}{L'}$, provided $L'\neq 0$
+    \item $\lim\limits_{x\to{a}}kf(x) = kL${ for any real number }$k.$
+\end{enumerate}
+
+\subsection{Estimation}
+first order estimate: 
+$y' \approx y + \Delta x \times \frac{dy}{dx} \Bigr|_{x=2}$
+
+second order estimate: 
+$y' \approx \text{1st estimate } + (\frac{(\triangle x)^2}{2}\times\frac{d^2y}{dx^2}\Bigr|_{x=2})$
+
+\subsection{Stats}
+pop. variance:
+$\sigma ^2=\frac{\sum x^2-\frac{(\sum x)^2}{n}}{n}$
+
+pop. covariance: 
+$\text{cov}(x, y) =\frac{\sum xy^2 - \frac{\sum x \sum y}{n}}{n}$
+
+pop. correlation: 
+$\frac{\text{cov}(x, y)}{\sigma_x \times \sigma_y}$
+
+
+\section{02. DIFFERENTIATION}
+extreme values:
+\begin{itemize}
+    \item $f'(x)=0$
+    \item $f'(x)$ does not exist
+    \item end points of the domain of $f$
+\end{itemize}
+parametric differentiaton: $\frac{d^2y}{dx^2} = \frac{d}{dx}(\frac{dy}{dx}) = \frac{\frac{d}{dt}(\frac{dy}{dx})}{\frac{dx}{dt}}$
+
+\subsection{Differentiation Techniques}
 \begin{center}
     \begin{tabular}{|>{\color{black}}c | >{\color{black}}c|}
         \hline
@@ -111,7 +161,19 @@
     \end{tabular}
 \end{center}
 
-\section{Integration Techniques}
+\subsection{L'Hopital's Rule}
+\begin{center}
+    $\lim\limits_{x\to x_0}\frac{f(x)}{g(x)}=\lim\limits_{x\to x_0}\frac{f'(x)}{g'(x)}$
+\end{center}
+\begin{itemize}
+    \item for indeterminate forms ($\frac{0}{0}$ or $\frac{\infty}{\infty}$), cannot directly substitute $x=a$. \\*
+    \item for other forms: convert to ($\frac{0}{0}$ or $\frac{\infty}{\infty}$) then apply L'Hopital's rule \\*
+    \item for exponents: use $\ln$, then sub into $e^{f(x)}$
+\end{itemize}
+
+
+\section{03. INTEGRATION}
+\subsection{Integration Techniques}
 \begin{center}
     \begin{tabular}{|>{\color{black}}c | >{\color{black}}c|}
         \hline
@@ -132,69 +194,21 @@
     \end{tabular}
 \end{center}
 
-\vbox{
-    \section{Estimation}
-    first order estimate: 
-    $y' \approx y + \Delta x \times \frac{dy}{dx} \Bigr|_{x=2}$
-    \\* second order estimate: 
-    $y' \approx \text{1st estimate } + (\frac{(\triangle x)^2}{2}\times\frac{d^2y}{dx^2}\Bigr|_{x=2})$
-}
-
-\vbox{
-    \section{Stats}
-    pop. variance:
-    $\sigma ^2=\frac{\sum x^2-\frac{(\sum x)^2}{n}}{n}$
-    \\* pop. covariance: 
-    $\text{cov}(x, y) =\frac{\sum xy^2 - \frac{\sum x \sum y}{n}}{n}$
-    \\* pop. correlation: 
-    $\frac{\text{cov}(x, y)}{\sigma_x \times \sigma_y}$
-}
-
-\vbox{
-    \section{Differentiation}
-    extreme values:
-    \begin{itemize}
-        \item $f'(x)=0$
-        \item $f'(x)$ does not exist
-        \item end points of the domain of $f$
-    \end{itemize}
-    parametric differentiaton: $\frac{d^2y}{dx^2} = \frac{d}{dx}(\frac{dy}{dx}) = \frac{\frac{d}{dt}(\frac{dy}{dx})}{\frac{dx}{dt}}$
-}
-\vbox{
-    \subsection{L'Hospital's Rule}
-    \begin{itemize}
-        \item for indeterminate forms ($\frac{0}{0}$ or $\frac{\infty}{\infty}$), cannot directly substitute $x=a$. \\*
-        \item for other forms: convert to ($\frac{0}{0}$ or $\frac{\infty}{\infty}$) then apply L'Hospital's rule \\*
-        \item for exponents: use $\ln$, then sub into $e^{f(x)}$
-    \end{itemize}
-
-    $\lim\limits_{x\to x_0}\frac{f(x)}{g(x)}=\lim\limits_{x\to x_0}\frac{f'(x)}{g'(x)}$
-}
-
-\vbox{
-    \subsection{Rules of Limits}
-    \begin{enumerate}
-        \item $\lim\limits_{x\to{a}}(f\pm g)(x) = L \pm L'$
-        \item $\lim\limits_{x\to{a}}(fg)(x) = LL'$
-        \item $\lim\limits_{x\to{a}}\frac{f}{g}(x) = \frac{L}{L'}$, provided $L'\neq 0$
-        \item $\lim\limits_{x\to{a}}kf(x) = kL${ for any real number }$k.$
-    \end{enumerate}
-}
-
-\vbox{
-    \section{Integration}
+\begin{center}
     $\frac{d}{dx}\int^x_af(t)dt = f(x)$
-    \begin{itemize}
-        \item \textbf{indefinite integral} — the integral of the function without any limits
-        \item \textbf{antiderivative} — any function whose derivative will be the same as the original function
-    \end{itemize}
-    substitution: $\int^b_af\big (g(x)\big )g'(x)dx = \int^{g(b)}_{g(a)}f(u)du$ \\*
-    by parts: $\int uv'\ dx = uv - \int u'v\ dx$ \\*
-    \subsection{volume of revolution}
-    about x-axis \\
-    (with hollow area) $V = \pi\int^b_a [f(x)]^2 - [g(x)]^2dx$
-    (about line $y=k$) $V = \pi\int^b_a [f(x) - k]^2dx$
-}
+\end{center}
+\begin{itemize}
+    \item \textbf{indefinite integral} — the integral of the function without any limits
+    \item \textbf{antiderivative} — any function whose derivative will be the same as the original function
+\end{itemize}
+substitution: $\int^b_af\big (g(x)\big )g'(x)dx = \int^{g(b)}_{g(a)}f(u)du$ \\*
+by parts: $\int uv'\ dx = uv - \int u'v\ dx$ \\*
+\subsection{volume of revolution}
+about x-axis:
+\begin{itemize}
+    \item (with hollow area) $V = \pi\int^b_a [f(x)]^2 - [g(x)]^2dx$
+    \item (about line $y=k$) $V = \pi\int^b_a [f(x) - k]^2dx$
+\end{itemize}
 
 \section{Logistic Models}
 $N = \frac{N_{t=\infty}}{1 + (\frac{N_{t=\infty}}{N_{t=0}} - 1)e^{-Bt}}$
@@ -203,6 +217,7 @@ $N = \frac{N_{t=\infty}}{1 + (\frac{N_{t=\infty}}{N_{t=0}} - 1)e^{-Bt}}$
     \item $B$ - birth rate
     \item $t$ - time
 \end{itemize}
+
 
 
 \end{multicols}
