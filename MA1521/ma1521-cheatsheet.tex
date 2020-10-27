@@ -220,11 +220,16 @@ $N = \frac{N_{t=\infty}}{1 + (\frac{N_{t=\infty}}{N_{t=0}} - 1)e^{-Bt}}$
 
 \section{04. SERIES}
 \subsection{geometric series}
-\begin{itemize}
-    \item sum (\textbf{divergent}) $= \frac{a(1-r^n)}{1-r}$
-    \item sum (\textbf{convergent}) $= \frac{a}{1-r}$
-\end{itemize}
-
+\begin{center}
+    \begin{multicols*}{2}
+        sum (\textbf{divergent}) 
+        \\* $\frac{a(1-r^n)}{1-r}$
+        
+        sum (\textbf{convergent}) 
+        \\* $\frac{a}{1-r}$
+    \end{multicols*}
+\end{center}
+    
 \subsection{power series}
 \begin{center}
     power series about $x = 0$
@@ -234,6 +239,7 @@ $N = \frac{N_{t=\infty}}{1 + (\frac{N_{t=\infty}}{N_{t=0}} - 1)e^{-Bt}}$
     $\sum\limits^\infty_{n=0}c_nx^n = c_0 + c_1(x-a) + c_2(x-a)^2 + \dots$
 \end{center}
 \subsubsection{radius of convergence}
+power series converges where $\lim\limits_{n \to \infty} \abs{\frac{u_{n+1}}{u_n}} < 1$
 \begin{center}
     \begin{tabular}{| p{0.25\linewidth} | p{0.15\linewidth} | p{0.35\linewidth} |} 
         \hline
@@ -268,7 +274,7 @@ For $f(x) = \sum\limits^\infty_{n = 0}c_n(x - a)^n$\  and \ $a-h<x<a+h$
     \\* $f(x) = \sum\limits^\infty_{n=0}\frac{f^n(0)}{n!}x^n$
 
     Taylor polynomial of $f$ at $a$:
-    \\* $P_n(x) = \sum\limits^n_{k = 0} \frac{f^k(x)}{k!} (x-a)^k$
+    \\* $P_n(x) = \sum\limits^n_{k = 0} \frac{f^k(a)}{k!} (x-a)^k$
 \end{center}
     
     
