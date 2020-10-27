@@ -12,9 +12,8 @@
 \usepackage{amssymb}
 \usepackage[table]{xcolor}
 \usepackage{vwcol}
-% for relations
-\usepackage{cancel}
-\usepackage{ mathrsfs }
+\usepackage{tikz}
+\usepackage{wrapfig}
 \setlist{nosep}
 
 \pdfinfo{
@@ -53,11 +52,14 @@
 \renewcommand{\bf}[1]{\textbf{#1}}
 \newcommand{\abs}[1]{\vert #1 \vert}
 \newcommand{\Mod}[1]{\ \mathrm{mod}\ #1}
+\newcommand{\vv}[1]{\boldsymbol{#1}}
+\newcommand{\VV}[1]{\overrightarrow{#1}}
+\newcommand{\cvv}[1]{\left(\begin{smallmatrix}#1\end{smallmatrix}\right)}
 
 \makeatother
 \definecolor{myblue}{cmyk}{1,.72,0,.38}
-\everymath\expandafter{\the\everymath \color{myblue}}
 % Define BibTeX command
+\everymath\expandafter{\the\everymath \color{myblue}}
 \def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
     T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
 \let\iff\leftrightarrow
@@ -203,7 +205,7 @@ parametric differentiaton: $\frac{d^2y}{dx^2} = \frac{d}{dx}(\frac{dy}{dx}) = \f
 \end{itemize}
 substitution: $\int^b_af\big (g(x)\big )g'(x)dx = \int^{g(b)}_{g(a)}f(u)du$ \\*
 by parts: $\int uv'\ dx = uv - \int u'v\ dx$ \\*
-\subsection{volume of revolution}
+\subsection{Volume of Revolution}
 about x-axis:
 \begin{itemize}
     \item (with hollow area) $V = \pi\int^b_a [f(x)]^2 - [g(x)]^2dx$
@@ -219,7 +221,7 @@ $N = \frac{N_{t=\infty}}{1 + (\frac{N_{t=\infty}}{N_{t=0}} - 1)e^{-Bt}}$
 \end{itemize}
 
 \section{04. SERIES}
-\subsection{geometric series}
+\subsection{Geometric Series}
 \begin{center}
     \begin{multicols*}{2}
         sum (\textbf{divergent}) 
@@ -229,8 +231,24 @@ $N = \frac{N_{t=\infty}}{1 + (\frac{N_{t=\infty}}{N_{t=0}} - 1)e^{-Bt}}$
         \\* $\frac{a}{1-r}$
     \end{multicols*}
 \end{center}
+
+\subsection{MacLaurin Series}
+\begin{align*}
+           \frac{1}{1 - x} &= \sum^\infty_{n = 0} x^n 
+        \\ \frac{1}{1 + x} &= \sum^\infty_{n = 0} (-1)^nx^n 
+        \\ \frac{1}{1 + x^2} &= \sum^\infty_{n = 0} x^2n 
+        \\ \ln(1 + x) &= \sum^\infty_{n = 1} \frac{(-1)^{n - 1}x^n}{n} 
+        \\ \sin x &= \sum^\infty_{n = 0} \frac{(-1)^nx^{2n + 1}}{(2n_1)!} 
+        \\ \cos x &= \sum^\infty_{n = 0} \frac{(-1)^nx^{2n}}{(2n)!}
+        \\ e^x &= \sum^\infty_{n = 0} \frac{x^n}{n!}
+        \\ \tan^{-1}x &= \sum^\infty_{n = 0} \frac{(-1)^n}{2n + 1} x^{2n+1}
+        \\ \frac{1}{(1-x)^2} &= \sum^\infty_{n = 1} nx^{n-1}
+        \\ \frac{1}{(1-x)^3} &= \frac{1}{2} \sum^\infty_{n = 2} n(n - 1)x^{n-2}
+        \\ (1 + x)^k &= \sum^\infty_{n = 0} \binom{k}{n}x^n
+        \\ &= 1 + kx + \frac{k(k-1)}{2!}x^2 + \dots
+\end{align*}
     
-\subsection{power series}
+\subsection{Power Series}
 \begin{center}
     power series about $x = 0$
     $\sum\limits^\infty_{n=0}c_nx^n = c_0 + c_1x + c_2x^2 + \dots$
@@ -238,7 +256,7 @@ $N = \frac{N_{t=\infty}}{1 + (\frac{N_{t=\infty}}{N_{t=0}} - 1)e^{-Bt}}$
     power series about $x = a$ ($a$ is the centre of the power series)
     $\sum\limits^\infty_{n=0}c_nx^n = c_0 + c_1(x-a) + c_2(x-a)^2 + \dots$
 \end{center}
-\subsubsection{radius of convergence}
+\subsubsection{Radius of Convergence}
 power series converges where $\lim\limits_{n \to \infty} \abs{\frac{u_{n+1}}{u_n}} < 1$
 \begin{center}
     \begin{tabular}{| p{0.25\linewidth} | p{0.15\linewidth} | p{0.35\linewidth} |} 
@@ -256,7 +274,7 @@ power series converges where $\lim\limits_{n \to \infty} \abs{\frac{u_{n+1}}{u_n
     \end{tabular} 
 \end{center}
 
-\subsubsection{differentiation/integration}
+\subsubsection{Differentiation/Integration}
 For $f(x) = \sum\limits^\infty_{n = 0}c_n(x - a)^n$\  and \ $a-h<x<a+h$
 \begin{center}
     \textbf{differentiation} of power series:
@@ -264,9 +282,10 @@ For $f(x) = \sum\limits^\infty_{n = 0}c_n(x - a)^n$\  and \ $a-h<x<a+h$
     
     \textbf{integration} of power series:
     \\* $\int f(x) dx = \sum\limits^\infty_0c_n \frac{(x - 1)^{n + 1}}{n + 1} + c$
+    \\* if $R=\infty$, $f(x)$ can be integrated to $\int^1_0 f(x) dx$
 \end{center}
 
-\subsection{taylor series}
+\subsection{Taylor series}
 \begin{center}
     $\sum\limits^\infty_{k = 0} \frac{f^k(a)}{k!}(x-a)^k$
 
@@ -276,7 +295,91 @@ For $f(x) = \sum\limits^\infty_{n = 0}c_n(x - a)^n$\  and \ $a-h<x<a+h$
     Taylor polynomial of $f$ at $a$:
     \\* $P_n(x) = \sum\limits^n_{k = 0} \frac{f^k(a)}{k!} (x-a)^k$
 \end{center}
-    
-    
+
+\section{05. VECTORS}
+unit vector, $\hat{\vv{p}} = \frac{\vv{p}}{\abs{\vv{p}}}$
+\begin{vwcol}[widths={0.16,0.8},
+    sep=0cm, justify=flush,rule=0pt]
+\begin{tikzpicture}[scale=0.5, every node/.style={transform shape}]
+    \coordinate[label=below left:O] (O) at (0,0);
+    \coordinate[label=A] (A) at (0.3,1.6);
+    \coordinate[label=B] (B) at (1.5, 1.4);
+    \coordinate[label=P] (P) at (1, 1.5);
+    \draw (O) 
+        -- node[left] {$\vv{a}$} (A) 
+        -- node[above] {$\lambda$} (P)
+        -- node[above] {$\mu$} (B) 
+        -- node[right] {$\vv{b}$} (O) 
+        -- node[left] {$\vv{p}$} (P);
+\end{tikzpicture}
+\begin{itemize}
+    \item \textbf{ratio theorem}: $\vv{p} = \frac{\mu\vv{a} + \lambda\vv{b}}{\lambda + \mu}$
+    \item \textbf{midpoint theorem}: $\vv{p} = \frac{\vv{a} + \vv{b}}{2}$
+\end{itemize}
+\end{vwcol}
+
+\subsection{Dot product}
+\begin{center}
+    $\vv{a} \cdot \vv{b} = \abs{\vv{a}} \abs{\vv{b}} \cos \theta$
+    \\* $\cvv{a_1 \\ a_2 \\ a_3} \cdot \cvv{b_1 \\ b_2 \\ b_3} = a_1b_1 + a_2b_2 + a_3b_3$
+    \newline
+    \begin{multicols*}{2}
+        $\vv{a} \perp \vv{b} \Then \vv{a} \cdot \vv{b} = 0$
+        \\ $\vv{a} \parallel \vv{b} \Then \vv{a} \cdot \vv{b} = \abs{\vv{a}} \abs{\vv{b}}$
+        \\ $\vv{a} \cdot \vv{b} > 0$ : $\vv{a}$ is acute
+        \\ $\vv{a} \cdot \vv{b} < 0$ : $\vv{a}$ is obtuse
+    \end{multicols*}
+\end{center}
+
+\subsection{Cross product}
+\begin{center}
+    $\vv{a} \times \vv{b} = \abs{\vv{a}} \abs{\vv{b}} \sin \theta \hat{\vv{n}}$
+    \\* $\cvv{a_1 \\ a_2 \\ a_3} \cdot \cvv{b_1 \\ b_2 \\ b_3} 
+        = \cvv{a_2b_3 - 1_3b_2 \\ -(a_1b_3 - a_3b_1) \\ a_1b_2 - a_2b_1}$
+    \newline
+    \begin{multicols*}{2}
+        $\vv{a} \perp \vv{b} \Then \vv{a} \times \vv{b} = \abs{\vv{a}} \abs{\vv{b}}$
+        $\vv{a} \parallel \vv{b} \Then \vv{a} \times \vv{b} = 0$
+        $\vv{a} \times \vv{b} = -(\vv{b} \times \vv{a})$
+        $\lambda\vv{a} \times \mu\vv{b} = \lambda\mu(\vv{a} \times \vv{b})$
+    \end{multicols*}
+\end{center}
+
+\subsection{Projection}
+\begin{vwcol}[widths={0.47,0.4},
+    sep=0cm, justify=flush,rule=0pt]
+\begin{tikzpicture}[scale=0.7, every node/.style={transform shape}]
+    \coordinate[label=below left:O] (O) at (0,0);
+    \coordinate[label=right:A] (A) at (2, 1);
+    \coordinate[label=below:B] (B) at (3, 0);
+    \coordinate[label=below:N] (N) at (2, 0);
+    \draw (A) 
+        -- node[above] {$\vv{a}$} (O)
+        -- node[below] {$\vv{b}$} (B); 
+    \draw[shorten >=0pt, dashed] (A) -- (N);
+\end{tikzpicture}
+\begin{itemize}
+    \item $\abs{\VV{ON}} = \abs{\vv{a} \cdot \hat{\vv{b}}} = \frac{\abs{\vv{a} \cdot \vv{b}}}{\abs{\vv{b}}}$
+    \item $\VV{ON} = (\vv{a} \cdot \hat{\vv{b}})\hat{\vv{b}} = \frac{\abs{\vv{a} \cdot \vv{b}}}{\abs{\vv{b}}^2}\vv{b}$
+\end{itemize}
+\end{vwcol}
+
+\subsection{Planes}
+\subsubsection{Equation of a Plane}
+$\vv{n}$ is a perpendicular to the plane; $A$ is a point on the plane.
+\begin{itemize}
+    \item parametric: $\vv{r} = \vv{a} + \lambda\vv{b} + \mu\vv{c}$
+    \item scalar product: $\vv{r} \cdot \vv{n} = \vv{a} \cdot \vv{n}$
+    \item standard form: $\vv{r} \cdot \hat{\vv{n}} = d$ 
+    \item cartesian: $\vv{a}x + \vv{b}y + \vv{c}z = p$
+\end{itemize}
+Length of projection of $\vv{a}$ on $\vv{n} = \abs{\vv{a} \cdot \hat{\vv{n}}} = \perp$ from $O$ to $\pi$
+
+\subsubsection{Distance from a point to a plane}
+\begin{center}
+    Shortest distance from a point $S(x_0, y_0, z_0)$ to a plane $\Pi: ax + by + c = d$ is given by:
+    \\* $\frac{\abs{ax_0 + by_0 + cz_0 + d}}{\sqrt{a^2 + b^2 + c^2}}$
+\end{center}
+
 \end{multicols}
 \end{document}
