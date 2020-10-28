@@ -86,7 +86,7 @@
 \begin{document}
 \raggedright
 \footnotesize
-\begin{multicols*}{4}
+\begin{multicols}{4}
 
 
 % multicol parameters
@@ -272,16 +272,25 @@ power series converges where $\lim\limits_{n \to \infty} \abs{\frac{u_{n+1}}{u_n
 \end{center}
 
 \subsection{MacLaurin Series}
+For $-\infty < x < \infty$
+\\ \;  % spacing
+\setlength\tabcolsep{1.5pt} % default value: 6pt
+\begin{tabular}{rl}
+           $\sin x$ & $= \sum\limits^\infty_{n = 0} \frac{(-1)^nx^{2n + 1}}{(2n_1)!} $
+        \\ $\cos x$ & $= \sum\limits^\infty_{n = 0} \frac{(-1)^nx^{2n}}{(2n)!}$
+        \\ $e^x$ & $= \sum\limits^\infty_{n = 0} \frac{x^n}{n!}$
+\end{tabular}
+
+For $-1 < x < 1$
+\\ \;  % spacing
 \setlength\tabcolsep{1.5pt} % default value: 6pt
 \begin{tabular}{rl}
            $\frac{1}{1 - x}$ & $= \sum\limits^\infty_{n = 0} x^n $
         \\ $\frac{1}{1 + x}$ & $= \sum\limits^\infty_{n = 0} (-1)^nx^n $
         \\ $\frac{1}{1 + x^2}$ & $= \sum\limits^\infty_{n = 0} x^2n $
         \\ $\ln(1 + x)$ & $= \sum\limits^\infty_{n = 1} \frac{(-1)^{n - 1}x^n}{n} $
-        \\ $\sin x$ & $= \sum\limits^\infty_{n = 0} \frac{(-1)^nx^{2n + 1}}{(2n_1)!} $
-        \\ $\cos x$ & $= \sum\limits^\infty_{n = 0} \frac{(-1)^nx^{2n}}{(2n)!}$
-        \\ $e^x$ & $= \sum\limits^\infty_{n = 0} \frac{x^n}{n!}$
         \\ $\tan^{-1}x$ & $= \sum\limits^\infty_{n = 0} \frac{(-1)^n}{2n + 1} x^{2n+1}$
+        \\ $\frac{1}{(1+x)^2}$ & $= \sum\limits^\infty_{n = 1} (-1)^{n-1}nx^{n-1}$
         \\ $\frac{1}{(1-x)^2}$ & $= \sum\limits^\infty_{n = 1} nx^{n-1}$
         \\ $\frac{1}{(1-x)^3}$ & $= \frac{1}{2} \sum\limits^\infty_{n = 2} n(n - 1)x^{n-2}$
         \\ $(1 + x)^k$ & $= \sum\limits^\infty_{n = 0} \binom{k}{n}x^n$
@@ -509,5 +518,5 @@ $f$ has a local maximum/minimum at $(a, b)$ if
     \end{tabular} 
 \end{center}
 
-\end{multicols*}
+\end{multicols}
 \end{document}
