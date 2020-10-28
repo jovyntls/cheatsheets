@@ -7,7 +7,7 @@ A compilation of cheatsheets I made for NUS Computer Science modules (may be app
 ### Current progress:
 
 - **CS1231S** [chapters 1 to 9]
-- **MA1521** [chapters 1 to 3]
+- **MA1521** [chapters 1 to 6]
 
 To do:
 

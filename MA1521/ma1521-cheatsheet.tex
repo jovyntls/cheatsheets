@@ -15,14 +15,15 @@
 \usepackage{tikz}
 \usepackage{wrapfig}
 \setlist{nosep}
+\graphicspath{ {./images/} }
 
 \pdfinfo{
-  /Title (MA1521.pdf)
-  /Creator (TeX)
+  /Title (MA1521-cheatsheet.pdf)
+  /Creator (Jovyn)
   /Producer (pdfTeX 1.40.0)
-  /Author (Seamus)
-  /Subject (Example)
-  /Keywords (pdflatex, latex,pdftex,tex)}
+  /Author (Jovyn)
+  /Subject (MA1521)
+  /Keywords (ma1521, cheatsheet, tex)}
 
 % Turn off header and footer
 \pagestyle{empty}
@@ -85,7 +86,7 @@
 \begin{document}
 \raggedright
 \footnotesize
-\begin{multicols}{4}
+\begin{multicols*}{4}
 
 
 % multicol parameters
@@ -99,7 +100,7 @@
 \begin{center}
     %
      \Large{\textbf{MA1521 Cheatsheet}} \\
-     \fbox{\small{AY20/21 Sem 1 | Chapter 1-3}}
+     \fbox{\small{AY20/21 Sem 1 | Chapter 1-6}}
     %  
 \end{center}
 
@@ -212,42 +213,26 @@ about x-axis:
     \item (about line $y=k$) $V = \pi\int^b_a [f(x) - k]^2dx$
 \end{itemize}
 
-\section{Logistic Models}
-$N = \frac{N_{t=\infty}}{1 + (\frac{N_{t=\infty}}{N_{t=0}} - 1)e^{-Bt}}$
-\begin{itemize}
-    \item $N$ - number
-    \item $B$ - birth rate
-    \item $t$ - time
-\end{itemize}
+% \section{Logistic Models}
+% $N = \frac{N_{t=\infty}}{1 + (\frac{N_{t=\infty}}{N_{t=0}} - 1)e^{-Bt}}$
+% \begin{itemize}
+%     \item $N$ - number
+%     \item $B$ - birth rate
+%     \item $t$ - time
+% \end{itemize}
 
 \section{04. SERIES}
 \subsection{Geometric Series}
 \begin{center}
-    \begin{multicols*}{2}
+    \begin{multicols}{2}
         sum (\textbf{divergent}) 
         \\* $\frac{a(1-r^n)}{1-r}$
         
         sum (\textbf{convergent}) 
         \\* $\frac{a}{1-r}$
-    \end{multicols*}
+    \end{multicols}
 \end{center}
 
-\subsection{MacLaurin Series}
-\begin{align*}
-           \frac{1}{1 - x} &= \sum^\infty_{n = 0} x^n 
-        \\ \frac{1}{1 + x} &= \sum^\infty_{n = 0} (-1)^nx^n 
-        \\ \frac{1}{1 + x^2} &= \sum^\infty_{n = 0} x^2n 
-        \\ \ln(1 + x) &= \sum^\infty_{n = 1} \frac{(-1)^{n - 1}x^n}{n} 
-        \\ \sin x &= \sum^\infty_{n = 0} \frac{(-1)^nx^{2n + 1}}{(2n_1)!} 
-        \\ \cos x &= \sum^\infty_{n = 0} \frac{(-1)^nx^{2n}}{(2n)!}
-        \\ e^x &= \sum^\infty_{n = 0} \frac{x^n}{n!}
-        \\ \tan^{-1}x &= \sum^\infty_{n = 0} \frac{(-1)^n}{2n + 1} x^{2n+1}
-        \\ \frac{1}{(1-x)^2} &= \sum^\infty_{n = 1} nx^{n-1}
-        \\ \frac{1}{(1-x)^3} &= \frac{1}{2} \sum^\infty_{n = 2} n(n - 1)x^{n-2}
-        \\ (1 + x)^k &= \sum^\infty_{n = 0} \binom{k}{n}x^n
-        \\ &= 1 + kx + \frac{k(k-1)}{2!}x^2 + \dots
-\end{align*}
-    
 \subsection{Power Series}
 \begin{center}
     power series about $x = 0$
@@ -256,6 +241,18 @@ $N = \frac{N_{t=\infty}}{1 + (\frac{N_{t=\infty}}{N_{t=0}} - 1)e^{-Bt}}$
     power series about $x = a$ ($a$ is the centre of the power series)
     $\sum\limits^\infty_{n=0}c_nx^n = c_0 + c_1(x-a) + c_2(x-a)^2 + \dots$
 \end{center}
+
+\subsection{Taylor series}
+\begin{center}
+    $\sum\limits^\infty_{k = 0} \frac{f^k(a)}{k!}(x-a)^k$
+
+    MacLaurin series:
+    \\* $f(x) = \sum\limits^\infty_{n=0}\frac{f^n(0)}{n!}x^n$
+
+    Taylor polynomial of $f$ at $a$:
+    \\* $P_n(x) = \sum\limits^n_{k = 0} \frac{f^k(a)}{k!} (x-a)^k$
+\end{center}
+
 \subsubsection{Radius of Convergence}
 power series converges where $\lim\limits_{n \to \infty} \abs{\frac{u_{n+1}}{u_n}} < 1$
 \begin{center}
@@ -274,9 +271,26 @@ power series converges where $\lim\limits_{n \to \infty} \abs{\frac{u_{n+1}}{u_n
     \end{tabular} 
 \end{center}
 
+\subsection{MacLaurin Series}
+\setlength\tabcolsep{1.5pt} % default value: 6pt
+\begin{tabular}{rl}
+           $\frac{1}{1 - x}$ & $= \sum\limits^\infty_{n = 0} x^n $
+        \\ $\frac{1}{1 + x}$ & $= \sum\limits^\infty_{n = 0} (-1)^nx^n $
+        \\ $\frac{1}{1 + x^2}$ & $= \sum\limits^\infty_{n = 0} x^2n $
+        \\ $\ln(1 + x)$ & $= \sum\limits^\infty_{n = 1} \frac{(-1)^{n - 1}x^n}{n} $
+        \\ $\sin x$ & $= \sum\limits^\infty_{n = 0} \frac{(-1)^nx^{2n + 1}}{(2n_1)!} $
+        \\ $\cos x$ & $= \sum\limits^\infty_{n = 0} \frac{(-1)^nx^{2n}}{(2n)!}$
+        \\ $e^x$ & $= \sum\limits^\infty_{n = 0} \frac{x^n}{n!}$
+        \\ $\tan^{-1}x$ & $= \sum\limits^\infty_{n = 0} \frac{(-1)^n}{2n + 1} x^{2n+1}$
+        \\ $\frac{1}{(1-x)^2}$ & $= \sum\limits^\infty_{n = 1} nx^{n-1}$
+        \\ $\frac{1}{(1-x)^3}$ & $= \frac{1}{2} \sum\limits^\infty_{n = 2} n(n - 1)x^{n-2}$
+        \\ $(1 + x)^k$ & $= \sum\limits^\infty_{n = 0} \binom{k}{n}x^n$
+        \\   & $= 1 + kx + \frac{k(k-1)}{2!}x^2 + \dots$
+\end{tabular}
+
 \subsubsection{Differentiation/Integration}
-For $f(x) = \sum\limits^\infty_{n = 0}c_n(x - a)^n$\  and \ $a-h<x<a+h$
 \begin{center}
+    For $f(x) = \sum\limits^\infty_{n = 0}c_n(x - a)^n$\  and \ $a-h<x<a+h$,
     \textbf{differentiation} of power series:
     \\* $f'(x) = \sum\limits^\infty_{n = 0}nc_n(x-a)^{n-1}$
     
@@ -285,50 +299,41 @@ For $f(x) = \sum\limits^\infty_{n = 0}c_n(x - a)^n$\  and \ $a-h<x<a+h$
     \\* if $R=\infty$, $f(x)$ can be integrated to $\int^1_0 f(x) dx$
 \end{center}
 
-\subsection{Taylor series}
-\begin{center}
-    $\sum\limits^\infty_{k = 0} \frac{f^k(a)}{k!}(x-a)^k$
-
-    MacLaurin series:
-    \\* $f(x) = \sum\limits^\infty_{n=0}\frac{f^n(0)}{n!}x^n$
-
-    Taylor polynomial of $f$ at $a$:
-    \\* $P_n(x) = \sum\limits^n_{k = 0} \frac{f^k(a)}{k!} (x-a)^k$
-\end{center}
-
 \section{05. VECTORS}
 unit vector, $\hat{\vv{p}} = \frac{\vv{p}}{\abs{\vv{p}}}$
-\begin{vwcol}[widths={0.16,0.8},
-    sep=0cm, justify=flush,rule=0pt]
-\begin{tikzpicture}[scale=0.5, every node/.style={transform shape}]
-    \coordinate[label=below left:O] (O) at (0,0);
-    \coordinate[label=A] (A) at (0.3,1.6);
-    \coordinate[label=B] (B) at (1.5, 1.4);
-    \coordinate[label=P] (P) at (1, 1.5);
-    \draw (O) 
-        -- node[left] {$\vv{a}$} (A) 
-        -- node[above] {$\lambda$} (P)
-        -- node[above] {$\mu$} (B) 
-        -- node[right] {$\vv{b}$} (O) 
-        -- node[left] {$\vv{p}$} (P);
-\end{tikzpicture}
-\begin{itemize}
-    \item \textbf{ratio theorem}: $\vv{p} = \frac{\mu\vv{a} + \lambda\vv{b}}{\lambda + \mu}$
-    \item \textbf{midpoint theorem}: $\vv{p} = \frac{\vv{a} + \vv{b}}{2}$
-\end{itemize}
-\end{vwcol}
+\begin{center}
+    \begin{multicols}{2}
+        \begin{tikzpicture}[scale=0.8, every node/.style={transform shape}]
+            \coordinate[label=below left:O] (O) at (0,0);
+            \coordinate[label=A] (A) at (0.3,1.6);
+            \coordinate[label=B] (B) at (1.5, 1.4);
+            \coordinate[label=P] (P) at (1, 1.5);
+            \draw (O) 
+            -- node[left] {$\vv{a}$} (A) 
+            -- node[above] {$\lambda$} (P)
+            -- node[above] {$\mu$} (B) 
+            -- node[right] {$\vv{b}$} (O) 
+            -- node[left] {$\vv{p}$} (P);
+        \end{tikzpicture}
+        \\ \textbf{ratio theorem}
+        \\* $\vv{p} = \frac{\mu\vv{a} + \lambda\vv{b}}{\lambda + \mu}$
+        \newline
+        \\ \textbf{midpoint theorem}
+        \\* $\vv{p} = \frac{\vv{a} + \vv{b}}{2}$
+    \end{multicols}
+\end{center}
 
 \subsection{Dot product}
 \begin{center}
     $\vv{a} \cdot \vv{b} = \abs{\vv{a}} \abs{\vv{b}} \cos \theta$
     \\* $\cvv{a_1 \\ a_2 \\ a_3} \cdot \cvv{b_1 \\ b_2 \\ b_3} = a_1b_1 + a_2b_2 + a_3b_3$
     \newline
-    \begin{multicols*}{2}
+    \begin{multicols}{2}
         $\vv{a} \perp \vv{b} \Then \vv{a} \cdot \vv{b} = 0$
         \\ $\vv{a} \parallel \vv{b} \Then \vv{a} \cdot \vv{b} = \abs{\vv{a}} \abs{\vv{b}}$
         \\ $\vv{a} \cdot \vv{b} > 0$ : $\vv{a}$ is acute
         \\ $\vv{a} \cdot \vv{b} < 0$ : $\vv{a}$ is obtuse
-    \end{multicols*}
+    \end{multicols}
 \end{center}
 
 \subsection{Cross product}
@@ -337,17 +342,17 @@ unit vector, $\hat{\vv{p}} = \frac{\vv{p}}{\abs{\vv{p}}}$
     \\* $\cvv{a_1 \\ a_2 \\ a_3} \cdot \cvv{b_1 \\ b_2 \\ b_3} 
         = \cvv{a_2b_3 - 1_3b_2 \\ -(a_1b_3 - a_3b_1) \\ a_1b_2 - a_2b_1}$
     \newline
-    \begin{multicols*}{2}
+    \begin{multicols}{2}
         $\vv{a} \perp \vv{b} \Then \vv{a} \times \vv{b} = \abs{\vv{a}} \abs{\vv{b}}$
         $\vv{a} \parallel \vv{b} \Then \vv{a} \times \vv{b} = 0$
         $\vv{a} \times \vv{b} = -(\vv{b} \times \vv{a})$
         $\lambda\vv{a} \times \mu\vv{b} = \lambda\mu(\vv{a} \times \vv{b})$
-    \end{multicols*}
+    \end{multicols}
 \end{center}
 
 \subsection{Projection}
-\begin{vwcol}[widths={0.47,0.4},
-    sep=0cm, justify=flush,rule=0pt]
+
+\begin{multicols}{2}
 \begin{tikzpicture}[scale=0.7, every node/.style={transform shape}]
     \coordinate[label=below left:O] (O) at (0,0);
     \coordinate[label=right:A] (A) at (2, 1);
@@ -362,7 +367,7 @@ unit vector, $\hat{\vv{p}} = \frac{\vv{p}}{\abs{\vv{p}}}$
     \item $\abs{\VV{ON}} = \abs{\vv{a} \cdot \hat{\vv{b}}} = \frac{\abs{\vv{a} \cdot \vv{b}}}{\abs{\vv{b}}}$
     \item $\VV{ON} = (\vv{a} \cdot \hat{\vv{b}})\hat{\vv{b}} = \frac{\abs{\vv{a} \cdot \vv{b}}}{\abs{\vv{b}}^2}\vv{b}$
 \end{itemize}
-\end{vwcol}
+\end{multicols}
 
 \subsection{Planes}
 \subsubsection{Equation of a Plane}
@@ -381,5 +386,128 @@ Length of projection of $\vv{a}$ on $\vv{n} = \abs{\vv{a} \cdot \hat{\vv{n}}} = 
     \\* $\frac{\abs{ax_0 + by_0 + cz_0 + d}}{\sqrt{a^2 + b^2 + c^2}}$
 \end{center}
 
+\section{06. PARTIAL DIFFERENTIATION}
+\subsection{Partial Derivatives}
+For $f(x, y)$,
+\begin{center}
+    first-order partial derivatives:
+    \begin{multicols}{2}
+            $f_x = \frac{d}{dx}f(x, y)$
+            \\ $f_y = \frac{d}{dy}f(x, y)$
+    \end{multicols}
+
+    second-order partial derivatives:
+    \begin{multicols}{2}
+            $f_{xx} = (f_x)_x = \frac{d}{dx}f_x$
+            \\ $f_{yy} = (f_y)_y = \frac{d}{dy}f_y$
+            \\ $f_{xy} = (f_x)_y = \frac{d}{dy}f_x$
+            \\ $f_{yx} = (f_y)_x = \frac{d}{dx}f_y$
+    \end{multicols}
+\end{center}
+
+\subsection{Chain Rule}
+\begin{center}
+    For $z(t) = f(x(t), y(t))$,
+    \\* $\frac{dz}{dt} = \frac{dz}{dx} \frac{dx}{dt} + \frac{dz}{dy} \frac{dy}{dt}$
+
+    For $z(s, t) = f\big(x(s, t), y(s, t)\big)$,
+    \\ $\frac{dz}{dt} = \frac{dz}{dx} \frac{dx}{dt} + \frac{dz}{dy} \frac{dy}{dt}$
+    \\ $\frac{dz}{ds} = \frac{dz}{dx} \frac{dx}{ds} + \frac{dz}{dy} \frac{dy}{ds}$
+\end{center}
+
+\subsection{Directional Derivatives}
+\begin{center}
+    The directional derivative of $f$ at $(a, b)$ in the direction of unit vector $\hat{\vv{u}} = u_1\vv{i} + u_2\vv{j}$ is 
+    $D_uf(a, b) = f_x(a, b) \cdot u_1 + f_y(a, b) \cdot u_2$
+\end{center}
+
+\includegraphics[width=0.8\linewidth]{MA1521-ch7-fig1}
+
+\begin{itemize}
+    \item \textbf{geometric meaning}: $D_uf(a, b)$ is the gradient of the tangent at $(a, b)$ to curve $C$ on a surface $z= f(x, y)$
+    \begin{itemize}
+        \item rate of change of $f(x, y)$ at $(a, b)$ in the direction of $\vv{u}$
+    \end{itemize}
+\end{itemize}
+
+% \begin{center}
+%     $x = a + u_1t, y = b + u_2t, z=0$
+%     \\* $D_if(a, b) = f_x(a, b)$
+%     \\* $D_jf(a, b) = f_y(a, b)$
+% \end{center}
+
+\subsubsection{Gradient Vector}
+\begin{center}
+    The \textbf{gradient} at $f(x, y)$ is the vector 
+    \\* $\nabla f = f_x\vv{i} + f_y\vv{j}$
+    \begin{align*}
+        D_uf(a, b) &= \nabla f(a, b) \cdot \hat{\vv{u}}
+        \\ &= \abs{\nabla f(a, b)} \cos\theta
+    \end{align*}
+\end{center}
+\begin{itemize}
+    \item $f$ increases most rapidly in the direction $\nabla f(a, b)$
+    \item $f$ decreases most rapidly in the direction $-\nabla f(a, b)$
+    \item largest possible value of $D_uf(a, b) = \vert \nabla f(a, b)\vert$
+    \begin{itemize}
+        \item occurs in the same direction as $f_x(a, b)\vv{i} + f_y(a, b)\vv{j}$
+    \end{itemize}
+\end{itemize}
+
+\subsubsection{Physical Meaning}
+\begin{center}
+Suppose a point $p$ moves a small distance $\Delta t$ along a unit vector $\hat{\vv{u}}$ to a new point $\vv{q}$.
+\\
+
+\begin{multicols}{2}
+    \begin{tikzpicture}[scale=0.7, every node/.style={transform shape}]
+        \coordinate[label=below left:$\overrightarrow{p}$] (P) at (0,0);
+        \coordinate[label=below:$\overrightarrow{q}$] (Q) at (1.5, 0.3);
+        \coordinate[label=$\overrightarrow{u}$] (U) at (2.5, 0.5);
+        \filldraw (P) circle (1pt);
+        \filldraw (Q) circle (1pt);
+        \draw[->] (P) -- node[above] {$\Delta t$} (Q) -- (U);
+    \end{tikzpicture}
+    \\ increment in $f$, 
+    \\* $\Delta f \approx D_uf(\vv{p})(\Delta t)$
 \end{multicols}
+\end{center}
+
+\subsection{Maximum \& Minimum Values}
+$f(x, y)$ has a \textbf{local maximum} at $(a, b)$ if $f(x, y) \leq f(a, b)$ for all points $(x, y)$ near $(a, b)$.
+\\ $f(x, y)$ has a \textbf{local minimum} at $(a, b)$ if $f(x, y) \geq f(a, b)$ for all points $(x, y)$ near $(a, b)$.
+
+\subsubsection{Critical Points}
+$f$ has a local maximum/minimum at $(a, b)$ if
+\begin{itemize}
+    \item $f_x(a, b)$ or $f_y(a, b)$ does not exist; OR
+    \item $f_x(a, b) = 0$ and $f_y(a, b) = 0$
+    \begin{itemize}
+        \item $f_x(a, b) \leq 0$ - maximum point
+        \item $f_x(a, b) \geq 0$ - minimum point
+    \end{itemize}
+\end{itemize}
+
+\subsubsection{Saddle Points}
+\begin{itemize}
+    \item $f_x(a, b) = 0, f_y(a, b) = 0$
+    \item neither a local minimum nor a local maximum
+\end{itemize}
+
+\subsubsection{Second Derivative Test}
+\begin{center}
+    Let $f_x(a, b) = 0$ and $f_y(a, b) = 0$.
+    \\* $D = f_{xx}(a, b)f_{yy}(a, b) - f_{xy}(a, b)^2$
+
+    \begin{tabular}{| c | c | c |}
+        \hline $D$ & $f_{xx}(a,b)$ & \textbf{local}
+        \\\hline + & + & \text{min}
+        \\\hline + & - & \text{max}
+        \\\hline - & \text{any} & \text{saddle point}
+        \\\hline 0 & \text{any} & \text{no conclusion}
+        \\\hline
+    \end{tabular} 
+\end{center}
+
+\end{multicols*}
 \end{document}
