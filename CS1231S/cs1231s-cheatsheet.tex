@@ -12,6 +12,7 @@
 \usepackage{amssymb}
 \usepackage[table]{xcolor}
 \usepackage{vwcol}
+\usepackage{tikz}
 % for relations
 \usepackage{cancel}
 \usepackage{ mathrsfs }
@@ -696,7 +697,7 @@ Let $\preccurlyeq$ be a partial order on a set $A$, and $c \in A$.
     \\* $\forall x, y \in A \ (x \preccurlyeq y \Then x \preccurlyeq^* y)$
 \end{center}
 
-\section{10. COUNTING \& PROBABILITY}
+\section{10A. COUNTING}
 \subsection{permutations}
 \begin{center}
     $P(n, r) = \frac{n!}{(n-r)!}$ \ \ (also $_nP_r, P^n_r$)
@@ -737,10 +738,90 @@ such that $y$ is the image of at least $k + 1$ distinct elements of $X$.
 \begin{center}
     $\binom{n}{r} = \frac{n!}{r! (n-r)!}$ (also $C(n, r)$, $_nC_r$, $C_{n,r}$, $^nC_r$)
     
-    \textit{r}-combinations from a set of $n$ elements with \textbf{repetition}
+    \textit{r}-combinations from $n$ elements with \textbf{repetition}
     \\* $= \binom{r + n - 1}{r}$
 \end{center}
 
+\subsubsection{pascal's formula}
+\begin{center}
+    Suppose $n, r \in \mathbb{Z}^+$ with $r \leq n$. Then
+    \\* $\binom{n + 1}{r} = \binom{n}{r-1} + \binom{n}{r}$
+\end{center}
+
+\subsubsection{binomial theorem}
+\begin{center}
+    $(a + b)^n = \sum^n_{k=0} \binom{n}{k} a^{n-k}b^k$
+    \\* binomial coefficient: $\binom{n}{k}$
+\end{center}
+
+\section{10B. PROBABILITY}
+
+\subsection{probability}
+Let $S$ be a sample space. For all events $A$ and $B$ in $S$, a \textit{probability function} $P$ satisfies the following axioms:
+\begin{enumerate}
+    \item $0 \leq P(A) \leq 1$
+    \item $P(\emptyset)=0$ and $P(S) = 1$
+    \item $(A \cap B = \emptyset) \Then \big[P(A \cup B) = P(A) + P(B)\big]$
+    \item $P(\bar{A}) = 1-P(A)$
+    \item $P(A \cup B) = P(A) + P(B) - P(A \cap B)$
+\end{enumerate}
+
+\subsection{expected value}
+For possible outcomes $a_1, a_2, \dots, a_n$ which occur with probabilities $p_1, p_2, \dots, p_n$, the \textbf{expected value} is
+\begin{center}
+    $\sum^n_{k=1} = a_kp_k$
+\end{center}
+\begin{itemize}
+    \item \textbf{linearity} of expectation
+    \begin{itemize}
+        \item $E[X+Y] = e[X] + E[Y]$
+        \item $E \left[ \sum\limits^n_{i=1}c_i\cdot X_i \right] = \sum\limits^n_{i=1}(c_i \cdot E[X_i])$
+    \end{itemize}
+\end{itemize}
+
+
+\subsection{conditional probability}
+\begin{center}
+    The conditional probability of $A$ given $B$,
+    \\* $P(A \mid B) = \frac{P(A \cap B)}{P(B)}$
+\end{center}
+probability tree:
+    \begin{tikzpicture}[scale=0.8, every node/.style={transform shape}]
+        \node[fill, circle, minimum size=1mm, inner sep=0] (O) at (0,1) {};
+        \node[] (B1) at (2,1.3) {$B_1$};
+        \node[] (B1c) at (2, 0.7) {$B_1^c$};
+        \node[label=right:{$B_2 \rightarrow P(B_1^c \cap B_2) = \dots$}, fill, circle, minimum size=1mm, inner sep=0] (B2) at (5, 1.1) {};
+        \node[label=right:{$B_2^c \rightarrow P(B_1^c \cap B_2^c) = \dots$}, fill, circle, minimum size=1mm, inner sep=0] (B2c) at (5, 0.4) {};
+        \draw (O)  -- node[above, sloped] {\tiny{$P(B_1) = \frac{1}{3}$}} (B1);
+        \draw (O) -- node[below, sloped] {\tiny{$P(B_1^c) = \frac{2}{3}$}} (B1c);
+        \draw (B1c) -- node[above, sloped] {\tiny{$P(B_2\mid B_1^c)$}} (B2);
+        \draw (B1c) -- node[below, sloped] {\tiny{$P(B_2^c\mid B_1^c)$}} (B2c);
+    \end{tikzpicture}
+
+\subsection{bayes' theorem}
+Suppose a sample space $S$ is a union of mutually disjoint events $B_1, B_2, \dots, B_n$ and $A$ is an event in $S$.
+\\* For $k \in \mathbb{Z}$ and $1 \leq k \leq n$, 
+\begin{center}
+    $P(B_k\mid A) = \frac{P(A \mid B_k) \cdot P(B_k)}{\sum\limits^n_{i=1}\big(P(A \mid B_i) \cdot P(B_i)\big)}$
+\end{center}
+
+\subsection{independent events}
+\begin{center}
+    $A$ and $B$ are \textbf{independent} \textit{iff}
+    \\* $P(A \cap B) = P(A) \cdot P(B)$
+
+    \hfill \break
+    $A$, $B$ and $C$ are \textbf{pairwise independent} \textit{iff}
+    \\* 1. $P(A \cap B) = P(A) \cdot P(B)$
+    \\* 2. $P(B \cap C) = P(B) \cdot P(C)$
+    \\* 3. $P(A \cap C) = P(A) \cdot P(C)$
+    
+    \hfill \break
+    $A$, $B$ and $C$ are \textbf{mutually independent} \textit{iff}
+    \\* 1. $A$, $B$ and $C$ are pairwise independent
+    \\* 2. $P(A \cap B \cap C) = P(A) \cdot P(B) \cdot P(C)$
+
+\end{center}
 \end{multicols}
 
 \pagebreak
