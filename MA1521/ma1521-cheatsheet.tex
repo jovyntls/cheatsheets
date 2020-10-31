@@ -287,7 +287,7 @@ For $-1 < x < 1$
 \begin{tabular}{rl}
            $\frac{1}{1 - x}$ & $= \sum\limits^\infty_{n = 0} x^n $
         \\ $\frac{1}{1 + x}$ & $= \sum\limits^\infty_{n = 0} (-1)^nx^n $
-        \\ $\frac{1}{1 + x^2}$ & $= \sum\limits^\infty_{n = 0} x^{2n} $
+        \\ $\frac{1}{1 + x^2}$ & $= \sum\limits^\infty_{n = 0} (-1)^nx^{2n} $
         \\ $\ln(1 + x)$ & $= \sum\limits^\infty_{n = 1} \frac{(-1)^{n - 1}x^n}{n} $
         \\ $\tan^{-1}x$ & $= \sum\limits^\infty_{n = 0} \frac{(-1)^n}{2n + 1} x^{2n+1}$
         \\ $\frac{1}{(1+x)^2}$ & $= \sum\limits^\infty_{n = 1} (-1)^{n-1}nx^{n-1}$
@@ -487,14 +487,15 @@ $f(x, y)$ has a \textbf{local maximum} at $(a, b)$ if $f(x, y) \leq f(a, b)$ for
 \\ $f(x, y)$ has a \textbf{local minimum} at $(a, b)$ if $f(x, y) \geq f(a, b)$ for all points $(x, y)$ near $(a, b)$.
 
 \subsubsection{Critical Points}
-$f$ has a local maximum/minimum at $(a, b)$ if
+% $f$ has a local maximum/minimum at $(a, b)$ if
 \begin{itemize}
     \item $f_x(a, b)$ or $f_y(a, b)$ does not exist; OR
     \item $f_x(a, b) = 0$ and $f_y(a, b) = 0$
-    \begin{itemize}
-        \item $f_x(a, b) \leq 0$ - maximum point
-        \item $f_x(a, b) \geq 0$ - minimum point
-    \end{itemize}
+    % FIX LATER
+    % \begin{itemize}
+    %     \item $f_x(a, b) \leq 0$ - maximum point
+    %     \item $f_x(a, b) \geq 0$ - minimum point
+    % \end{itemize}
 \end{itemize}
 
 \subsubsection{Saddle Points}
