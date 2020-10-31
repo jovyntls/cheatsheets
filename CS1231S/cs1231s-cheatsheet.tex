@@ -820,8 +820,192 @@ Suppose a sample space $S$ is a union of mutually disjoint events $B_1, B_2, \do
     $A$, $B$ and $C$ are \textbf{mutually independent} \textit{iff}
     \\* 1. $A$, $B$ and $C$ are pairwise independent
     \\* 2. $P(A \cap B \cap C) = P(A) \cdot P(B) \cdot P(C)$
-
 \end{center}
+
+\section{11. GRAPHS}
+\begin{itemize}
+    \item mathematical structures used to model pairwise relations between objects
+\end{itemize}
+\subsection{types of graphs}
+\begin{multicols}{2}
+\begin{center}
+    undirected graph
+    \\
+    \begin{tikzpicture}[scale=0.8, every node/.style={transform shape}]
+        \node[fill, circle, minimum size=1mm, inner sep=0] (O) at (0,0) {};
+        \node[label=above:{$v_1$}, fill, circle, minimum size=1mm, inner sep=0] (v1) at (1.2,1) {};
+        \node[label=left:{$v_2$}, fill, circle, minimum size=1mm, inner sep=0] (v2) at (0,0) {};
+        \node[label=right:{$v_3$}, fill, circle, minimum size=1mm, inner sep=0] (v3) at (1.7,-0.2) {};
+        \draw (v1) -- node[left] {$e_1$} (v2)
+                   -- node[below] {$e_2$} (v3);
+        \draw (v1) to[out=20, in=10] node[right] {$e_3$} (v3);
+        \draw (v3) to[out=-200, in=-90] node[left] {$e_4$} (v1);
+    \end{tikzpicture}
+    \\* $e_1 = \{v_1, v_2\}$
+
+    directed graph
+    \\
+    \begin{tikzpicture}[scale=0.7, every node/.style={transform shape}]
+        \node[fill, circle, minimum size=1mm, inner sep=0] (O) at (0,0) {};
+        \node[label=above:{$v_1$}, fill, circle, minimum size=1mm, inner sep=0] (v1) at (1.2,1) {};
+        \node[label=left:{$v_2$}, fill, circle, minimum size=1mm, inner sep=0] (v2) at (0,0) {};
+        \node[label=right:{$v_3$}, fill, circle, minimum size=1mm, inner sep=0] (v3) at (1.7,-0.2) {};
+        \draw[->] (v1) -- node[left] {$e_1$} (v2);
+        \draw[->] (v2) -- node[below] {$e_2$} (v3);
+        \draw[->] (v1) to[out=20, in=10] node[right] {$e_3$} (v3);
+        \draw[->] (v3) to[out=-200, in=-90] node[left] {$e_4$} (v1);
+        \draw[->] (v1) to[in=-150,out=-230, loop] node[left] {$e_5$} (v1);
+        \draw[->] (v2) to[in=-50,out=-130, loop] node[below] {$e_6$} (v2);
+        \draw[->] (v3) to[in=-80,out=-160, loop] node[below] {$e_7$} (v3);
+    \end{tikzpicture}
+    \\* $e_1 = (v_1, v_2)$
+\end{center}
+\end{multicols}
+
+\subsubsection{undirected graph}
+\begin{itemize}
+    \item denoted by $G = (V, E)$, comprising
+    \begin{itemize}
+        \item nonempty set of \textit{vertices/nodes}, $V = \{v_1, v_2, \dots, v_n\}$
+        \item a set of \textit{edges}, $E = \{e_1, e_2, \cdots, e_k\}$
+    \end{itemize}
+    \item $e = \{v, w\}$ for an undirected edge $E$ incident on vertices $v$ and $w$
+\end{itemize}
+
+\subsubsection{directed graph}
+\begin{itemize}
+    \item denoted by $G = (V, E)$, comprising
+    \begin{itemize}
+        \item nonempty set $V$ of \textit{vertices}
+        \item a set $E$ of \textit{directed edges} (ordered pair of vertices)
+    \end{itemize}
+    \item $e = (v, w)$ for an directed edge $E$ from vertex $v$ to vertex $w$
+\end{itemize}
+
+\begin{center}
+    simple graph
+    \\
+    \begin{tikzpicture}[scale=0.7, every node/.style={transform shape}]
+        \node[fill, circle, minimum size=1mm, inner sep=0] (v1) at (0,0) {};
+        \node[fill, circle, minimum size=1mm, inner sep=0] (v2) at (0,1) {};
+        \node[fill, circle, minimum size=1mm, inner sep=0] (v3) at (1,1) {};
+        \node[fill, circle, minimum size=1mm, inner sep=0] (v4) at (1,0) {};
+        \draw (v1) -- (v2) -- (v3) -- (v1) -- (v3) -- (v4);
+    \end{tikzpicture}
+
+    % simple graph
+    % \\
+    % \begin{tikzpicture}[scale=0.7, every node/.style={transform shape}]
+    %     \node[fill, circle, minimum size=1mm, inner sep=0] (v1) at (0,0) {};
+    %     \node[fill, circle, minimum size=1mm, inner sep=0] (v2) at (0,1) {};
+    %     \node[fill, circle, minimum size=1mm, inner sep=0] (v3) at (1,1) {};
+    %     \node[fill, circle, minimum size=1mm, inner sep=0] (v4) at (1,0) {};
+    %     \draw (v1) -- (v2) -- (v3) -- (v1) -- (v3) -- (v4);
+    % \end{tikzpicture}
+\end{center}
+
+\subsubsection{simple graph}
+\begin{itemize}
+    \item \textbf{undirected graph} with no loops or parallel edges
+\end{itemize}
+
+\subsubsection{complete graph}
+\begin{itemize}
+    \item a complete graph on $n$ vertices, $n>0$, denoted $K_n$, is a simple graph with $n$ vertices and exactly one edge connecting each pair of distinct vertices
+\end{itemize}
+
+\subsubsection{bipartite graph}
+\begin{itemize}
+    \item a simple graph whose vertices can be divided into two disjoint sets $U$ and $V$ such that every edge connects a vertex in $U$ to one in $V$
+    \item \textbf{complete bipartite graph:}
+    \begin{itemize}
+        \item bipartite graph on two disjoint sets $U$ and $V$ such that every vertex in $U$ connects to every vertex in $V$
+        \item if csakjfnadlfsjasdjj
+    \end{itemize}
+\end{itemize}
+
+\subsubsection{subgraph of a graph}
+\begin{itemize}
+    \item dsjgfdkhlafn
+\end{itemize}
+
+\subsection{degree}
+\begin{itemize}
+    \item \textbf{degree} of $v, deg(v) =$ number of edges incident on $v$
+    \item \textbf{total degree} of $G$ = sum of the degrees of all vertices of $G$
+\end{itemize}
+\centerline{total degree of $G$ = $2 \times $ (number of edges of $G$)}
+\begin{itemize}
+    \item C10.1.2 - the total degree of a graph is even
+    \item P10.1.3 - in any graph there are an even number of vertices of odd degree
+\end{itemize}
+
+\subsection{trails, paths and circuits}
+Let $G$ be a graph; let $v$ and $w$ be vertices of $G$.
+\begin{itemize}
+    \item \textbf{walk} (from $v$ to $w$): a finite alternating sequence of adjacent vertices and edges of $G$.
+    \begin{itemize}
+        \item e.g. $v_0e_1v_1e_2\dots v_{n-1}e_nv_n$
+        \item \textbf{length} of walk: the number of edges, $n$
+    \end{itemize}
+    \item a \textbf{trivial walk} from $v$ to $v$ consists of the single vertex $v$
+    \item \textbf{trail} (from $v$ to $w$): a walk from $v$ to $w$ that does not contain a repeated edge
+    \item \textbf{path} (from $v$ to $w$): a trail that does not contain a repeated vertex
+    \item \textbf{closed walk}: walk that starts and ends at the same vertex
+    \item \textbf{circuit/cycle}: an undirected graph $G(V, E)$ where 
+        \begin{itemize}
+            \item $V = \{_1, x_2, \dots, x_n\}$
+            \item $E = \{\{x_1, x_2\}, \{x_2, x_3\}, \dots, \{x_{n-1}, x_n\}, \{x_n, x_1\}\}$
+            \item $n \in \mathbb{Z}_{\geq 3}$
+            \item aka a closed walk that does not contain a repeated edge
+        \end{itemize}
+    \item \textbf{simple circuit/cycle}: does not have any other repeated vertex except the first and last
+    \item (an undirected graph is) \textbf{cyclic} if it contains a loop/cycle
+\end{itemize}
+
+\subsection{connectedness}
+\begin{itemize}
+    \item vertices $v$ and $w$ are connected $\Iff \exists$ a walk from $v$ to $w$
+    \item graph $G$ is connected $\Iff \forall$ vertices $v, w \in V, \exists$ a walk from $v$ to $w$ 
+\end{itemize}
+\subsubsection{connected component}
+\begin{itemize}
+    \item a connected subgraph of the largest possible size
+    \item graph $H$ is a connected component of graph $G \Iff$ 
+    \begin{enumerate}
+        \item $H$ is a subgraph of $G$
+        \item $H$ is connected
+        \item no connected subgraph of $G$ has $H$ as a subgraph and contains vertices or edges that are not in $H$
+    \end{enumerate}
+\end{itemize}
+
+\subsection{Euler circuit}
+\begin{itemize}
+    \item \textbf{Euler circuit}: a circuit that contains every vertex and traverses every edge of $G$ exactly once
+    \item \textbf{Eulerian graph}: graph that contains an Euler circuit
+    \begin{center}
+        \textbf{T10.2.4} 
+        \\* Eulerian graph $\Iff$ every vertex has positive even degree
+    \end{center}
+    \item \textbf{Euler trail} (from $v$ to $w$): a sequence of adjacent edges and vertices that starts at $v$, ends at $w$, 
+        and passes through every vertex of $G$ at least once, and traverses every edge of $G$ exactly once.
+    \begin{center}
+        \textbf{C10.2.5}
+        \\* $\exists$ Euler trail $\Iff$ $G$ is connected; $v, w$ have odd degree;
+        \\* all other vertices of $G$ have positive even degree
+    \end{center}
+\end{itemize}
+
+% \subsection{Hamiltonian circuit}
+% \begin{itemize}
+%     \item \textbf{Hamiltonian circuit} (for $G$): a \textit{simple circuit} that includes every vertex of $G$.
+%     \begin{itemize}
+%         \item does not need to include all the edges of $G$ (unlike Euler circuit)
+%     \end{itemize}
+%     \item \textbf{Hamilton(ian) graph}: contains a Hamiltonian circuit
+% \end{itemize}
+
+
 \end{multicols}
 
 \pagebreak
@@ -975,6 +1159,12 @@ Suppose a sample space $S$ is a union of mutually disjoint events $B_1, B_2, \do
         \begin{itemize}
             \item A smallest element is minimal.
             \item There is at most one smallest element.
+        \end{itemize}
+        \item L10.2.1 - Let $G$ be a graph.
+        \begin{itemize}
+            \item L10.2.1a - If $G$ is connected, then any two distinct vertices of $G$ can be connected by a path
+            \item L10.2.1b - If vertices $v$ and $w$ are part of a circuit in $G$ and one edge is removed from the circuit, then there still exists a trail from $v$ to $w$ in $G$.
+            \item L10.2.1c - If $G$ is connected and $G$ contains a circuit, then an edge of the circuit can be removed without disconnecting $G$.
         \end{itemize}
     \end{itemize}
 
