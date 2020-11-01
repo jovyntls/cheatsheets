@@ -883,6 +883,7 @@ Suppose a sample space $S$ is a union of mutually disjoint events $B_1, B_2, \do
 \end{itemize}
 
 \begin{center}
+\begin{multicols}{3}    
     simple graph
     \\
     \begin{tikzpicture}[scale=0.7, every node/.style={transform shape}]
@@ -893,15 +894,81 @@ Suppose a sample space $S$ is a union of mutually disjoint events $B_1, B_2, \do
         \draw (v1) -- (v2) -- (v3) -- (v1) -- (v3) -- (v4);
     \end{tikzpicture}
 
-    % simple graph
-    % \\
-    % \begin{tikzpicture}[scale=0.7, every node/.style={transform shape}]
-    %     \node[fill, circle, minimum size=1mm, inner sep=0] (v1) at (0,0) {};
-    %     \node[fill, circle, minimum size=1mm, inner sep=0] (v2) at (0,1) {};
-    %     \node[fill, circle, minimum size=1mm, inner sep=0] (v3) at (1,1) {};
-    %     \node[fill, circle, minimum size=1mm, inner sep=0] (v4) at (1,0) {};
-    %     \draw (v1) -- (v2) -- (v3) -- (v1) -- (v3) -- (v4);
-    % \end{tikzpicture}
+    non simple graph
+    \\
+    \begin{tikzpicture}[scale=0.7, every node/.style={transform shape}]
+        \node[fill, circle, minimum size=1mm, inner sep=0] (v1) at (0,0) {};
+        \node[fill, circle, minimum size=1mm, inner sep=0] (v2) at (0,1) {};
+        \node[fill, circle, minimum size=1mm, inner sep=0] (v3) at (1,1) {};
+        \node[fill, circle, minimum size=1mm, inner sep=0] (v4) at (1,0) {};
+        \draw[blue] (v1) to[in=-150,out=-230, loop] node[left] {} (v1);
+        \draw (v3) -- (v2) -- (v1) -- (v3);
+        \draw[blue] (v3) to[in=50,out=-50] node[left] {} (v4);
+        \draw[blue] (v4) to[in=240,out=-200] node[left] {} (v3);
+    \end{tikzpicture}
+
+    complete graph
+    \\
+    \begin{tikzpicture}[scale=0.25, every node/.style={transform shape}]
+        \node[fill, circle, minimum size=2mm, inner sep=0] (v1) at (0,-2) {};
+        \node[fill, circle, minimum size=2mm, inner sep=0] (v2) at (-1.9, -0.62) {};
+        \node[fill, circle, minimum size=2mm, inner sep=0] (v3) at (-1.18, 1.62) {};
+        \node[fill, circle, minimum size=2mm, inner sep=0] (v4) at (1.18, 1.62) {};
+        \node[fill, circle, minimum size=2mm, inner sep=0] (v5) at (1.9, -0.62) {};
+        \draw (v1) -- (v3) -- (v5) -- (v2) -- (v4) -- (v1);
+        \draw (v1) -- (v2) -- (v3) -- (v4) -- (v5) -- (v1);
+    \end{tikzpicture}
+
+    subgraph
+    \\
+    \begin{tikzpicture}[scale=0.7, every node/.style={transform shape}]
+        \node[fill, circle, minimum size=1mm, inner sep=0] (v1) at (0,0) {};
+        \node[fill, circle, minimum size=1mm, inner sep=0] (v2) at (0,0.4) {};
+        \node[fill, circle, minimum size=1mm, inner sep=0] (v3) at (1,0.8) {};
+        \node[fill, circle, minimum size=1mm, inner sep=0] (v4) at (0.7,0) {};
+        \node[blue, fill, circle, minimum size=1mm, inner sep=0] (v5) at (1.7, 0.5) {};
+        \node[blue, fill, circle, minimum size=1mm, inner sep=0] (v6) at (1.8, 0) {};
+        \draw (v1) -- (v2) -- (v3) -- (v1) -- (v3) -- (v4);
+        \draw[blue] (v5) -- (v6);
+    \end{tikzpicture}
+    \\* \begin{tiny} Graph with 2 subgraphs \end{tiny}
+    
+    bipartite graph
+    \\
+    \begin{tikzpicture}[scale=0.5, every node/.style={transform shape}]
+        \node[fill, circle, minimum size=1mm, inner sep=0] (a1) at (0, 0.5) {};
+        \node[fill, circle, minimum size=1mm, inner sep=0] (a2) at (0,0) {};
+        \node[fill, circle, minimum size=1mm, inner sep=0] (a3) at (0, -0.5) {};
+        \node[blue, fill, circle, minimum size=1mm, inner sep=0] (b1) at (2, 0.75) {};
+        \node[blue, fill, circle, minimum size=1mm, inner sep=0] (b2) at (2, 0.25) {};
+        \node[blue, fill, circle, minimum size=1mm, inner sep=0] (b3) at (2, -0.25) {};
+        \node[blue, fill, circle, minimum size=1mm, inner sep=0] (b4) at (2, -0.75) {};
+        \draw (a1) -- (b1) -- (a2) -- (b3) -- (a3);
+        \draw (b1) -- (a2) -- (b4);
+        \draw (b1) -- (a3) -- (b2);
+    \end{tikzpicture}
+
+    complete bipartite graph
+    \\
+    \begin{tikzpicture}[scale=0.5, every node/.style={transform shape}]
+        \node[fill, circle, minimum size=1mm, inner sep=0] (a1) at (0, 0.4) {};
+        \node[fill, circle, minimum size=1mm, inner sep=0] (a2) at (0,-0.4) {};
+        \node[blue, fill, circle, minimum size=1mm, inner sep=0] (b1) at (2, 0.75) {};
+        \node[blue, fill, circle, minimum size=1mm, inner sep=0] (b2) at (2, 0.25) {};
+        \node[blue, fill, circle, minimum size=1mm, inner sep=0] (b3) at (2, -0.25) {};
+        \node[blue, fill, circle, minimum size=1mm, inner sep=0] (b4) at (2, -0.75) {};
+        \draw (a1) -- (b1);
+        \draw (a1) -- (b2);
+        \draw (a1) -- (b3);
+        \draw (a1) -- (b4);
+        \draw (a2) -- (b1);
+        \draw (a2) -- (b2);
+        \draw (a2) -- (b3);
+        \draw (a2) -- (b4);
+    \end{tikzpicture}
+
+
+\end{multicols}
 \end{center}
 
 \subsubsection{simple graph}
@@ -917,16 +984,19 @@ Suppose a sample space $S$ is a union of mutually disjoint events $B_1, B_2, \do
 \subsubsection{bipartite graph}
 \begin{itemize}
     \item a simple graph whose vertices can be divided into two disjoint sets $U$ and $V$ such that every edge connects a vertex in $U$ to one in $V$
-    \item \textbf{complete bipartite graph:}
+    \item \textbf{complete bipartite graph:} $K_{m, n}$
     \begin{itemize}
         \item bipartite graph on two disjoint sets $U$ and $V$ such that every vertex in $U$ connects to every vertex in $V$
-        \item if csakjfnadlfsjasdjj
+        \item denoted $K_{m, n}$ where $\abs{U} = m, \abs{V} = n$
     \end{itemize}
 \end{itemize}
 
 \subsubsection{subgraph of a graph}
+$H$ is a subgraph of $G \Iff$ 
 \begin{itemize}
-    \item dsjgfdkhlafn
+    \item every vertex in $H$ is also a vertex in $G$
+    \item every edge in $H$ is also an edge in $G$
+    \item every edge in $H$ has the same endpoints as it has in $G$
 \end{itemize}
 
 \subsection{degree}
