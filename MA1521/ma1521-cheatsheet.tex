@@ -430,7 +430,7 @@ For $f(x, y)$,
     $D_uf(a, b) = f_x(a, b) \cdot u_1 + f_y(a, b) \cdot u_2$
 \end{center}
 
-\includegraphics[width=0.8\linewidth]{MA1521-ch7-fig1}
+\includegraphics[width=0.8\linewidth]{MA1521-ch6-fig1}
 
 \begin{itemize}
     \item \textbf{geometric meaning}: $D_uf(a, b)$ is the gradient of the tangent at $(a, b)$ to curve $C$ on a surface $z= f(x, y)$
@@ -517,6 +517,115 @@ $f(x, y)$ has a \textbf{local maximum} at $(a, b)$ if $f(x, y) \leq f(a, b)$ for
         \\\hline 0 & \text{any} & \text{no conclusion}
         \\\hline
     \end{tabular} 
+\end{center}
+
+\section{07. DOUBLE INTEGRALS}
+\begin{center}
+    Let $\Delta A_i$ be the area of $R_i$ and $(x_i, y_i)$ be a point on $R_i$. 
+    \\* Let $f(x, y)$ be a function of two variables. The \textbf{double integral} of $f$ over $R$ is 
+    \\* $\displaystyle\iint_R f(x, y) dA = \lim_{n \to \infty} \sum^n_{i=1} f(x_i, y_i) \Delta A_i$
+\end{center}
+
+\subsection{Geometric Meaning}
+$\iint_R f(x, y) dA$ is the volume under hte surface $z = f(x, y)$ and above the $xy$-plane over the region R.
+\begin{center}
+    \includegraphics[width=0.7\linewidth]{MA1521-ch7-fig1}
+\end{center}
+
+\subsection{Properties of Double Integrals}
+\begin{enumerate}
+    \item $\iint_R\big(f(x, y) + g(x,y)\big)dA$
+        \\ \qquad $ = \iint_Rf(x,y)dA + \iint_Rg(x,y)dA$
+    \item $\iint_R cf(x,y)dA = c\iint_R f(x,y)dA$, where $c$ is a constant
+    \item If $f(x,y) \geq g(x,y) \text{ for all } (x, y) \in \mathbb{R},$ then 
+        \\ \qquad $\iint_R f(x,y)dA \geq \iint_R g(x, y) dA$
+    \item If $R$ = $R1 \cup R2$, $R1$ and $R2$ do not overlap, then 
+        \\ \centerline{$\iint_R f(x,y) dA = \iint_{R1} f(x,y) dA + \iint_{R2}f(x, y) dA$}
+    \item The area of $R$, 
+        \\ \qquad $A(R) = \iint_R dA = \iint_R 1 dA$
+    \item If $m \leq f(x, y) \leq M$ for all $(x, y) \in R$, then 
+        \\ \qquad $mA(R) \leq \iint_R f(x, y)dA \leq MA(R)$
+\end{enumerate}
+
+\subsection{Rectangular Regions}
+\begin{center}
+    For a rectangular region $R$ in the $xy$-plane, $a \leq x \leq b, \quad c \leq y \leq d$
+    \begin{align*}
+        \iint_R f(x, y) dA &= \int^d_c\left[\int^b_a f(x, y) dx\right]dy
+        \\* &= \int^b_a\left[\int^d_c f(x, y) dy\right]dx
+    \end{align*}
+
+    If $f(x, y) = g(x) h(y)$, then 
+    \\* $\displaystyle \iint_R g(x)h(y)dA = \left(\int^b_a g(x)dx\right) \left(\int^d_c h(y)dy\right)$
+\end{center}
+
+\subsection{General Regions}
+\subsubsection{Type A}
+\begin{center}    
+    \begin{multicols}{2}
+        \includegraphics[width=0.9\linewidth]{ma1521-ch7-typeA}
+        \\ lower/upper bounds:
+        \\* $g_1(x) \leq y \leq g_2(x)$
+        \\ \ 
+        \\ left/right bounds:
+        \\* $a \leq x \leq b$
+    \end{multicols}
+    
+    The region $R$ is given by
+    % \\* $R : g_1(x) \leq y \leq g_2(x), \ a \leq x \leq b$
+    \\* $\displaystyle\iint_R f(x,y) dA = \int^b_a\Big [ \int^{g_2(x)}_{g_1(x)}f(x,y)dy \Big ]dx$
+\end{center}
+
+\subsubsection{Type B}
+\begin{center}    
+    \begin{multicols}{2}
+        \includegraphics[width=0.9\linewidth]{ma1521-ch7-typeB}
+        \\ lower/upper bounds:
+        \\* $c \leq y \leq d$
+        \\ \ 
+        \\ left/right bounds:
+        \\* $h_1(y) \leq x \leq h_2(y)$
+    \end{multicols}
+    
+    The region $R$ is given by
+    % \\* $R :c \leq y \leq d, \ h_1(y) \leq x \leq h_2(y)$
+    \\* $\displaystyle\iint_R f(x,y) dA = \int^d_c\Big [ \int^{h_2(y)}_{h_1(y)}f(x,y)dx \Big ]dy$
+\end{center}
+
+\subsection{Polar Coordinates}
+\begin{center}
+    \begin{multicols}{2}
+        \includegraphics[width=0.85\linewidth]{ma1521-ch7-polar}
+        \\ $x = r\cos\theta$
+        \\* $y = r\sin\theta$
+        \\* $dxdy \Rightarrow rdrd\theta$
+
+        \begin{align*}
+            \Delta A &\approx (r \Delta \theta)(\Delta r)
+            \\ &= r \Delta r \Delta \theta
+        \end{align*}
+        % $dA = rdrd\theta$
+        \fbox{$dA = rdrd\theta$}
+    \end{multicols}
+    The region $R$ is given by
+    \\* $R: a \leq r \leq b, \ \alpha \leq \theta \leq \beta$
+    $\displaystyle\iint_Rf(x, y) dA = \int^\beta_\alpha \int^b_a f(r \cos \theta, r \sin \theta)r\ drd\theta$
+\end{center}
+
+\subsection{Applications}
+\subsubsection{Volume}
+\begin{center}
+    Suppose $D$ is a solid under the surface of $z = f(x, y)$ 
+    \\* over a plane region $R$
+    \\* Volume of $\displaystyle D = \iint_R f(x, y)dA$
+\end{center}
+
+\subsubsection{Surface Area}
+\begin{center}
+    % If $f$ has continuous first partial derivatives on a closed region $R$ of the $xy$-plane, 
+    For area $S$ of that portion of the surface $z = f(x, y)$ 
+    \\* that projects onto $R$,
+    \\* $\displaystyle S = \iint_R \sqrt{(\frac{\partial z}{\partial x})^2 + (\frac{\partial z}{\partial y})^2 + 1} dA$
 \end{center}
 
 \end{multicols}
