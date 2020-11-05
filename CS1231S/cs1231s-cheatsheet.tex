@@ -13,6 +13,8 @@
 \usepackage[table]{xcolor}
 \usepackage{vwcol}
 \usepackage{tikz}
+\usepackage{mathtools}
+\usepackage{nicematrix}
 % for relations
 \usepackage{cancel}
 \usepackage{ mathrsfs }
@@ -1024,7 +1026,7 @@ Let $G$ be a graph; let $v$ and $w$ be vertices of $G$.
     \item \textbf{closed walk}: walk that starts and ends at the same vertex
     \item \textbf{circuit/cycle}: an undirected graph $G(V, E)$ where 
         \begin{itemize}
-            \item $V = \{_1, x_2, \dots, x_n\}$
+            \item $V = \{x_1, x_2, \dots, x_n\}$
             \item $E = \{\{x_1, x_2\}, \{x_2, x_3\}, \dots, \{x_{n-1}, x_n\}, \{x_n, x_1\}\}$
             \item $n \in \mathbb{Z}_{\geq 3}$
             \item aka a closed walk that does not contain a repeated edge
@@ -1054,7 +1056,9 @@ Let $G$ be a graph; let $v$ and $w$ be vertices of $G$.
     \item \textbf{Euler circuit}: a circuit that contains every vertex and traverses every edge of $G$ exactly once
     \item \textbf{Eulerian graph}: graph that contains an Euler circuit
     \begin{center}
-        \textbf{T10.2.4} 
+        \textbf{T10.2.3} 
+        \\* Euler circuit $\Iff$ connected and every vertex has positive even degree
+        \\ \textbf{T10.2.4} 
         \\* Eulerian graph $\Iff$ every vertex has positive even degree
     \end{center}
     \item \textbf{Euler trail} (from $v$ to $w$): a sequence of adjacent edges and vertices that starts at $v$, ends at $w$, 
@@ -1066,15 +1070,235 @@ Let $G$ be a graph; let $v$ and $w$ be vertices of $G$.
     \end{center}
 \end{itemize}
 
-% \subsection{Hamiltonian circuit}
-% \begin{itemize}
-%     \item \textbf{Hamiltonian circuit} (for $G$): a \textit{simple circuit} that includes every vertex of $G$.
-%     \begin{itemize}
-%         \item does not need to include all the edges of $G$ (unlike Euler circuit)
-%     \end{itemize}
-%     \item \textbf{Hamilton(ian) graph}: contains a Hamiltonian circuit
-% \end{itemize}
+\subsection{Hamiltonian circuit}
+\begin{itemize}
+    \item \textbf{Hamiltonian circuit} (for $G$): a \textit{simple circuit} that includes every vertex of $G$.
+    \begin{itemize}
+        \item does not need to include all the edges of $G$ (unlike Euler circuit)
+    \end{itemize}
+    \item \textbf{Hamilton(ian) graph}: contains a Hamiltonian circuit
+    \item If $G$ is a Hamiltonian circuit, then $G$ has subgraph $H$ where:
+    \begin{enumerate}
+        \item $H$ contains every vertex of G
+        \item $H$ is connected
+        \item $H$ has the same number of edges as vertices
+        \item every vertex of $H$ has degree 2
+    \end{enumerate}
+\end{itemize}
 
+\subsection{matrix representations of graphs}
+\begin{itemize}
+    \item \textbf{equal matrices} $\Iff$ A and B are the same size and $a_{ij} = b_{ij}$ for all $i = 1, 2, \dots, m$ and $i = 1, 2, \dots, n$
+    \item \textbf{square matrix}: equal number of rows and columns
+    \item \textbf{main diagonal}: all entries $a_{11}, a_{22}, \dots, a_{nn}$
+    \item \textbf{symmetric matrix} $\Iff \forall i, j \in \mathbb{Z}^+_{\leq n} (a_{ij} = a_{ji})$
+\end{itemize}
+
+\subsubsection{adjacency matrix}
+\begin{center}
+The adjacency matrix of a \textbf{directed graph} $G$ 
+    \\* is the $n \times n$ matrix $A = (a_{ij})$ over the set of non-negative integers such that
+    \\* $a_{ij}$ = number of \textbf{arrows} from $v_i$ to $v_j$ $\forall i, j = 1, 2, \dots, n$
+    \\ \ 
+
+\setlength{\columnseprule}{0pt}
+\begin{multicols}{2}
+    \begin{tikzpicture}[scale=0.9, every node/.style={transform shape}]
+        \node[label=right:{$v_4$}, fill, circle, minimum size=1mm, inner sep=0] (v4) at (0,0) {};
+        \node[label=left:{$v_1$}, fill, circle, minimum size=1mm, inner sep=0] (v1) at (0,1) {};
+        \node[label=right:{$v_2$}, fill, circle, minimum size=1mm, inner sep=0] (v2) at (1,1) {};
+        \node[label=right:{$v_3$}, fill, circle, minimum size=1mm, inner sep=0] (v3) at (1,0) {};
+        \draw (v4) -- (v1) -- (v2) -- (v4) -- (v2);
+        \draw (v3) to[out=30, in=300] node[right] {} (v2);
+        \draw (v2) to[out=250, in=150] node[left] {} (v3);
+        \draw (v4) to[in=210,out=150, loop] node[below] {} (v4);
+    \end{tikzpicture}
+
+    $A =$ \tiny $\begin{bNiceArray}{CCCC}%
+        [first-col,
+         first-row,
+         code-for-first-col = \color{black},
+         code-for-first-row = \color{black}]
+          & v_1 & v_2 & v_3 & v_4 \\ 
+         v_1 & 0 & 1 & 0 & 1 \\
+         v_2 & 1 & 0 & 2 & 1 \\
+         v_3 & 0 & 2 & 0 & 0 \\
+         v_4 & 1 & 1 & 0 & 1
+       \end{bNiceArray}$
+\end{multicols}    
+
+    \ 
+    \\ The adjacency matrix of an \textbf{undirected graph} $G$ 
+    \\* is the $n \times n$ matrix $A = (a_{ij})$ over the set of non-negative integers such that
+    \\* $a_{ij}$ = number of \textbf{edges} from $v_i$ to $v_j$ $\forall i, j = 1, 2, \dots, n$
+    
+    \begin{multicols}{2}
+        \begin{tikzpicture}[scale=0.7, every node/.style={transform shape}]
+            \node[fill, circle, minimum size=1mm, inner sep=0] (O) at (0,0) {};
+            \node[label=above:{$v_1$}, fill, circle, minimum size=1mm, inner sep=0] (v1) at (1.2,1) {};
+            \node[label=left:{$v_2$}, fill, circle, minimum size=1mm, inner sep=0] (v2) at (0,0) {};
+            \node[label=below:{$v_3$}, fill, circle, minimum size=1mm, inner sep=0] (v3) at (1.7,-0.2) {};
+            \draw[->] (v1) -- node[left] {$e_1$} (v2);
+            \draw[->] (v2) -- node[below] {$e_2$} (v3);
+            \draw[->] (v1) to[out=20, in=10] node[right] {$e_3$} (v3);
+            \draw[->] (v3) to[out=-200, in=-90] node[left] {$e_4$} (v1);
+            \draw[->] (v1) to[in=-150,out=-230, loop] node[left] {$e_5$} (v1);
+            \draw[->] (v2) to[in=-50,out=-130, loop] node[below] {$e_6$} (v2);
+        \end{tikzpicture}
+
+        \ 
+        \\ $A =$ \tiny $\begin{bNiceArray}{CCC}%
+            [first-col,
+             first-row,
+             code-for-first-col = \color{black},
+             code-for-first-row = \color{black}]
+              & v_1 & v_2 & v_3 \\ 
+             v_1 & 1 & 0 & 0 \\
+             v_2 & 1 & 1 & 2 \\
+             v_3 & 1 & 0 & 0 \\
+           \end{bNiceArray}$
+    \end{multicols}
+\end{center}
+
+\subsubsection{identity matrix}
+\begin{center}
+    The $n \times n$ identity matrix,
+    \\* $I_n = (\delta_{ij}) = \begin{cases}
+        1, \text{if } i = j
+        \\ 0, \text{if } i \neq j
+    \end{cases}$ for all $i, j = 1, 2, \dots, n$
+\end{center}
+
+\subsection{matrix multiplication}
+\subsubsection{scalar product}
+\begin{center}
+$
+    [a_{i1} \; a_{i2} \; \dots \; a_{in}]
+    \begin{bmatrix} b_{1j} \\ b_{2j} \\ \vdots \\b_{nj}\end{bmatrix}
+    = a_{i1}b_{1j} + a_{i2}b_{2j} + \dots + a_{in}b_{nj}
+$
+\end{center}
+\subsubsection{matrix product}
+\begin{center}
+    Let $A = (a_{ij})$ be an $m \times k$ matrix and $B = (b_{ij})$ be a $k \times n$ matrix with real entries.
+    \\* $AB = (c_{ij}) = \sum^k_{r=1} a_{ir}b_{rj}$
+    \\ \ 
+    \\ $\times$ commutative \quad $\checkmark$ associative
+\end{center}
+
+\subsubsection{nth power of a matrix}
+\begin{center}
+    For any $n \times n$ matrix \textbf{A}, the powers of A are defined as follows:
+    \\* $A^0 = I$ where $I$ is the $n \times n$ identity matrix
+    \\* $A^n = A A^{n-1} \quad \forall n \in \mathbb{Z}_{\geq 1}$
+\end{center}
+
+\subsubsection{counting walks of length N}
+\begin{center}
+    number of walks of length $n$ from $v_i$ to $v_j$ 
+    \\* $=$ the $ij$-th entry of $A^n$
+\end{center}
+
+\subsection{isomorphism}
+\begin{itemize}
+    \item graph isomorphism ($\cong$) is an equivalence relation.
+\end{itemize}
+Let $G = (V_G, E_G)$ and $G' = (V_{G'}, E_{G'})$ be two graphs.
+\begin{center}
+    $G \cong G' \Iff $ there exists a permutation $\pi: V_G \to V_{G'}$
+    \\* such that $\{u, v\} \in E_G \Iff \{\pi (u), \pi (v) \} \in E_G$
+\end{center}
+
+\subsection{planar graph}
+\begin{itemize}
+    \item a graph that can be drawn on a two-dimensional plane without edges crossing.
+    \begin{itemize}
+        \item divides a plane into \textit{regions/faces} (includes 'outside' the graph)
+    \end{itemize}
+    \item \textbf{Euler's formula}: For a connected planar simple graph $G = (V, E)$ with $e = \abs{E}$ and $v = \abs{V}$ and $f$ faces,
+    \\ \centerline{$f = e - v + 2$}
+\end{itemize}
+
+\subsection{trees}
+\begin{itemize}
+    \item \textbf{tree} $\Iff$ graph that is circuit-free and connected
+\begin{center}
+    \textbf{L10.5.4}
+    \\* If $G$ is a connected graph with $n$ vertices and $n-1$ edges, then $G$ is a tree.
+\end{center}
+    \item \textbf{trivial tree}: graph that comprises a single vertex
+    \item \textbf{forest} $\Iff$ graph is circuit-free and connected
+    \begin{itemize}
+        \item a group of trees
+    \end{itemize}
+    \item \textbf{terminal vertex}: a vertex of degree 1
+    \item \textbf{internal vertex}: a vertex of degree greater than 1
+\end{itemize}
+
+\begin{center}
+    \begin{multicols}{3}
+        graph
+        \\*
+        \begin{tikzpicture}[scale=0.7, every node/.style={transform shape}]
+            \node[fill, circle, minimum size=1mm, inner sep=0] (v1) at (0,1) {};
+            \node[fill, circle, minimum size=1mm, inner sep=0] (v2) at (0.3,1.5) {};
+            \node[fill, circle, minimum size=1mm, inner sep=0] (v3) at (0.4,0.7) {};
+            \node[fill, circle, minimum size=1mm, inner sep=0] (v4) at (0.6,1.2) {};
+            \node[fill, circle, minimum size=1mm, inner sep=0] (v5) at (0.6,0.2) {};
+            \node[fill, circle, minimum size=1mm, inner sep=0] (v6) at (1,0.6) {};
+            \draw (v3) -- (v1) -- (v2) -- (v4) -- (v3) -- (v5) -- (v6);
+        \end{tikzpicture}
+        
+        tree
+        \\*
+        \begin{tikzpicture}[scale=0.7, every node/.style={transform shape}]
+            \node[fill, circle, minimum size=1mm, inner sep=0] (v1) at (0,1) {};
+            \node[fill, circle, minimum size=1mm, inner sep=0] (v2) at (0.3,1.5) {};
+            \node[fill, circle, minimum size=1mm, inner sep=0] (v3) at (0.4,0.7) {};
+            \node[fill, circle, minimum size=1mm, inner sep=0] (v4) at (0.6,1.2) {};
+            \node[fill, circle, minimum size=1mm, inner sep=0] (v5) at (0.6,0.2) {};
+            \node[fill, circle, minimum size=1mm, inner sep=0] (v6) at (1,0.6) {};
+            \draw (v5) -- (v3) -- (v1) -- (v2) -- (v4) -- (v6);
+        \end{tikzpicture}
+        
+        forest
+        \\*
+        \begin{tikzpicture}[scale=0.7, every node/.style={transform shape}]
+            \node[fill, circle, minimum size=1mm, inner sep=0] (v1) at (0,1) {};
+            \node[fill, circle, minimum size=1mm, inner sep=0] (v2) at (0.3,1.5) {};
+            \node[fill, circle, minimum size=1mm, inner sep=0] (v3) at (0.4,0.7) {};
+            \node[fill, circle, minimum size=1mm, inner sep=0] (v4) at (0.6,1.2) {};
+            \node[fill, circle, minimum size=1mm, inner sep=0] (v5) at (0.6,0.2) {};
+            \node[fill, circle, minimum size=1mm, inner sep=0] (v6) at (1,0.6) {};
+            \draw (v1) -- (v2);
+            \draw (v5) -- (v3) -- (v4) -- (v6);
+        \end{tikzpicture}
+    \end{multicols}
+\end{center}
+
+\subsection{rooted trees}
+\begin{itemize}
+    \item \textbf{rooted tree}: a tree in which there is one vertex that is distinguished from the others and is called the root.
+    \item \textbf{level} (of a vertex): the number of edges along the unique path between it and the root
+    \item \textbf{height} (of a rooted tree): the maximum level of any vertex of the tree
+    \item children, parent, siblings, ancestor, decendant
+\end{itemize}
+
+\subsubsection{binary tree}
+\begin{itemize}
+    \item \textbf{binary tree}: a rooted tree in which every parent has at most 2 children
+    \begin{itemize}
+        \item at most one left child and at most one right child
+    \end{itemize}
+    \item \textbf{full binary tree}: a binary tree in which every parent has exactly 2 children
+    \item (left/right) \textbf{subtree}: Given any parent $v$ in a binary tree $T$, 
+        the binary tree whose root is the (left/right) child of $v$, whose vertices consist of the left child of $v$ and all its descendants, 
+        and whose edges consist of all those edges of $T$ that connect the vertices of the left subtree.
+\end{itemize}
+\begin{center}
+    \textbf{T10.6.1}: Full Binary Tree Theorem
+    \\* If $T$ is a full binary tree wiht $k$ internal vertices, then $T$ has a total of $2k + 1$ vertices and has $k+1$ terminal vertices.
+\end{center}
 
 \end{multicols}
 
@@ -1236,6 +1460,12 @@ Let $G$ be a graph; let $v$ and $w$ be vertices of $G$.
             \item L10.2.1b - If vertices $v$ and $w$ are part of a circuit in $G$ and one edge is removed from the circuit, then there still exists a trail from $v$ to $w$ in $G$.
             \item L10.2.1c - If $G$ is connected and $G$ contains a circuit, then an edge of the circuit can be removed without disconnecting $G$.
         \end{itemize}
+        \item L10.5.1 - Any non-trivial tree has at least one vertex of degree 1.
+        \item T10.5.2 - Any tree with $n$ vertices $(n>0)$ has $n-1$ edges.
+        \item L10.5.3 - If $G$ is any connected graph, $C$ is any circuit in $G$, and one of the edges of $C$ is removed from $G$, then the graph that remains is still connected.
+        \item L10.5.4 - If $G$ is a connected graph with $n$ vertices and $n-1$ edges, then $G$ is a tree.
+        \item T10.6.1 - If $T$ is a full binary tree wiht $k$ internal vertices, then $T$ has a total of $2k + 1$ vertices and has $k+1$ terminal vertices.
+        \item T10.6.2 - For non-negative integers $h$, if $T$ is any binary tree with height $h$ and $t$ terminal vertices, then $t \leq 2^h$.
     \end{itemize}
 
     \subsection{abbreviations}
