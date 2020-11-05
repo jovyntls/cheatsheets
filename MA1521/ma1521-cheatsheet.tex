@@ -14,6 +14,7 @@
 \usepackage{vwcol}
 \usepackage{tikz}
 \usepackage{wrapfig}
+\usepackage{makecell}
 \setlist{nosep}
 \graphicspath{ {./images/} }
 
@@ -212,14 +213,6 @@ about x-axis:
     \item (with hollow area) $V = \pi\int^b_a [f(x)]^2 - [g(x)]^2dx$
     \item (about line $y=k$) $V = \pi\int^b_a [f(x) - k]^2dx$
 \end{itemize}
-
-% \section{Logistic Models}
-% $N = \frac{N_{t=\infty}}{1 + (\frac{N_{t=\infty}}{N_{t=0}} - 1)e^{-Bt}}$
-% \begin{itemize}
-%     \item $N$ - number
-%     \item $B$ - birth rate
-%     \item $t$ - time
-% \end{itemize}
 
 \section{04. SERIES}
 \subsection{Geometric Series}
@@ -627,6 +620,61 @@ $\iint_R f(x, y) dA$ is the volume under hte surface $z = f(x, y)$ and above the
     \\* that projects onto $R$,
     \\* $\displaystyle S = \iint_R \sqrt{(\frac{\partial z}{\partial x})^2 + (\frac{\partial z}{\partial y})^2 + 1} dA$
 \end{center}
+
+\section{08. ORDINARY DIFFERENTIAL EQUATIONS}
+\begin{itemize}
+    \item \textbf{general solution}: solution containing arbitrary constants
+    \item \textbf{particular solution}: gives specific values to arbitrary constants
+    \item the general solution of the $n$-th order DE will have $n$ arbitrary constants
+\end{itemize}
+
+\subsection{Separable Equations}
+\begin{center}
+    A first-order DE is \textbf{separable} if it can be written in the form 
+    \\* $M(x) - N(y)y' = 0$ \quad or \quad $M(x)dx = N(y)dy$
+\end{center}
+
+\subsection{Reductions to Separable Form}
+
+\begin{center}
+    \def\arraystretch{1.5}
+    {\setlength{\tabcolsep}{1em}
+    \begin{tabular}{|>{\color{black}}c | >{\color{black}}c|}
+        \hline
+        form & change of variable
+        \\ \hline
+            $y' = g(\frac{y}{x})$ & set $v = \frac{y}{x}$ 
+        \\ \hline
+            \makecell{
+                $y' = f(ax + by + c)$
+                \\ $\Then y' = \frac{ax + by + c}{\alpha x + \beta y + \gamma}$
+            } & set $v = ax + by$
+        \\ \hline
+            $y' + P(x)y = Q(x)$ & \makecell{
+                $R = e^{\int P dx}$ 
+                \\ $\Then y = \frac{1}{R} \int RQdx$ 
+                }
+        \\ \hline
+        $y' + P(x)y = Q(x)y^n$ & \makecell{
+            set $z = y^{1-n}$
+            \\ $\Then y' = \frac{y^n}{1-n} z'$
+            \\ $R = e^{\int P dx}$ 
+            \\ $\Then y = \frac{1}{R} \int RQdx$ 
+        }
+        \\ \hline
+
+    \end{tabular}
+    }
+\end{center}
+
+\subsection{Logistic Models}
+$N = \frac{N_{t=\infty}}{1 + (\frac{N_{t=\infty}}{N_{t=0}} - 1)e^{-Bt}}$
+\begin{itemize}
+    \item $N$ - number
+    \item $B$ - birth rate
+    \item $t$ - time
+\end{itemize}
+
 
 \end{multicols}
 \end{document}
