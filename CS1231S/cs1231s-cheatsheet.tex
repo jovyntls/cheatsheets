@@ -13,11 +13,14 @@
 \usepackage[table]{xcolor}
 \usepackage{vwcol}
 \usepackage{tikz}
+\usetikzlibrary{arrows.meta}
+\usetikzlibrary{calc}
 \usepackage{mathtools}
 \usepackage{nicematrix}
 % for relations
 \usepackage{cancel}
 \usepackage{ mathrsfs }
+\graphicspath{ {./images/} }
 \setlist{nosep}
 
 \pdfinfo{
@@ -99,10 +102,13 @@
 \setlength{\columnsep}{2pt}
 
 \begin{center}
-    %
-     \Large{\textbf{CS1231S}} \\
-     \fbox{\small{AY20/21 Sem 1}}
-    %  
+    \fbox{%
+        \parbox{0.8\linewidth}{\centering \textcolor{black}{
+            {\Large\textbf{CS1231S}}
+            \\ \normalsize{AY20/21 sem 1}}
+            \\ {\footnotesize \textcolor{myblue}{by jovyntls}}
+        }%
+    }
 \end{center}
 
 \section{01. PROOFS}
@@ -1300,6 +1306,122 @@ Let $G = (V_G, E_G)$ and $G' = (V_{G'}, E_{G'})$ be two graphs.
     \\* If $T$ is a full binary tree wiht $k$ internal vertices, then $T$ has a total of $2k + 1$ vertices and has $k+1$ terminal vertices.
 \end{center}
 
+\subsubsection{binary tree traversal}
+\noindent
+\begin{minipage}[c]{0.3\linewidth}
+    \begin{center}
+        \begin{tikzpicture}[scale=0.5, every node/.style={transform shape}]
+            \node[draw, circle, minimum size=5mm, inner sep=0pt, outer sep=0pt] (F) at (0,0) {F};
+            \node[draw, circle, minimum size=5mm, inner sep=0pt, outer sep=0pt] (B) at (-1,-0.5) {B};
+            \node[draw, circle, minimum size=5mm, inner sep=0pt, outer sep=0pt] (G) at (1,-0.5) {G};
+            \node[draw, circle, minimum size=5mm, inner sep=0pt, outer sep=0pt] (A) at (-1.5,-1.2) {A};
+            \node[draw, circle, minimum size=5mm, inner sep=0pt, outer sep=0pt] (D) at (-0.5,-1.2) {D};
+            \node[draw, circle, minimum size=5mm, inner sep=0pt, outer sep=0pt] (I) at (1.5,-1.2) {I};
+            \node[draw, circle, minimum size=5mm, inner sep=0pt, outer sep=0pt] (C) at (-1,-1.9) {C};
+            \node[draw, circle, minimum size=5mm, inner sep=0pt, outer sep=0pt] (E) at (0,-1.9) {E};
+            \node[draw, circle, minimum size=5mm, inner sep=0pt, outer sep=0pt] (H) at (1,-1.9) {H};
+            \draw[-{Latex[angle=60:3pt]}] (F) -- (B);
+            \draw[-{Latex[angle=60:3pt]}] (F) -- (G);
+            \draw[-{Latex[angle=60:3pt]}] (B) -- (A);
+            \draw[-{Latex[angle=60:3pt]}] (B) -- (D);
+            \draw[-{Latex[angle=60:3pt]}] (D) -- (C);
+            \draw[-{Latex[angle=60:3pt]}] (D) -- (E);
+            \draw[-{Latex[angle=60:3pt]}] (G) -- (I);
+            \draw[-{Latex[angle=60:3pt]}] (I) -- (H);
+        \end{tikzpicture}
+        \\ {\tiny\textit{F-B-G-A-D-I-C-E-H}}
+    \end{center}
+\end{minipage} % no space if you would like to put them side by side
+\begin{minipage}[c]{0.65\linewidth}\color{black}
+    \textbf{Breadth-First Search (BFS)}
+    \begin{itemize}
+        \item starts at the root 
+        \item visits its adjacent vertices
+        \item visits the next level
+    \end{itemize}
+\end{minipage}
+
+\ 
+\\ \textbf{Depth-First Search (DFS)}
+\begin{itemize}
+    \item \textbf{pre-order}
+    \begin{itemize}
+        \item process the root (or current vertex)
+        \item traverse the left subtree recursively
+        \item traverse the right subtree recursively
+    \end{itemize}
+    \item \textbf{in-order}
+    \begin{itemize}
+        \item traverse the left subtree recursively
+        \item process the root (or current vertex)
+        \item traverse the right subtree recursively
+    \end{itemize}
+    \item \textbf{post-order}
+    \begin{itemize}
+        \item traverse the left subtree recursively
+        \item traverse the right subtree recursively
+        \item process the root (or current vertex)
+    \end{itemize}
+\end{itemize}
+\begin{center}
+    \begin{multicols}{3}
+        \textit{pre-order DFS}
+        \includegraphics[width=0.9\linewidth]{cs1231s-ch11-preorder}
+        \\* {\tiny\textbf{F-B-A-D-C-E-G-I-H}}
+        
+        \textit{in-order DFS}
+        \includegraphics[width=0.9\linewidth]{cs1231s-ch11-inorder}
+        \\* {\tiny\textbf{A-B-C-D-E-F-G-H-I}}
+        
+        \textit{post-order DFS}
+        \includegraphics[width=0.9\linewidth]{cs1231s-ch11-postorder}
+        \\* {\tiny\textbf{A-C-E-D-B-H-I-G-F}}
+    \end{multicols}
+\end{center}
+
+\subsection{spanning trees}
+\begin{itemize}
+    \item \textbf{spanning tree} (for a graph $G$): a subgraph of $G$ that contains every vertex of $G$ and is a tree.
+    \begin{itemize}
+        \item $w(e)$ - weight of edge $e$
+        \item $w(G)$ - total weight of $G$
+    \end{itemize}
+    \item \textbf{weighted graph}: each edge has an associated positive real number weight
+    \begin{itemize}
+        \item \textbf{total weight}: sum of the weights of all edges
+    \end{itemize}
+    \item \textbf{minimum spanning tree}: least possible total weight compared to all other spanning trees
+\end{itemize}
+
+\subsubsection{Kruskal's algorithm}
+For a connected weighted graph $G$ with $n$ vertices
+\begin{enumerate}
+    \item initialise $T$ to have all the vertices of $G$ and no edges.
+    \item let $E$ be the set of all edges in $G$; let $m = 0$
+    \item while $(m < n - 1)$
+    \begin{enumerate}
+        \item find and remove the edge $e$ in $E$ of least weight
+        \item if adding $e$ to the edge set of $T$ does not produce a circuit:
+        \begin{enumerate}
+            \item add $e$ to the edge set of $T$
+            \item set $m = m + 1$
+        \end{enumerate}
+    \end{enumerate}
+\end{enumerate}
+
+\subsubsection{Prim's algorithm}
+\begin{enumerate}
+    \item pick any vertex $v$ of $G$ and let $T$ be the graph with this vertex only
+    \item let $V$ be the set of all vertices of $G$ except $v$
+    \item for ($i = 0$ to $n-1$)
+    \begin{enumerate}
+        \item find the edge $e$ in $G$ with the least weight of all the edges connected to $T$.
+            let $w$ be the endpoint of $e$.
+        \item add $e$ and $w$ to the edge and vertex sets of $T$
+        \item delete $w$ from $v$
+    \end{enumerate}
+\end{enumerate}
+
 \end{multicols}
 
 \pagebreak
@@ -1466,6 +1588,12 @@ Let $G = (V_G, E_G)$ and $G' = (V_{G'}, E_{G'})$ be two graphs.
         \item L10.5.4 - If $G$ is a connected graph with $n$ vertices and $n-1$ edges, then $G$ is a tree.
         \item T10.6.1 - If $T$ is a full binary tree wiht $k$ internal vertices, then $T$ has a total of $2k + 1$ vertices and has $k+1$ terminal vertices.
         \item T10.6.2 - For non-negative integers $h$, if $T$ is any binary tree with height $h$ and $t$ terminal vertices, then $t \leq 2^h$.
+        \item P10.7.1 - 
+        \begin{enumerate}
+            \item Every connected graph has a spanning tree.
+            \item Any two spanning trees for a graph have the same number of edges
+        \end{enumerate} 
+        \item 
     \end{itemize}
 
     \subsection{abbreviations}
