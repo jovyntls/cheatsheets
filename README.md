@@ -1,6 +1,6 @@
 # NUS CS Cheatsheets
 
-A compilation of cheatsheets I made for NUS Computer Science modules (may be applicable to other majors as well)
+A compilation of cheatsheets I made for NUS Computing mods
 
 If you find any typos please let me know! Thank you :)
 
@@ -8,8 +8,8 @@ If you find any typos please let me know! Thank you :)
 
 ### Current progress:
 
-- **CS1231S** [chapters 1 to 10]
-- **MA1521** [chapters 1 to 6]
+- [x] **CS1231S** [all chapters]
+- [x] **MA1521** [all chapters]
 
 To do:
 

@@ -99,10 +99,13 @@
 \setlength{\columnsep}{2pt}
 
 \begin{center}
-    %
-     \Large{\textbf{MA1521 Cheatsheet}} \\
-     \fbox{\small{AY20/21 Sem 1 | Chapter 1-6}}
-    %  
+    \fbox{%
+        \parbox{0.8\linewidth}{\centering \textcolor{black}{
+            {\Large\textbf{MA1521}}
+            \\ \normalsize{AY20/21 Sem 1}}
+            \\ {\footnotesize by jovyntls}
+        }%
+    }
 \end{center}
 
 \section{01. FUNCTIONS \& LIMITS}
@@ -114,22 +117,22 @@
     \item $\lim\limits_{x\to{a}}kf(x) = kL${ for any real number }$k.$
 \end{enumerate}
 
-\subsection{Estimation}
-first order estimate: 
-$y' \approx y + \Delta x \times \frac{dy}{dx} \Bigr|_{x=2}$
+% \subsection{Estimation}
+% first order estimate: 
+% $y' \approx y + \Delta x \times \frac{dy}{dx} \Bigr|_{x=2}$
 
-second order estimate: 
-$y' \approx \text{1st estimate } + (\frac{(\triangle x)^2}{2}\times\frac{d^2y}{dx^2}\Bigr|_{x=2})$
+% second order estimate: 
+% $y' \approx \text{1st estimate } + (\frac{(\triangle x)^2}{2}\times\frac{d^2y}{dx^2}\Bigr|_{x=2})$
 
-\subsection{Stats}
-pop. variance:
-$\sigma ^2=\frac{\sum x^2-\frac{(\sum x)^2}{n}}{n}$
+% \subsection{Stats}
+% pop. variance:
+% $\sigma ^2=\frac{\sum x^2-\frac{(\sum x)^2}{n}}{n}$
 
-pop. covariance: 
-$\text{cov}(x, y) =\frac{\sum xy^2 - \frac{\sum x \sum y}{n}}{n}$
+% pop. covariance: 
+% $\text{cov}(x, y) =\frac{\sum xy^2 - \frac{\sum x \sum y}{n}}{n}$
 
-pop. correlation: 
-$\frac{\text{cov}(x, y)}{\sigma_x \times \sigma_y}$
+% pop. correlation: 
+% $\frac{\text{cov}(x, y)}{\sigma_x \times \sigma_y}$
 
 
 \section{02. DIFFERENTIATION}
@@ -147,20 +150,23 @@ parametric differentiaton: $\frac{d^2y}{dx^2} = \frac{d}{dx}(\frac{dy}{dx}) = \f
         \hline
         $f(x)$ & $f'(x)$
         \\ \hline
+        \rule{0pt}{2.3ex}  % top spacing
             $\tan x$ & $\sec ^2 x$ \\
             $\csc x$ & $-\csc x \cot x$ \\
             $\sec x$ & $\sec x \tan x$ \\
             $\cot x$ & $- \csc ^2 x$
         \\ \hline
+        \rule{0pt}{2.3ex}  % top spacing
             $a^{f(x)}$ & $\ln a \cdot f'(x)a^{f(x)}$ \\
             $\log_af(x)$ & $\log_a e \cdot \frac{f'(x)}{f(x)}$
-        \\ \hline
-            $\sin^{-1} f(x)$ & $\frac{f'(x)}{\sqrt{1-[f(x)]^2}}, \ \ _{\vert f(x) \vert < 1}$ \\
-            $\cos^{-1} f(x)$ & $-\frac{f'(x)}{\sqrt{1-[f(x)]^2}}, \ \ _{\vert f(x) \vert < 1}$ \\
-            $\tan^{-1} f(x)$ & $\frac{f'(x)}{1 + [f(x)]^2}$ \\
-            $\cot^{-1} f(x)$ & $-\frac{f'(x)}{1 + [f(x)]^2}$ \\
-            $\sec^{-1} f(x)$ & $\frac{f'(x)}{\vert f(x) \vert \sqrt{[f(x)]^2-1}}$ \\
-            $\csc^{-1} f(x)$ & $-\frac{f'(x)}{\vert f(x) \vert \sqrt{[f(x)]^2-1}}$ \\
+        \\[1ex] \hline
+        \rule{0pt}{3ex}  % top spacing
+            $\sin^{-1} f(x)$ & $\frac{f'(x)}{\sqrt{1-[f(x)]^2}}, \ \ _{\vert f(x) \vert < 1}$ \\[1.5ex]
+            $\cos^{-1} f(x)$ & $-\frac{f'(x)}{\sqrt{1-[f(x)]^2}}, \ \ _{\vert f(x) \vert < 1}$ \\[1.5ex]
+            $\tan^{-1} f(x)$ & $\frac{f'(x)}{1 + [f(x)]^2}$ \\[1.5ex]
+            $\cot^{-1} f(x)$ & $-\frac{f'(x)}{1 + [f(x)]^2}$ \\[1.5ex]
+            $\sec^{-1} f(x)$ & $\frac{f'(x)}{\vert f(x) \vert \sqrt{[f(x)]^2-1}}$ \\[1.5ex]
+            $\csc^{-1} f(x)$ & $-\frac{f'(x)}{\vert f(x) \vert \sqrt{[f(x)]^2-1}}$ \\[2ex]
         \hline
     \end{tabular}
 \end{center}
@@ -179,6 +185,7 @@ parametric differentiaton: $\frac{d^2y}{dx^2} = \frac{d}{dx}(\frac{dy}{dx}) = \f
 \section{03. INTEGRATION}
 \subsection{Integration Techniques}
 \begin{center}
+    \def\arraystretch{1.2}
     \begin{tabular}{|>{\color{black}}c | >{\color{black}}c|}
         \hline
         $f(x)$ & $\int f(x)$
@@ -187,13 +194,15 @@ parametric differentiaton: $\frac{d^2y}{dx^2} = \frac{d}{dx}(\frac{dy}{dx}) = \f
             $\cot x$ & $\ln (\sin x),$ \tiny{$0 < x < \pi $} \\
             $\csc x$ & $-\ln (\csc x + \cot x),$ \tiny{$0 < x < \pi $} \\
             $\sec x$ & $\ln (\sec x + \tan x),$ \tiny{$\vert x \vert < \frac{\pi}{2} $}
-        \\ \hline
+        \\[0.5ex] \hline
+        \rule{0pt}{2.3ex}  % top spacing
             $\frac{1}{x^2 + a^2}$ & $\frac{1}{a} \tan^{-1}(\frac{x}{a})$ \\
             $\frac{1}{\sqrt{a^2 - x^2}}$ & $\sin^{-1}(\frac{x}{a})$, \tiny{$\vert x \vert < a$} \\
-            $\frac{1}{x^2 - a^2}$ & $\frac{1}{2a} \ln(\frac{x - a}{x + a})$, \tiny{$x > a$} \\
+            $\frac{1}{x^2 - a^2}$ & $\frac{1}{2a} \ln(\frac{x - a}{x + a})$, \tiny{$x > a$} \\[1ex]
             $\frac{1}{a^2 - x^2}$ & $\frac{1}{2a} \ln(\frac{x + a}{x - a})$, \tiny{$x < a$} 
-        \\ \hline
-            $a^{x}$ & $\frac{a^x}{\ln a}$ \\
+        \\[0.5ex] \hline 
+        \rule{0pt}{2.6ex}  % top spacing
+            $a^{x}$ & $\frac{a^x}{\ln a}$ \\[0.5ex]
         \hline
     \end{tabular}
 \end{center}
@@ -502,6 +511,7 @@ $f(x, y)$ has a \textbf{local maximum} at $(a, b)$ if $f(x, y) \leq f(a, b)$ for
     Let $f_x(a, b) = 0$ and $f_y(a, b) = 0$.
     \\* $D = f_{xx}(a, b)f_{yy}(a, b) - f_{xy}(a, b)^2$
 
+    \def\arraystretch{1.2}
     \begin{tabular}{| c | c | c |}
         \hline $D$ & $f_{xx}(a,b)$ & \textbf{local}
         \\\hline + & + & \text{min}
@@ -644,24 +654,27 @@ $\iint_R f(x, y) dA$ is the volume under hte surface $z = f(x, y)$ and above the
         form & change of variable
         \\ \hline
             $y' = g(\frac{y}{x})$ & set $v = \frac{y}{x}$ 
-        \\ \hline
+        \\ \hline 
+        \rule{0pt}{4ex}
             \makecell{
                 $y' = f(ax + by + c)$
                 \\ $\Then y' = \frac{ax + by + c}{\alpha x + \beta y + \gamma}$
             } & set $v = ax + by$
-        \\ \hline
+        \\[2ex] \hline
+        \rule{0pt}{3.5ex}
             $y' + P(x)y = Q(x)$ & \makecell{
                 $R = e^{\int P dx}$ 
                 \\ $\Then y = \frac{1}{R} \int RQdx$ 
                 }
-        \\ \hline
+        \\[1.5ex] \hline
+        \rule{0pt}{6.5ex}
         $y' + P(x)y = Q(x)y^n$ & \makecell{
             set $z = y^{1-n}$
             \\ $\Then y' = \frac{y^n}{1-n} z'$
             \\ $R = e^{\int P dx}$ 
             \\ $\Then y = \frac{1}{R} \int RQdx$ 
         }
-        \\ \hline
+        \\[4.5ex] \hline
 
     \end{tabular}
     }
