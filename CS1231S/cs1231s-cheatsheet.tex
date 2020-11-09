@@ -1105,39 +1105,9 @@ Let $G$ be a graph; let $v$ and $w$ be vertices of $G$.
 The adjacency matrix of a \textbf{directed graph} $G$ 
     \\* is the $n \times n$ matrix $A = (a_{ij})$ over the set of non-negative integers such that
     \\* $a_{ij}$ = number of \textbf{arrows} from $v_i$ to $v_j$ $\forall i, j = 1, 2, \dots, n$
-    \\ \ 
 
-\setlength{\columnseprule}{0pt}
-\begin{multicols}{2}
-    \begin{tikzpicture}[scale=0.9, every node/.style={transform shape}]
-        \node[label=right:{$v_4$}, fill, circle, minimum size=1mm, inner sep=0] (v4) at (0,0) {};
-        \node[label=left:{$v_1$}, fill, circle, minimum size=1mm, inner sep=0] (v1) at (0,1) {};
-        \node[label=right:{$v_2$}, fill, circle, minimum size=1mm, inner sep=0] (v2) at (1,1) {};
-        \node[label=right:{$v_3$}, fill, circle, minimum size=1mm, inner sep=0] (v3) at (1,0) {};
-        \draw (v4) -- (v1) -- (v2) -- (v4) -- (v2);
-        \draw (v3) to[out=30, in=300] node[right] {} (v2);
-        \draw (v2) to[out=250, in=150] node[left] {} (v3);
-        \draw (v4) to[in=210,out=150, loop] node[below] {} (v4);
-    \end{tikzpicture}
 
-    $A =$ \tiny $\begin{bNiceArray}{CCCC}%
-        [first-col,
-         first-row,
-         code-for-first-col = \color{black},
-         code-for-first-row = \color{black}]
-          & v_1 & v_2 & v_3 & v_4 \\ 
-         v_1 & 0 & 1 & 0 & 1 \\
-         v_2 & 1 & 0 & 2 & 1 \\
-         v_3 & 0 & 2 & 0 & 0 \\
-         v_4 & 1 & 1 & 0 & 1
-       \end{bNiceArray}$
-\end{multicols}    
-
-    \ 
-    \\ The adjacency matrix of an \textbf{undirected graph} $G$ 
-    \\* is the $n \times n$ matrix $A = (a_{ij})$ over the set of non-negative integers such that
-    \\* $a_{ij}$ = number of \textbf{edges} from $v_i$ to $v_j$ $\forall i, j = 1, 2, \dots, n$
-    
+    \setlength{\columnseprule}{0pt} 
     \begin{multicols}{2}
         \begin{tikzpicture}[scale=0.7, every node/.style={transform shape}]
             \node[fill, circle, minimum size=1mm, inner sep=0] (O) at (0,0) {};
@@ -1164,6 +1134,38 @@ The adjacency matrix of a \textbf{directed graph} $G$
              v_3 & 1 & 0 & 0 \\
            \end{bNiceArray}$
     \end{multicols}
+
+    \ 
+\\ The adjacency matrix of an \textbf{undirected graph} $G$ 
+    \\* is the $n \times n$ matrix $A = (a_{ij})$ over the set of non-negative integers such that
+    \\* $a_{ij}$ = number of \textbf{edges} from $v_i$ to $v_j$ $\forall i, j = 1, 2, \dots, n$
+    \\ \ 
+
+    \begin{multicols}{2}
+        \begin{tikzpicture}[scale=0.9, every node/.style={transform shape}]
+            \node[label=right:{$v_4$}, fill, circle, minimum size=1mm, inner sep=0] (v4) at (0,0) {};
+            \node[label=left:{$v_1$}, fill, circle, minimum size=1mm, inner sep=0] (v1) at (0,1) {};
+            \node[label=right:{$v_2$}, fill, circle, minimum size=1mm, inner sep=0] (v2) at (1,1) {};
+            \node[label=right:{$v_3$}, fill, circle, minimum size=1mm, inner sep=0] (v3) at (1,0) {};
+            \draw (v4) -- (v1) -- (v2) -- (v4) -- (v2);
+            \draw (v3) to[out=30, in=300] node[right] {} (v2);
+            \draw (v2) to[out=250, in=150] node[left] {} (v3);
+            \draw (v4) to[in=210,out=150, loop] node[below] {} (v4);
+        \end{tikzpicture}
+
+        $A =$ \tiny $\begin{bNiceArray}{CCCC}%
+            [first-col,
+            first-row,
+            code-for-first-col = \color{black},
+            code-for-first-row = \color{black}]
+            & v_1 & v_2 & v_3 & v_4 \\ 
+            v_1 & 0 & 1 & 0 & 1 \\
+            v_2 & 1 & 0 & 2 & 1 \\
+            v_3 & 0 & 2 & 0 & 0 \\
+            v_4 & 1 & 1 & 0 & 1
+        \end{bNiceArray}$
+    \end{multicols}  
+    
 \end{center}
 
 \subsubsection{identity matrix}
@@ -1233,7 +1235,7 @@ Let $G = (V_G, E_G)$ and $G' = (V_{G'}, E_{G'})$ be two graphs.
     \\* If $G$ is a connected graph with $n$ vertices and $n-1$ edges, then $G$ is a tree.
 \end{center}
     \item \textbf{trivial tree}: graph that comprises a single vertex
-    \item \textbf{forest} $\Iff$ graph is circuit-free and connected
+    \item \textbf{forest} $\Iff$ graph is circuit-free and not connected
     \begin{itemize}
         \item a group of trees
     \end{itemize}
