@@ -653,7 +653,11 @@ $\iint_R f(x, y) dA$ is the volume under hte surface $z = f(x, y)$ and above the
         \hline
         form & change of variable
         \\ \hline
-            $y' = g(\frac{y}{x})$ & set $v = \frac{y}{x}$ 
+        \rule{0pt}{3.5ex}
+            $y' = g(\frac{y}{x})$ & \makecell{
+                set $v = \frac{y}{x}$ 
+                \\ $\Then y' = v + xv'$
+            }
         \\ \hline 
         \rule{0pt}{4ex}
             \makecell{
@@ -680,14 +684,76 @@ $\iint_R f(x, y) dA$ is the volume under hte surface $z = f(x, y)$ and above the
     }
 \end{center}
 
-\subsection{Logistic Models}
-$N = \frac{N_{t=\infty}}{1 + (\frac{N_{t=\infty}}{N_{t=0}} - 1)e^{-Bt}}$
-\begin{itemize}
-    \item $N$ - number
-    \item $B$ - birth rate
-    \item $t$ - time
-\end{itemize}
+\subsection{Population models}
+\begin{center}
+    $N$ - number; $B$ - birth rate; $t$ - time
+    \\ \      
+    \begin{multicols}{2}
+        \textbf{Logistic Model}
+            $N = \frac{N_{t=\infty}}{1 + (\frac{N_{t=\infty}}{N_{t=0}} - 1)e^{-Bt}}$
 
+        \textbf{Malthus Model}
+                $N(t) = N_0e^{kt}$
+    \end{multicols}
+\end{center}
+
+
+
+\subsection{Common Scenarios}
+\textbf{uranium decays into thorium}
+\begin{center}
+    amount of uranium, 
+        \\* $U(t) = U_0e^{-k_Ut}$
+        \\* $\frac{dU}{dt} = -k_UU$
+    \\* amount of thorium, 
+        \\* $T(t) = \frac{k_UU_0}{k_T - k_U}(e^{-k_Ut} - e^{-k_Tt})$
+        \\* $\frac{dT}{dt} = k_UU - k_TT$
+    \\* decay rate constant, $k = \frac{\ln 2}{t_{1/2}}$
+    \\* ratio of thorium to uranium,
+        \\* $\frac{T}{U} = \frac{k_U}{k_T - k_U}(1 - e^{-(k_T-k_U)t})$
+\end{center}
+
+\begin{multicols}{2}
+    \textbf{Radioactive Decay}
+    \begin{center}
+        $Q(t) = Q_0e^{-kt}$
+        \\* $k = \frac{\ln 2}{t_{1/2}}$
+    \end{center}
+
+    \ \textbf{Cooling/Heating}
+    \begin{center}
+        $\frac{dT}{dt} = k(T - T_{env})$
+        \\* $\frac{1}{T-T_{env}}dT = kdt$
+    \end{center}
+\end{multicols}
+\ 
+
+\begin{multicols}{2}
+    \textbf{Falling objects (N2L)}
+    \begin{center}
+        Resistance = $bv^2$
+        \\* $m \frac{dv}{dt} = mg - bv^2$
+        \\* Let $k = \sqrt{\frac{mg}{b}}$ 
+        \\* $\Then \frac{1}{v^2 - k^2} dv = -\frac{b}{m}dt$
+    \end{center}
+
+    \ \textbf{Resistive medium}
+    \begin{center}
+        Resistance = $kv$
+        \\* $m \frac{dv}{dt} = mg - kv$
+        \\* $v' + \frac{k}{m}v = g$ (linear)
+        \\ \ 
+    \end{center}
+\end{multicols}
+
+\ 
+\\ \textbf{Concentration of salt in liquid}
+\\ Let $R$ = rate of flow (in and out), $Q$ = total amount of salt, 
+    \\* $V$ = total volume, $C_{in}$ = concentration of inflow
+\begin{center}
+    Rate of flow, $\frac{dQ}{dt} = RC_{in} - \frac{R}{V}Q$
+    \\* $\Then Q' + \frac{R}{V}Q = RC_{in}$
+\end{center}
 
 \end{multicols}
 \end{document}
