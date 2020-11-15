@@ -29,6 +29,15 @@
 % Turn off header and footer
 \pagestyle{empty}
 
+% for tight centres (less spacing)
+\newenvironment{tightcenter}{%
+  \setlength\topsep{0pt}
+  \setlength\parskip{0pt}
+  \begin{center}
+}{%
+  \end{center}
+}
+
 % redefine section commands to use less space
 \makeatletter
 \renewcommand{\section}{\@startsection{section}{1}{0mm}%
@@ -87,7 +96,7 @@
 \begin{document}
 \raggedright
 \footnotesize
-\begin{multicols}{4}
+\begin{multicols*}{4}
 
 
 % multicol parameters
@@ -493,11 +502,10 @@ $f(x, y)$ has a \textbf{local maximum} at $(a, b)$ if $f(x, y) \leq f(a, b)$ for
 \begin{itemize}
     \item $f_x(a, b)$ or $f_y(a, b)$ does not exist; OR
     \item $f_x(a, b) = 0$ and $f_y(a, b) = 0$
-    % FIX LATER
-    % \begin{itemize}
-    %     \item $f_x(a, b) \leq 0$ - maximum point
-    %     \item $f_x(a, b) \geq 0$ - minimum point
-    % \end{itemize}
+    \begin{itemize}
+        \item $f_x(0, b) \leq 0$ - maximum point \textit{along the x axis}
+        \item $f_y(a, 0) \geq 0$ - minimum point \textit{along the y axis}
+    \end{itemize}
 \end{itemize}
 
 \subsubsection{Saddle Points}
@@ -530,7 +538,7 @@ $f(x, y)$ has a \textbf{local maximum} at $(a, b)$ if $f(x, y) \leq f(a, b)$ for
 \end{center}
 
 \subsection{Geometric Meaning}
-$\iint_R f(x, y) dA$ is the volume under hte surface $z = f(x, y)$ and above the $xy$-plane over the region R.
+$\iint_R f(x, y) dA$ is the volume under the surface $z = f(x, y)$ and above the $xy$-plane over the region R.
 \begin{center}
     \includegraphics[width=0.7\linewidth]{MA1521-ch7-fig1}
 \end{center}
@@ -684,10 +692,10 @@ $\iint_R f(x, y) dA$ is the volume under hte surface $z = f(x, y)$ and above the
     }
 \end{center}
 
-\subsection{Population models}
+\subsection{Population Models}
 \begin{center}
     $N$ - number; $B$ - birth rate; $t$ - time
-    \\ \      
+    % \\ \      
     \begin{multicols}{2}
         \textbf{Logistic Model}
             $N = \frac{N_{t=\infty}}{1 + (\frac{N_{t=\infty}}{N_{t=0}} - 1)e^{-Bt}}$
@@ -700,8 +708,8 @@ $\iint_R f(x, y) dA$ is the volume under hte surface $z = f(x, y)$ and above the
 
 
 \subsection{Common Scenarios}
-\textbf{uranium decays into thorium}
-\begin{center}
+\textbf{Uranium decays into Thorium}
+\begin{tightcenter}
     amount of uranium, 
         \\* $U(t) = U_0e^{-k_Ut}$
         \\* $\frac{dU}{dt} = -k_UU$
@@ -711,49 +719,47 @@ $\iint_R f(x, y) dA$ is the volume under hte surface $z = f(x, y)$ and above the
     \\* decay rate constant, $k = \frac{\ln 2}{t_{1/2}}$
     \\* ratio of thorium to uranium,
         \\* $\frac{T}{U} = \frac{k_U}{k_T - k_U}(1 - e^{-(k_T-k_U)t})$
-\end{center}
+\end{tightcenter}
 
 \begin{multicols}{2}
-    \textbf{Radioactive Decay}
-    \begin{center}
+    \textbf{Radioactive decay}
+    \begin{tightcenter}
         $Q(t) = Q_0e^{-kt}$
         \\* $k = \frac{\ln 2}{t_{1/2}}$
-    \end{center}
+    \end{tightcenter}
 
     \ \textbf{Cooling/Heating}
-    \begin{center}
+    \begin{tightcenter}
         $\frac{dT}{dt} = k(T - T_{env})$
         \\* $\frac{1}{T-T_{env}}dT = kdt$
-    \end{center}
+    \end{tightcenter}
 \end{multicols}
-\ 
 
 \begin{multicols}{2}
     \textbf{Falling objects (N2L)}
-    \begin{center}
+    \begin{tightcenter}
         Resistance = $bv^2$
         \\* $m \frac{dv}{dt} = mg - bv^2$
         \\* Let $k = \sqrt{\frac{mg}{b}}$ 
         \\* $\Then \frac{1}{v^2 - k^2} dv = -\frac{b}{m}dt$
-    \end{center}
+    \end{tightcenter}
 
     \ \textbf{Resistive medium}
-    \begin{center}
+    \begin{tightcenter}
         Resistance = $kv$
         \\* $m \frac{dv}{dt} = mg - kv$
         \\* $v' + \frac{k}{m}v = g$ (linear)
         \\ \ 
-    \end{center}
+    \end{tightcenter}
 \end{multicols}
 
-\ 
-\\ \textbf{Concentration of salt in liquid}
+\textbf{Concentration of salt in liquid}
 \\ Let $R$ = rate of flow (in and out), $Q$ = total amount of salt, 
     \\* $V$ = total volume, $C_{in}$ = concentration of inflow
-\begin{center}
+\begin{tightcenter}
     Rate of flow, $\frac{dQ}{dt} = RC_{in} - \frac{R}{V}Q$
     \\* $\Then Q' + \frac{R}{V}Q = RC_{in}$
-\end{center}
+\end{tightcenter}
 
-\end{multicols}
+\end{multicols*}
 \end{document}
