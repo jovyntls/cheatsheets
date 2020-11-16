@@ -34,6 +34,14 @@
 % Turn off header and footer
 \pagestyle{empty}
 
+\newenvironment{tightcenter}{%
+  \setlength\topsep{0pt}
+  \setlength\parskip{0pt}
+  \begin{center}
+}{%
+  \end{center}
+}
+
 % redefine section commands to use less space
 \makeatletter
 \renewcommand{\section}{\@startsection{section}{1}{0mm}%
@@ -309,16 +317,17 @@
     \end{itemize}
 \end{itemize}
 
-\setlength{\tabcolsep}{0.3em}
-\begin{tabular}{>{\color{black}}p{0.12\textwidth}| >{\color{black}}p{0.08\textwidth}}
+\begin{multicols}{2}
     \begin{itemize}
         \item \bf{contrapositive} : $\lnot q \then \lnot p$ 
         \item \bf{inverse} : $\lnot p \then \lnot q$ 
         \item \bf{converse} : $q \then p$ 
     \end{itemize} 
-    & converse $\equiv$ inverse \newline
-    statement $\equiv$ contrapositive
-\end{tabular}
+    \begin{center}
+        converse $\equiv$ inverse 
+        \\ statement $\equiv$ contrapositive 
+    \end{center}
+\end{multicols}
 \begin{itemize}
     \item r is a \bf{necessary} condition for s: $\lnot r \then \lnot s$ and $s \then r$
     \item r is a \bf{sufficient} condition for s: $r \then s$
@@ -539,7 +548,7 @@ define the set of WFF($\Sigma$) as follows
 \section{08. NUMBER THEORY}
 \subsection{divisibility}
 \begin{itemize}
-    \item $n \mod{d}$ is always non-negative.
+    \item $n \Mod d$ is always non-negative.
 \end{itemize}
 \begin{center}
     transitivity of divisibility
@@ -552,7 +561,7 @@ define the set of WFF($\Sigma$) as follows
     \\* $\forall n \in \mathbb{Z}$ and $d \in \mathbb{Z}^+$, $\exists ! q, r \in \mathbb{Z}$ s.t.
     \\* $n = dq + r$ and $0 \leq r < d$
     \\* $q = n\ div\ d = \lfloor n/d \rfloor$ 
-    \\* $r = n\ mod\ d = n - dq$
+    \\* $r = n \Mod d = n - dq$
 \end{center}
 
 \subsection{base-b representation}
@@ -565,13 +574,13 @@ define the set of WFF($\Sigma$) as follows
 
 \subsection{greatest common divisor}
 \begin{itemize}
-    \item $m\ mod\ n$
-    \item if $m \neq 0$ and $n \neq 0$, then gcd(m, n) exists and is positive.
+    \item $m \Mod n$
+    \item if $m \neq 0$ and $n \neq 0$, then $\gcd(m, n)$ exists and is positive.
     \item \bf{Euclidean Algorithm} for finding gcd
 \end{itemize}
 \begin{center}
     Bezout's Lemma: 
-    \\* For all $m, n \in \mathbb{Z}$ with $n \neq 0$, there exist $s, t \in \mathbb{Z}$ such that $gcd(m, n) = ms + nt$.
+    \\* For all $m, n \in \mathbb{Z}$ with $n \neq 0$, there exist $s, t \in \mathbb{Z}$ such that $\gcd(m, n) = ms + nt$.
     \\ Euclid's Lemma: 
     \\* Let $m, n \in Z^+$. If $p$ is prime and $p \mid mn$, then $p \mid m$ or $p \mid n$.
 \end{center}
@@ -590,7 +599,7 @@ define the set of WFF($\Sigma$) as follows
     Let $a,b,c \in \mathbb{Z}$ and $n \in \mathbb{Z}^+$.
     \\ {congruence}
         \\* $a \equiv b \ (\Mod{n}) \Iff a \Mod{n} = b \Mod{n}$
-        \\* Then $\exists k \in \mathbb{Z} \mid a = nk + b$ and $n \mid (a - b)$
+        \\* Then $\exists k \in \mathbb{Z} \bigl( a = nk + b$ and $n \mid (a - b) \bigr)$
     \\ {reflexivity}
         \\* $a \equiv a \ (\Mod{n})$
     \\ {symmetry}
@@ -789,10 +798,10 @@ For possible outcomes $a_1, a_2, \dots, a_n$ which occur with probabilities $p_1
 
 
 \subsection{conditional probability}
-\begin{center}
+\begin{tightcenter}
     The conditional probability of $A$ given $B$,
     \\* $P(A \mid B) = \frac{P(A \cap B)}{P(B)}$
-\end{center}
+\end{tightcenter}
 probability tree:
     \begin{tikzpicture}[scale=0.8, every node/.style={transform shape}]
         \node[fill, circle, minimum size=1mm, inner sep=0] (O) at (0,1) {};
@@ -806,12 +815,28 @@ probability tree:
         \draw (B1c) -- node[below, sloped] {\tiny{$P(B_2^c\mid B_1^c)$}} (B2c);
     \end{tikzpicture}
 
-\subsection{bayes' theorem}
+\subsection{Bayes' theorem}
 Suppose a sample space $S$ is a union of mutually disjoint events $B_1, B_2, \dots, B_n$ and $A$ is an event in $S$.
 \\* For $k \in \mathbb{Z}$ and $1 \leq k \leq n$, 
 \begin{center}
     $P(B_k\mid A) = \frac{P(A \mid B_k) \cdot P(B_k)}{\sum\limits^n_{i=1}\big(P(A \mid B_i) \cdot P(B_i)\big)}$
 \end{center}
+
+\subsubsection{application}
+\begin{center}
+    $P(B_1 \mid A) = \frac{P(A \mid B_1) \cdot P(B_1)}{P(A \mid B_1) \cdot P(B_1) + P(A \mid B_2) \cdot P(B_2)}$
+\end{center}
+Let $A$ be the event that the person test positive for a disease.
+\\* $B_1$: the person actually has the disease.
+\\* $B_2$: the person does not have the disease.
+\begin{tightcenter}
+    \begin{multicols}{2}
+        true positives: $P(B_1\mid A)$
+        \\ false positives: $P(A \mid B_2)$
+        \\ false negatives: $P(\bar{A} \mid B_1)$
+        \\ true negatives: $P(\bar{A} \mid B_2)$
+    \end{multicols}
+\end{tightcenter}
 
 \subsection{independent events}
 \begin{center}
@@ -1213,8 +1238,9 @@ $
 \end{itemize}
 Let $G = (V_G, E_G)$ and $G' = (V_{G'}, E_{G'})$ be two graphs.
 \begin{center}
-    $G \cong G' \Iff $ there exists a permutation $\pi: V_G \to V_{G'}$
-    \\* such that $\{u, v\} \in E_G \Iff \{\pi (u), \pi (v) \} \in E_G$
+    $G \cong G' \Iff$ there exist bijections $g: V_G \to V_G'$ and $h: E_G \to E_G'$ that preserve
+        the edge-edgepoint functions of $G$ and $G'$ in the sense that $\forall v \in V_G$ and $e \in E_G$,
+    \\* $v$ is an endpoint of $e \Iff g(v)$ is an endpoint of $h(e)$.
 \end{center}
 
 \subsection{planar graph}
@@ -1506,42 +1532,42 @@ For a connected weighted graph $G$ with $n$ vertices
 \begin{multicols*}{3}
     \section{proven:}
     \begin{itemize}
-        \item L1E1 - the product of 2 consecutive odd numbers is always odd.
-        \item L1E5 - the difference between 2 consecutive squares is always odd
-        \item L4E4 - the sum of any 2 even integers is even
-        \item L4T4.6.1 - there is no greatest integer
-        \item L4T4.3.1 - for all positive integers $a$ and $b$, if $a \vert b$, then $a \leq b$.
-        \item L1P4.6.4 - for all integers $n$, if $n^2$ is even then $n$ is even
-        \item L4T4.2.1 - all integers are rational numbers
-        \item L4T4.2.2 - the sum of any 2 rational numbers is rational
-        \item L1E7 - there exist irrational numbers $p$ and $q$ such that $p^q$ is rational
-        \item L4T4.7.1 - $\sqrt{2}$ is irrational.
-        \item L4T4.3.2 - the only divisors of $1$ are $1$ and $-1$.
-        \item L4T4.3.3 - \bf{transitivity of divisibility} 
+        \item E1.1 - the product of 2 consecutive odd numbers is always odd.
+        \item E1.5 - the difference between 2 consecutive squares is always odd
+        \item E1.4 - the sum of any 2 even integers is even
+        \item T4.6.1 - there is no greatest integer
+        \item T4.3.1 - for all positive integers $a$ and $b$, if $a \vert b$, then $a \leq b$.
+        \item P4.6.4 - for all integers $n$, if $n^2$ is even then $n$ is even
+        \item T4.2.1 - all integers are rational numbers
+        \item T4.2.2 - the sum of any 2 rational numbers is rational
+        \item E1.7 - there exist irrational numbers $p$ and $q$ such that $p^q$ is rational
+        \item T4.7.1 - $\sqrt{2}$ is irrational.
+        \item T4.3.2 - the only divisors of $1$ are $1$ and $-1$.
+        \item T4.3.3 - \bf{transitivity of divisibility} 
         \begin{itemize}
             \item if $a\vert b$ and $b \vert c$, then $a \vert c$.
         \end{itemize}
-        \item L3T3.2.1 - \bf{negation of a universal statement}: 
+        \item T3.2.1 - \bf{negation of a universal statement}: 
         \begin{itemize}
             \item $\lnot (\forall x \in D, P(x)) \equiv \exists x \in D \mid \lnot P(x)$
         \end{itemize}
-        \item L3T3.2.2 - \bf{negation of an existential statement}: 
+        \item T3.2.2 - \bf{negation of an existential statement}: 
         \begin{itemize}
             \item $\lnot (\exists x \in D \mid P(x)) \equiv \forall x \in D, \lnot P(x)$
         \end{itemize}
-        \item L5T5.1.14 - there exists a unique set with no element. It is denoted by $\emptyset$.
-        \item L5E5.3.7 - for all $A, B$: $(A \cap B) \cup (A \backslash B) = A$
-        \item L5T5.3.11(1) - let $A, B$ be disjoint finite sets. Then $\vert A \cup B \vert = \vert A \vert + \vert B \vert$
-        \item L5T5.3.11(2) - let $A_1, A_2, \dots, A_n$ be pairwise disjoint finite sets. Then $\vert A_1 \cup A_2 \cup \dots \cup A_n \vert = \vert A_1 \vert + \vert A_2 \vert + \dots + \vert A_n \vert$
-        \item L5T5.3.12 - \bf{Inclusion-Exclusion Principle}: 
+        \item T5.1.14 - there exists a unique set with no element. It is denoted by $\emptyset$.
+        \item E5.3.7 - for all $A, B$: $(A \cap B) \cup (A \backslash B) = A$
+        \item T5.3.11(1) - let $A, B$ be disjoint finite sets. Then $\vert A \cup B \vert = \vert A \vert + \vert B \vert$
+        \item T5.3.11(2) - let $A_1, A_2, \dots, A_n$ be pairwise disjoint finite sets. Then $\vert A_1 \cup A_2 \cup \dots \cup A_n \vert = \vert A_1 \vert + \vert A_2 \vert + \dots + \vert A_n \vert$
+        \item T5.3.12 - \bf{Inclusion-Exclusion Principle}: 
         \begin{itemize}
             \item for all finite sets $A$ and $B$, $\vert A \cup B \vert = \vert A \vert + \vert B \vert - \vert A \cap B \vert$
         \end{itemize} 
-        \item L6T6.1.26 - \bf{associativity of function composition}: 
+        \item T6.1.26 - \bf{associativity of function composition}: 
         \begin{itemize}
             \item $f\circ (g \circ h) = (f \circ g) \circ h$
         \end{itemize}
-        \item L6P2.6.16 - \bf{uniqueness of inverses}: 
+        \item P2.6.16 - \bf{uniqueness of inverses}: 
         \begin{itemize}
             \item If $g, g'$ are inverses of $f: A \to B$, then $g = g'$.
         \end{itemize} 
@@ -1565,12 +1591,13 @@ For a connected weighted graph $G$ with $n$ vertices
         \item T8.2.8 - there are infinitely many prime numbers
         \item T8.3.13 - $\forall n \in \mathbb{Z}^+, \exists ! \ell \in \mathbb{Z}_{\geq 0}$ and $a_0, a_1, \dots, a_\ell \in \{0, 1, \dots, b - 1\}$ 
         such that <the definition of base-b representation> holds.
-        \item L8.4.11 - If $x, y, r \in \mathbb{Z}$ such that $x \ mod \ y = r$, then $gcd(x, y) = gcd(y, r)$.
+        \item L8.4.11 - If $x, y, r \in \mathbb{Z}$ such that $x \ mod \ y = r$, then $\gcd(x, y) = \gcd(y, r)$.
         \item Let $a, b, c, d \in \mathbb{Z}$ and $n \in \mathbb{Z}^+$ s.t. $a \equiv b \ (\Mod{n})$ and $c \equiv d \ (\Mod{n})$. 
         \begin{itemize}
             \item P8.6.6 - \bf{addition: } Then $a + c \equiv b + d \ (\Mod n)$
             \item P8.6.13 - \bf{multiplication: } Then $ac \equiv bd \ (\Mod n)$
         \end{itemize}
+        \item E9.2.11 - The equality relation $R$ on a set $A$ has equivalence classes of the form $[x] = \{y \in A : x = y \} = \{x\}$ where $x \in A$
         \item T9.3.4 - Let $R$ be an equivalence relation on a set $A$. Then $A / R$ is a partition of A.
         \item T9.3.5 - If $\mathscr{C}$ is a partition of $A$, then there is an equivalence relation of $R$ on $A$ such that $A/R = \mathscr{C}$.
         \item L9.5.5 - Consider a partial order $\preccurlyeq$ on set $A$. 
@@ -1595,7 +1622,7 @@ For a connected weighted graph $G$ with $n$ vertices
             \item Every connected graph has a spanning tree.
             \item Any two spanning trees for a graph have the same number of edges
         \end{enumerate} 
-        \item 
+        % \item 
     \end{itemize}
 
     \subsection{abbreviations}
