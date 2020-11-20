@@ -1,0 +1,261 @@
+\documentclass[10pt]{article}
+\usepackage[scaled=0.92]{helvet}
+\usepackage{calc}
+\usepackage{multicol}
+\usepackage{ifthen}
+\usepackage[a4paper,margin=3mm]{geometry}
+\usepackage{amsmath,amsthm,amsfonts,amssymb}
+\usepackage{color,graphicx,overpic}
+\usepackage{hyperref}
+\usepackage{newtxtext} 
+\usepackage{enumitem}
+\usepackage{amssymb}
+\usepackage[table]{xcolor}
+\usepackage{vwcol}
+\usepackage{tikz}
+\usepackage{wrapfig}
+\usepackage{makecell}
+\setlist{nosep}
+\graphicspath{ {./images/} }
+
+\pdfinfo{
+  /Title (MA1521-cheatsheet.pdf)
+  /Creator (Jovyn)
+  /Producer (pdfTeX 1.40.0)
+  /Author (Jovyn)
+  /Subject (MA1521)
+  /Keywords (ma1521, cheatsheet, tex)}
+
+% Turn off header and footer
+\pagestyle{empty}
+
+% for tight centres (less spacing)
+\newenvironment{tightcenter}{%
+  \setlength\topsep{0pt}
+  \setlength\parskip{0pt}
+  \begin{center}
+}{%
+  \end{center}
+}
+
+% redefine section commands to use less space
+\makeatletter
+\renewcommand{\section}{\@startsection{section}{1}{0mm}%
+                                {-1ex plus -.5ex minus -.2ex}%
+                                {0.5ex plus .2ex}%x
+                                {\normalfont\large\bfseries}}
+\renewcommand{\subsection}{\@startsection{subsection}{2}{0mm}%
+                                {-1explus -.5ex minus -.2ex}%
+                                {0.5ex plus .2ex}%
+                                {\normalfont\normalsize\bfseries}}
+\renewcommand{\subsubsection}{\@startsection{subsubsection}{3}{0mm}%
+                                {-1ex plus -.5ex minus -.2ex}%
+                                {1ex plus .2ex}%
+                                {\normalfont\small\bfseries}}%
+\renewcommand{\familydefault}{\sfdefault}
+\renewcommand\rmdefault{\sfdefault}
+% makes nested numbering (e.g. 1.1.1, 1.1.2, etc)
+\renewcommand{\labelenumii}{\theenumii}
+\renewcommand{\theenumii}{\theenumi.\arabic{enumii}.}
+\renewcommand\labelitemii{•}
+%  for logical not operator
+\renewcommand{\lnot}{\mathord{\sim}}
+\renewcommand{\bf}[1]{\textbf{#1}}
+\newcommand{\abs}[1]{\vert #1 \vert}
+\newcommand{\Mod}[1]{\ \mathrm{mod}\ #1}
+\newcommand{\vv}[1]{\boldsymbol{#1}}
+\newcommand{\VV}[1]{\overrightarrow{#1}}
+\newcommand{\cvv}[1]{\left(\begin{smallmatrix}#1\end{smallmatrix}\right)}
+\newcommand{\pifrac}[1]{\tfrac{\pi}{#1}}
+\newcommand{\half}{\frac{1}{2}}
+
+\makeatother
+\definecolor{myblue}{cmyk}{1,.72,0,.38}
+% Define BibTeX command
+\everymath\expandafter{\the\everymath \color{myblue}}
+\def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
+    T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
+\let\iff\leftrightarrow
+\let\Iff\Leftrightarrow
+\let\then\rightarrow
+\let\Then\Rightarrow
+
+% Don't print section numbers
+\setcounter{secnumdepth}{0}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0pt plus 0.5ex}
+%% this changes all items (enumerate and itemize)
+\setlength{\leftmargini}{0.5cm}
+\setlength{\leftmarginii}{0.5cm}
+\setlist[itemize,1]{leftmargin=2mm,labelindent=1mm,labelsep=1mm}
+\setlist[itemize,2]{leftmargin=4mm,labelindent=1mm,labelsep=1mm}
+
+%My Environments
+\newtheorem{example}[section]{Example}
+% -----------------------------------------------------------------------
+
+\begin{document}
+\begin{center}
+    \fbox{%
+        \parbox{0.5\linewidth}{\centering \textcolor{black}{
+            {\Large\textbf{TRIGONOMETRY FORMULA LIST}}}
+            \\ {\footnotesize by jovyntls}
+        }%
+    }
+\end{center}
+\begin{multicols*}{2}
+
+% multicol parameters
+% These lengths are set only within the two main columns
+\setlength{\columnseprule}{0.25pt}
+\setlength{\premulticols}{1pt}
+\setlength{\postmulticols}{1pt}
+\setlength{\multicolsep}{1pt}
+\setlength{\columnsep}{2pt}
+
+\section{common values}
+\begin{center}
+    \def\arraystretch{1.4}
+    \begin{tabular}{| c | c | c | c | c | c |}
+        \hline 
+        $\theta$ / $^{\circ}$  & $0^{\circ}$ & $30^{\circ}$ & $45^{\circ}$ & $60^{\circ}$ & $90^{\circ}$
+        \\ \hline
+        $\theta$ / rad & $0$ & $\pifrac{6}$ & $\pifrac{4}$ & $\pifrac{3}$ & $\pifrac{2}$
+        \\ \hline 
+        $\sin \theta$ & $0$ & $\half$ & $\frac{\sqrt{2}}{2}$ & $\frac{\sqrt{3}}{2}$ & $1$
+        \\ \hline 
+        $\cos \theta$ & $1$ & $\frac{\sqrt{3}}{2}$ & $\frac{\sqrt{2}}{2}$ & $\half$ & $0$
+        \\ \hline 
+        $\tan \theta$ & $0$ & $\frac{\sqrt{3}}{3}$ & $1$ & $\sqrt{3}$ & undefined
+        \\ \hline
+    \end{tabular}
+\end{center}
+\ 
+
+\begin{multicols}{2}
+    \section{reciprocal}
+    \begin{align*}
+            \csc A = \tfrac{1}{\sin A}
+        \\* \sec A = \tfrac{1}{\cos A}
+        \\* \cot A = \tfrac{1}{\tan A}
+    \end{align*}
+
+    \section{ periodicity}
+    \begin{align*}
+        \sin (A \pm 2\pi) = \sin A
+        \\* \cos (A \pm 2\pi) = \cos A
+        \\* \tan (A \pm \pi) = \tan A
+    \end{align*}
+\end{multicols}
+    
+\section{co-function}
+\begin{align*}
+    \sin (\pifrac{2} - A) = \cos A
+    \\* \cos (\pifrac{2} - A) = \sin A
+    \\* \tan (\pifrac{2} - A) = \cot A
+\end{align*}
+
+
+
+\section{sum \& difference}
+\begin{align*}
+        \sin (A \pm B) &= \sin A \cos B \pm \cos A \sin B
+    \\* \cos (A \pm B) &= \cos A \cos B \mp \sin A \sin B
+    \\* \tan (A \pm B) &= \frac{\tan A \pm \tan B}{1 \mp \tan A \tan B}
+\end{align*}
+
+\section{pythagorean identities}
+\begin{align*}
+        \sin^2A + \cos^2A &= 1
+    \\* \sec^2A - \tan^2A &= 1
+    \\* \csc^2A - \cot^2A &= 1
+\end{align*}
+
+\section{double angle}
+\begin{align*}
+        \sin (2A) &= 2\sin A \cos A
+    \\* \cos (2A) &= \cos^2A - \sin^2A
+    \\*         &= 1 - 2\sin^2A
+    \\*         &= 2\cos^2A - 1
+    \\*         &= \frac{1 - \tan^2A}{1 + \tan^2A}
+    \\ \tan (2A) &= \frac{2\tan A}{1 - \tan^2A}
+\end{align*}
+
+\section{product to sum}
+\begin{align*}
+            \sin A \sin B &= \half \biggl[ \cos (A-B) - \cos (A+B) \biggr]
+        \\* \cos A \cos B &= \half \biggl[ \cos (A-B) + \cos (A+B) \biggr]
+        \\* \sin A \cos B &= \half \biggl[ \sin (A+B) + \sin (A-B) \biggr]
+        \\* \cos A \sin B &= \half \biggl[ \sin (A+B) - \sin (A-B) \biggr]
+\end{align*}
+
+\section{sum to product}
+\begin{align*}
+        \sin A \pm \sin B &= 2 \sin \left(\frac{A \pm B}{2}\right) \cos \left(\frac{A \mp B}{2}\right)
+    \\* \cos A + \cos B &= 2 \cos \left(\frac{A + B}{2}\right) \cos \left(\frac{A - B}{2}\right)
+    \\* \cos A - \cos B &= -2 \sin \left(\frac{A + B}{2}\right) \sin \left(\frac{A - B}{2}\right)
+\end{align*}
+
+\section{geometry}
+\subsection{sine rule}
+\begin{align*}
+    \frac{a}{\sin A} = \frac{b}{\sin B} = \frac{c}{\sin C}
+\end{align*}
+\subsection{cosine rule}
+\begin{align*}
+        a^2 &= b^2 + c^2 - 2bc \cos A
+    \\* A &= \cos^{-1} \left(\frac{b^2 + c^2 - a^2}{2bc}\right)
+\end{align*}
+\subsection{area of triangle}
+\begin{center}
+        $\half ab \sin C$
+\end{center}
+\subsubsection{Heron's formula}
+\begin{center}
+    area $= \sqrt{s(s-a)(s-b)(s-c)}$ 
+    \\* where $s = \half(a + b + c)$
+\end{center}
+
+
+\section{differentiation}
+\begin{center}
+    \begin{tabular}{|>{\color{black}}c | >{\color{black}}c|}
+        \hline
+        $f(x)$ & $f'(x)$
+        \\ \hline
+        \rule{0pt}{2.3ex}  % top spacing
+            $\tan x$ & $\sec ^2 x$ \\
+            $\csc x$ & $-\csc x \cot x$ \\
+            $\sec x$ & $\sec x \tan x$ \\
+            $\cot x$ & $- \csc ^2 x$
+        \\[1ex] \hline
+        \rule{0pt}{3ex}  % top spacing
+            $\sin^{-1} f(x)$ & $\frac{f'(x)}{\sqrt{1-[f(x)]^2}}, \ \ _{\vert f(x) \vert < 1}$ \\[1.5ex]
+            $\cos^{-1} f(x)$ & $-\frac{f'(x)}{\sqrt{1-[f(x)]^2}}, \ \ _{\vert f(x) \vert < 1}$ \\[1.5ex]
+            $\tan^{-1} f(x)$ & $\frac{f'(x)}{1 + [f(x)]^2}$ \\[1.5ex]
+            $\cot^{-1} f(x)$ & $-\frac{f'(x)}{1 + [f(x)]^2}$ \\[1.5ex]
+            $\sec^{-1} f(x)$ & $\frac{f'(x)}{\vert f(x) \vert \sqrt{[f(x)]^2-1}}$ \\[1.5ex]
+            $\csc^{-1} f(x)$ & $-\frac{f'(x)}{\vert f(x) \vert \sqrt{[f(x)]^2-1}}$ \\[2ex]
+        \hline
+    \end{tabular}
+\end{center}
+
+\section{integration}
+\begin{center}
+    \def\arraystretch{1.2}
+    \begin{tabular}{|>{\color{black}}c | >{\color{black}}c|}
+        \hline
+        $f(x)$ & $\int f(x)$
+        \\ \hline
+            $\tan x$ & $\ln (\sec x),$ \tiny{${\vert x \vert < \frac{\pi}{2}}$} \\
+            $\cot x$ & $\ln (\sin x),$ \tiny{$0 < x < \pi $} \\
+            $\csc x$ & $-\ln (\csc x + \cot x),$ \tiny{$0 < x < \pi $} \\
+            $\sec x$ & $\ln (\sec x + \tan x),$ \tiny{$\vert x \vert < \frac{\pi}{2} $}
+        \\[0.5ex] \hline
+    \end{tabular}
+\end{center}
+
+
+\end{multicols*}
+\end{document}
