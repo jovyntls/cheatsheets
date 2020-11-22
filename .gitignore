@@ -7,8 +7,10 @@
 **.log
 **.out
 **.synctex.gz
+# **/\_\_*_temp.tex
+# **/\_\_*_temp.pdf
 
 
 # exception: ignore this
-*/\_\_latexindent\_temp.tex
-*/\_\_latexindent\_temp.pdf
+**/\_\_latexindent\_temp.tex
+**/\_\_latexindent\_temp.pdf
