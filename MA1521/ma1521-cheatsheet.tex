@@ -371,7 +371,6 @@ unit vector, $\hat{\vv{p}} = \frac{\vv{p}}{\abs{\vv{p}}}$
 \end{center}
 
 \subsection{Projection}
-
 \begin{multicols}{2}
 \begin{tikzpicture}[scale=0.7, every node/.style={transform shape}]
     \coordinate[label=below left:O] (O) at (0,0);
@@ -383,10 +382,11 @@ unit vector, $\hat{\vv{p}} = \frac{\vv{p}}{\abs{\vv{p}}}$
         -- node[below] {$\vv{b}$} (B); 
     \draw[shorten >=0pt, dashed] (A) -- (N);
 \end{tikzpicture}
-\begin{itemize}
-    \item $\abs{\VV{ON}} = \abs{\vv{a} \cdot \hat{\vv{b}}} = \frac{\abs{\vv{a} \cdot \vv{b}}}{\abs{\vv{b}}}$
-    \item $\VV{ON} = (\vv{a} \cdot \hat{\vv{b}})\hat{\vv{b}} = \frac{\abs{\vv{a} \cdot \vv{b}}}{\abs{\vv{b}}^2}\vv{b}$
-\end{itemize}
+$\triangle ANO = \frac{1}{2} \abs{\VV{OA} \times \VV{ON}}$
+\begin{center}
+    $\abs{\VV{ON}} = \abs{\vv{a} \cdot \hat{\vv{b}}} = \frac{\abs{\vv{a} \cdot \vv{b}}}{\abs{\vv{b}}}$
+    \\* $\VV{ON} = (\vv{a} \cdot \hat{\vv{b}})\hat{\vv{b}} = \frac{\abs{\vv{a} \cdot \vv{b}}}{\abs{\vv{b}}^2}\vv{b}$
+\end{center}
 \end{multicols}
 
 \subsection{Planes}
@@ -694,7 +694,7 @@ $\iint_R f(x, y) dA$ is the volume under the surface $z = f(x, y)$ and above the
 
 \subsection{Population Models}
 \begin{center}
-    $N$ - number; $B$ - birth rate; $t$ - time
+    $N$ - number; $B$ - birth rate; $t$ - time; $D$ - death rate
     % \\ \      
     \begin{multicols}{2}
         \textbf{Logistic Model}
@@ -702,6 +702,7 @@ $\iint_R f(x, y) dA$ is the volume under the surface $z = f(x, y)$ and above the
 
         \textbf{Malthus Model}
                 $N(t) = N_0e^{kt}$
+                \\* where $k = B - D$
     \end{multicols}
 \end{center}
 
