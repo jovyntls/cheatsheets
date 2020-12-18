@@ -11,11 +11,6 @@ If you find any typos please let me know! Thank you :)
 - [x] **CS1231S** [all chapters]
 - [x] **MA1521** [all chapters]
 
-To do:
-
-- [ ] adjust formatting
-- [ ] create templates
-
 ---
 
 ## Other useful resources:
@@ -32,6 +27,7 @@ To do:
 - [Truth table generator](https://web.stanford.edu/class/cs103/tools/truth-table-tool/)
 - [Euclidean Algorithm](https://people.math.sc.edu/sumner/numbertheory/euclidean/euclidean.html)
 - [Base converter](https://www.rapidtables.com/convert/number/base-converter.html)
+- [Graphs](https://graphonline.ru/en/?q=en)
 
 ### MA1521
 

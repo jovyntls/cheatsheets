@@ -1,12 +1,14 @@
 
 
 .DS_Store
+.gitignore
 **.aux
 **.fdb_latexmk
 **.fls
 **.log
 **.out
 **.synctex.gz
+TEMPLATE/*
 # **/\_\_*_temp.tex
 # **/\_\_*_temp.pdf
 
