@@ -1,0 +1,260 @@
+\documentclass[10pt, landscape]{article}
+\usepackage[scaled=0.92]{helvet}
+\usepackage{calc}
+\usepackage{multicol}
+\usepackage{ifthen}
+\usepackage[a4paper,margin=3mm,landscape]{geometry}
+\usepackage{amsmath,amsthm,amsfonts,amssymb}
+\usepackage{color,graphicx,overpic}
+\usepackage{hyperref}
+\usepackage{newtxtext} 
+\usepackage{enumitem}
+\usepackage[table]{xcolor}
+\usepackage{mathtools}
+% for drawing diragrams/graphs
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta}
+\usetikzlibrary{calc}
+\setlist{nosep}
+
+% ADDITIONAL USEFUL PACKAGES:
+% for matrices
+\usepackage{nicematrix}
+% for relations
+\usepackage{cancel}
+\usepackage{ mathrsfs }
+% for including images
+\graphicspath{ {./images/} }
+
+
+\pdfinfo{
+  /Title (MA1102R.pdf)
+  /Creator (TeX)
+  /Producer (pdfTeX 1.40.0)
+  /Author (Jovyn)
+  /Subject (MA1102R)
+  /Keywords (MA1102R, calculus,nus,cheatsheet,pdf)}
+
+% Turn off header and footer
+\pagestyle{empty}
+
+\newenvironment{tightcenter}{%
+  \setlength\topsep{0pt}
+  \setlength\parskip{0pt}
+  \begin{center}
+}{%
+  \end{center}
+}
+
+% redefine section commands to use less space
+\makeatletter
+\renewcommand{\section}{\@startsection{section}{1}{0mm}%
+                                {-1ex plus -.5ex minus -.2ex}%
+                                {0.5ex plus .2ex}%x
+                                {\normalfont\large\bfseries}}
+\renewcommand{\subsection}{\@startsection{subsection}{2}{0mm}%
+                                {-1explus -.5ex minus -.2ex}%
+                                {0.5ex plus .2ex}%
+                                {\normalfont\normalsize\bfseries}}
+\renewcommand{\subsubsection}{\@startsection{subsubsection}{3}{0mm}%
+                                {-1ex plus -.5ex minus -.2ex}%
+                                {1ex plus .2ex}%
+                                {\normalfont\small\bfseries}}%
+\renewcommand{\familydefault}{\sfdefault}
+\renewcommand\rmdefault{\sfdefault}
+%  makes nested numbering (e.g. 1.1.1, 1.1.2, etc)
+\renewcommand{\labelenumii}{\theenumii}
+\renewcommand{\theenumii}{\theenumi.\arabic{enumii}.}
+\renewcommand\labelitemii{•}
+%  convenient absolute value symbol
+\newcommand{\abs}[1]{\vert #1 \vert}
+%  convenient floor and ceiling
+\newcommand{\floor}[1]{\lfloor #1 \rfloor}
+\newcommand{\ceil}[1]{\lceil #1 \rceil}
+%  convenient modulo
+\newcommand{\Mod}[1]{\ \mathrm{mod}\ #1}
+%  for logical not operator, iff symbol, convenient "if/then"
+\renewcommand{\lnot}{\mathord{\sim}}
+\let\iff\leftrightarrow
+\let\Iff\Leftrightarrow
+\let\then\rightarrow
+\let\Then\Rightarrow
+%  vectors
+\newcommand{\vv}[1]{\boldsymbol{#1}}
+\newcommand{\VV}[1]{\overrightarrow{#1}}
+%  column vector
+\newcommand{\cvv}[1]{\left(\begin{smallmatrix}#1\end{smallmatrix}\right)}
+
+\makeatother
+\definecolor{myblue}{cmyk}{1,.72,0,.38}
+\everymath\expandafter{\the\everymath \color{myblue}}
+% Define BibTeX command
+\def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
+    T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
+
+% Don't print section numbers
+\setcounter{secnumdepth}{0}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0pt plus 0.5ex}
+%% this changes all items (enumerate and itemize)
+\setlength{\leftmargini}{0.5cm}
+\setlength{\leftmarginii}{0.5cm}
+\setlist[itemize,1]{leftmargin=2mm,labelindent=1mm,labelsep=1mm}
+\setlist[itemize,2]{leftmargin=4mm,labelindent=1mm,labelsep=1mm}
+
+%My Environments
+\newtheorem{example}[section]{Example}
+% -----------------------------------------------------------------------
+
+\begin{document}
+\raggedright
+\footnotesize
+\begin{multicols*}{4
+    '}
+
+
+% multicol parameters
+% These lengths are set only within the two main columns
+\setlength{\columnseprule}{0.25pt}
+\setlength{\premulticols}{1pt}
+\setlength{\postmulticols}{1pt}
+\setlength{\multicolsep}{1pt}
+\setlength{\columnsep}{2pt}
+
+\begin{center}
+    \fbox{%
+        \parbox{0.8\linewidth}{\centering \textcolor{black}{
+            {\Large\textbf{MA1102R}}
+            \\ \normalsize{AY20/21 sem 2}}
+            \\ {\footnotesize \textcolor{myblue}{by jovyntls}}
+        }%
+    }
+\end{center}
+
+\section{00. FUNCTIONS \& SETS}
+\subsection{sets}
+\centerline{$A = \{ x \mid \ properties \ of x \}$}
+\begin{itemize}
+    \item $A \subseteq B$: A is a subset of B
+    \item $A \nsubseteq B$: A is not a subset of B
+    \item $A = B \iff A \subseteq B \land B \subseteq A$
+\end{itemize}
+
+\subsubsection{operations on sets}
+\begin{itemize}
+    \item union: $A \cup B = \{x \mid x \in A \lor x \in B\}$
+    \item intersection: $A \cap B = \{x \mid x \in A \land x \in B\}$
+    \item difference: $A \backslash B = \{x \mid x \in A \land x \notin B\}$
+\end{itemize}
+
+\begin{center}
+\setlength{\columnseprule}{0pt}
+\begin{multicols*}{2}
+
+    \subsubsection{notations of sets}
+    \begin{itemize}
+        \item $\mathbb{R, Q, Z, N}$
+        \item $\mathbb{N} = \mathbb{Z}^+$
+        \item $\emptyset$: empty set
+    \end{itemize}
+
+    \subsubsection{notations of intervals}
+    \begin{itemize}
+        \item closed interval (inclusive): $[a, b] = \{x \mid a \leq x \leq b\}$
+        \item open interval (exclusive): $(a, b) = \{x \mid a < x < b\}$
+        \begin{itemize}
+            \item $(a, \infty) = \{x \mid a < x\}$
+        \end{itemize}
+    \end{itemize}
+
+\end{multicols*}
+\end{center}
+
+\subsection{functions}
+\begin{itemize}
+    \item \textbf{existence}: $\forall a \in A, f(a) \in B$
+    \item \textbf{uniqueness}: $\forall a \in A$ has only one image in $B$.
+    \item for $f : A \to B$
+    \begin{itemize}
+        \item domain: $A$
+        \item codomain: $B$
+        \item range: $\{f(x) \mid x \in A\}$
+    \end{itemize}
+    \item for this mod: 
+    \begin{itemize}
+        \item $A, B \subseteq \mathbb{R}$
+        \item if $A$ is not stated, the domain of $f$ is the largest possible set for which $f$ is defined
+        \item if $B$ is not stated, $B = \mathbb{R}$
+    \end{itemize}
+\end{itemize}
+
+\subsubsection{graphs of functions}
+\begin{tightcenter}
+    The graph of $f$ is the set 
+    \\ $G(f) := \{ \left(x, f(x)\right) \mid x \in A\}$
+\end{tightcenter}
+\begin{itemize}
+    \item if $A, B \subseteq R$ then $G(f) \subseteq A \times B \subseteq \mathbb{R} \times \mathbb{R}$
+    \item each element is a point on the Cartesian plane $\mathbb{R}^2$
+\end{itemize}
+
+\subsubsection{algebra of functions}
+% \begin{center}
+%     addition
+%     \\* $(f+g)(x) := f(x) + g(x)$
+% \end{center}
+\begin{tabular}{| c | c |}
+    % \multicolumn{3}{>{\color{black}}c}{LOGICAL EQUIVALENCES} 
+    \hline 
+     function & domain
+    \\ \hline 
+         $(f + g)(x) := f(x) + g(x)$ 
+        & $A \cap B$
+    \\ \hline 
+         $(f - g)(x) := f(x) - g(x)$ 
+        & $A \cap B$
+    \\ \hline 
+         $(fg)(x) := f(x)g(x)$ 
+        & $A \cap B$
+    \\ \hline 
+         $(f/g)(x) := f(x)/g(x)$ 
+        & $\{x \in A \cap B \mid g(x) \neq 0\}$
+    \\ \hline 
+\end{tabular}
+
+\subsubsection{types of functions}
+\begin{itemize}
+    \item \textbf{rational function}: $R(x) = \frac{P(x)}{Q(x)}$, where $P, Q$ are polynomials and $Q(x) \neq 0$
+    \begin{itemize}
+        \item every polynomial is a rational function ($Q(x) = 1$)
+    \end{itemize}
+    \item \textbf{algebraic function}: constructed from polynomials using algebraic operations
+    \item a function $f$ is \textbf{increasing} on a set $I$ if $x_q < x_2 \Then f(x_1) < f(x_2)$ for any $x_1, x_2 \in I$.
+    \item a function $f$ is \textbf{decreasing} on a set $I$ if $x_q < x_2 \Then f(x_1) > f(x_2)$ for any $x_1, x_2 \in I$.
+    \item even/odd:
+    \begin{itemize}
+        \item \textbf{even function}: $\forall x, f(-x) = f(x)$
+        \begin{itemize}
+            \item symmetric about the $y$-axis
+        \end{itemize}
+        \item \textbf{odd function}: $\forall x, f(-x) = -f(x)$
+        \begin{itemize}
+            \item symmetric about the origin $O$
+        \end{itemize}
+        \item any function defined on $\mathbb{R}$ can be decomposed \textit{uniquely} into the sum of an even function and an odd function
+    \end{itemize}
+    \item \textbf{power function}: $x^n$
+
+        \centerline{
+            $x^n$ is \begin{cases} 
+                $an odd function,$ & $if $n$ is odd$ \\
+                $an even function,$ & $if $n$ is even$ 
+            \end{cases}
+            % \]
+        }
+\end{itemize}
+
+\end{multicols*}
+
+\end{document}
