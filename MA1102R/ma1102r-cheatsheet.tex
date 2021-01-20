@@ -15,6 +15,7 @@
 \usepackage{tikz}
 \usetikzlibrary{arrows.meta}
 \usetikzlibrary{calc}
+\graphicspath{ {./images/} }
 \setlist{nosep}
 
 % ADDITIONAL USEFUL PACKAGES:
@@ -245,15 +246,157 @@
         \item any function defined on $\mathbb{R}$ can be decomposed \textit{uniquely} into the sum of an even function and an odd function
     \end{itemize}
     \item \textbf{power function}: $x^n$
-
-        \centerline{
-            $x^n$ is \begin{cases} 
-                $an odd function,$ & $if $n$ is odd$ \\
-                $an even function,$ & $if $n$ is even$ 
-            \end{cases}
-            % \]
-        }
+    \begin{itemize}
+        \item $x^n$ is $\begin{cases} 
+            $an odd function,$ & $if $n$ is odd$ \\
+            $an even function,$ & $if $n$ is even$ 
+        \end{cases}$
+    \end{itemize}
 \end{itemize}
+
+\section{01. LIMITS}
+\subsection{definition}
+\begin{center}
+    if $f(x)$ is arbitrarily close to L by taking $x$ to be sufficiently close (but not equal to) $a$, then we write
+    \\* $\displaystyle{\lim_{x \to a} f(x) = L}$
+    \\* or $x \to a \Then f(x) \to L$
+\end{center}
+\begin{itemize}
+    \item the limit $\displaystyle{\lim_{x \to a} f(x)}$
+    \begin{itemize}
+        \item depends only on the values of $f(x)$ for $x$ near $a$    
+        \item is independent to the value of $f(x)$ at $a$.
+    \end{itemize}
+\end{itemize}
+
+\subsection{limit laws}
+\begin{itemize}
+    \item Let $c \in \mathbb{R}$. $\displaystyle{\lim_{x \to a} c = c}$
+    \item $\displaystyle{\lim_{x \to a} x = a}$
+\end{itemize}
+Suppose $\displaystyle{\lim_{x \to a} f(x) = L}$ and $\displaystyle{\lim_{x \to a} g(x) = M}$. Let $c$ be a constant. 
+\begin{itemize}
+    \item $\displaystyle{\lim_{x \to a} \left( cf(x) \right)} = cL = c \lim_{x \to a} f(x)$
+    \item $\displaystyle{\lim_{x \to a} \left( f(x) + g(x) \right) = L + M = \lim_{x \to a} f(x) + \lim_{x \to a} g(x)}$
+    \item $\displaystyle{\lim_{x \to a} \left( f(x) - g(x) \right) = \lim_{x \to a} f(x) - \lim_{x \to a} g(x)}$
+    \item $\displaystyle{\lim_{x \to a} \left(f(x) g(x)\right) \lim_{x \to a} f(x) \lim_{x \to a} g(x)}$
+    \item $\displaystyle{\lim_{x \to a} \frac{f(x)}{g(x)} = \frac{\lim_{x \to a} f(x)}{\lim_{x \to a} g(x)}}$ provided that $\displaystyle{\lim_{x \to a} g(x) \neq 0}$
+    \item $\displaystyle{\lim_{x \to a} \left( f(x) \right) ^n = \left(\lim_{x \to a} f(x)\right)^n}$
+    \item $\displaystyle{\lim_{x \to a} \sqrt[n]{f(x)} = \sqrt[n]{\lim_{x \to a} f(x)}}$
+\end{itemize}
+
+\subsubsection{inequalities on limits}
+Suppose $\displaystyle{\lim_{x \to a} f(x) = L}$ and $\displaystyle{\lim_{x \to a} g(x) = M}$. 
+\begin{center}
+    \textbf{lemma}
+    \\* if $f(x) \leq g(x)$ for all $x$ near $a$ (except possibly at $a$), 
+    \\* then $L \leq M$.
+
+    \textbf{lemma}
+    \\* If $f(x) \geq 0$ for all $x$, then $L \geq 0$.
+\end{center}
+
+\subsubsection{direct substitution property}
+\begin{center}
+    Let $f$ be a polynomial or rational function. 
+    \\* If $a$ is in the domain of $f$, then
+    \\* $\displaystyle{\lim_{x \to a} f(x) = f(a)}$
+
+    If $f(x) = g(x)$ for all $x$ near $a$ except possibly at $a$, then 
+    \\* $\displaystyle{\lim_{x \to a} f(x) = \lim_{x \to a} g(x)}$
+\end{center}
+
+applications
+\begin{itemize}
+    \item if $a$ is not in the domain (e.g. 0 denominator), don't apply directly
+    \item convert to an equivalent function and then sub in
+\end{itemize}
+
+\subsection{one-sided limits}
+\begin{itemize}
+    \item limit laws also hold for one-sided limits
+\end{itemize}
+\begin{center}
+    If as $x$ is close to $a$ from the right, $f(x)$ is close to L, the right-hand limit of $f$ as $x$ approaches $a$ equals $L$.
+    \\* $\displaystyle{\left( x \to a^+ \Then f(x) \to L \right) \Then \lim_{x \to a^+} f(x) = L}$
+    
+    If as $x$ is close to $a$ from the left, $f(x)$ is close to L, the left-hand limit of $f$ as $x$ approaches $a$ equals $L$.
+    \\* $\displaystyle{\left( x \to a^- \Then f(x) \to L \right) \Then \lim_{x \to a^-} f(x) = L}$
+\end{center}
+
+\begin{center}
+    \fbox{
+        $\displaystyle{\lim_{x \to a} f(x) = L \iff \lim_{x \to a^+} f(x) = \lim_{x \to a^-} f(x) = L}$
+    }
+    $f(x) \to L \Leftarrow x \to a \Iff \begin{cases}
+        x \to a^+ \Then f(x) \to L \\
+        x \to a^- \Then f(x) \to L
+    \end{cases}$
+\end{center}
+
+\subsection{infinite limits}
+\begin{center}
+    Suppose $f$ is defined on both sides of $a$ (except possibly at $a$).
+    \\* If $f(x)$ is arbitrarily large by taking $x$ sufficiently close to $a$, 
+    \\* $\displaystyle{\lim_{x \to a} f(x) = \infty}$
+    \\* If $f(x)$ is arbitrarily negatively large $\cdots$, 
+    \\* $\displaystyle{\lim_{x \to a} f(x) = -\infty}$
+
+    Suppose $f$ is defined on $[M, \infty)$ for some real number $M$.
+    \\* If $f(x)$ is arbitrarily close to $L$ by taking $x$ sufficiently large,
+    \\* $\displaystyle{\lim_{x \to \infty} f(x) = L}$
+\end{center}
+
+\subsubsection{squeeze theorem}
+\begin{itemize}
+    \item Suppose $f(x)$ is bounded by $g(x)$ and $h(x)$ where 
+    \begin{itemize}
+        \item $g(x) \leq f(x) \leq h(x)$ for all $x$ near $a$ (except at $a$),
+        \item and $\displaystyle{\lim_{x \to a} g(x) = \lim_{x \to a} h(x) = L}$.
+    \end{itemize}
+\end{itemize}
+\centerline{Then $\displaystyle{\lim_{x \to a} f(x) = L}$}
+
+\subsection{definition of limits}
+\begin{center}
+    Let $f$ be a function defined on an open interval containing $a$, except possibly at $a$.
+    \\* The limit of $f(x)$. as $x$ approaches $a$, equals $L$ if. for every $\epsilon > 0$ there is $\delta > 0$ such that
+    \\* $0 < \abs{x - a} < \delta \Rightarrow \abs{f(x) - L} < \epsilon$ 
+    \includegraphics[width=0.9\linewidth]{ma1102r-limits.png}
+\end{center}
+informally,
+\begin{itemize}
+    \item $x$ is close to but not equal to $a$.
+    \item $f(x)$ is arbitrarily close to $L$.
+\end{itemize}
+
+\subsubsection{definition of one-sided limits}
+\begin{center}
+    \textbf{LH Limit}: $\displaystyle{\lim_{x \to a^-} f(x) = L}$ 
+    \\* if for every $\epsilon > 0$ there exists $\delta > 0$ such that
+    \\* $0 < a - x < \delta \Then \abs{f(x) - L} < \epsilon$
+\end{center}
+\begin{center}
+    \textbf{RH Limit}: $\displaystyle{\lim_{x \to a^+} f(x) = L}$ 
+    \\* if for every $\epsilon > 0$ there exists $\delta > 0$ such that
+    \\* $0 < x - a < \delta \Then \abs{f(x) - L} < \epsilon$
+\end{center}
+
+\subsubsection{definition of infinite limit}
+\begin{center}
+    $\displaystyle{\lim_{x \to a} f(x) = \infty}$ 
+    \\* if for every $M > 0$ there exists $\delta > 0$ such that
+    \\* $0 < \abs{x - a} < \delta \Then f(x) > M$
+    \includegraphics[width=0.9\linewidth]{ma1102r-infinite-limit.png}
+    \\* \textbf{negative infinite limit:}
+    \\* $0 < \abs{x - a} < \delta \Then f(x) < M$
+\end{center}
+
+
+\subsection{triangle inequality}
+\begin{center}
+    $\abs{a = b} \leq \abs{a} + \abs{b}$ for all $a, b \in \mathbb{R}$
+\end{center}
 
 \end{multicols*}
 
