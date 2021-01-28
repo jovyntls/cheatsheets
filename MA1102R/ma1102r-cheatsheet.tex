@@ -360,14 +360,14 @@ applications
 \subsection{definition of limits}
 \begin{center}
     Let $f$ be a function defined on an open interval containing $a$, except possibly at $a$.
-    \\* The limit of $f(x)$. as $x$ approaches $a$, equals $L$ if. for every $\epsilon > 0$ there is $\delta > 0$ such that
+    \\* The limit of $f(x)$ as $x$ approaches $a$, equals $L$ if. for every $\epsilon > 0$ there is $\delta > 0$ such that
     \\* $0 < \abs{x - a} < \delta \Rightarrow \abs{f(x) - L} < \epsilon$ 
     \includegraphics[width=0.9\linewidth]{ma1102r-limits.png}
 \end{center}
 informally,
 \begin{itemize}
-    \item $x$ is close to but not equal to $a$.
-    \item $f(x)$ is arbitrarily close to $L$.
+    \item $0 < \abs{x - a} < \delta \Then$ $x$ is close to but not equal to $a$.
+    \item $0 < \abs{f(x) - L} < \epsilon \Then$ $f(x)$ is arbitrarily close to $L$.
 \end{itemize}
 
 \subsubsection{definition of one-sided limits}
@@ -391,6 +391,74 @@ informally,
     \\* \textbf{negative infinite limit:}
     \\* $0 < \abs{x - a} < \delta \Then f(x) < M$
 \end{center}
+
+\section{02. CONTINUOUS FUNCTIONS}
+\subsection{definition of continuity}
+\begin{center}
+    a function $f$ is \textbf{continuous at $a$} $\Iff$ 
+    \\* $f$ is continuous from the left and from the right at $a$
+    \\* $\displaystyle{\lim_{x \to a} f(x) = f(a)}$
+\end{center}
+a function $f$ is \textit{continuous at an interval} if it is continuous at every number in the interval.
+\begin{center}
+    $f$ is continuous on \textbf{open interval} $(a, b)$
+    \\* $\Iff f$ is continuous at every $x \in (a, b)$
+    \\ $f$ is continuous on \textbf{closed interval} [a, b]
+    $\Iff \begin{cases}
+        f $ is continuous at every $x \in (a, b) \\
+        f $ is continuous from the right at $ a \\
+        f $ is continuous from the left at $ b
+    \end{cases}$
+\end{center}
+
+\subsubsection{continuity test}
+$f$ is continuous at $a \Iff$ 
+\begin{enumerate}
+    \item $f$ is defined at $a$ ($a$ is in the domain of $f$)
+    \item $\displaystyle{\lim_{x \to a} f(x)}$ exists
+    \item $\displaystyle{\lim_{x \to a} f(x)} = f(a)$ 
+\end{enumerate}
+
+\subsubsection{precise definition of continuity}
+\begin{center}
+    a function $f$ is continuous at a number $a$ if $\forall \epsilon > 0, \exists \delta > 0$ such that 
+    $\abs{x - a} < \delta \Then \abs{f(x) - f(a)} < \epsilon$
+\end{center}
+
+\subsubsection{examples of discontinuity}
+\begin{itemize}
+    \item removable discontinuity
+    \item infinite discontinuity
+    \item jump discontinuity
+\end{itemize}
+
+\subsection{properties of continuous functions}
+let $f$ and $g$ be functions continuous at $a$. let $c$ be a constant.
+\begin{enumerate}
+    \item $cf$ is continuous at $a$
+    \item $f+g$ is continuous at $a$
+    \item $f-g$ is continuous at $a$
+    \item $fg$ is continuous at $a$
+    \item $\frac{f}{g}$ is continuous at $a$, provided $g(a) \neq 0$
+\end{enumerate}
+
+\textbf{other properties}
+\begin{itemize}
+    \item a polynomial is continuous everywhere;
+    \item a rational function is continuous on its domain
+    \item let $c$ be a real number. $f(x) = c$ is continuous on $\mathbb{R}$.
+    \item $f(x) = x$ is continuous on $\mathbb{R}$.
+\end{itemize}
+
+\subsection{trigonometric functions}
+\begin{itemize}
+    \item $f(x) = \sin x$  and $g(x) = \cos x$ are continuous everywhere
+    \item $\tan x, \sec x$ are continuous whenever $\cos x \neq 0$
+    \item $\cot x, \csc x$ are continuous whenever $\sin x \neq 0$
+    \begin{itemize}
+        \item domain: $\mathbb{R} \backslash \{0, \pm \pi, \pm 2\pi, \cdots\}$
+    \end{itemize}
+\end{itemize}
 
 
 \subsection{triangle inequality}
