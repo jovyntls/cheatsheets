@@ -285,6 +285,12 @@ Suppose $\displaystyle{\lim_{x \to a} f(x) = L}$ and $\displaystyle{\lim_{x \to 
     \item $\displaystyle{\lim_{x \to a} \sqrt[n]{f(x)} = \sqrt[n]{\lim_{x \to a} f(x)}}$
 \end{itemize}
 
+\begin{center}
+    \fbox{
+        if $\displaystyle{\lim_{x \to a} \frac{f(x)}{g(x)}}$ exists and $\displaystyle{\lim_{x \to a} g(x) = 0}$, then $\displaystyle{\lim_{x \to a} f(x) = 0}$
+    }
+\end{center}
+
 \subsubsection{inequalities on limits}
 Suppose $\displaystyle{\lim_{x \to a} f(x) = L}$ and $\displaystyle{\lim_{x \to a} g(x) = M}$. 
 \begin{center}
@@ -450,7 +456,7 @@ let $f$ and $g$ be functions continuous at $a$. let $c$ be a constant.
     \item $f(x) = x$ is continuous on $\mathbb{R}$.
 \end{itemize}
 
-\subsection{trigonometric functions}
+\subsubsection{trigonometric functions}
 \begin{itemize}
     \item $f(x) = \sin x$  and $g(x) = \cos x$ are continuous everywhere
     \item $\tan x, \sec x$ are continuous whenever $\cos x \neq 0$
@@ -459,6 +465,34 @@ let $f$ and $g$ be functions continuous at $a$. let $c$ be a constant.
         \item domain: $\mathbb{R} \backslash \{0, \pm \pi, \pm 2\pi, \cdots\}$
     \end{itemize}
 \end{itemize}
+
+\subsection{composite of continuous functions}
+\begin{center}
+    if $f$ is continuous at $b$ and $\displaystyle{\lim_{x \to a} g(x) = b}$, then 
+    \\* $\displaystyle{\lim_{x \to a} f(g(x)) = f(\lim_{x \to a} g(x))}$
+\end{center}
+\begin{center}
+    if $g$ is continuous at $a$ and $f$ is continuous at $g(a)$,
+    \\* then $f \circ g$ is continuous at $a$.
+    \\* $\displaystyle{\lim_{x \to a} (f \circ g)(x) = (f \circ g)(a)}$
+\end{center}
+
+\subsection{substitution theorem}
+Suppose $y = f(x)$ such that $\displaystyle{\lim_{x \to a}f(x) = b}$. If
+\begin{enumerate}
+    \item $g$ is continuous at $b$, OR 
+    \item $\forall x$ near $a$, except at $a$, $f(x) \neq b$ and $\displaystyle{\lim_{y \to b} g(y)}$ exists
+\end{enumerate}
+Then $\displaystyle{\lim_{x \to a} g(f(x)) = \lim_{y \to b} g(y)}$
+
+\subsection{intermediate value theorem}\
+\begin{center}
+    Let $f$ be a function continuous on $[a, b]$ with $f(a) \neq f(b)$. 
+    \\* Let $N$ be a number between $f(a)$ and $f(b)$.
+    \\* Then there exists $c \in (a, b)$ such that $f(c) = N$.
+    \includegraphics[width=0.9\linewidth]{ma1102r-intermediate-value-theorem.png}
+\end{center}
+
 
 
 \subsection{triangle inequality}
