@@ -402,7 +402,7 @@ informally,
 \subsection{definition of continuity}
 \begin{center}
     a function $f$ is \textbf{continuous at $a$} $\Iff$ 
-    \\* $f$ is continuous from the left and from the right at $a$
+    \\* $f$ is continuous from the left and from the right at $a$.
     \\* $\displaystyle{\lim_{x \to a} f(x) = f(a)}$
 \end{center}
 a function $f$ is \textit{continuous at an interval} if it is continuous at every number in the interval.
@@ -492,6 +492,54 @@ Then $\displaystyle{\lim_{x \to a} g(f(x)) = \lim_{y \to b} g(y)}$
     \\* Then there exists $c \in (a, b)$ such that $f(c) = N$.
     \includegraphics[width=0.9\linewidth]{ma1102r-intermediate-value-theorem.png}
 \end{center}
+
+\section{03. DERIVATIVES}
+
+\subsection{tangent line}
+\begin{center}
+    the \textbf{tangent line} to $y=f(x)$ at $(a, f(a))$ is the line 
+    \\* passing through $(a, f(a))$ with slope $f'(a)$:
+    \\* $y = f'(a)(x-a) + f(a)$
+\end{center}
+
+\subsection{definition of derivatives}
+\begin{itemize}
+    \item $f$ is differentiable at $a$ if $f'(a)$ exists
+    \item $f'(a)$ is the slope of $y=f(x)$ at $x=a$
+\end{itemize}
+\begin{center}
+    $\displaystyle{f'(x) := \lim_{h \to 0} \frac{f(x+h) - f(x)}{h}}$
+    $\displaystyle{f'(a) := \lim_{x \to a} \frac{f(x) - f(a)}{x-a}}$
+\end{center}
+\begin{itemize}
+    \item $f'(x) = y' = \frac{dy}{dx} = \frac{df}{dx} = \frac{d}{dx}f(x) = D_xf(x) = \cdots$
+    \item $\displaystyle{\frac{dy}{dx} := \lim_{x \to 0} \frac{\Delta y}{\Delta x}}$  (derivative of $y$ with respect to $x$)
+    \item $f'(a) = \frac{dy}{dx}\vert_{x = a}$
+\end{itemize}
+
+\subsection{differentiable functions}
+\begin{itemize}
+    \item $f$ is differentiable at $a$ if $\displaystyle{f'(a) := \lim_{x \to 0}\frac{f(a + h) - f(a)}{h}}$ exists.
+    \item $f$ is differentiable on $(a, b)$ if $f$ is differentiable at every $c \in (a, b)$
+\end{itemize}
+
+\subsubsection{differentiability \& continuity}
+\begin{itemize}
+    \item if $f$ is differentiable at $a$, then $f$ is continuous at $a$.
+    \begin{itemize}
+        \item differentiability $\Then$ continuity
+    \end{itemize}
+    \item continuity $\nRightarrow$ differentiability
+\end{itemize}
+
+
+\begin{center}
+    \ 
+\end{center}
+
+
+
+
 
 
 
