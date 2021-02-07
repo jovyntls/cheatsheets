@@ -255,19 +255,30 @@
 \end{itemize}
 
 \section{01. LIMITS}
-\subsection{definition}
+\subsection{precise definition of limits}
 \begin{center}
-    if $f(x)$ is arbitrarily close to L by taking $x$ to be sufficiently close (but not equal to) $a$, then we write
-    \\* $\displaystyle{\lim_{x \to a} f(x) = L}$
-    \\* or $x \to a \Then f(x) \to L$
+    Let $f$ be a function defined on an open interval containing $a$, except possibly at $a$.
+    \\* The limit of $f(x)$ as $x$ approaches $a$, equals $L$ if, for every $\epsilon > 0$ there is $\delta > 0$ such that
+    \\* $0 < \abs{x - a} < \delta \Rightarrow \abs{f(x) - L} < \epsilon$ 
+    \includegraphics[width=0.9\linewidth]{ma1102r-limits.png}
 \end{center}
+informally,
 \begin{itemize}
-    \item the limit $\displaystyle{\lim_{x \to a} f(x)}$
-    \begin{itemize}
-        \item depends only on the values of $f(x)$ for $x$ near $a$    
-        \item is independent to the value of $f(x)$ at $a$.
-    \end{itemize}
+    \item $0 < \abs{x - a} < \delta \Then$ $x$ is close to but not equal to $a$.
+    \item $0 < \abs{f(x) - L} < \epsilon \Then$ $f(x)$ is arbitrarily close to $L$.
 \end{itemize}
+% \begin{center}
+%     if $f(x)$ is arbitrarily close to L by taking $x$ to be sufficiently close (but not equal to) $a$, then we write
+%     \\* $\displaystyle{\lim_{x \to a} f(x) = L}$
+%     \\* or $x \to a \Then f(x) \to L$
+% \end{center}
+% \begin{itemize}
+%     \item the limit $\displaystyle{\lim_{x \to a} f(x)}$
+%     \begin{itemize}
+%         \item depends only on the values of $f(x)$ for $x$ near $a$    
+%         \item is independent to the value of $f(x)$ at $a$.
+%     \end{itemize}
+% \end{itemize}
 
 \subsection{limit laws}
 \begin{itemize}
@@ -340,42 +351,6 @@ applications
     \end{cases}$
 \end{center}
 
-\subsection{infinite limits}
-\begin{center}
-    Suppose $f$ is defined on both sides of $a$ (except possibly at $a$).
-    \\* If $f(x)$ is arbitrarily large by taking $x$ sufficiently close to $a$, 
-    \\* $\displaystyle{\lim_{x \to a} f(x) = \infty}$
-    \\* If $f(x)$ is arbitrarily negatively large $\cdots$, 
-    \\* $\displaystyle{\lim_{x \to a} f(x) = -\infty}$
-
-    Suppose $f$ is defined on $[M, \infty)$ for some real number $M$.
-    \\* If $f(x)$ is arbitrarily close to $L$ by taking $x$ sufficiently large,
-    \\* $\displaystyle{\lim_{x \to \infty} f(x) = L}$
-\end{center}
-
-\subsubsection{squeeze theorem}
-\begin{itemize}
-    \item Suppose $f(x)$ is bounded by $g(x)$ and $h(x)$ where 
-    \begin{itemize}
-        \item $g(x) \leq f(x) \leq h(x)$ for all $x$ near $a$ (except at $a$),
-        \item and $\displaystyle{\lim_{x \to a} g(x) = \lim_{x \to a} h(x) = L}$.
-    \end{itemize}
-\end{itemize}
-\centerline{Then $\displaystyle{\lim_{x \to a} f(x) = L}$}
-
-\subsection{definition of limits}
-\begin{center}
-    Let $f$ be a function defined on an open interval containing $a$, except possibly at $a$.
-    \\* The limit of $f(x)$ as $x$ approaches $a$, equals $L$ if. for every $\epsilon > 0$ there is $\delta > 0$ such that
-    \\* $0 < \abs{x - a} < \delta \Rightarrow \abs{f(x) - L} < \epsilon$ 
-    \includegraphics[width=0.9\linewidth]{ma1102r-limits.png}
-\end{center}
-informally,
-\begin{itemize}
-    \item $0 < \abs{x - a} < \delta \Then$ $x$ is close to but not equal to $a$.
-    \item $0 < \abs{f(x) - L} < \epsilon \Then$ $f(x)$ is arbitrarily close to $L$.
-\end{itemize}
-
 \subsubsection{definition of one-sided limits}
 \begin{center}
     \textbf{LH Limit}: $\displaystyle{\lim_{x \to a^-} f(x) = L}$ 
@@ -388,7 +363,8 @@ informally,
     \\* $0 < x - a < \delta \Then \abs{f(x) - L} < \epsilon$
 \end{center}
 
-\subsubsection{definition of infinite limit}
+\subsection{definition of infinite limits}
+% \subsubsection{definition of infinite limit}
 \begin{center}
     $\displaystyle{\lim_{x \to a} f(x) = \infty}$ 
     \\* if for every $M > 0$ there exists $\delta > 0$ such that
@@ -397,6 +373,39 @@ informally,
     \\* \textbf{negative infinite limit:}
     \\* $0 < \abs{x - a} < \delta \Then f(x) < M$
 \end{center}
+
+\subsubsection{limits to infinity}
+\begin{center}
+    $\displaystyle{\lim_{x \to -\infty}f(x) = L}$: 
+    \\* For every $\epsilon > 0$, there exists $N$ such that
+    \\* $x > N \Then \abs{f(x) - L} < \epsilon$
+    \\ \ 
+    \\ $\displaystyle{\lim_{x \to -\infty}f(x) = \infty}$: 
+    \\* For every $M > 0$, there exists $N$ such that
+    \\* $x > N \Then f(x) > M$
+\end{center}
+% \begin{center}
+%     Suppose $f$ is defined on both sides of $a$ (except possibly at $a$).
+%     \\* If $f(x)$ is arbitrarily large by taking $x$ sufficiently close to $a$, 
+%     \\* $\displaystyle{\lim_{x \to a} f(x) = \infty}$
+%     \\* If $f(x)$ is arbitrarily negatively large $\cdots$, 
+%     \\* $\displaystyle{\lim_{x \to a} f(x) = -\infty}$
+
+%     Suppose $f$ is defined on $[M, \infty)$ for some real number $M$.
+%     \\* If $f(x)$ is arbitrarily close to $L$ by taking $x$ sufficiently large,
+%     \\* $\displaystyle{\lim_{x \to \infty} f(x) = L}$
+% \end{center}
+
+\subsection{squeeze theorem}
+\begin{itemize}
+    \item Suppose $f(x)$ is bounded by $g(x)$ and $h(x)$ where 
+    \begin{itemize}
+        \item $g(x) \leq f(x) \leq h(x)$ for all $x$ near $a$ (except at $a$),
+        \item and $\displaystyle{\lim_{x \to a} g(x) = \lim_{x \to a} h(x) = L}$.
+    \end{itemize}
+\end{itemize}
+\centerline{Then $\displaystyle{\lim_{x \to a} f(x) = L}$}
+
 
 \section{02. CONTINUOUS FUNCTIONS}
 \subsection{definition of continuity}
