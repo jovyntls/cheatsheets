@@ -376,11 +376,11 @@ applications
 
 \subsubsection{limits to infinity}
 \begin{center}
-    $\displaystyle{\lim_{x \to -\infty}f(x) = L}$: 
+    $\displaystyle{\lim_{x \to \infty}f(x) = L}$: 
     \\* For every $\epsilon > 0$, there exists $N$ such that
     \\* $x > N \Then \abs{f(x) - L} < \epsilon$
     \\ \ 
-    \\ $\displaystyle{\lim_{x \to -\infty}f(x) = \infty}$: 
+    \\ $\displaystyle{\lim_{x \to \infty}f(x) = \infty}$: 
     \\* For every $M > 0$, there exists $N$ such that
     \\* $x > N \Then f(x) > M$
 \end{center}
@@ -541,6 +541,56 @@ Then $\displaystyle{\lim_{x \to a} g(f(x)) = \lim_{y \to b} g(y)}$
     \item continuity $\nRightarrow$ differentiability
 \end{itemize}
 
+\subsection{differentiation}
+\begin{itemize}
+    \item every polynomial and rational function is differentiable on its domain
+    \begin{itemize}
+        \item the domain of $f'$ may be smaller than the domain of $f$.
+    \end{itemize}
+    \item trigonometric functions are differentiable on the domain
+\end{itemize}
+
+\subsubsection{chain rule}
+\begin{center}
+    If $g$ is differentiable at $a$ and $f$ is differentiable at $b = g(a)$, then $F = f \circ g$ is differentiable at $a$ and
+    \\* $F'(a) = (f \circ g)'(a) = f'(b)g'(a) = f'(g(a))g'(a)$
+\end{center}
+\begin{center}
+    If $z=f(y)$ and $y = g(x)$, then 
+    \\* $\frac{dz}{dx} = \frac{dz}{dy} \frac{dy}{dx}$
+    \\* $\frac{dz}{dx}\vert_{x=a} = \frac{dz}{dy}\vert_{y=b} \frac{dy}{dx}\vert_{x=a}$
+\end{center}
+
+\subsubsection{generalised chain rule}
+$h$ is differentiable at $a$; $g$ is differentiable at $B = h(a)$; $f$ is differentiable at $c = g(b)$.
+\begin{align*}
+    (f \circ (g \circ h))'&= f' \circ (g \circ h) \cdot (g \circ h)'
+    \\ &= f'(c)g'(b)h'(a)
+\end{align*}
+\begin{center}
+    Leibniz notation:
+    \\* If $y = h(x), z=g(y), w=f(z)$,
+    \\* $\frac{dw}{dx}  = \frac{dw}{dz} \frac{dz}{dy} \frac{dy}{dx}$
+\end{center}
+
+\subsection{implicit differentiation}
+\begin{itemize}
+    \item assumes that $\frac{dy}{dx}$ exists
+\end{itemize}
+
+\subsection{second derivative}
+\begin{center}
+    $f''(x) = \frac{d}{dx}(\frac{dy}{dx}) = \frac{d^2y}{dx^2}$
+    \\* $f' = D(f) \Rightarrow f'' := D^2(f)$
+\end{center}
+
+\subsection{higher derivatives}
+\begin{center}
+    $f^{(0)} := f$
+    \\* For any positive integer $n$, $f^{(n)} := (f^{(n-1)})'$
+    \\* if $y=f(x)$, then $f^{(n)}(x) = y^{(n)} = \frac{d^ny}{dx^n} = D^nf(x)$
+\end{center}
+
 
 \begin{center}
     \ 
@@ -552,9 +602,25 @@ Then $\displaystyle{\lim_{x \to a} g(f(x)) = \lim_{y \to b} g(y)}$
 
 
 
-\subsection{triangle inequality}
+\subsection{misc}
+\subsubsection{triangle inequality}
 \begin{center}
     $\abs{a = b} \leq \abs{a} + \abs{b}$ for all $a, b \in \mathbb{R}$
+\end{center}
+
+\subsubsection{binomial theorem}
+\begin{center}
+    $\displaystyle{(a+b)^n = \sum^n_{k=0}\binom{n}{k}a^{n-k}b^k}$
+    \\* $= a^n + \binom{n}{1}a^{n-1}{b} + \dots + \binom{n}{n-1} ab^{n-1} + b^n$
+\end{center}
+\begin{center}
+    where the binomial coefficient is given by 
+    \\* $\binom{n}{k} = \frac{n!}{k!(n-k)!}$
+\end{center}
+
+\subsubsection{factorisation}
+\begin{center}
+    $a^n-b^n = (a-b)(a^{n-1} + a^{n-2}b + \cdots + ab^{n-2} + b^{n-1})$
 \end{center}
 
 \end{multicols*}
