@@ -594,6 +594,80 @@ $h$ is differentiable at $a$; $g$ is differentiable at $B = h(a)$; $f$ is differ
     \\* if $y=f(x)$, then $f^{(n)}(x) = y^{(n)} = \frac{d^ny}{dx^n} = D^nf(x)$
 \end{center}
 
+\section{04. APPLICATIONS OF DIFFERENTIATION}
+
+\subsection{extreme values of functions}
+Let $f$ be a function with domain $D$.
+
+\subsubsection{global (absolute) max/min}
+\begin{itemize}
+    \item aka absolute max/min
+    \item extreme values = absolute maximum and absolute minimum
+\end{itemize}
+\begin{center}
+    $f$ has a global \textbf{maximum} at $c \in D$
+    \\* $\Iff f(c) \geq f(x)$ for all $x \in D$
+    \\ $f$ has a global \textbf{minimum} at $c \in D$
+    \\* $\Iff f(c) \leq f(x)$ for all $x \in D$
+\end{center}
+
+\subsubsection{local max/min}
+\begin{itemize}
+    \item aka relative max/min aka "turning points"
+\end{itemize}
+\begin{center}
+    $f$ has a local \textbf{maximum} at $c \in D$ 
+    \\* $\Iff f(c) \geq f(x)$ for all $x$ near $c$
+    \\ $f$ has a local \textbf{minimum} at $c \in D$ 
+    \\* $\Iff f(c) \leq f(x)$ for all $x$ near $c$
+\end{center}
+
+\subsection{extreme value theorem}
+\begin{center}
+    \textbf{existence}
+    \\* if $f$ is \textit{continuous} on a \textit{finite closed} interval $[a, b]$,
+    \\* then $f$ attains extreme values on $[a, b]$.
+
+    \textbf{value}
+    \\* the extreme value occurs at either 
+    \\* \textit{critical numbers} or the \textit{endpoints} ($x=a, x=b$).
+\end{center}
+
+\subsection{critical numbers}
+\begin{center}
+    Then $c \in D$ is a \textit{critical number} of $f$ if 
+    \\* $f'(c) = 0$, or $f'(c)$ does not exist.
+\end{center}
+\begin{center}
+    \textbf{fermat's theorem}
+    \\* Suppose $f$ has a local maximum or minimum at $c$.
+    \\* If $f'(c)$ exists, then $f'(c)=0$.
+\end{center}
+
+\subsection{Rolle's Theorem}
+\begin{center}
+    Let $f$ be a function such that $f$ is \textit{continuous} on $[a, b]$, $f$ is \textit{differentiable} on $(a, b)$, and $f(a) = f(b)$.
+    \\* Then there is a number $c \in (a, b)$ such that $f'(c) = 0$.
+\end{center}
+
+\subsection{mean value theorem}
+\begin{center}
+    Let $f$ be a function such that 
+    \\* $f$ is \textit{continuous} on $[a, b]$ and $f$ is \textit{differentiable} on $(a, b)$.
+    \\* Then there exists $c \in (a, b)$ such that 
+    \\* $f'(c) = \frac{f(b) - f(a)}{b-a}$
+\end{center}
+\includegraphics[width=0.9\linewidth]{ma1102r-mean-value-theorem.png}
+\begin{itemize}
+    \item generalisation of Rolle's theorem when $f(a) = f(b)$.
+\end{itemize}
+
+\subsubsection{ordinary differential equations}
+\begin{center}
+    Let $f$ and $g$ be continuous on $[a, b]$.
+    \\* If $f'(x) = g'(x)$ for all $x \in (a, b)$, 
+    \\* then $f(x) = g(x) + C$ on $[a, b]$ for a constant $C$.
+\end{center}
 
 \begin{center}
     \ 
