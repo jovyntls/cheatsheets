@@ -1,5 +1,4 @@
 
-
 .DS_Store
 .gitignore
 **.aux
@@ -9,6 +8,7 @@
 **.out
 **.synctex.gz
 TEMPLATE/*
+TEMPLATE
 # **/\_\_*_temp.tex
 # **/\_\_*_temp.pdf
 
