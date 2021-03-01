@@ -1,0 +1,21 @@
+
+.DS_Store
+**.aux
+**.fdb_latexmk
+**.fls
+**.log
+**.out
+**.synctex.gz
+TEMPLATE/*
+TEMPLATE
+# **/\_\_*_temp.tex
+# **/\_\_*_temp.pdf
+
+
+# exception: ignore this
+**/\_\_latexindent\_temp.tex
+**/\_\_latexindent\_temp.pdf
+
+# CS2030S
+CS2030S/*
+!CS2030S/cs2030s-cheatsheet.pdf
