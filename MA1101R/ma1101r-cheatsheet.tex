@@ -1,0 +1,190 @@
+\documentclass[10pt, landscape]{article}
+\usepackage[scaled=0.92]{helvet}
+\usepackage{calc}
+\usepackage{multicol}
+\usepackage{ifthen}
+\usepackage[a4paper,margin=3mm,landscape]{geometry}
+\usepackage{amsmath,amsthm,amsfonts,amssymb}
+\usepackage{color,graphicx,overpic}
+\usepackage{hyperref}
+\usepackage{newtxtext} 
+\usepackage{enumitem}
+\usepackage[table]{xcolor}
+\usepackage{mathtools}
+\usepackage{nicematrix}
+% for drawing diragrams/graphs
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta}
+\usetikzlibrary{calc}
+\setlist{nosep}
+
+% ADDITIONAL USEFUL PACKAGES:
+% for matrices
+
+% for relations
+\usepackage{cancel}
+\usepackage{ mathrsfs }
+% for including images
+\graphicspath{ {./images/} }
+
+
+\pdfinfo{
+  /Title (MA1101R.pdf)
+  /Creator (TeX)
+  /Producer (pdfTeX 1.40.0)
+  /Author (Jovyn)
+  /Subject (MA1101R)
+  /Keywords (MA1101R, nus,cheatsheet,pdf)}
+
+% Turn off header and footer
+\pagestyle{empty}
+
+\newenvironment{tightcenter}{%
+  \setlength\topsep{0pt}
+  \setlength\parskip{0pt}
+  \begin{center}
+}{%
+  \end{center}
+}
+
+% redefine section commands to use less space
+\makeatletter
+\renewcommand{\section}{\@startsection{section}{1}{0mm}%
+                                {-1ex plus -.5ex minus -.2ex}%
+                                {0.5ex plus .2ex}%x
+                                {\normalfont\large\bfseries}}
+\renewcommand{\subsection}{\@startsection{subsection}{2}{0mm}%
+                                {-1explus -.5ex minus -.2ex}%
+                                {0.5ex plus .2ex}%
+                                {\normalfont\normalsize\bfseries}}
+\renewcommand{\subsubsection}{\@startsection{subsubsection}{3}{0mm}%
+                                {-1ex plus -.5ex minus -.2ex}%
+                                {1ex plus .2ex}%
+                                {\normalfont\small\bfseries}}%
+\renewcommand{\familydefault}{\sfdefault}
+\renewcommand\rmdefault{\sfdefault}
+%  makes nested numbering (e.g. 1.1.1, 1.1.2, etc)
+\renewcommand{\labelenumii}{\theenumii}
+\renewcommand{\theenumii}{\theenumi.\arabic{enumii}.}
+\renewcommand\labelitemii{•}
+%  highlighting for math
+\newcommand{\mathcolorbox}[2]{\colorbox{#1}{$\displaystyle #2$}}
+%  convenient absolute value symbol
+\newcommand{\abs}[1]{\vert #1 \vert}
+%  convenient floor and ceiling
+\newcommand{\floor}[1]{\lfloor #1 \rfloor}
+\newcommand{\ceil}[1]{\lceil #1 \rceil}
+%  convenient modulo
+\newcommand{\Mod}[1]{\ \mathrm{mod}\ #1}
+%  for logical not operator, iff symbol, convenient "if/then"
+\renewcommand{\lnot}{\mathord{\sim}}
+\let\iff\leftrightarrow
+\let\Iff\Leftrightarrow
+\let\then\rightarrow
+\let\Then\Rightarrow
+%  vectors
+\newcommand{\vv}[1]{\boldsymbol{#1}}
+\newcommand{\VV}[1]{\overrightarrow{#1}}
+%  column vector
+\newcommand{\cvv}[1]{\left(\begin{smallmatrix}#1\end{smallmatrix}\right)}
+%  cell colours
+\newcommand\bggreen{\cellcolor{green!10}}
+
+\makeatother
+\definecolor{myblue}{cmyk}{1,.72,0,.38}
+\everymath\expandafter{\the\everymath \color{myblue}}
+% Define BibTeX command
+\def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
+    T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
+
+% Don't print section numbers
+\setcounter{secnumdepth}{0}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0pt plus 0.5ex}
+%% this changes all items (enumerate and itemize)
+\setlength{\leftmargini}{0.5cm}
+\setlength{\leftmarginii}{0.5cm}
+\setlist[itemize,1]{leftmargin=2mm,labelindent=1mm,labelsep=1mm}
+\setlist[itemize,2]{leftmargin=4mm,labelindent=1mm,labelsep=1mm}
+
+%My Environments
+\newtheorem{example}[section]{Example}
+% -----------------------------------------------------------------------
+
+\begin{document}
+
+\begin{multicols*}{4
+    '}
+
+
+% multicol parameters
+% These lengths are set only within the two main columns
+\setlength{\columnseprule}{0.25pt}
+\setlength{\premulticols}{1pt}
+\setlength{\postmulticols}{1pt}
+\setlength{\multicolsep}{1pt}
+\setlength{\columnsep}{2pt}
+
+\begin{center}
+    \fbox{%
+        \parbox{0.8\linewidth}{\centering \textcolor{black}{
+            {\Large\textbf{MA1101R}}
+            \\ \normalsize{AY20/21 sem 2}}
+            \\ {\footnotesize \textcolor{myblue}{by jovyntls}}
+        }%
+    }
+\end{center}
+
+\section{01. LINEAR SYSTEMS}
+\begin{itemize}
+  \item \textbf{zero equation} $\then$ coefficients are all zero 
+  \begin{itemize}
+    \item either 0 or infinitely many solutions
+  \end{itemize}
+  \item \textbf{inconsistent} $\then$ has no solutions
+  \item \textbf{solution set} $\then$ \textit{set} of all solutions to the equation
+  \begin{itemize}
+    \item $\{(1_s, 2s, s) \mid s \in \mathbb{R} \}$
+  \end{itemize}
+  \item \textbf{general solution} $\then$ \textit{expression} that gives us all solutions to the equation
+  \begin{itemize}
+    \item $\begin{cases}
+      x=t
+      \\ y = 2t + 1
+    \end{cases}$
+  \end{itemize}
+\end{itemize}
+\begin{center}
+  \includegraphics[width=0.9\linewidth]{ma1101r-ch1-1.png}
+\end{center}
+
+\subsection{elementary row operations}
+\begin{enumerate}
+  \item $cR_i, c\neq 0$ - multiply by a non-zero constant 
+  \item $R_i \leftrightarrow R_j$ - interchange 2 equations
+  \item $R_i + cR_j, c \in \mathbb{R}$ - add a multiple of one equation to another equation
+\end{enumerate}
+
+\subsection{(reduced) row echelon forms}
+\begin{itemize}
+  \item \# of pivot columns = \# of leading entries = \# of nonzero rows
+  \item every matrix has a \textbf{unique} RREF but can have multiple REF.
+\end{itemize}
+
+\subsection{homogenous linear systems}
+\begin{itemize}
+  \item \textbf{homogenous} $\then$ rightmost column is all zeros 
+  \item either:
+  \begin{itemize}
+    \item one solution - \textbf{trivial solution}
+    \item infinitely many solutions AND the trivial solution
+  \end{itemize}
+\end{itemize}
+
+
+
+
+\end{multicols*}
+
+\end{document}
