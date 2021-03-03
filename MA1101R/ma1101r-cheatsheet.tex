@@ -113,7 +113,8 @@
 % -----------------------------------------------------------------------
 
 \begin{document}
-
+\raggedright
+\footnotesize
 \begin{multicols*}{4
     '}
 
@@ -145,7 +146,7 @@
   \item \textbf{inconsistent} $\then$ has no solutions
   \item \textbf{solution set} $\then$ \textit{set} of all solutions to the equation
   \begin{itemize}
-    \item $\{(1_s, 2s, s) \mid s \in \mathbb{R} \}$
+    \item $\{(1+s, 2s, s) \mid s \in \mathbb{R} \}$
   \end{itemize}
   \item \textbf{general solution} $\then$ \textit{expression} that gives us all solutions to the equation
   \begin{itemize}
@@ -181,6 +182,97 @@
     \item infinitely many solutions AND the trivial solution
   \end{itemize}
 \end{itemize}
+
+\section{02. MATRICES}
+\subsection{types of matrices}
+\begin{itemize}
+  \item \textbf{row/column} matrix $\then$ only one row/column
+  \begin{itemize}
+    \item 1x1 matrix is both row \& column matrix
+  \end{itemize}
+  \item \textbf{square} $\then$ same number of rows \& columns
+  \item \textbf{diagonal} $\then$ all non-diagonal entries are zero
+  \begin{itemize}
+    \item \textbf{scalar} $\then$ all diagonal entries are the same
+    \item \textbf{identity}, $I_n \then$ all diagonal entries are 1
+  \end{itemize}
+  \item \textbf{zero} $\then$ all entries are equal to zero
+  \item \textbf{symmetric} $\then$ $a_{ij} = a_{ji} \forall i, j$
+  \begin{itemize}
+    \item symmetric $\iff A^T = A$
+  \end{itemize}
+  \item \textbf{triangular} 
+  \begin{itemize}
+    \item \textbf{upper} $\then a_{ij} = 0$ whenever $i>j$
+    \item \textbf{lower} $\then a_{ij} = 0$ whenever $i<j$
+    \item for any upper triangular matrix $D$ where all entries are 1, $D^n=0$.
+  \end{itemize}
+\end{itemize}
+
+\subsection{useful notation}
+<fill in lol>
+
+\subsection{transpose}
+\begin{itemize}
+  \item $(A^T)^T = A$
+  \item $(A+B)^T = A^T + B^T$
+  \item if $c$ is a scalar, then $(cA)^T = cA^T$
+  \item $(AB)^T = B^TA^T$
+\end{itemize}
+
+\subsection{inverse}
+\begin{itemize}
+  \item \textbf{uniqueness of inverses} $\then$ if $B$ and $C$ are inverses of $A$, then $B=C$.
+  \item \textbf{cancellation laws} - only hold if $A$ is invertible.
+  \begin{itemize}
+    \item if $B_1$ and $B_2$ are $m \times n$ matrices such that $AB_1 = AB_2$, then $B_1 = B_2$.
+    \item if $C_1$ and $C_2$ are $m \times n$ matrices such that $C_1A = C_2A$, then $C_1 = C_2$.
+  \end{itemize}
+\end{itemize}
+\begin{center}
+  inverse of 2x2 matrix:
+  \\* $A^{-1} = \frac{1}{ad-bc} \left[ 
+    \begin{array}{cc}
+    d & -b\\
+    -c & a
+    \end{array}
+    \right]$
+\end{center}
+
+\subsubsection{properties of inverses}
+if $A, B$ are invertible matrices and $c$ is a nonzero scalar,
+\begin{itemize}
+  \item $cA$ is invertible: $(cA)^{-1} = \frac{1}{c}A^{-1}$
+  \item $A^T$ is invertible: $(A^T)^{-1} = (A^{-1})^T$
+  \item $A^{-1}$ is invertible: $(A^{-1})^{-1} = A$
+  \item $AB$ is invertible: $(AB)^{-1} = B^{-1}A^{-1}$
+\end{itemize}
+\ 
+\\ if $A,B$ are square matrices of the same size and $AB=I$, then
+\begin{itemize}
+  \item $A$ and $B$ are invertible
+  \item $A^{-1} = B; \quad B^{-1}=A$
+  \item $BA=I$
+\end{itemize}
+\ 
+\\ negative powers of square matrices
+\begin{itemize}
+  \item $A^{-n} = (A^{-1})^n = A^{-1}A^{-1} \cdots A^{-1}$
+  \item if $A$ is invertible, $(A^n)^{-1} = (A^{-1})^n$
+\end{itemize}
+
+% \begin{equation*}
+%   \left[
+%     \begin{array}{ccc}
+%       x & x & x \\
+%       0 & x & x \\
+%       \rowcolor{blue!20}
+%       0 & 0 & x \\
+%       0 & 0 & 0 \\
+%       \bggreen a  & \bggreen c &  d\\
+%     \end{array}
+%   \right]
+% \end{equation*}
 
 
 
