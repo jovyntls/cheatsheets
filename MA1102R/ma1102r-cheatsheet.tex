@@ -111,7 +111,7 @@
 \begin{document}
 \raggedright
 \footnotesize
-\begin{multicols*}{4
+\begin{multicols}{4
     '}
 
 
@@ -669,6 +669,112 @@ Let $f$ be a function with domain $D$.
     \\* then $f(x) = g(x) + C$ on $[a, b]$ for a constant $C$.
 \end{center}
 
+\subsection{increasing/decreasing test}
+Let $f$ be continuous on $[a, b]$ and differentiable on $(a, b)$.
+\begin{itemize}
+    \item $f'(x) > 0$ for any $x \in (a, b) \Then f$ is increasing.
+    \begin{itemize}
+        \item $f$ is increasing $\Then f(x) \geq 0$
+    \end{itemize}
+    \item $f'(x) < 0$ for any $x \in (a, b) \Then f$ is decreasing.
+    \begin{itemize}
+        \item $f$ is decreasing $\Then f(x) \leq 0$
+    \end{itemize}
+    \item $f'(x) = 0 \Then f$ could be increasing OR decreasing.
+\end{itemize}
+
+\subsection{first derivative test}
+Let $f$ be continuous and $c$ be a critical number of $f$. Suppose $f$ is differentiable near $c$ (except possibly at $c$).
+At $c$, if $f'$ changes from:
+\begin{itemize}
+    \item (+) to (-) $\then f$ has a local \textbf{maximum} at $c$
+    \item (-) to (+) $\then f$ has a local \textbf{minimum} at $c$
+    \item no change in sign $\then f$ has neither local max/min at $c$.
+\end{itemize}
+
+\subsection{concavity}
+\begin{center}
+    \includegraphics[width=0.8\linewidth]{ma1102r-concavity.png}
+    \\ $f$ is \textbf{concave up} on an open interval $I$ 
+    \\* if $f(x) > f'(y)(x-y) + f(y)$ for any $x \neq y \in I$
+    \\* for $a < b \in I$, $f'(a) < f'(b)$
+    \\* concave up $\Iff f'$ is increasing
+
+    $f$ is \textbf{concave down} on an open interval $I$
+    \\* if $f(x) < f'(y)(x-y) + f(y)$ for any $x \neq y \in I$
+    \\* for $a < b \in I$, $f'(a) > f'(b)$
+    \\* concave down $\Iff f'$ is decreasing
+
+    \includegraphics[width=0.9\linewidth]{ma1102r-concavity-shortcut.png}
+\end{center}
+
+\subsubsection{concavity test}
+\begin{itemize}
+    \item $f'' > 0$ on $I \Then f$ is concave up on $I$
+    \item $f'' < 0$ on $I \Then f$ is concave down on $I$
+\end{itemize}
+
+\subsection{second derivative test}
+If $f'(c) = 0$ and $f''(c)$ exists,
+\begin{itemize}
+    \item $f''(c) > 0 \Then f$ has a \textbf{local maximum} at $c$.
+    \item $f''(c) < 0 \Then f$ has a \textbf{local minimum} at $c$.
+    \item $f''(c) = 0 \Then$ inconclusive
+\end{itemize}
+
+\subsection{inflection point}
+\begin{itemize}
+    \item A point $P$ on the curve $y = f(x)$ is an inflection point if
+    \begin{itemize}
+        \item $f$ is continuous at $P$, and
+        \item the concavity of the curve changes at $P$.
+    \end{itemize}
+    \item if $c$ is an inflection point and $f$ is twice differentiable at $c$, then $f''(c) = 0$.
+\end{itemize}
+
+\subsection{Taylor's Theorem}
+\begin{center}
+    $f(x) = f(a) + f'(a)(x-a) + \frac{f''(a)}{2}(x-a)^2 + \dots + \frac{f^{(n)}(a)}{n!}(x-a)^n + R_n,$
+    \\* where $R_n = \frac{f^{(n+1)}(a)}{(n+1)!}(x-a)^{(n+1)}$ for $c$ between $x$ and $a$
+\end{center}
+\subsubsection{Taylor Series}
+\begin{center}
+    As $R-n \to 0$ as $n \to \infty$, then
+    \\* $\displaystyle{f(x) = \sum^\infty_{n=0} \frac{f^{(n)}(a)}{n!}(x-a)^n}$
+\end{center}
+
+\subsection{L'Hopital's Rule $(\frac{0}{0})$}
+Let $f$ and $g$ be functions such that 
+\begin{itemize}
+    \item $\displaystyle{\lim_{x \to a}f(x) = \lim_{x \to a}g(x) = 0}$ 
+    \item $f$ and $g$ are differentiable near $a$ (except at $a$).
+\end{itemize}
+\begin{tightcenter}
+    Then $\displaystyle{\lim_{x \to a}\frac{f(x)}{g(x)} = \lim_{x \to a}\frac{f'(x)}{g'(x)}}$,
+    \\* provided that the RHS limit exists or is $\pm \infty$
+\end{tightcenter}
+
+\subsection{L'Hopital's Rule $(\frac{\infty}{\infty})$}
+Suppose that 
+\begin{itemize}
+    \item $\displaystyle{\lim_{x \to a}\abs{f(x)} = \lim_{x \to a}\abs{g(x)} = \infty}$,
+    \item $f$ and $g$ are differentiable near $a$ (except at $a$), 
+    \item $g'(x) \neq 0$ near $a$ (except at $a$)
+\end{itemize}
+\begin{tightcenter}
+    Then $\displaystyle{\lim_{x \to a}\frac{f(x)}{g(x)} = \lim_{x \to a}\frac{f'(x)}{g'(x)}}$
+    \\ provided that the RHS limit exists or is $\pm \infty$
+\end{tightcenter}
+
+\subsection{Cauchy's Mean Value Theorem}
+\begin{center}
+    Let $f, g$ be continuous on $[a, b]$, differentiable on $(a, b)$, 
+    \\* and $g'(x) \neq 0$ for any $x \in (a, b)$.
+    \\* Then there exists $c \in (a, b)$ such that 
+    \\* $\frac{f'(c)}{g'(c)} = \frac{f(b) - f(a)}{g(b) - g(a)}$
+    \includegraphics[width=0.9\linewidth]{ma1102r-cauchy-mvt.png}
+\end{center}
+
 \begin{center}
     \ 
 \end{center}
@@ -700,6 +806,11 @@ Let $f$ be a function with domain $D$.
     $a^n-b^n = (a-b)(a^{n-1} + a^{n-2}b + \cdots + ab^{n-2} + b^{n-1})$
 \end{center}
 
-\end{multicols*}
+\subsubsection{misc}
+\begin{itemize}
+    \item $\forall x \in (0, \frac{\pi}{2}), \sin x < x < \tan x$
+\end{itemize}
+
+\end{multicols}
 
 \end{document}
