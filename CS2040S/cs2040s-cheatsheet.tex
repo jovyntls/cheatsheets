@@ -130,7 +130,7 @@
         \parbox{0.8\linewidth}{\centering \textcolor{black}{
             {\Large\textbf{CS2040S}}
             \\ \normalsize{AY20/21 sem 2}}
-            \\ {\footnotesize \textcolor{myblue}{by jovyntls}}
+            \\ {\footnotesize \textcolor{myblue}{github.com/jovyntls}}
         }%
     }
 \end{center}
@@ -140,15 +140,15 @@
 \begin{center}
     $T(n) = O(f(n))$ 
     \\* if $\exists c, n_0 > 0$ such that for all $n > n_0$, $T(n) \leq cf(n)$
-    \includegraphics[width=0.6\linewidth]{cs2040s-big-o.png}
+    \includegraphics[width=0.5\linewidth]{cs2040s-big-o.png}
     
     $T(n) = \Omega(f(n))$
     \\* if $\exists c, n_0 > 0$ such that for all $n > n_0$, $T(n) \geq cf(n)$
-    \includegraphics[width=0.6\linewidth]{cs2040s-big-omega.png}
+    \includegraphics[width=0.5\linewidth]{cs2040s-big-omega.png}
 
     $T(n) = \Theta(f(n))$
     \\* $\iff T(n) = O(f(n))$ and $T(n) = \Omega(f(n))$
-    \includegraphics[width=0.6\linewidth]{cs2040s-big-omega.png}
+    \includegraphics[width=0.5\linewidth]{cs2040s-big-omega.png}
 \end{center}
 
 \subsection{properties}
@@ -157,14 +157,25 @@ Let $T(n) = O(f(n))$ and $S(n) = O(g(n))$
     \item addition: $T(n) + S(n) = O(f(n) + g(n))$
     \item multiplication: $T(n) * S(n) = O(f(n) * g(n))$
     \item composition: $f_1 \circ f_2 = O(g_1 \circ g_2)$
+    \begin{itemize}
+        \item only if both functions are increasing
+    \end{itemize}
     \item if/else statements: $\text{cost} = \max(c1, c2) \leq c1+c2$
+    \item max: $\max(f(n), g(n)) \leq f(n) + g(n)$
 \end{itemize}
 
 \subsubsection{notable}
 \begin{itemize}
     \item $\sqrt{n}\log n$ is $O(n)$
     \item $O(2^{2n}) \neq O(2^n)$
-    \item $O(\log (n!)) = O(n\log n)$
+    \item $O(\log (n!)) = O(n\log n) \then$ sterling's approximation
+\end{itemize}
+
+\subsection{space complexity}
+\begin{itemize}
+    \item the maximum space incurred \textbf{at any time at any point} 
+    \item NOT the maximum space incurred altogether!
+    \item assumption: once we exit the function, we release all memory that was used
 \end{itemize}
 
 \section{SORTING}
@@ -239,6 +250,7 @@ Let $T(n) = O(f(n))$ and $S(n) = O(g(n))$
     \item a BST is either empty, or a node pointing to 2 BSTs.
     \item tree balance depends on order of insertion
     \item balanced tree: $O(h) = O(\log n)$
+    \item for a full-binary tree of size $n, \exists k \in \mathbb{Z}^+$ s.t. $n=2^k-1$ 
 \end{itemize}
 
 \subsubsection{BST operations}
@@ -268,26 +280,23 @@ Let $T(n) = O(f(n))$ and $S(n) = O(g(n))$
         \end{itemize}
     \end{itemize}
 \end{itemize}
-\begin{center}
-    < successor code >
-\end{center}
 
-\subsection{traversal}
-\begin{center}
-    \begin{multicols}{3}
-        \textit{pre-order DFS}
-        \includegraphics[width=0.9\linewidth]{../../CS1231S/images/cs1231s-ch11-preorder}
-        \\* {\tiny\textbf{F-B-A-D-C-E-G-I-H}}
+% \subsection{traversal}
+% \begin{center}
+%     \begin{multicols}{3}
+%         \textit{pre-order DFS}
+%         \includegraphics[width=0.9\linewidth]{../../CS1231S/images/cs1231s-ch11-preorder}
+%         \\* {\tiny\textbf{F-B-A-D-C-E-G-I-H}}
         
-        \textit{in-order DFS}
-        \includegraphics[width=0.9\linewidth]{../../CS1231S/images/cs1231s-ch11-inorder}
-        \\* {\tiny\textbf{A-B-C-D-E-F-G-H-I}}
+%         \textit{in-order DFS}
+%         \includegraphics[width=0.9\linewidth]{../../CS1231S/images/cs1231s-ch11-inorder}
+%         \\* {\tiny\textbf{A-B-C-D-E-F-G-H-I}}
         
-        \textit{post-order DFS}
-        \includegraphics[width=0.9\linewidth]{../../CS1231S/images/cs1231s-ch11-postorder}
-        \\* {\tiny\textbf{A-C-E-D-B-H-I-G-F}}
-    \end{multicols}
-\end{center}
+%         \textit{post-order DFS}
+%         \includegraphics[width=0.9\linewidth]{../../CS1231S/images/cs1231s-ch11-postorder}
+%         \\* {\tiny\textbf{A-C-E-D-B-H-I-G-F}}
+%     \end{multicols}
+% \end{center}
 
 \subsection{AVL Trees}
 \begin{itemize}
@@ -296,9 +305,13 @@ Let $T(n) = O(f(n))$ and $S(n) = O(g(n))$
         \item $\iff$ \code{|v.left.height - v.right.height| $\leq 1$}
     \end{itemize}
     \item each node is augmented with its height - \code{v.height = h(v)}
+    \item space complexity: $O(LN)$ for $N$ strings of length $L$
 \end{itemize}
 
 \subsubsection{rebalancing}
+\begin{tightcenter}
+    \includegraphics[width=0.8\linewidth]{cs2040s-tree-rotation.png}
+\end{tightcenter}
 \begin{itemize}
     \item insertion: max. 2 rotations
     \item deletion: recurse all the way up
@@ -307,20 +320,20 @@ Let $T(n) = O(f(n))$ and $S(n) = O(g(n))$
 [case 1] B is  \textbf{balanced: right-rotate}
 \begin{center}
     $h(L) = h(M), \quad h(R) = h(M) - 1$
-    \includegraphics[width=0.8\linewidth]{cs2040s-rebalance-case-1.png}
+    \includegraphics[width=0.6\linewidth]{cs2040s-rebalance-case-1.png}
 \end{center}
 
 [case 2] B is  \textbf{left-heavy: right-rotate}
 \begin{center}
     $h(L) = h(M) + 1, \quad h(R) = h(M)$
-    \includegraphics[width=0.8\linewidth]{cs2040s-rebalance-case-2.png}
+    \includegraphics[width=0.6\linewidth]{cs2040s-rebalance-case-2.png}
 \end{center}
 
 [case 3] B is  \textbf{right-heavy: left-rotate(v.left), right-rotate(v)}
 \begin{center}
     $h(L) = h(M) - 1, \quad h(R) = h(L)$
-    \includegraphics[width=0.8\linewidth]{cs2040s-rebalance-case-3-1.png}
-    \includegraphics[width=0.8\linewidth]{cs2040s-rebalance-case-3-2.png}
+    \\* \includegraphics[width=0.6\linewidth]{cs2040s-rebalance-case-3-1.png}
+    \\* \includegraphics[width=0.6\linewidth]{cs2040s-rebalance-case-3-2.png}
 \end{center}
 
 \subsection{updating nodes after rotation}
@@ -340,6 +353,83 @@ Let $T(n) = O(f(n))$ and $S(n) = O(g(n))$
 \begin{center}
     \includegraphics[width=0.8\linewidth]{cs2040s-trie.png}
 \end{center}
+
+\subsection{kd-Tree}
+\includegraphics[width=0.8\linewidth]{cs2040s-kdtree.png}
+\begin{itemize}
+    \item stores geometric data (points in an $(x, y)$ plane)
+    \item alternates splitting (partitioning) via $x$ and $y$ coordinates
+    \item \code{construct(points[])} $\Then O(n \log n)$
+    \item \code{search(point)} $\Then O(h)$
+    \item \code{searchMin()} $\Then T(n) = 2T(\frac{n}{4}) + O(1) \Then O(\sqrt{n})$
+\end{itemize}
+
+\subsection{(a, b)-trees}
+{\scriptsize{e.g. a (2, 4)-tree storing 18 keys}}
+\includegraphics[width=1\linewidth]{cs2040s-ab-tree.png}
+\begin{itemize}
+    \item rules
+    \begin{enumerate}
+        \item $(a, b)$-child policy where $2 \leq a \leq (b+1)/2$
+        \begin{tabular}{|c|c|c|c|c|}
+            \hline 
+             & \multicolumn{2}{c|}{\# keys} & \multicolumn{2}{c|}{\# children}
+            \\\hline
+            node type & min & max & min & max
+            \\\hline
+            root & $1$ & $b-1$ & $2$ & $b$
+            \\\hline
+            internal & $a-1$ & $b-1$ & $a$ & $b$
+            \\\hline
+            leaf & $a-1$ & $b-1$ & $0$ & $0$
+            \\\hline
+        \end{tabular}
+        \item an internal nodes has one more child than its number of keys
+        \item all leaf nodes must be at the same depth from the root
+    \end{enumerate}
+    \item terminology (for a node $z$)
+    \begin{itemize}
+        \item key range - range of keys covered in subtree rooted at $z$
+        \item keylist - list of keys within $z$
+        \item treelist - list of $z$'s children
+    \end{itemize}
+    \item max height $= O(\log_an) + 1$
+    \item min height $= O(\log_bn)$
+    \item \code{search(key)} $\Then O(\log n)$
+    \begin{itemize}
+        \item $= O(\log_2 b \cdot \log_a n)$ for binary search at each node
+    \end{itemize}
+    \item \code{insert(key)} $\Then O(\log n)$
+    \item \code{split()} a node with too many children
+    \begin{enumerate}
+        \item use median to split the keylist into 2 halves
+        \item move median key to parent; re-connect remaining nodes
+        \item (if the parent is now unbalanced, recurse upwards; if the root is reached, median key becomes the new root)
+    \end{enumerate}
+    \includegraphics[width=0.4\linewidth]{cs2040s-abtree-split-1.png}
+    $\Then$
+    \includegraphics[width=0.3\linewidth]{cs2040s-abtree-split-2.png}
+    \item \code{delete(key)} $\Then O(\log n)$
+    \begin{itemize}
+        \item if the node becomes empty, \code{merge(y, z)} - join it with its left sibling \& replace it with their parent
+        \\* \includegraphics[width=0.25\linewidth]{cs2040s-abtree-delete-1.png}
+        $\Then$
+        \includegraphics[width=0.3\linewidth]{cs2040s-abtree-delete-2.png}
+        \item if the combined nodes exceed max size: \code{share(y, z)} = \code{merge(y, z)} then \code{split()}
+    \end{itemize}
+\end{itemize}
+
+\subsection{B-Tree}
+\begin{itemize}
+    \item $(B, 2B)$-trees $\Then (a, b)$-tree where $a=B, b=2B$ 
+    \item possible augmentation: use a linkedList to connect between each level
+\end{itemize}
+
+\subsection{Merkle Trees}
+\begin{itemize}
+    \item binary tree - nodes augmented with a hash of their children
+    \item same root value = identical tree
+\end{itemize}
 
 \section{HASH TABLES}
 \begin{itemize}
@@ -483,6 +573,16 @@ $n =$ number of elements in the hash table
     \item \textbf{linearity of expectation}: $E[A = B] = E[A] + E[B]$
 \end{itemize}
 
+\section{UNIFORMLY RANDOM PERMUTATION}
+\begin{itemize}
+    \item for an array of $n$ items, every of the $n!$ possible permutations are producible with probability of exactly $\frac{1}{n!}$
+    \begin{itemize}
+        \item the number of outcomes should distribute over each permutation uniformly. (i.e. $\frac{\text{\# of outcomes}}{\text{\# of permutations}} \in \mathbb{N}$)
+    \end{itemize}
+    \item probability of a specific item remaining in its initial position $= \frac{1}{n}$
+    \item \textbf{KnuthShuffle}: for every element in array $A$, swap it with a random index in array $A. \Then O(n)$
+\end{itemize}
+
 
 \end{multicols}
 
@@ -526,23 +626,36 @@ $n =$ number of elements in the hash table
         searching
         \\* \begin{tabular}{| c | c |}\hline
             \textbf{search} & \textbf{average} \\\hline
-            \text{linear} & $O(n)$ \\\hline
-            \text{binary} & $O(\log n)$ \\\hline
-            \text{quickSelect} & $O(n)$ \\\hline
+            linear & $O(n)$ \\\hline
+            binary & $O(\log n)$ \\\hline
+            quickSelect & $O(n)$ \\\hline
         \end{tabular}
         
-        data structures (search/insert)
+        data structures (search/insert) assuming $O(1)$ comparison cost
         \\* \begin{tabular}{| c | c | c |}\hline
             \textbf{data structure} & \textbf{search} & \textbf{insert}\\\hline
-            \text{sorted array} & $O(\log n)$ & $O(n)$ \\\hline
-            \text{unsorted array} & $O(n)$ & $O(1)$ \\\hline
-            \text{linked list} & $O(n)$ & $O(1)$ \\\hline
-            \text{tree} & $O(\log n)$ or $O(h)$ & $O(\log n)$ or $O(h)$ \\\hline
-            \text{dictionary} & $O(\log n)$ & $O(\log n)$ \\\hline
-            \text{symbol table} & $O(1)$ & $O(1)$ \\\hline
-            \text{chaining} & $O(n + cost(h))$ & $O(1 + cost(h))$ \\\hline
-            \text{open addressing} & $O(1)$ & $O(1)$ \\\hline
+            sorted array & $O(\log n)$ & $O(n)$ \\\hline
+            unsorted array & $O(n)$ & $O(1)$ \\\hline
+            linked list & $O(n)$ & $O(1)$ \\\hline
+            tree & $O(\log n)$ or $O(h)$ & $O(\log n)$ or $O(h)$ \\\hline
+            trie & $O(L)$ & $O(L)$ \\\hline
+            dictionary & $O(\log n)$ & $O(\log n)$ \\\hline
+            symbol table & $O(1)$ & $O(1)$ \\\hline
+            chaining & $O(n + cost(h))$ & $O(1 + cost(h))$ \\\hline
+            open addressing & $O(1)$ & $O(1)$ \\\hline
         \end{tabular}
+
+        orders of growth
+        \begin{align*}
+            T(n) &= 2T(\frac{n}{2}) + O(n) &\Rightarrow O(n \log n)
+            \\ T(n) &= T(\frac{n}{2}) + O(n) &\Rightarrow O(n)
+            \\ T(n) &= 2T(\frac{n}{2}) + O(1) &\Rightarrow O(n)
+            \\ T(n) &= T(\frac{n}{2}) + O(1) &\Rightarrow O(\log n)
+            \\ T(n) &= 2T(n - 1) + O(1) &\Rightarrow O(2^n)
+            \\ T(n) &= 2T(\frac{n}{2}) + O(n \log n) &\Rightarrow O(n(\log n)^2)
+            \\ T(n) &= 2T(\frac{n}{4}) + O(1) &\Rightarrow O(\sqrt{n})
+            \\ T(n) &= T(n - c) + O(n) &\Rightarrow O(n^2)
+        \end{align*}
     
     \end{center}
 \end{multicols}
