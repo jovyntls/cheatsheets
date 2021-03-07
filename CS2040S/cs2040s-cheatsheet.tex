@@ -180,40 +180,26 @@ Let $T(n) = O(f(n))$ and $S(n) = O(g(n))$
 
 \section{SORTING}
 \subsection{overview}
-\textbf{Bubble Sort}
 \begin{itemize}
-    \item compare adjacent items and swap 
-\end{itemize}
-
-\textbf{Selection Sort}
-\begin{itemize}
-    \item takes the smallest element and swaps into place
-    \item after $k$ iterations: the first $k$ elements are sorted 
-\end{itemize}
-
-\textbf{Insertion Sort}
-\begin{itemize}
-    \item from left to right: swap element leftwards until it's smaller than the next element. repeat for next element
-    \item tends to be faster than the other $O(n^2)$ algorithms
-\end{itemize}
-
-\textbf{Merge Sort}
-\begin{itemize}
-    \item divide and conquer algorithm 
-    \item mergeSort first half; mergeSort second half; merge
-\end{itemize}
-
-\textbf{Quick Sort}
-\begin{itemize}
-    \item partition algorithm: $O(n)$
+    \item \textbf{BubbleSort} - compare adjacent items and swap 
+    \item \textbf{SelectionSort} - takes the smallest element, swaps into place
+    \item \textbf{InsertionSort} - from left to right: swap element leftwards until it's smaller than the next element. repeat for next element
     \begin{itemize}
-        \item take first element as partition. 2 pointers from left to right
+        \item tends to be faster than the other $O(n^2)$ algorithms
+    \end{itemize}
+    \item \textbf{MergeSort} - mergeSort first half; mergeSort second half; merge
+    \item \textbf{QuickSort}
+    \begin{itemize}
+        \item partition algorithm: $O(n)$
         \begin{itemize}
-            \item left pointer moves until element > pivot
-            \item right pointer moves until element < pivot
-            \item swap elements until left = right. 
+            \item first element as partition. 2 pointers from left to right
+            \begin{itemize}
+                \item left pointer moves until element > pivot
+                \item right pointer moves until element < pivot
+                \item swap elements until left = right. 
+            \end{itemize}
+            \item then swap partition and left=right index.
         \end{itemize}
-        \item then swap partition and left=right index.
     \end{itemize}
 \end{itemize}
 
@@ -226,14 +212,10 @@ Let $T(n) = O(f(n))$ and $S(n) = O(g(n))$
 
 \subsubsection{choice of pivot}
 \begin{itemize}
-    \item worst case time of $O(n^2)$
+    \item worst case $O(n^2)$: first/last/middle element
+    \item worst case $O(n\log n)$: median/random element
     \begin{itemize}
-        \item first/last/middle element
-    \end{itemize}
-    \item worst case (expected) time of $O(n\log n)$:
-    \begin{itemize}
-        \item median/random element
-        \item split by fractions: O(nlogn)
+        \item split by fractions: $O(n\log n)$
     \end{itemize}
     \item choose at random: runtime is a random variable
 \end{itemize}
@@ -320,29 +302,29 @@ Let $T(n) = O(f(n))$ and $S(n) = O(g(n))$
 [case 1] B is  \textbf{balanced: right-rotate}
 \begin{center}
     $h(L) = h(M), \quad h(R) = h(M) - 1$
-    \includegraphics[width=0.6\linewidth]{cs2040s-rebalance-case-1.png}
+    \includegraphics[width=0.7\linewidth]{cs2040s-rebalance-case-1.png}
 \end{center}
 
 [case 2] B is  \textbf{left-heavy: right-rotate}
 \begin{center}
     $h(L) = h(M) + 1, \quad h(R) = h(M)$
-    \includegraphics[width=0.6\linewidth]{cs2040s-rebalance-case-2.png}
+    \includegraphics[width=0.7\linewidth]{cs2040s-rebalance-case-2.png}
 \end{center}
 
 [case 3] B is  \textbf{right-heavy: left-rotate(v.left), right-rotate(v)}
 \begin{center}
     $h(L) = h(M) - 1, \quad h(R) = h(L)$
-    \\* \includegraphics[width=0.6\linewidth]{cs2040s-rebalance-case-3-1.png}
-    \\* \includegraphics[width=0.6\linewidth]{cs2040s-rebalance-case-3-2.png}
+    \\* \includegraphics[width=0.7\linewidth]{cs2040s-rebalance-case-3-1.png}
+    \\* \includegraphics[width=0.7\linewidth]{cs2040s-rebalance-case-3-2.png}
 \end{center}
 
 \subsection{updating nodes after rotation}
 \begin{center}
     weights
-    \\* \includegraphics[width=0.8\linewidth]{cs2040s-rotate-weights.png}
+    \\* \includegraphics[width=0.6\linewidth]{cs2040s-rotate-weights.png}
     
     max
-    \\* \includegraphics[width=0.8\linewidth]{cs2040s-rotate-max.png}
+    \\* \includegraphics[width=0.6\linewidth]{cs2040s-rotate-max.png}
 \end{center}
 
 \subsection{Trie}
@@ -350,9 +332,23 @@ Let $T(n) = O(f(n))$ and $S(n) = O(g(n))$
     \item \code{search, insert} - $O(L)$ (for string of length $L$)
     \item space: $O($size of text $\cdot$ overhead$)$
 \end{itemize}
-\begin{center}
-    \includegraphics[width=0.8\linewidth]{cs2040s-trie.png}
-\end{center}
+\begin{tightcenter}
+    \includegraphics[width=0.6\linewidth]{cs2040s-trie.png}
+\end{tightcenter}
+
+\subsection{interval trees}
+\begin{tightcenter}
+    \includegraphics[width=0.5\linewidth]{cs2040s-interval-tree.png}
+\end{tightcenter}
+\begin{itemize}
+    \item \code{search(key)} $\Then O(\log n)$
+    \begin{itemize}
+        \item if value is in root interval, return
+        \item if value > max(left subtree), recurse right
+        \item else recurse left (go left only when can't go right)
+    \end{itemize}
+    \item all-overlaps $\Then O(k \log n)$ for $k$ overlapping intervals
+\end{itemize}
 
 \subsection{kd-Tree}
 \includegraphics[width=0.8\linewidth]{cs2040s-kdtree.png}
@@ -433,7 +429,6 @@ Let $T(n) = O(f(n))$ and $S(n) = O(g(n))$
 
 \section{HASH TABLES}
 \begin{itemize}
-    \item very fast - faster than BST
     \item disadvantage: no successor/predecessor operation
 \end{itemize}
 
@@ -583,12 +578,9 @@ $n =$ number of elements in the hash table
     \item \textbf{KnuthShuffle}: for every element in array $A$, swap it with a random index in array $A. \Then O(n)$
 \end{itemize}
 
-
 \end{multicols}
 
-
 \hrulefill \\
-% \dotfill
 
 \begin{multicols}{3}
     \begin{center}
@@ -659,8 +651,5 @@ $n =$ number of elements in the hash table
     
     \end{center}
 \end{multicols}
-
-\begin{center}
-\end{center}
 
 \end{document}
