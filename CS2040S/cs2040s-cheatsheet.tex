@@ -169,6 +169,7 @@ Let $T(n) = O(f(n))$ and $S(n) = O(g(n))$
     \item $\sqrt{n}\log n$ is $O(n)$
     \item $O(2^{2n}) \neq O(2^n)$
     \item $O(\log (n!)) = O(n\log n) \then$ sterling's approximation
+    \item $T(n-1) + T(n-2) + \dots + T(1) = 2T(n-1)$
 \end{itemize}
 
 \subsection{space complexity}
@@ -291,31 +292,23 @@ Let $T(n) = O(f(n))$ and $S(n) = O(g(n))$
 \end{itemize}
 
 \subsubsection{rebalancing}
-\begin{tightcenter}
-    \includegraphics[width=0.8\linewidth]{cs2040s-tree-rotation.png}
-\end{tightcenter}
-\begin{itemize}
-    \item insertion: max. 2 rotations
-    \item deletion: recurse all the way up
-    \item rotations can create every possible tree shape.
-\end{itemize}
 [case 1] B is  \textbf{balanced: right-rotate}
 \begin{center}
     $h(L) = h(M), \quad h(R) = h(M) - 1$
-    \includegraphics[width=0.7\linewidth]{cs2040s-rebalance-case-1.png}
+    \includegraphics[width=0.6\linewidth]{cs2040s-rebalance-case-1.png}
 \end{center}
 
 [case 2] B is  \textbf{left-heavy: right-rotate}
 \begin{center}
     $h(L) = h(M) + 1, \quad h(R) = h(M)$
-    \includegraphics[width=0.7\linewidth]{cs2040s-rebalance-case-2.png}
+    \includegraphics[width=0.6\linewidth]{cs2040s-rebalance-case-2.png}
 \end{center}
 
 [case 3] B is  \textbf{right-heavy: left-rotate(v.left), right-rotate(v)}
 \begin{center}
     $h(L) = h(M) - 1, \quad h(R) = h(L)$
-    \\* \includegraphics[width=0.7\linewidth]{cs2040s-rebalance-case-3-1.png}
-    \\* \includegraphics[width=0.7\linewidth]{cs2040s-rebalance-case-3-2.png}
+    \\* \includegraphics[width=0.6\linewidth]{cs2040s-rebalance-case-3-1.png}
+    \\* \includegraphics[width=0.6\linewidth]{cs2040s-rebalance-case-3-2.png}
 \end{center}
 
 \subsection{updating nodes after rotation}
@@ -327,19 +320,22 @@ Let $T(n) = O(f(n))$ and $S(n) = O(g(n))$
     \\* \includegraphics[width=0.6\linewidth]{cs2040s-rotate-max.png}
 \end{center}
 
+\begin{tightcenter}
+    \includegraphics[width=0.8\linewidth]{cs2040s-tree-rotation.png}
+\end{tightcenter}
+\begin{itemize}
+    \item insertion: max. 2 rotations
+    \item deletion: recurse all the way up
+    \item rotations can create every possible tree shape.
+\end{itemize}
+
 \subsection{Trie}
 \begin{itemize}
     \item \code{search, insert} - $O(L)$ (for string of length $L$)
     \item space: $O($size of text $\cdot$ overhead$)$
 \end{itemize}
-\begin{tightcenter}
-    \includegraphics[width=0.6\linewidth]{cs2040s-trie.png}
-\end{tightcenter}
 
 \subsection{interval trees}
-\begin{tightcenter}
-    \includegraphics[width=0.5\linewidth]{cs2040s-interval-tree.png}
-\end{tightcenter}
 \begin{itemize}
     \item \code{search(key)} $\Then O(\log n)$
     \begin{itemize}
@@ -350,8 +346,31 @@ Let $T(n) = O(f(n))$ and $S(n) = O(g(n))$
     \item all-overlaps $\Then O(k \log n)$ for $k$ overlapping intervals
 \end{itemize}
 
+\includegraphics[width=0.5\linewidth]{cs2040s-trie.png}
+\includegraphics[width=0.45\linewidth]{cs2040s-interval-tree.png}
+
+\subsection{orthogonal range searching}
+\begin{itemize}
+    \item binary tree; leaves store points, internal nodes store max value in left subtree
+    \item \code{buildTree(points[])} $\Then O(n \log n)$ \quad (space is $O(n)$)
+    \item \code{query(low, hight)} $\Then O(k + \log n)$ for $k$ points
+    \begin{itemize}
+        \item \code{v=findSplit()} $\Then O(\log n)$ - find node b/w low \& high
+        \item \code{leftTraversal(v)} $\Then O(k)$ - either output all the right subtree and recurse left, or recurse right 
+        \item \code{rightTraversal(v)} - symmetric
+    \end{itemize}
+    \item \code{insert(key), insert(key)} $\Then O(\log n)$ 
+    \item \code{2D\_query()} $\Then O(\log^2n + k)$ \quad (space is $O(n \log n)$)
+    \begin{itemize}
+        \item build x-tree from x-coordinates; for each node, build a y-tree from y-coordinates of subtree
+    \end{itemize}
+    \item \code{2D\_buildTree(points[])} $\Then O(n \log n)$
+\end{itemize}
+
 \subsection{kd-Tree}
-\includegraphics[width=0.8\linewidth]{cs2040s-kdtree.png}
+\begin{tightcenter}
+    \includegraphics[width=0.6\linewidth]{cs2040s-kdtree.png}
+\end{tightcenter}
 \begin{itemize}
     \item stores geometric data (points in an $(x, y)$ plane)
     \item alternates splitting (partitioning) via $x$ and $y$ coordinates
@@ -380,7 +399,7 @@ Let $T(n) = O(f(n))$ and $S(n) = O(g(n))$
             leaf & $a-1$ & $b-1$ & $0$ & $0$
             \\\hline
         \end{tabular}
-        \item an internal nodes has one more child than its number of keys
+        \item an internal node has 1 more child than its number of keys
         \item all leaf nodes must be at the same depth from the root
     \end{enumerate}
     \item terminology (for a node $z$)
@@ -514,7 +533,7 @@ let $cost(h)$ be the cost of the hash function
     \end{itemize}
     \item \textbf{performance}
     \begin{itemize}
-        \item if the table is $\frac{1}{4}$ full, then there will be clusters of size $\Theta(\log n)$
+        \item if the table is $\frac{1}{4}$ full, there will be clusters of size $\Theta(\log n)$
         \item expected cost of an operation, $E[\# probes] \leq \frac{1}{1 - \alpha}$
             \\* (assume $\alpha < 1$ and uniform hashing)
     \end{itemize}
@@ -532,10 +551,10 @@ let $cost(h)$ be the cost of the hash function
 \end{itemize}
 
 \subsubsection{double hashing}
-\begin{center}
+\begin{tightcenter}
     for 2 functions $f, g$, define
     \\* $h(k, i) = f(k) + i \cdot g(k) \Mod m$
-\end{center}
+\end{tightcenter}
 \begin{itemize}
     \item if $g(k)$ is relatively prime to $m$, then $h(k, i)$ hits all buckets
     \begin{itemize}
@@ -574,8 +593,8 @@ $n =$ number of elements in the hash table
     \begin{itemize}
         \item the number of outcomes should distribute over each permutation uniformly. (i.e. $\frac{\text{\# of outcomes}}{\text{\# of permutations}} \in \mathbb{N}$)
     \end{itemize}
-    \item probability of a specific item remaining in its initial position $= \frac{1}{n}$
-    \item \textbf{KnuthShuffle}: for every element in array $A$, swap it with a random index in array $A. \Then O(n)$
+    \item probability of an item remaining in its initial position $= \frac{1}{n}$
+    \item \textbf{KnuthShuffle} $\Then O(n)$ - for every element in array $A$, swap it with a random index in array $A$. 
 \end{itemize}
 
 \end{multicols}
@@ -583,9 +602,8 @@ $n =$ number of elements in the hash table
 \hrulefill \\
 
 \begin{multicols}{3}
-    \begin{center}
-        sorting
-        \\* $
+    \begin{tightcenter}
+        $
         \begin{array}{| c | c | c | c | c | c |}
             \hline\textbf{sort} & \textbf{best} & \textbf{average} & \textbf{worst} & \textbf{stable?} & \textbf{memory}
     
@@ -601,40 +619,39 @@ $n =$ number of elements in the hash table
             \\\hline
         \end{array} 
         $\
-
-        sorting invariants
-        \\*
         \begin{tabular}{| c | c |}
-            \hline\textbf{sort} & \textbf{invariant} (after $k$ iterations)
+            \multicolumn{2}{c}{sorting invariants}
+            \\\hline\textbf{sort} & \textbf{invariant} (after $k$ iterations)
             \\\hline bubble & largest $k$ elements are sorted
             \\\hline selection & smallest $k$ elements are sorted
             \\\hline insertion & first $k$ elements are in order
             \\\hline merge & –
             \\\hline quick & partition is in the right position
             \\\hline
-        \end{tabular} 
-        
-
-        searching
-        \\* \begin{tabular}{| c | c |}\hline
+        \end{tabular} \begin{tabular}{| c | c |}
+            \multicolumn{2}{c}{searching}\\\hline
             \textbf{search} & \textbf{average} \\\hline
             linear & $O(n)$ \\\hline
             binary & $O(\log n)$ \\\hline
             quickSelect & $O(n)$ \\\hline
+            interval & $O(\log n)$ \\\hline
+            all-overlaps & $O(k\log n)$ \\\hline
+            1D range & $O(k + \log n)$ \\\hline
+            2D range & $O(k + \log^2 n)$ \\\hline
         \end{tabular}
         
-        data structures (search/insert) assuming $O(1)$ comparison cost
+        data structures assuming $O(1)$ comparison cost
         \\* \begin{tabular}{| c | c | c |}\hline
             \textbf{data structure} & \textbf{search} & \textbf{insert}\\\hline
             sorted array & $O(\log n)$ & $O(n)$ \\\hline
             unsorted array & $O(n)$ & $O(1)$ \\\hline
             linked list & $O(n)$ & $O(1)$ \\\hline
-            tree & $O(\log n)$ or $O(h)$ & $O(\log n)$ or $O(h)$ \\\hline
+            tree (kd/(a, b)/binary) & $O(\log n)$ or $O(h)$ & $O(\log n)$ or $O(h)$ \\\hline
             trie & $O(L)$ & $O(L)$ \\\hline
             dictionary & $O(\log n)$ & $O(\log n)$ \\\hline
             symbol table & $O(1)$ & $O(1)$ \\\hline
-            chaining & $O(n + cost(h))$ & $O(1 + cost(h))$ \\\hline
-            open addressing & $O(1)$ & $O(1)$ \\\hline
+            chaining & $O(n)$ & $O(1)$ \\\hline
+            open addressing & $\frac{1}{1-\alpha} = O(1)$ & $O(1)$ \\\hline
         \end{tabular}
 
         orders of growth
@@ -648,8 +665,6 @@ $n =$ number of elements in the hash table
             \\ T(n) &= 2T(\frac{n}{4}) + O(1) &\Rightarrow O(\sqrt{n})
             \\ T(n) &= T(n - c) + O(n) &\Rightarrow O(n^2)
         \end{align*}
-    
-    \end{center}
+    \end{tightcenter}
 \end{multicols}
-
 \end{document}
