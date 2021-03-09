@@ -11,18 +11,8 @@
 \usepackage{enumitem}
 \usepackage[table]{xcolor}
 \usepackage{mathtools}
-% for drawing diragrams/graphs
-\usepackage{tikz}
-\usetikzlibrary{arrows.meta}
-\usetikzlibrary{calc}
 \setlist{nosep}
 
-% ADDITIONAL USEFUL PACKAGES:
-% for matrices
-\usepackage{nicematrix}
-% for relations
-\usepackage{cancel}
-\usepackage{ mathrsfs }
 % for including images
 \graphicspath{ {./images/} }
 
@@ -138,17 +128,18 @@
 \section{ORDERS OF GROWTH}
 \subsection{definitions}
 \begin{center}
+    $T(n) = \Theta(f(n))$
+    \\* $\iff T(n) = O(f(n))$ and $T(n) = \Omega(f(n))$
+    \includegraphics[width=0.55\linewidth]{cs2040s-big-theta.png}
+
     $T(n) = O(f(n))$ 
     \\* if $\exists c, n_0 > 0$ such that for all $n > n_0$, $T(n) \leq cf(n)$
-    \includegraphics[width=0.5\linewidth]{cs2040s-big-o.png}
     
     $T(n) = \Omega(f(n))$
     \\* if $\exists c, n_0 > 0$ such that for all $n > n_0$, $T(n) \geq cf(n)$
-    \includegraphics[width=0.5\linewidth]{cs2040s-big-omega.png}
-
-    $T(n) = \Theta(f(n))$
-    \\* $\iff T(n) = O(f(n))$ and $T(n) = \Omega(f(n))$
-    \includegraphics[width=0.5\linewidth]{cs2040s-big-omega.png}
+    \includegraphics[width=0.48\linewidth]{cs2040s-big-o.png}
+    \includegraphics[width=0.48\linewidth]{cs2040s-big-omega.png}
+    
 \end{center}
 
 \subsection{properties}
@@ -172,8 +163,17 @@ Let $T(n) = O(f(n))$ and $S(n) = O(g(n))$
     \item $T(n-1) + T(n-2) + \dots + T(1) = 2T(n-1)$
 \end{itemize}
 
+\subsubsection{master theorem}
+$T(n) = aT(\frac{n}{b}) + f(n) \quad a \geq 0, b > 1$
+$= \begin{cases}
+    \Theta(n^{\log_ba}) & \quad \text{ if } f(n) < n^{\log_ba} \text{ polynomially}
+    \\ \Theta(n^{\log_ba} \log n) & \quad \text{ if } f(n) = n^{\log_ba} 
+    \\ \Theta(f(n)) & \quad \text{ if } f(n) > n^{\log_ba} \text{ polynomially}
+\end{cases}$
+
 \subsection{space complexity}
 \begin{itemize}
+    \item $\Theta(f(n))$ time complexity $\Then O(f(n))$ space complexity
     \item the maximum space incurred \textbf{at any time at any point} 
     \item NOT the maximum space incurred altogether!
     \item assumption: once we exit the function, we release all memory that was used
@@ -188,10 +188,11 @@ Let $T(n) = O(f(n))$ and $S(n) = O(g(n))$
     \begin{itemize}
         \item tends to be faster than the other $O(n^2)$ algorithms
     \end{itemize}
-    \item \textbf{MergeSort} - mergeSort first half; mergeSort second half; merge
+    \item \textbf{MergeSort} - mergeSort 1st half; mergeSort 2nd half; merge
     \item \textbf{QuickSort}
     \begin{itemize}
         \item partition algorithm: $O(n)$
+        \item stable quicksort: $O(\log n)$ space
         \begin{itemize}
             \item first element as partition. 2 pointers from left to right
             \begin{itemize}
@@ -283,7 +284,7 @@ Let $T(n) = O(f(n))$ and $S(n) = O(g(n))$
 
 \subsection{AVL Trees}
 \begin{itemize}
-    \item \textbf{height-balanced} 
+    \item \textbf{height-balanced} (maintained with rotations)
     \begin{itemize}
         \item $\iff$ \code{|v.left.height - v.right.height| $\leq 1$}
     \end{itemize}
@@ -295,29 +296,29 @@ Let $T(n) = O(f(n))$ and $S(n) = O(g(n))$
 [case 1] B is  \textbf{balanced: right-rotate}
 \begin{center}
     $h(L) = h(M), \quad h(R) = h(M) - 1$
-    \includegraphics[width=0.6\linewidth]{cs2040s-rebalance-case-1.png}
+    \includegraphics[width=0.65\linewidth]{cs2040s-rebalance-case-1.png}
 \end{center}
 
 [case 2] B is  \textbf{left-heavy: right-rotate}
 \begin{center}
     $h(L) = h(M) + 1, \quad h(R) = h(M)$
-    \includegraphics[width=0.6\linewidth]{cs2040s-rebalance-case-2.png}
+    \includegraphics[width=0.65\linewidth]{cs2040s-rebalance-case-2.png}
 \end{center}
 
 [case 3] B is  \textbf{right-heavy: left-rotate(v.left), right-rotate(v)}
 \begin{center}
     $h(L) = h(M) - 1, \quad h(R) = h(L)$
-    \\* \includegraphics[width=0.6\linewidth]{cs2040s-rebalance-case-3-1.png}
-    \\* \includegraphics[width=0.6\linewidth]{cs2040s-rebalance-case-3-2.png}
+    \\* \includegraphics[width=0.65\linewidth]{cs2040s-rebalance-case-3-1.png}
+    \\* \includegraphics[width=0.65\linewidth]{cs2040s-rebalance-case-3-2.png}
 \end{center}
 
 \subsection{updating nodes after rotation}
 \begin{center}
     weights
-    \\* \includegraphics[width=0.6\linewidth]{cs2040s-rotate-weights.png}
+    \\* \includegraphics[width=0.65\linewidth]{cs2040s-rotate-weights.png}
     
     max
-    \\* \includegraphics[width=0.6\linewidth]{cs2040s-rotate-max.png}
+    \\* \includegraphics[width=0.65\linewidth]{cs2040s-rotate-max.png}
 \end{center}
 
 \begin{tightcenter}
@@ -400,7 +401,7 @@ Let $T(n) = O(f(n))$ and $S(n) = O(g(n))$
             \\\hline
         \end{tabular}
         \item an internal node has 1 more child than its number of keys
-        \item all leaf nodes must be at the same depth from the root
+        \item all leaf nodes must be at the \textbf{same depth} from the root
     \end{enumerate}
     \item terminology (for a node $z$)
     \begin{itemize}
@@ -584,7 +585,7 @@ $n =$ number of elements in the hash table
 \begin{itemize}
     \item if an event occurs with probability $p$, the expected number of iterations needed for this event to occur is $\frac{1}{p}$.
     \item for \textbf{random variables}: expectation is always equal to the probability
-    \item \textbf{linearity of expectation}: $E[A = B] = E[A] + E[B]$
+    \item \textbf{linearity of expectation}: $E[A + B] = E[A] + E[B]$
 \end{itemize}
 
 \section{UNIFORMLY RANDOM PERMUTATION}
@@ -615,7 +616,7 @@ $n =$ number of elements in the hash table
             
             \\\hline\text{merge} & \Omega(n\log n) & O(n\log n) & O(n\log n) & \checkmark & O(n)
             
-            \\\hline\text{quick} & \Omega(n\log n) & O(n\log n) & O(n^2) & \times & ?
+            \\\hline\text{quick} & \Omega(n\log n) & O(n\log n) & O(n^2) & \times & O(1)
             \\\hline
         \end{array} 
         $\
@@ -624,8 +625,8 @@ $n =$ number of elements in the hash table
             \\\hline\textbf{sort} & \textbf{invariant} (after $k$ iterations)
             \\\hline bubble & largest $k$ elements are sorted
             \\\hline selection & smallest $k$ elements are sorted
-            \\\hline insertion & first $k$ elements are in order
-            \\\hline merge & –
+            \\\hline insertion & first $k$ slots are sorted
+            \\\hline merge & given subarray is sorted
             \\\hline quick & partition is in the right position
             \\\hline
         \end{tabular} \begin{tabular}{| c | c |}
@@ -653,6 +654,11 @@ $n =$ number of elements in the hash table
             chaining & $O(n)$ & $O(1)$ \\\hline
             open addressing & $\frac{1}{1-\alpha} = O(1)$ & $O(1)$ \\\hline
         \end{tabular}
+
+        \ 
+        \\ orders of growth
+        \\* $1 < \log n < \sqrt{n} < n < n \log n < n^2 < n^3 < 2^n < 2^{2n}$
+        \\* $\log_a n < n^a < a^n < n! < n^n$
 
         orders of growth
         \begin{align*}
