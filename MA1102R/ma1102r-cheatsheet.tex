@@ -67,6 +67,7 @@
 \renewcommand{\labelenumii}{\theenumii}
 \renewcommand{\theenumii}{\theenumi.\arabic{enumii}.}
 \renewcommand\labelitemii{•}
+\renewcommand\labelitemiii{•}
 %  convenient absolute value symbol
 \newcommand{\abs}[1]{\vert #1 \vert}
 %  convenient floor and ceiling
@@ -76,7 +77,6 @@
 \newcommand{\Mod}[1]{\ \mathrm{mod}\ #1}
 %  for logical not operator, iff symbol, convenient "if/then"
 \renewcommand{\lnot}{\mathord{\sim}}
-\let\iff\leftrightarrow
 \let\Iff\Leftrightarrow
 \let\then\rightarrow
 \let\Then\Rightarrow
@@ -140,37 +140,26 @@
     \item $A \subseteq B$: A is a subset of B
     \item $A \nsubseteq B$: A is not a subset of B
     \item $A = B \iff A \subseteq B \land B \subseteq A$
-\end{itemize}
-
-\subsubsection{operations on sets}
-\begin{itemize}
-    \item union: $A \cup B = \{x \mid x \in A \lor x \in B\}$
-    \item intersection: $A \cap B = \{x \mid x \in A \land x \in B\}$
-    \item difference: $A \backslash B = \{x \mid x \in A \land x \notin B\}$
-\end{itemize}
-
-\begin{center}
-\setlength{\columnseprule}{0pt}
-\begin{multicols*}{2}
-
-    \subsubsection{notations of sets}
+    \item \textbf{operations on sets}
     \begin{itemize}
-        \item $\mathbb{R, Q, Z, N}$
-        \item $\mathbb{N} = \mathbb{Z}^+$
+        \item union: $A \cup B = \{x \mid x \in A \lor x \in B\}$
+        \item intersection: $A \cap B = \{x \mid x \in A \land x \in B\}$
+        \item difference: $A \backslash B = \{x \mid x \in A \land x \notin B\}$
+    \end{itemize}
+    \item \textbf{common notations on sets}: 
+    \begin{itemize}
+        \item $\mathbb{R, Q, Z, N}$ where $\mathbb{N} = \mathbb{Z}^+$
         \item $\emptyset$: empty set
     \end{itemize}
+\end{itemize}
 
-    \subsubsection{notations of intervals}
-    \begin{itemize}
-        \item closed interval (inclusive): $[a, b] = \{x \mid a \leq x \leq b\}$
-        \item open interval (exclusive): $(a, b) = \{x \mid a < x < b\}$
-        \begin{itemize}
-            \item $(a, \infty) = \{x \mid a < x\}$
-        \end{itemize}
-    \end{itemize}
-
+\begin{multicols*}{2}
+    \textbf{closed interval} (inclusive): $[a, b] = \{x \mid a \leq x \leq b\}$
+    \\* \ 
+    \\ \ 
+    \textbf{open} interval (exclusive): $(a, b) = \{x \mid a < x < b\}$
+$(a, \infty) = \{x \mid a < x\}$
 \end{multicols*}
-\end{center}
 
 \subsection{functions}
 \begin{itemize}
@@ -178,8 +167,7 @@
     \item \textbf{uniqueness}: $\forall a \in A$ has only one image in $B$.
     \item for $f : A \to B$
     \begin{itemize}
-        \item domain: $A$
-        \item codomain: $B$
+        \item domain: $A$, codomain: $B$
         \item range: $\{f(x) \mid x \in A\}$
     \end{itemize}
     \item for this mod: 
@@ -191,38 +179,33 @@
 \end{itemize}
 
 \subsubsection{graphs of functions}
-\begin{tightcenter}
+\begin{center}
     The graph of $f$ is the set 
-    \\ $G(f) := \{ \left(x, f(x)\right) \mid x \in A\}$
-\end{tightcenter}
+    \\* $G(f) := \{ \left(x, f(x)\right) \mid x \in A\}$
+\end{center}
 \begin{itemize}
     \item if $A, B \subseteq R$ then $G(f) \subseteq A \times B \subseteq \mathbb{R} \times \mathbb{R}$
     \item each element is a point on the Cartesian plane $\mathbb{R}^2$
 \end{itemize}
 
 \subsubsection{algebra of functions}
-% \begin{center}
-%     addition
-%     \\* $(f+g)(x) := f(x) + g(x)$
-% \end{center}
-\begin{tabular}{| c | c |}
-    % \multicolumn{3}{>{\color{black}}c}{LOGICAL EQUIVALENCES} 
+$\begin{array}{| c | c |}
     \hline 
-     function & domain
+     \text{function} & \text{domain}
     \\ \hline 
-         $(f + g)(x) := f(x) + g(x)$ 
-        & $A \cap B$
+         (f + g)(x) := f(x) + g(x) 
+        & A \cap B
     \\ \hline 
-         $(f - g)(x) := f(x) - g(x)$ 
-        & $A \cap B$
+         (f - g)(x) := f(x) - g(x) 
+        & A \cap B
     \\ \hline 
-         $(fg)(x) := f(x)g(x)$ 
-        & $A \cap B$
+         (fg)(x) := f(x)g(x) 
+        & A \cap B
     \\ \hline 
-         $(f/g)(x) := f(x)/g(x)$ 
-        & $\{x \in A \cap B \mid g(x) \neq 0\}$
+         (f/g)(x) := f(x)/g(x) 
+        & {\scriptstyle\{x \in A \cap B \mid g(x) \neq 0\}}
     \\ \hline 
-\end{tabular}
+\end{array}$
 
 \subsubsection{types of functions}
 \begin{itemize}
@@ -256,11 +239,20 @@
 
 \section{01. LIMITS}
 \subsection{precise definition of limits}
+Let $f$ be a function defined on an open interval containing $a$, except possibly at $a$.
 \begin{center}
-    Let $f$ be a function defined on an open interval containing $a$, except possibly at $a$.
-    \\* The limit of $f(x)$ as $x$ approaches $a$, equals $L$ if, for every $\epsilon > 0$ there is $\delta > 0$ such that
-    \\* $0 < \abs{x - a} < \delta \Rightarrow \abs{f(x) - L} < \epsilon$ 
-    \includegraphics[width=0.9\linewidth]{ma1102r-limits.png}
+    The limit of $f(x)$ (as $x$ approaches $a$) equals $L$ if, 
+    \begin{tightcenter}
+        \noindent\fbox{%
+        \parbox{0.7\linewidth}{%
+            \begin{tightcenter}
+                for every $\epsilon > 0$ there is $\delta > 0$ such that
+            \\* $0 < \abs{x - a} < \delta \Rightarrow \abs{f(x) - L} < \epsilon$ 
+            \end{tightcenter}
+            }
+        }%
+    \end{tightcenter}
+    \includegraphics[width=0.8\linewidth]{ma1102r-limits.png}
 \end{center}
 informally,
 \begin{itemize}
@@ -281,6 +273,14 @@ informally,
 % \end{itemize}
 
 \subsection{limit laws}
+\begin{tightcenter}
+    \noindent\fbox{%
+    \parbox{0.8\linewidth}{%
+        you cannot apply any laws on limits 
+        UNLESS you have shown that the limit exists!!
+        }
+    }%
+\end{tightcenter}
 \begin{itemize}
     \item Let $c \in \mathbb{R}$. $\displaystyle{\lim_{x \to a} c = c}$
     \item $\displaystyle{\lim_{x \to a} x = a}$
@@ -290,7 +290,7 @@ Suppose $\displaystyle{\lim_{x \to a} f(x) = L}$ and $\displaystyle{\lim_{x \to 
     \item $\displaystyle{\lim_{x \to a} \left( cf(x) \right)} = cL = c \lim_{x \to a} f(x)$
     \item $\displaystyle{\lim_{x \to a} \left( f(x) + g(x) \right) = L + M = \lim_{x \to a} f(x) + \lim_{x \to a} g(x)}$
     \item $\displaystyle{\lim_{x \to a} \left( f(x) - g(x) \right) = \lim_{x \to a} f(x) - \lim_{x \to a} g(x)}$
-    \item $\displaystyle{\lim_{x \to a} \left(f(x) g(x)\right) \lim_{x \to a} f(x) \lim_{x \to a} g(x)}$
+    \item $\displaystyle{\lim_{x \to a} \left(f(x) g(x)\right) = \lim_{x \to a} f(x) \lim_{x \to a} g(x)}$
     \item $\displaystyle{\lim_{x \to a} \frac{f(x)}{g(x)} = \frac{\lim_{x \to a} f(x)}{\lim_{x \to a} g(x)}}$ provided that $\displaystyle{\lim_{x \to a} g(x) \neq 0}$
     \item $\displaystyle{\lim_{x \to a} \left( f(x) \right) ^n = \left(\lim_{x \to a} f(x)\right)^n}$
     \item $\displaystyle{\lim_{x \to a} \sqrt[n]{f(x)} = \sqrt[n]{\lim_{x \to a} f(x)}}$
@@ -314,20 +314,16 @@ Suppose $\displaystyle{\lim_{x \to a} f(x) = L}$ and $\displaystyle{\lim_{x \to 
 \end{center}
 
 \subsubsection{direct substitution property}
+Let $f$ be a polynomial or rational function. 
 \begin{center}
-    Let $f$ be a polynomial or rational function. 
-    \\* If $a$ is in the domain of $f$, then
+    If $a$ is in the domain of $f$, then
     \\* $\displaystyle{\lim_{x \to a} f(x) = f(a)}$
 
     If $f(x) = g(x)$ for all $x$ near $a$ except possibly at $a$, then 
     \\* $\displaystyle{\lim_{x \to a} f(x) = \lim_{x \to a} g(x)}$
 \end{center}
 
-applications
-\begin{itemize}
-    \item if $a$ is not in the domain (e.g. 0 denominator), don't apply directly
-    \item convert to an equivalent function and then sub in
-\end{itemize}
+If $a$ is not in the domain (e.g. 0 denominator), don't apply directly - convert to an equivalent function and then sub in
 
 \subsection{one-sided limits}
 \begin{itemize}
@@ -336,11 +332,10 @@ applications
 \begin{center}
     If as $x$ is close to $a$ from the right, $f(x)$ is close to L, the right-hand limit of $f$ as $x$ approaches $a$ equals $L$.
     \\* $\displaystyle{\left( x \to a^+ \Then f(x) \to L \right) \Then \lim_{x \to a^+} f(x) = L}$
-    
-    If as $x$ is close to $a$ from the left, $f(x)$ is close to L, the left-hand limit of $f$ as $x$ approaches $a$ equals $L$.
+    \\ \ 
+    \\ If as $x$ is close to $a$ from the left, $f(x)$ is close to L, the left-hand limit of $f$ as $x$ approaches $a$ equals $L$.
     \\* $\displaystyle{\left( x \to a^- \Then f(x) \to L \right) \Then \lim_{x \to a^-} f(x) = L}$
 \end{center}
-
 \begin{center}
     \fbox{
         $\displaystyle{\lim_{x \to a} f(x) = L \iff \lim_{x \to a^+} f(x) = \lim_{x \to a^-} f(x) = L}$
@@ -356,25 +351,27 @@ applications
     \textbf{LH Limit}: $\displaystyle{\lim_{x \to a^-} f(x) = L}$ 
     \\* if for every $\epsilon > 0$ there exists $\delta > 0$ such that
     \\* $0 < a - x < \delta \Then \abs{f(x) - L} < \epsilon$
-\end{center}
-\begin{center}
-    \textbf{RH Limit}: $\displaystyle{\lim_{x \to a^+} f(x) = L}$ 
+    \\ \ 
+    \\ \textbf{RH Limit}: $\displaystyle{\lim_{x \to a^+} f(x) = L}$ 
     \\* if for every $\epsilon > 0$ there exists $\delta > 0$ such that
     \\* $0 < x - a < \delta \Then \abs{f(x) - L} < \epsilon$
 \end{center}
 
 \subsection{definition of infinite limits}
-% \subsubsection{definition of infinite limit}
 \begin{center}
     $\displaystyle{\lim_{x \to a} f(x) = \infty}$ 
     \\* if for every $M > 0$ there exists $\delta > 0$ such that
     \\* $0 < \abs{x - a} < \delta \Then f(x) > M$
-    \includegraphics[width=0.9\linewidth]{ma1102r-infinite-limit.png}
+    \includegraphics[width=0.7\linewidth]{ma1102r-infinite-limit.png}
     \\* \textbf{negative infinite limit:}
     \\* $0 < \abs{x - a} < \delta \Then f(x) < M$
 \end{center}
+\begin{itemize}
+    \item $\infty$ is NOT a number $\Then$ an infinite limit does NOT exist
+\end{itemize}
 
 \subsubsection{limits to infinity}
+Suppose $f$ is defined on $[M, \infty)$ for some $M \in \mathbb{R}$:
 \begin{center}
     $\displaystyle{\lim_{x \to \infty}f(x) = L}$: 
     \\* For every $\epsilon > 0$, there exists $N$ such that
@@ -397,34 +394,50 @@ applications
 % \end{center}
 
 \subsection{squeeze theorem}
-\begin{itemize}
-    \item Suppose $f(x)$ is bounded by $g(x)$ and $h(x)$ where 
+Suppose $f(x)$ is bounded by $g(x)$ and $h(x)$ where 
     \begin{itemize}
-        \item $g(x) \leq f(x) \leq h(x)$ for all $x$ near $a$ (except at $a$),
-        \item and $\displaystyle{\lim_{x \to a} g(x) = \lim_{x \to a} h(x) = L}$.
+        \item $g(x) \leq f(x) \leq h(x)$ for all $x$ near $a$ (except at $a$), and
+        \item $\displaystyle{\lim_{x \to a} g(x) = \lim_{x \to a} h(x) = L}$.
     \end{itemize}
-\end{itemize}
-\centerline{Then $\displaystyle{\lim_{x \to a} f(x) = L}$}
+\begin{center}
+    Then $\displaystyle{\lim_{x \to a} f(x) = L}$.
+    \includegraphics[width=0.8\linewidth]{ma1102r-squeeze-theorem.png}
+\end{center}
 
 
 \section{02. CONTINUOUS FUNCTIONS}
 \subsection{definition of continuity}
 \begin{center}
-    a function $f$ is \textbf{continuous at $a$} $\Iff$ 
+    a function $f$ is \textbf{continuous at $a$} $\iff$ 
     \\* $f$ is continuous from the left and from the right at $a$.
     \\* $\displaystyle{\lim_{x \to a} f(x) = f(a)}$
+    \begin{itemize}
+        \item $f$ is continuous from the right at $a$ if $\displaystyle{\lim_{x \to a^+} f(x) = a}$
+        \item $f$ is continuous from the left at $a$ if $\displaystyle{\lim_{x \to a^-} f(x) = a}$
+    \end{itemize}
 \end{center}
-a function $f$ is \textit{continuous at an interval} if it is continuous at every number in the interval.
+
+a function $f$ is \textbf{continuous at an interval} if it is continuous at every number in the interval.
 \begin{center}
     $f$ is continuous on \textbf{open interval} $(a, b)$
     \\* $\Iff f$ is continuous at every $x \in (a, b)$
-    \\ $f$ is continuous on \textbf{closed interval} [a, b]
+    \\ $f$ is continuous on \textbf{closed interval} $[a, b]$
     $\Iff \begin{cases}
         f $ is continuous at every $x \in (a, b) \\
         f $ is continuous from the right at $ a \\
         f $ is continuous from the left at $ b
     \end{cases}$
 \end{center}
+
+\subsubsection{precise definition of continuity}
+\begin{center}
+    a function $f$ is \textbf{continuous} at a number $a$ if 
+    \\* for all $\epsilon > 0$, there exists $\delta > 0$ such that 
+    $\abs{x - a} < \delta \Then \abs{f(x) - f(a)} < \epsilon$
+\end{center}
+\begin{itemize}
+    \item aka $\displaystyle{\lim_{x \to a}} f(x) = f(a)$
+\end{itemize}
 
 \subsubsection{continuity test}
 $f$ is continuous at $a \Iff$ 
@@ -434,21 +447,17 @@ $f$ is continuous at $a \Iff$
     \item $\displaystyle{\lim_{x \to a} f(x)} = f(a)$ 
 \end{enumerate}
 
-\subsubsection{precise definition of continuity}
-\begin{center}
-    a function $f$ is continuous at a number $a$ if $\forall \epsilon > 0, \exists \delta > 0$ such that 
-    $\abs{x - a} < \delta \Then \abs{f(x) - f(a)} < \epsilon$
-\end{center}
-
 \subsubsection{examples of discontinuity}
-\begin{itemize}
-    \item removable discontinuity
-    \item infinite discontinuity
-    \item jump discontinuity
-\end{itemize}
-\includegraphics[width=0.32\linewidth]{ma1102r-removable-discontinuity.png}
-\includegraphics[width=0.32\linewidth]{ma1102r-infinite-discontinuity.png}
-\includegraphics[width=0.32\linewidth]{ma1102r-jump-discontinuity.png}
+\begin{center}
+    \begin{multicols*}{3}
+        removable
+        \\* \includegraphics[width=0.95\linewidth]{ma1102r-removable-discontinuity.png}
+        infinite
+        \\* \includegraphics[width=0.95\linewidth]{ma1102r-infinite-discontinuity.png}
+        jump
+        \\* \includegraphics[width=0.95\linewidth]{ma1102r-jump-discontinuity.png}
+    \end{multicols*}
+\end{center}
 
 \subsection{properties of continuous functions}
 let $f$ and $g$ be functions continuous at $a$. let $c$ be a constant.
@@ -457,14 +466,17 @@ let $f$ and $g$ be functions continuous at $a$. let $c$ be a constant.
     \item $f+g$ is continuous at $a$
     \item $f-g$ is continuous at $a$
     \item $fg$ is continuous at $a$
-    \item $\frac{f}{g}$ is continuous at $a$, provided $g(a) \neq 0$
+    \item $f/g$ is continuous at $a$, provided $g(a) \neq 0$
 \end{enumerate}
 
 \textbf{other properties}
 \begin{itemize}
-    \item a polynomial is continuous everywhere;
+    \item a polynomial is continuous everywhere
     \item a rational function is continuous on its domain
-    \item let $c$ be a real number. $f(x) = c$ is continuous on $\mathbb{R}$.
+    \begin{itemize}
+        \item if $P(x)$ and $Q(x)$ are polynomials, $\frac{P(x)}{Q(x)}$ is continuous whenever $Q(x) \neq 0$.
+    \end{itemize}
+    \item $f(x) = c$ is continuous on $\mathbb{R}$ for all $c \in \mathbb{R}$.
     \item $f(x) = x$ is continuous on $\mathbb{R}$.
 \end{itemize}
 
@@ -472,6 +484,9 @@ let $f$ and $g$ be functions continuous at $a$. let $c$ be a constant.
 \begin{itemize}
     \item $f(x) = \sin x$  and $g(x) = \cos x$ are continuous everywhere
     \item $\tan x, \sec x$ are continuous whenever $\cos x \neq 0$
+    \begin{itemize}
+        \item domain: $\mathbb{R} \backslash \{\pm \frac{pi}{2}, \pm \frac{3\pi}{2}, \pm \frac{5\pi}{2}, \dots\}$
+    \end{itemize}
     \item $\cot x, \csc x$ are continuous whenever $\sin x \neq 0$
     \begin{itemize}
         \item domain: $\mathbb{R} \backslash \{0, \pm \pi, \pm 2\pi, \cdots\}$
@@ -481,7 +496,7 @@ let $f$ and $g$ be functions continuous at $a$. let $c$ be a constant.
 \subsection{composite of continuous functions}
 \begin{center}
     if $f$ is continuous at $b$ and $\displaystyle{\lim_{x \to a} g(x) = b}$, then 
-    \\* $\displaystyle{\lim_{x \to a} f(g(x)) = f(\lim_{x \to a} g(x))}$
+    \\* $\displaystyle{\lim_{x \to a} f(g(x)) = f(\lim_{x \to a} g(x)) = f(b)}$
 \end{center}
 \begin{center}
     if $g$ is continuous at $a$ and $f$ is continuous at $g(a)$,
@@ -494,6 +509,9 @@ Suppose $y = f(x)$ such that $\displaystyle{\lim_{x \to a}f(x) = b}$. If
 \begin{enumerate}
     \item $g$ is continuous at $b$, OR 
     \item $\forall x$ near $a$, except at $a$, $f(x) \neq b$ and $\displaystyle{\lim_{y \to b} g(y)}$ exists
+    \begin{itemize}
+        \item aka, $\displaystyle{\lim_{y \to b}g(y)}$ exists and $f$ is one-to-one.
+    \end{itemize}
 \end{enumerate}
 Then $\displaystyle{\lim_{x \to a} g(f(x)) = \lim_{y \to b} g(y)}$
 
@@ -509,37 +527,53 @@ Then $\displaystyle{\lim_{x \to a} g(f(x)) = \lim_{y \to b} g(y)}$
 
 \subsection{tangent line}
 \begin{center}
-    the \textbf{tangent line} to $y=f(x)$ at $(a, f(a))$ is the line 
-    \\* passing through $(a, f(a))$ with slope $f'(a)$:
-    \\* $y = f'(a)(x-a) + f(a)$
+    the \textbf{tangent line} to $y=f(x)$ at $(a, f(a))$ is 
+    \\* the line passing through $(a, f(a))$ with slope $f'(a)$:
+    \fbox{
+        $y = f'(a)(x-a) + f(a)$
+    }
 \end{center}
 
 \subsection{definition of derivatives}
 \begin{itemize}
     \item $f$ is differentiable at $a$ if $f'(a)$ exists
     \item $f'(a)$ is the slope of $y=f(x)$ at $x=a$
-\end{itemize}
-\begin{center}
-    $\displaystyle{f'(x) := \lim_{h \to 0} \frac{f(x+h) - f(x)}{h}}$
-    $\displaystyle{f'(a) := \lim_{x \to a} \frac{f(x) - f(a)}{x-a}}$
-\end{center}
-\begin{itemize}
+    \begin{itemize}
+        \item $f'(a) = \frac{dy}{dx}\vert_{x = a}$
+        \item $\frac{dy}{dx} := {\displaystyle\lim_{x \to 0}} \frac{\Delta y}{\Delta x}$  (derivative of $y$ with respect to $x$)
+    \end{itemize}
     \item $f'(x) = y' = \frac{dy}{dx} = \frac{df}{dx} = \frac{d}{dx}f(x) = D_xf(x) = \cdots$
-    \item $\displaystyle{\frac{dy}{dx} := \lim_{x \to 0} \frac{\Delta y}{\Delta x}}$  (derivative of $y$ with respect to $x$)
-    \item $f'(a) = \frac{dy}{dx}\vert_{x = a}$
 \end{itemize}
+\begin{tightcenter}
+    \noindent\fbox{%
+        \parbox{0.9\linewidth}{%
+            \begin{tightcenter}
+            the \textbf{derivative} of a function $f$
+            \\* ${\displaystyle{f'(x) := \lim_{h \to 0}}} \frac{f(x+h) - f(x)}{h}$
+            \\ the \textbf{derivative} of a function $f$ at a number $a$ is 
+            \\* ${\displaystyle{f'(a) := \lim_{x \to a}}} \frac{f(x) - f(a)}{x-a}$
+            \end{tightcenter}
+            }
+        }%
+\end{tightcenter}
 
 \subsection{differentiable functions}
 \begin{itemize}
-    \item $f$ is differentiable at $a$ if $\displaystyle{f'(a) := \lim_{x \to 0}\frac{f(a + h) - f(a)}{h}}$ exists.
-    \item $f$ is differentiable on $(a, b)$ if $f$ is differentiable at every $c \in (a, b)$
+    \item $f$ is differentiable at $a$ if 
+    \begin{itemize}
+        \item ${\displaystyle{f'(a) := \lim_{x \to 0}}}\frac{f(a + h) - f(a)}{h}$ exists.
+    \end{itemize}
+    \item $f$ is differentiable on $(a, b)$ if 
+    \begin{itemize}
+        \item $f$ is differentiable at every $c \in (a, b)$
+    \end{itemize}
 \end{itemize}
 
 \subsubsection{differentiability \& continuity}
 \begin{itemize}
-    \item if $f$ is differentiable at $a$, then $f$ is continuous at $a$.
+    \item differentiability $\Then$ continuity
     \begin{itemize}
-        \item differentiability $\Then$ continuity
+        \item if $f$ is differentiable at $a$, then $f$ is continuous at $a$.
     \end{itemize}
     \item continuity $\nRightarrow$ differentiability
 \end{itemize}
@@ -552,6 +586,14 @@ Then $\displaystyle{\lim_{x \to a} g(f(x)) = \lim_{y \to b} g(y)}$
     \end{itemize}
     \item trigonometric functions are differentiable on the domain
 \end{itemize}
+
+\subsubsection{differentiation of trigonometric functions}
+\begin{center}
+    \begin{multicols}{2}
+        ${\displaystyle{\lim_{\theta \to 0}} \frac{\sin\theta}{\theta} = 1}$
+        \\ ${\displaystyle{\lim_{\theta \to 0}} \frac{1 - \cos\theta}{\theta} = 0}$
+    \end{multicols}
+\end{center}
 
 \subsubsection{chain rule}
 \begin{center}
@@ -593,6 +635,13 @@ $h$ is differentiable at $a$; $g$ is differentiable at $B = h(a)$; $f$ is differ
     \\* For any positive integer $n$, $f^{(n)} := (f^{(n-1)})'$
     \\* if $y=f(x)$, then $f^{(n)}(x) = y^{(n)} = \frac{d^ny}{dx^n} = D^nf(x)$
 \end{center}
+\begin{itemize}
+    \item for $f(x) = \frac{1}{x}$, $f^{(n)}(x) = \frac{(-1)^nn!}{x^{n+1}}$
+    \item for $f(x) = x^m$, $f^{(n)}(x) = \begin{cases}
+        \frac{m!x^{m-n}}{(m-n)!} &\text{ if } m \geq n,
+        \\ 0 &\text{ if } m < n.
+    \end{cases}$
+\end{itemize}
 
 \section{04. APPLICATIONS OF DIFFERENTIATION}
 
@@ -614,6 +663,7 @@ Let $f$ be a function with domain $D$.
 \subsubsection{local max/min}
 \begin{itemize}
     \item aka relative max/min aka "turning points"
+    \item "all $x$ near $c$" = for all $x$ in an open interval containing $c$
 \end{itemize}
 \begin{center}
     $f$ has a local \textbf{maximum} at $c \in D$ 
@@ -621,6 +671,10 @@ Let $f$ be a function with domain $D$.
     \\ $f$ has a local \textbf{minimum} at $c \in D$ 
     \\* $\Iff f(c) \leq f(x)$ for all $x$ near $c$
 \end{center}
+\begin{itemize}
+    \item local max/min $\nRightarrow$ global max/min
+    \item global max/min $\nRightarrow$ local max/min
+\end{itemize}
 
 \subsection{extreme value theorem}
 \begin{center}
@@ -635,12 +689,13 @@ Let $f$ be a function with domain $D$.
 
 \subsection{critical numbers}
 \begin{center}
-    Then $c \in D$ is a \textit{critical number} of $f$ if 
+    $c \in D$ is a \textit{critical number} of $f$ if 
     \\* $f'(c) = 0$, or $f'(c)$ does not exist.
 \end{center}
 \begin{center}
     \textbf{fermat's theorem}
-    \\* Suppose $f$ has a local maximum or minimum at $c$.
+    \\* If $f$ has a local maximum or minimum at $c$, 
+    \\* then $c$ is a critical number.
     \\* If $f'(c)$ exists, then $f'(c)=0$.
 \end{center}
 
@@ -788,7 +843,7 @@ Suppose that
 \subsection{misc}
 \subsubsection{triangle inequality}
 \begin{center}
-    $\abs{a = b} \leq \abs{a} + \abs{b}$ for all $a, b \in \mathbb{R}$
+    $\abs{a + b} \leq \abs{a} + \abs{b}$ for all $a, b \in \mathbb{R}$
 \end{center}
 
 \subsubsection{binomial theorem}
@@ -804,6 +859,8 @@ Suppose that
 \subsubsection{factorisation}
 \begin{center}
     $a^n-b^n = (a-b)(a^{n-1} + a^{n-2}b + \cdots + ab^{n-2} + b^{n-1})$
+    $a^3-b^3 = (a-b)(a^2+ab+b^2)$
+    $a^3+b^3 = (a+b)(a^2-ab+b^2)$
 \end{center}
 
 \subsubsection{misc}
