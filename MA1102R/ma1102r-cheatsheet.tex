@@ -928,33 +928,51 @@ let $u = g(x)$ be a differentiable function.
 \end{center}
 
 
-% \subsection{improper integral}
-% \subsubsection{for discontinuous integrands}
-% \begin{center}
-%     if $f$ is continuous on $[a, b)$ and discontinuous at $b$,
-%     \\* ${\displaystyle{\int^b_a f(x) \dx = \lim_{t \to b^-} \int^t_a f(x) \dx}}$
-% \end{center}
+\subsection{improper integral}
+\subsubsection{for discontinuous integrands}
+\begin{center}
+    if $f$ is continuous on $[a, b)$ and discontinuous at $b$,
+    \\* ${\displaystyle{\int^b_a f(x) \dx = \lim_{t \to b^-} \int^t_a f(x) \dx}}$
+\end{center}
 
-% \begin{center}
-%     if $f$ is continuous on $(a, b]$ and discontinuous at $a$,
-%     \\* ${\displaystyle{\int^b_a f(x) \dx = \lim_{t \to a^+} \int^b_t f(x) \dx}}$
-% \end{center}
-% \begin{itemize}
-%     \item $\int^b_a f(x) \dx$ is the limit of integrals.
-%     \begin{itemize}
-%         \item \textbf{converges} if the limit exists
-%         \item \textbf{diverges} if the limit does not exist
-%     \end{itemize}
-% \end{itemize}
+\begin{center}
+    if $f$ is continuous on $(a, b]$ and discontinuous at $a$,
+    \\* ${\displaystyle{\int^b_a f(x) \dx = \lim_{t \to a^+} \int^b_t f(x) \dx}}$
+\end{center}
+\begin{itemize}
+    \item $\int^b_a f(x) \dx$ is the limit of integrals.
+    \begin{itemize}
+        \item \textbf{converges} if the limit exists
+        \item \textbf{diverges} if the limit does not exist
+    \end{itemize}
+\end{itemize}
 
-% \subsubsection{discontinuity in the interior of the interval}
-% \begin{center}
-%     suppose $f$ has discontinuity at $c \in (a, b)$. then
-%     \\* ${\displaystyle{\int^b_a f(x) \dx = \lim_{t \to c^-} \int^t_a f(x) \dx + \lim_{t \to c^+} \int^b_t f(x) \dx}}$ 
-% \end{center}
+\subsubsection{discontinuity in the interior of the interval}
+\begin{center}
+    suppose $f$ has discontinuity at $c \in (a, b)$. then
+    \\* ${\displaystyle{\int^b_a f(x) \dx = \lim_{t \to c^-} \int^t_a f(x) \dx + \lim_{t \to c^+} \int^b_t f(x) \dx}}$ 
+\end{center}
 
-% \subsubsection{over infinite intervals}
+\subsubsection{over infinite intervals}
+\begin{center}
+    ${\displaystyle{\int^\infty_{-\infty} f(x) \dx = \int^a_{-\infty} f(x) \dx + \int^\infty_a f(x) \dx}}$
+\end{center}
 
+\begin{center}
+    if $\int^t_a f(x) \dx$ exists for every $t \geq a$, then
+    \\* the \textbf{improper integral} of $f$ from $a$ to $\infty$ is
+    \\* ${\displaystyle{\int^\infty_a f(x) \dx = \lim_{t \to \infty} \int^t_a f(x) \dx}}$
+\end{center}
+
+\begin{center}
+    if $\int^b_t f(x) \dx$ exists for every $t \leq b$, then
+    \\* the \textbf{improper integral} of $f$ from $-\infty$ to $b$ is
+    \\* ${\displaystyle{\int^\infty_a f(x) \dx = \lim_{t \to \infty} \int^t_a f(x) \dx}}$
+\end{center}
+
+\begin{itemize}
+    \item NOTE: $\int^\infty_{-\infty} f(x) \dx \neq \lim_{a \to \infty} \int^a_{-a} f(x) \dx$
+\end{itemize}
 
 
 \begin{center}
