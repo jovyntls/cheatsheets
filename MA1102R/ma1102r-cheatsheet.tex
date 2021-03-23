@@ -85,6 +85,8 @@
 \newcommand{\VV}[1]{\overrightarrow{#1}}
 %  column vector
 \newcommand{\cvv}[1]{\left(\begin{smallmatrix}#1\end{smallmatrix}\right)}
+%  for differentials
+\newcommand{\dx}{\mathop{dx}}
 
 \makeatother
 \definecolor{myblue}{cmyk}{1,.72,0,.38}
@@ -829,6 +831,131 @@ Suppose that
     \\* $\frac{f'(c)}{g'(c)} = \frac{f(b) - f(a)}{g(b) - g(a)}$
     \includegraphics[width=0.9\linewidth]{ma1102r-cauchy-mvt.png}
 \end{center}
+
+\section{05. INTEGRAlS}
+\subsection{definite integral}
+Let $f$ be a continuous function on $[a, b]$ divided into $n$ intervals.
+\begin{center}
+    \textbf{Riemann sum}
+    \\* $\left[ f(x_1^*) + f(x_2^*) + \cdots + f(x^*_n) \right] \Delta x = {\displaystyle\sum^n_{i=1}f(x_i^*)\Delta x}$
+    \begin{itemize}
+        \item the lengths of subintervals are not necessarily equal
+        \begin{itemize}
+            \item $\max\{\abs{x_i - x_{i-1} : i = 1, \cdots, n}\} \to 0$
+        \end{itemize}
+    \end{itemize}
+\end{center}
+
+\begin{center}
+    \textbf{definite integral} of $f$ from $a$ to $b$:
+    \noindent\fbox{%
+    \parbox{0.9\linewidth}{%
+    \begin{tightcenter}
+        ${\displaystyle{\int^b_a f(x) dx = \lim_{n \to \infty} \sum^n_{i = 1} f(x_i^*) \Delta x}}$
+    \end{tightcenter}
+    }
+    }%
+    \\* where $\Delta x = \frac{b - a}{n}$
+\end{center}
+\begin{itemize}
+    \item $f$ is \textbf{integrable} from $a$ to $b$ if ${\displaystyle{\lim_{n \to \infty} \sum^n_{i = 1} f(x_i^*) \Delta x}}$ exists.
+    \item continuous functions are integrable.
+    \item $\int^b_a f(x) dx = - \int^a_b f(x) dx$
+    \item $\int^a_a f(x) dx = 0$
+\end{itemize}
+
+\subsubsection{properties}
+let $f$ and $g$ be continuous functions.
+\begin{itemize}
+    \item $\int^b_a c \dx = (b-a) c$
+    \item $\int^b_a (f(x) \pm g(x)) \dx = \int^b_a f(x) \dx \pm \int^b_a g(x) \dx$
+    \item $\int^c_a f(x) \dx = \int^c_b f(x) \dx \pm \int^b_a f(x) \dx$
+    \item suppose $f(x) \geq 0$ on $[a, b]$. Then $\int^b_a f(x) \dx \geq 0$.
+    \item suppose $f(x) \geq g(x)$ on $[a, b]$. 
+    \item \begin{itemize}
+        \item Then $\int^b_a f(x) \dx \geq \int^b_a g(x) \dx$.
+    \end{itemize}
+    \item suppose $m \leq f(x) \leq M$ on $[a, b]$. 
+    \begin{itemize}
+        \item Then $m(b - a) \leq \int^b_af(x) \dx \leq M(b-a)$.
+    \end{itemize}
+\end{itemize}
+
+\subsection{fundamental theorem of calculus}
+for $g(x) = \int^x_a f(t) \, dt \quad (a \leq x \leq b)$, 
+\begin{itemize}
+    \item $g$ is continuous on $[a, b]$
+    \item $g$ is differentiable on $(a, b)$
+    \item $g'(x) = f(x)$ on $(a, b) \quad$ or $\quad \frac{d}{dx} \int^x_a f(t) \mathop{dt} = f(x)$
+\end{itemize}
+\begin{tightcenter}
+    \includegraphics[width=0.7\linewidth]{ma1102r-derivatives.png}
+\end{tightcenter}
+if $F$ is continuous on $[a, b]$, and $F' = f$ on $(a, b)$,
+\begin{tightcenter}
+    ${\displaystyle{\int^b_a f(x) \dx = F(b) - F(a) = F(x) \Bigr|^{x = b}_{x = a}}}$
+    \\* ${\displaystyle{\int^x_a \frac{d}{dx} F(t) \mathop{dt} = F(x) - F(a)}}$
+    \includegraphics[width=0.7\linewidth]{ma1102r-ftc-1.png}
+    \includegraphics[width=0.7\linewidth]{ma1102r-ftc-2.png}
+\end{tightcenter}
+
+\subsection{indefinite integral}
+\begin{itemize}
+    \item \textbf{indefinite integral} of $f$, ${\displaystyle{\int f(x) \dx = F(x) + c}}$
+    \item \textbf{antiderivative} (of a continuous function $f$): a continuous function $F$ such that $F' = f$.
+    \begin{itemize}
+        \item antiderivatives of $f$ are functions of form $F + c$
+        \item indefinite integral is a family of antiderivatives
+    \end{itemize}
+    \item properties of indefinite integral
+    \begin{itemize}
+        \item ${\displaystyle{\int (af(x) \pm bg(x)) \dx = a \int f(x) \dx \pm \, b \int g(x) \dx}}$
+    \end{itemize}
+\end{itemize}
+
+\subsection{substitution rule}
+let $u = g(x)$ be a differentiable function. 
+\subsubsection{indefinite integral}
+\begin{center}
+    if $f$ and $g'$ are continuous, 
+    \\* ${\displaystyle{\int f(g(x))g'(x) \dx = \int f(u) \mathop{du}}}$
+\end{center}
+\subsubsection{definite integral}
+\begin{center}
+    if $g'$ are continuous on $[a, b]$,
+    \\* and $f$ is continuous on the range of $u = g(x)$,
+    \\* ${\displaystyle{\int^b_a f(g(x))g'(x) \dx = \int^{g(b)}_{g(a)} f(u) \mathop{du}}}$
+\end{center}
+
+
+% \subsection{improper integral}
+% \subsubsection{for discontinuous integrands}
+% \begin{center}
+%     if $f$ is continuous on $[a, b)$ and discontinuous at $b$,
+%     \\* ${\displaystyle{\int^b_a f(x) \dx = \lim_{t \to b^-} \int^t_a f(x) \dx}}$
+% \end{center}
+
+% \begin{center}
+%     if $f$ is continuous on $(a, b]$ and discontinuous at $a$,
+%     \\* ${\displaystyle{\int^b_a f(x) \dx = \lim_{t \to a^+} \int^b_t f(x) \dx}}$
+% \end{center}
+% \begin{itemize}
+%     \item $\int^b_a f(x) \dx$ is the limit of integrals.
+%     \begin{itemize}
+%         \item \textbf{converges} if the limit exists
+%         \item \textbf{diverges} if the limit does not exist
+%     \end{itemize}
+% \end{itemize}
+
+% \subsubsection{discontinuity in the interior of the interval}
+% \begin{center}
+%     suppose $f$ has discontinuity at $c \in (a, b)$. then
+%     \\* ${\displaystyle{\int^b_a f(x) \dx = \lim_{t \to c^-} \int^t_a f(x) \dx + \lim_{t \to c^+} \int^b_t f(x) \dx}}$ 
+% \end{center}
+
+% \subsubsection{over infinite intervals}
+
+
 
 \begin{center}
     \ 
