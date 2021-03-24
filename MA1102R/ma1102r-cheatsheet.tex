@@ -2,7 +2,6 @@
 \usepackage[scaled=0.92]{helvet}
 \usepackage{calc}
 \usepackage{multicol}
-\usepackage{ifthen}
 \usepackage[a4paper,margin=3mm,landscape]{geometry}
 \usepackage{amsmath,amsthm,amsfonts,amssymb}
 \usepackage{color,graphicx,overpic}
@@ -78,7 +77,7 @@
 %  for logical not operator, iff symbol, convenient "if/then"
 \renewcommand{\lnot}{\mathord{\sim}}
 \let\Iff\Leftrightarrow
-\let\then\rightarrow
+\let\then\Rightarrow
 \let\Then\Rightarrow
 %  vectors
 \newcommand{\vv}[1]{\boldsymbol{#1}}
@@ -832,7 +831,7 @@ Suppose that
     \includegraphics[width=0.9\linewidth]{ma1102r-cauchy-mvt.png}
 \end{center}
 
-\section{05. INTEGRAlS}
+\section{05. INTEGRALS}
 \subsection{definite integral}
 Let $f$ be a continuous function on $[a, b]$ divided into $n$ intervals.
 \begin{center}
@@ -979,8 +978,96 @@ let $u = g(x)$ be a differentiable function.
     \ 
 \end{center}
 
+\section{07. INVERSE FUNCTIONS \& INTEGRATION}
 
+\subsubsection{one to one functions}
+\begin{center}
+    let $f$ be a function with domain $D$. 
+    \\* $f$ is \textbf{one-to-one} if, for any $a, b \in D$, 
+    \\* $a \neq b \then f(a) \neq f(b)$
+    \\* OR $f(a) = f(b) \then a = b$
+\end{center}
 
+\subsection{inverse function}
+let $f$ be a one-to-one function with domain $A$ and range $B$.
+\begin{itemize}
+    \item its \textbf{inverse function} $f^{-1}$ is the function with
+    \begin{itemize}
+        \item domain $B$ and range $A$, and
+        \item $f^{-1}(y) = x \iff y = f(x)$ for any $x \in A$, $y \in B$
+    \end{itemize}
+    \item $f^{-1} \circ f = id_A$ and $f \circ f^{-1} = id_B$
+    \item $(f^{-1})^{-1} = f$
+    \item NOTE: $(f(x))^{-1}$ is the reciprocal of the value of $f(x)$
+\end{itemize}
+\subsubsection{properties}
+let $f$ be a \textit{one-to-one continuous} function on an open interval $I$.
+\begin{itemize}
+    \item the inverse function $f^{-1}$ is also continuous.
+    \item if $f$ is differentiable at $a \in I$, and $f'(a) \neq 0$, then
+    \begin{itemize}
+        \item $f^{-1}$ is differentiable at $b = f(a)$
+        \item $(f^{-1})'(b) = \frac{1}{f'(a)}$
+    \end{itemize}
+\end{itemize}
+\begin{tightcenter}
+    \includegraphics[width=0.5\linewidth]{ma1102r-inverse-functions.png}
+\end{tightcenter}
+
+\subsection{derivatives of trigonometric functions}
+\begin{center}
+    \begin{math}
+        \begin{array}{| c | c |}
+            \hline 
+             \text{function} & \text{derivative}
+            \\ \hline 
+            \rule{0pt}{2.4ex}  % top spacing
+                \sin^{-1}x & \frac{1}{\sqrt{1 - x^2}}
+                \\ \cos^{-1}x & \frac{-1}{\sqrt{1 - x^2}}
+                \\ \tan^{-1}x & \frac{1}{1+x^2}
+            \\ \hline 
+        \end{array}
+        \quad
+        \begin{array}{| c | c |}
+            \hline 
+             \text{function} & \text{derivative}
+            \\ \hline 
+            \rule{0pt}{2.4ex}  % top spacing
+                \csc^{-1}x & \frac{-1}{x\sqrt{x^2-1}}
+                \\ \sec^{-1}x & \frac{1}{x\sqrt{x^2-1}}
+                \\ \cot^{-1}x & \frac{-1}{1+x^2}
+            \\ \hline 
+        \end{array}
+    \end{math}
+\end{center}
+\subsubsection{trigonometric identities}
+\begin{itemize}
+    \item $\tan^{-1}x + \cot^{-1}x - \frac{\pi}{2}$
+    \item $\sec^{-1}x + \csc^{-1}x = \begin{cases}
+        \frac{\pi}{2}, &\text{if } x \geq 1
+        \\ \frac{5\pi}{2}, &\text{if } x \leq -1
+    \end{cases}$
+\end{itemize}
+
+\subsection{natural logarithmic function}
+\begin{center}
+    natural logarithmic function, $\ln x = \int^x_1 \frac{1}{t} \mathop{dt} \quad (x > 0)$
+    \includegraphics[width=0.4\linewidth]{ma1102r-natural-logarithm-1.png}
+    \includegraphics[width=0.55\linewidth]{ma1102r-natural-logarithm-2.png}
+\end{center}
+\begin{itemize}
+    \item $\ln x < 0$ for $0 < x < 1$; $\quad \ln x > 0$ for $ > 1$; $\quad \ln 1 = 0$
+    \item $\ln x$ is increasing on $\mathbb{R}^n$ ($\frac{d}{dx} \ln x > 0$)
+\end{itemize}
+
+\subsection{logarithmic differentiation}
+aka take $\ln$ on both sides and implicitly differentiate
+\begin{center}
+    if $y = f_1(x)f_2(x)\cdots f_n(x)$ is a product of nonzero functions, 
+    $\ln \abs{y} = \ln \abs{f_1(x)} + \ln \abs{f_2(x)} + \cdots + \ln \abs{f_n(x)}$
+    \\* $\frac{dy}{dx} = \left[ \frac{f'_1(x)}{f_1(x)} + \frac{f'_2(x)}{f_2(x)} + \cdots + \frac{f'_n(x)}{f_n(x)} \right]y$
+    \\* $= \left[ \frac{f'_1(x)}{f_1(x)} + \frac{f'_2(x)}{f_2(x)} + \cdots + \frac{f'_n(x)}{f_n(x)} \right]f_1(x)f_2(x)\cdots f_n(x)$
+\end{center}
 
 
 
