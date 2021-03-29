@@ -2,7 +2,6 @@
 \usepackage[scaled=0.92]{helvet}
 \usepackage{calc}
 \usepackage{multicol}
-\usepackage{ifthen}
 \usepackage[a4paper,margin=3mm,landscape]{geometry}
 \usepackage{amsmath,amsthm,amsfonts,amssymb}
 \usepackage{color,graphicx,overpic}
@@ -78,13 +77,15 @@
 %  for logical not operator, iff symbol, convenient "if/then"
 \renewcommand{\lnot}{\mathord{\sim}}
 \let\Iff\Leftrightarrow
-\let\then\rightarrow
+\let\then\Rightarrow
 \let\Then\Rightarrow
 %  vectors
 \newcommand{\vv}[1]{\boldsymbol{#1}}
 \newcommand{\VV}[1]{\overrightarrow{#1}}
 %  column vector
 \newcommand{\cvv}[1]{\left(\begin{smallmatrix}#1\end{smallmatrix}\right)}
+%  for differentials
+\newcommand{\dx}{\mathop{dx}}
 
 \makeatother
 \definecolor{myblue}{cmyk}{1,.72,0,.38}
@@ -772,8 +773,8 @@ At $c$, if $f'$ changes from:
 \subsection{second derivative test}
 If $f'(c) = 0$ and $f''(c)$ exists,
 \begin{itemize}
-    \item $f''(c) > 0 \Then f$ has a \textbf{local maximum} at $c$.
-    \item $f''(c) < 0 \Then f$ has a \textbf{local minimum} at $c$.
+    \item $f''(c) < 0 \Then f$ has a \textbf{local maximum} at $c$.
+    \item $f''(c) > 0 \Then f$ has a \textbf{local minimum} at $c$.
     \item $f''(c) = 0 \Then$ inconclusive
 \end{itemize}
 
@@ -830,12 +831,243 @@ Suppose that
     \includegraphics[width=0.9\linewidth]{ma1102r-cauchy-mvt.png}
 \end{center}
 
+\section{05. INTEGRALS}
+\subsection{definite integral}
+Let $f$ be a continuous function on $[a, b]$ divided into $n$ intervals.
+\begin{center}
+    \textbf{Riemann sum}
+    \\* $\left[ f(x_1^*) + f(x_2^*) + \cdots + f(x^*_n) \right] \Delta x = {\displaystyle\sum^n_{i=1}f(x_i^*)\Delta x}$
+    \begin{itemize}
+        \item the lengths of subintervals are not necessarily equal
+        \begin{itemize}
+            \item $\max\{\abs{x_i - x_{i-1} : i = 1, \cdots, n}\} \to 0$
+        \end{itemize}
+    \end{itemize}
+\end{center}
+
+\begin{center}
+    \textbf{definite integral} of $f$ from $a$ to $b$:
+    \noindent\fbox{%
+    \parbox{0.9\linewidth}{%
+    \begin{tightcenter}
+        ${\displaystyle{\int^b_a f(x) dx = \lim_{n \to \infty} \sum^n_{i = 1} f(x_i^*) \Delta x}}$
+    \end{tightcenter}
+    }
+    }%
+    \\* where $\Delta x = \frac{b - a}{n}$
+\end{center}
+\begin{itemize}
+    \item $f$ is \textbf{integrable} from $a$ to $b$ if ${\displaystyle{\lim_{n \to \infty} \sum^n_{i = 1} f(x_i^*) \Delta x}}$ exists.
+    \item continuous functions are integrable.
+    \item $\int^b_a f(x) dx = - \int^a_b f(x) dx$
+    \item $\int^a_a f(x) dx = 0$
+\end{itemize}
+
+\subsubsection{properties}
+let $f$ and $g$ be continuous functions.
+\begin{itemize}
+    \item $\int^b_a c \dx = (b-a) c$
+    \item $\int^b_a (f(x) \pm g(x)) \dx = \int^b_a f(x) \dx \pm \int^b_a g(x) \dx$
+    \item $\int^c_a f(x) \dx = \int^c_b f(x) \dx \pm \int^b_a f(x) \dx$
+    \item suppose $f(x) \geq 0$ on $[a, b]$. Then $\int^b_a f(x) \dx \geq 0$.
+    \item suppose $f(x) \geq g(x)$ on $[a, b]$. 
+    \item \begin{itemize}
+        \item Then $\int^b_a f(x) \dx \geq \int^b_a g(x) \dx$.
+    \end{itemize}
+    \item suppose $m \leq f(x) \leq M$ on $[a, b]$. 
+    \begin{itemize}
+        \item Then $m(b - a) \leq \int^b_af(x) \dx \leq M(b-a)$.
+    \end{itemize}
+\end{itemize}
+
+\subsection{fundamental theorem of calculus}
+for $g(x) = \int^x_a f(t) \, dt \quad (a \leq x \leq b)$, 
+\begin{itemize}
+    \item $g$ is continuous on $[a, b]$
+    \item $g$ is differentiable on $(a, b)$
+    \item $g'(x) = f(x)$ on $(a, b) \quad$ or $\quad \frac{d}{dx} \int^x_a f(t) \mathop{dt} = f(x)$
+\end{itemize}
+\begin{tightcenter}
+    \includegraphics[width=0.7\linewidth]{ma1102r-derivatives.png}
+\end{tightcenter}
+if $F$ is continuous on $[a, b]$, and $F' = f$ on $(a, b)$,
+\begin{tightcenter}
+    ${\displaystyle{\int^b_a f(x) \dx = F(b) - F(a) = F(x) \Bigr|^{x = b}_{x = a}}}$
+    \\* ${\displaystyle{\int^x_a \frac{d}{dx} F(t) \mathop{dt} = F(x) - F(a)}}$
+    \includegraphics[width=0.7\linewidth]{ma1102r-ftc-1.png}
+    \includegraphics[width=0.7\linewidth]{ma1102r-ftc-2.png}
+\end{tightcenter}
+
+\subsection{indefinite integral}
+\begin{itemize}
+    \item \textbf{indefinite integral} of $f$, ${\displaystyle{\int f(x) \dx = F(x) + c}}$
+    \item \textbf{antiderivative} (of a continuous function $f$): a continuous function $F$ such that $F' = f$.
+    \begin{itemize}
+        \item antiderivatives of $f$ are functions of form $F + c$
+        \item indefinite integral is a family of antiderivatives
+    \end{itemize}
+    \item properties of indefinite integral
+    \begin{itemize}
+        \item ${\displaystyle{\int (af(x) \pm bg(x)) \dx = a \int f(x) \dx \pm \, b \int g(x) \dx}}$
+    \end{itemize}
+\end{itemize}
+
+\subsection{substitution rule}
+let $u = g(x)$ be a differentiable function. 
+\subsubsection{indefinite integral}
+\begin{center}
+    if $f$ and $g'$ are continuous, 
+    \\* ${\displaystyle{\int f(g(x))g'(x) \dx = \int f(u) \mathop{du}}}$
+\end{center}
+\subsubsection{definite integral}
+\begin{center}
+    if $g'$ are continuous on $[a, b]$,
+    \\* and $f$ is continuous on the range of $u = g(x)$,
+    \\* ${\displaystyle{\int^b_a f(g(x))g'(x) \dx = \int^{g(b)}_{g(a)} f(u) \mathop{du}}}$
+\end{center}
+
+
+\subsection{improper integral}
+\subsubsection{for discontinuous integrands}
+\begin{center}
+    if $f$ is continuous on $[a, b)$ and discontinuous at $b$,
+    \\* ${\displaystyle{\int^b_a f(x) \dx = \lim_{t \to b^-} \int^t_a f(x) \dx}}$
+\end{center}
+
+\begin{center}
+    if $f$ is continuous on $(a, b]$ and discontinuous at $a$,
+    \\* ${\displaystyle{\int^b_a f(x) \dx = \lim_{t \to a^+} \int^b_t f(x) \dx}}$
+\end{center}
+\begin{itemize}
+    \item $\int^b_a f(x) \dx$ is the limit of integrals.
+    \begin{itemize}
+        \item \textbf{converges} if the limit exists
+        \item \textbf{diverges} if the limit does not exist
+    \end{itemize}
+\end{itemize}
+
+\subsubsection{discontinuity in the interior of the interval}
+\begin{center}
+    suppose $f$ has discontinuity at $c \in (a, b)$. then
+    \\* ${\displaystyle{\int^b_a f(x) \dx = \lim_{t \to c^-} \int^t_a f(x) \dx + \lim_{t \to c^+} \int^b_t f(x) \dx}}$ 
+\end{center}
+
+\subsubsection{over infinite intervals}
+\begin{center}
+    ${\displaystyle{\int^\infty_{-\infty} f(x) \dx = \int^a_{-\infty} f(x) \dx + \int^\infty_a f(x) \dx}}$
+\end{center}
+
+\begin{center}
+    if $\int^t_a f(x) \dx$ exists for every $t \geq a$, then
+    \\* the \textbf{improper integral} of $f$ from $a$ to $\infty$ is
+    \\* ${\displaystyle{\int^\infty_a f(x) \dx = \lim_{t \to \infty} \int^t_a f(x) \dx}}$
+\end{center}
+
+\begin{center}
+    if $\int^b_t f(x) \dx$ exists for every $t \leq b$, then
+    \\* the \textbf{improper integral} of $f$ from $-\infty$ to $b$ is
+    \\* ${\displaystyle{\int^\infty_a f(x) \dx = \lim_{t \to \infty} \int^t_a f(x) \dx}}$
+\end{center}
+
+\begin{itemize}
+    \item NOTE: $\int^\infty_{-\infty} f(x) \dx \neq \lim_{a \to \infty} \int^a_{-a} f(x) \dx$
+\end{itemize}
+
+
 \begin{center}
     \ 
 \end{center}
 
+\section{07. INVERSE FUNCTIONS \& INTEGRATION}
 
+\subsubsection{one to one functions}
+\begin{center}
+    let $f$ be a function with domain $D$. 
+    \\* $f$ is \textbf{one-to-one} if, for any $a, b \in D$, 
+    \\* $a \neq b \then f(a) \neq f(b)$
+    \\* OR $f(a) = f(b) \then a = b$
+\end{center}
 
+\subsection{inverse function}
+let $f$ be a one-to-one function with domain $A$ and range $B$.
+\begin{itemize}
+    \item its \textbf{inverse function} $f^{-1}$ is the function with
+    \begin{itemize}
+        \item domain $B$ and range $A$, and
+        \item $f^{-1}(y) = x \iff y = f(x)$ for any $x \in A$, $y \in B$
+    \end{itemize}
+    \item $f^{-1} \circ f = id_A$ and $f \circ f^{-1} = id_B$
+    \item $(f^{-1})^{-1} = f$
+    \item NOTE: $(f(x))^{-1}$ is the reciprocal of the value of $f(x)$
+\end{itemize}
+\subsubsection{properties}
+let $f$ be a \textit{one-to-one continuous} function on an open interval $I$.
+\begin{itemize}
+    \item the inverse function $f^{-1}$ is also continuous.
+    \item if $f$ is differentiable at $a \in I$, and $f'(a) \neq 0$, then
+    \begin{itemize}
+        \item $f^{-1}$ is differentiable at $b = f(a)$
+        \item $(f^{-1})'(b) = \frac{1}{f'(a)}$
+    \end{itemize}
+\end{itemize}
+\begin{tightcenter}
+    \includegraphics[width=0.5\linewidth]{ma1102r-inverse-functions.png}
+\end{tightcenter}
+
+\subsection{derivatives of trigonometric functions}
+\begin{center}
+    \begin{math}
+        \begin{array}{| c | c |}
+            \hline 
+             \text{function} & \text{derivative}
+            \\ \hline 
+            \rule{0pt}{2.4ex}  % top spacing
+                \sin^{-1}x & \frac{1}{\sqrt{1 - x^2}}
+                \\ \cos^{-1}x & \frac{-1}{\sqrt{1 - x^2}}
+                \\ \tan^{-1}x & \frac{1}{1+x^2}
+            \\ \hline 
+        \end{array}
+        \quad
+        \begin{array}{| c | c |}
+            \hline 
+             \text{function} & \text{derivative}
+            \\ \hline 
+            \rule{0pt}{2.4ex}  % top spacing
+                \csc^{-1}x & \frac{-1}{x\sqrt{x^2-1}}
+                \\ \sec^{-1}x & \frac{1}{x\sqrt{x^2-1}}
+                \\ \cot^{-1}x & \frac{-1}{1+x^2}
+            \\ \hline 
+        \end{array}
+    \end{math}
+\end{center}
+\subsubsection{trigonometric identities}
+\begin{itemize}
+    \item $\tan^{-1}x + \cot^{-1}x - \frac{\pi}{2}$
+    \item $\sec^{-1}x + \csc^{-1}x = \begin{cases}
+        \frac{\pi}{2}, &\text{if } x \geq 1
+        \\ \frac{5\pi}{2}, &\text{if } x \leq -1
+    \end{cases}$
+\end{itemize}
+
+\subsection{natural logarithmic function}
+\begin{center}
+    natural logarithmic function, $\ln x = \int^x_1 \frac{1}{t} \mathop{dt} \quad (x > 0)$
+    \includegraphics[width=0.4\linewidth]{ma1102r-natural-logarithm-1.png}
+    \includegraphics[width=0.55\linewidth]{ma1102r-natural-logarithm-2.png}
+\end{center}
+\begin{itemize}
+    \item $\ln x < 0$ for $0 < x < 1$; $\quad \ln x > 0$ for $ > 1$; $\quad \ln 1 = 0$
+    \item $\ln x$ is increasing on $\mathbb{R}^n$ ($\frac{d}{dx} \ln x > 0$)
+\end{itemize}
+
+\subsection{logarithmic differentiation}
+aka take $\ln$ on both sides and implicitly differentiate
+\begin{center}
+    if $y = f_1(x)f_2(x)\cdots f_n(x)$ is a product of nonzero functions, 
+    $\ln \abs{y} = \ln \abs{f_1(x)} + \ln \abs{f_2(x)} + \cdots + \ln \abs{f_n(x)}$
+    \\* $\frac{dy}{dx} = \left[ \frac{f'_1(x)}{f_1(x)} + \frac{f'_2(x)}{f_2(x)} + \cdots + \frac{f'_n(x)}{f_n(x)} \right]y$
+    \\* $= \left[ \frac{f'_1(x)}{f_1(x)} + \frac{f'_2(x)}{f_2(x)} + \cdots + \frac{f'_n(x)}{f_n(x)} \right]f_1(x)f_2(x)\cdots f_n(x)$
+\end{center}
 
 
 
