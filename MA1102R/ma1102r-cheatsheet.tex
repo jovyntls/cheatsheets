@@ -1126,12 +1126,12 @@ aka take $\ln$ on both sides and implicitly differentiate
 \subsection{logarithmic differentiation II}
 \begin{center}
     for $y = f(x)^{g(x)} (f(x) > 0)$,
-    $\ln y = g(x) \ln f(x) \then \frac{1}{y} = \frac{dy}{dx} = \frac{d}{dx}[g(x) \ln f(x)]$
+    \\* $\ln y = g(x) \ln f(x) \then \frac{dy}{dx} = y \frac{d}{dx}[g(x) \ln f(x)]$
+    \begin{align*}
+        \lim_{x \to a}(f(x)^{g(x)}) &= \lim_{x \to a} \exp \left( g(x) \ln f(x) \right) \\
+        &= \exp\left( \lim_{x \to a} g(x) \ln f(x) \right)
+    \end{align*}
 \end{center}
-\begin{align*}
-    \lim_{x \to a}(f(x)^{g(x)}) &= \lim_{x \to a} \exp \left( g(x) \ln f(x) \right) \\
-    &= \exp\left( \lim_{x \to a} g(x) \ln f(x) \right)
-\end{align*}
 
 \subsection{exponential function}
 \begin{center}
@@ -1151,7 +1151,7 @@ aka take $\ln$ on both sides and implicitly differentiate
     \end{itemize}
 \end{itemize}
 \subsubsection{properties}
-\begin{minipage}{0.35\linewidth}   
+\begin{minipage}{0.32\linewidth}   
     \begin{itemize}
         \item $a^ua^v = a^{u+v}$
         \item $a^{-u} = \frac{1}{a^u}$
@@ -1161,7 +1161,7 @@ aka take $\ln$ on both sides and implicitly differentiate
     \end{itemize}
 \end{minipage}
 \hfill\vline\hfill
-\begin{minipage}{0.6\linewidth}
+\begin{minipage}{0.65\linewidth}
     \begin{itemize}
         \item ${\displaystyle{\lim_{x \to \infty} e^x =\infty}}$, ${\displaystyle{\lim_{x \to -\infty} e^x = 0}}$
         \item ${\displaystyle{\lim_{x \to \infty} \frac{e^x}{x^n} = \infty}}$ for $n \in \mathbb{Z}^+$
@@ -1217,9 +1217,60 @@ properties
     \end{itemize}
 \end{itemize}
 
-    
+\section{07. APPLICATIONS OF INTEGRALS}
+\subsection{volume} 
+\begin{center}
+    \begin{multicols}{2}
+        \includegraphics[width=0.95\linewidth]{ma1102r-volume-revolution-x.png}
+        \\ rotate about the \textbf{x-axis}:
+        \\* ${\displaystyle{V = \pi \int^b_a (f(x))^2 \dx}}$
+        
+        \includegraphics[width=0.7\linewidth]{ma1102r-volume-revolution-y.png}
+        \\ rotate about the \textbf{y-axis}: 
+        \\* ${\displaystyle{V = \pi \int^b_a (f(y))^2 \mathop{dy}}}$
+    \end{multicols}
+\end{center}
 
+\subsubsection{method of cylindrical shells}
+\begin{center}
+    \includegraphics[width=0.4\linewidth]{ma1102r-volume-revolution-cylindrical.png}
+    \includegraphics[width=0.4\linewidth]{ma1102r-volume-revolution-cylindrical-y.png}
+    \\ rotation about \textbf{x-axis}:
+        \\* $V = \int^b_a 2\pi x f(x) \dx = \int 2\pi (radius \cdot height) \dx$
+    \\ rotation about \textbf{y-axis}:
+        \\* $V = \int^b_a 2\pi y f(y) \mathop{dy} = \int 2\pi (radius \cdot height) \mathop{dy}$
+\end{center}
 
+\subsection{arc length}
+\begin{minipage}{0.25\linewidth}
+    \includegraphics[width=0.95\linewidth]{ma1102r-arc-length.png}
+\end{minipage}
+\begin{minipage}{0.7\linewidth}
+    \begin{itemize}
+        \item a function $f$ is \textbf{smooth} if $f'$ is continuous.
+        \item arc length, 
+        \\ \noindent\fbox{%
+        \parbox{0.9\linewidth}{%
+        \begin{tightcenter}
+            ${\displaystyle{L = \int^b_a \sqrt{1 + (f'(x))^2} \dx}}$
+        \end{tightcenter}
+        }
+        }%
+    \end{itemize}
+\end{minipage}
+
+\subsection{surface area of revolution}
+\begin{center}
+    Let $f$ be a smooth function such that $f(x) \geq 0$ on $[a, b]$. 
+    \\ Then the area of the surface obtained by rotating the curve $y = f(x),  a \leq x \leq b$ about the $x$-axis is
+    \noindent\fbox{%
+    \parbox{0.9\linewidth}{%
+    \begin{tightcenter}
+        ${\displaystyle{A = \int^b_a 2\pi f(x) \sqrt{1 + (f'(x))^2} \dx}}$
+    \end{tightcenter}
+    }
+    }%
+\end{center}
 
 \subsection{misc}
 \subsubsection{triangle inequality}
