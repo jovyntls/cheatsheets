@@ -912,7 +912,12 @@ if $F$ is continuous on $[a, b]$, and $F' = f$ on $(a, b)$,
     \end{itemize}
 \end{itemize}
 
-\subsection{substitution rule}
+\subsection{integration by parts}
+\begin{center}
+    ${\displaystyle{u \mathop{dv} = uv - \int v \mathop{du}}}$
+\end{center}
+
+\subsection{substitution rule (I)}
 let $u = g(x)$ be a differentiable function. 
 \subsubsection{indefinite integral}
 \begin{center}
@@ -924,6 +929,13 @@ let $u = g(x)$ be a differentiable function.
     if $g'$ are continuous on $[a, b]$,
     \\* and $f$ is continuous on the range of $u = g(x)$,
     \\* ${\displaystyle{\int^b_a f(g(x))g'(x) \dx = \int^{g(b)}_{g(a)} f(u) \mathop{du}}}$
+\end{center}
+
+\subsection{substitution rule (II)}
+let $f$ and $g'$ be continuous functions, and 
+\\* $x = g(t)$ is a one-to-one differentiable function.
+\begin{center}
+    ${\displaystyle{\int f(x) \dx = \int f(g(t))g'(t) \mathop{dt}}}$
 \end{center}
 
 
@@ -978,9 +990,9 @@ let $u = g(x)$ be a differentiable function.
     \ 
 \end{center}
 
-\section{07. INVERSE FUNCTIONS \& INTEGRATION}
+\section{06. INVERSE FUNCTIONS \& INTEGRATION}
 
-\subsubsection{one to one functions}
+\subsection{one to one functions}
 \begin{center}
     let $f$ be a function with domain $D$. 
     \\* $f$ is \textbf{one-to-one} if, for any $a, b \in D$, 
@@ -1011,8 +1023,50 @@ let $f$ be a \textit{one-to-one continuous} function on an open interval $I$.
     \end{itemize}
 \end{itemize}
 \begin{tightcenter}
-    \includegraphics[width=0.5\linewidth]{ma1102r-inverse-functions.png}
+    \noindent\fbox{%
+    \parbox{0.5\linewidth}{%
+    \begin{tightcenter}
+        $(f^{-1})'(f(a)) = \frac{1}{f'(a)}$
+    \end{tightcenter}
+    }
+    }%
+    \\ \includegraphics[width=0.5\linewidth]{ma1102r-inverse-functions.png}
 \end{tightcenter}
+
+\subsection{techniques of integration}
+\subsubsection{common trigonometric substitutions}
+\begin{itemize}
+    \item $\sqrt{a^2 - x^2}, \quad x = a\sin t, \quad t \in [-\frac{\pi}{2}, \frac{\pi}{2}]$
+    \item $\sqrt{x^2 - a^2}, \quad x = a\sec t, \quad t \in [0, -\frac{\pi}{2}) \cup (\pi, \frac{3\pi}{2}]$
+    \item $a^2 + x^2, \quad x = a\tan t, \quad t \in (-\frac{\pi}{2}, \frac{\pi}{2})$
+\end{itemize}
+
+\subsubsection{integration of rational functions}
+for $f = \frac{A(x)}{B(x)}$,
+\begin{itemize}
+    \item manipulate such that $\deg A(x) < \deg B(x)$, \\* then decompose into partial fractions
+    \item common rational functions:
+    \begin{itemize}
+        \item ${\displaystyle{\int \frac{1}{(x+a)^k} \dx = \begin{cases}
+            \ln \abs{x + a} + K, & \text{ if } k = 1 \\
+            \frac{(x+a)^{1-k}}{1-k} + K, & \text{ if } k \geq 1
+        \end{cases} }}$
+
+        \item ${\displaystyle{\int \frac{u}{(u^2+d^2)^r} \mathop{du} = \begin{cases}
+            \frac{1}{2} \ln (u^2 + d^2), &\text{ if } r = 1 \\
+            \frac{(u^2 + d^2)^{1-r}}{2(1-r)}, &\text{ if } r \geq 2
+        \end{cases} }}$
+
+        \item ${\displaystyle{\int \frac{1}{(u^2+d^2)^r} \mathop{du} = \frac{1}{d^{2r-1}} \int \frac{1}{(t^2+1)^r} \mathop{dt} }}$
+        \item ${\displaystyle{}}$
+    \end{itemize}
+\end{itemize}
+
+\subsubsection{universal trigonometric substitution}
+\begin{center}
+    any rational expression in $\sin x$ and $\cos x$ can be integrated using the substitution $t = \tan \frac{x}{2}, \quad x \in (-\pi, \pi)$.
+    \\* $\sin x = \frac{2t}{1 + t^2}, \quad \cos x = \frac{1 - t^2}{1 + t^2}, \quad \frac{dx}{dt} = \frac{2}{1 + t^2}$
+\end{center}
 
 \subsection{derivatives of trigonometric functions}
 \begin{center}
@@ -1060,17 +1114,163 @@ let $f$ be a \textit{one-to-one continuous} function on an open interval $I$.
     \item $\ln x$ is increasing on $\mathbb{R}^n$ ($\frac{d}{dx} \ln x > 0$)
 \end{itemize}
 
-\subsection{logarithmic differentiation}
+\subsection{logarithmic differentiation I}
 aka take $\ln$ on both sides and implicitly differentiate
 \begin{center}
-    if $y = f_1(x)f_2(x)\cdots f_n(x)$ is a product of nonzero functions, 
+    for $y = f_1(x)f_2(x)\cdots f_n(x)$ (product of nonzero functions), 
     $\ln \abs{y} = \ln \abs{f_1(x)} + \ln \abs{f_2(x)} + \cdots + \ln \abs{f_n(x)}$
     \\* $\frac{dy}{dx} = \left[ \frac{f'_1(x)}{f_1(x)} + \frac{f'_2(x)}{f_2(x)} + \cdots + \frac{f'_n(x)}{f_n(x)} \right]y$
     \\* $= \left[ \frac{f'_1(x)}{f_1(x)} + \frac{f'_2(x)}{f_2(x)} + \cdots + \frac{f'_n(x)}{f_n(x)} \right]f_1(x)f_2(x)\cdots f_n(x)$
 \end{center}
 
+\subsection{logarithmic differentiation II}
+\begin{center}
+    for $y = f(x)^{g(x)} (f(x) > 0)$,
+    \\* $\ln y = g(x) \ln f(x) \then \frac{dy}{dx} = y \frac{d}{dx}[g(x) \ln f(x)]$
+    \begin{align*}
+        \lim_{x \to a}(f(x)^{g(x)}) &= \lim_{x \to a} \exp \left( g(x) \ln f(x) \right) \\
+        &= \exp\left( \lim_{x \to a} g(x) \ln f(x) \right)
+    \end{align*}
+\end{center}
 
+\subsection{exponential function}
+\begin{center}
+    $y = e^x = \exp(x) \iff \ln y = x$
+    \\* $\exp(x) = \ln ^{-1} (x)$ ($\exp(x)$ is the inverse of $\ln x$)
+    \\* $a^x = \exp(x \ln a) = e^{x \ln a}$
+    \includegraphics[width=0.8\linewidth]{ma1102r-exponential-function.png}
+    \\* ${\displaystyle{e = \lim_{n \to \infty}(1 + \frac{1}{n})^n}}$
+\end{center}
+\begin{itemize}
+    \item $\ln(e^x) = x$ for $x \in \mathbb{R}$ and $e^{\ln y} = y$ for $y \in \mathbb{R}^+$
+    \item common equations
+    \begin{itemize}
+        \item ${\displaystyle{\lim_{x \to \infty} e^x =\infty}}$, ${\displaystyle{\lim_{x \to -\infty} e^x = 0}}$
+        \item ${\displaystyle{\lim_{x \to \infty} \frac{e^x}{x^n} = \infty}}$ for $n \in \mathbb{Z}^+$
+        \item ${\displaystyle{e^x = \sum^\infty_{n = 0} \frac{x^n}{n!} = 1 + x + \frac{x^2}{2!} + \frac{x^3}{3!} + \dots}}$
+    \end{itemize}
+\end{itemize}
+\subsubsection{properties}
+\begin{minipage}{0.32\linewidth}   
+    \begin{itemize}
+        \item $a^ua^v = a^{u+v}$
+        \item $a^{-u} = \frac{1}{a^u}$
+        \item $(a^u)^v = a^{uv}$
+        \item $(a^x)' = a^x\ln a$
+        \item $\frac{d}{dx} x^r = rx^{r-1}$
+    \end{itemize}
+\end{minipage}
+\hfill\vline\hfill
+\begin{minipage}{0.65\linewidth}
+    \begin{itemize}
+        \item ${\displaystyle{\lim_{x \to \infty} e^x =\infty}}$, ${\displaystyle{\lim_{x \to -\infty} e^x = 0}}$
+        \item ${\displaystyle{\lim_{x \to \infty} \frac{e^x}{x^n} = \infty}}$ for $n \in \mathbb{Z}^+$
+        \item ${\displaystyle{e^x = \sum^\infty_{n = 0} \frac{x^n}{n!} = 1 + x + \frac{x^2}{2!} + \dots}}$
+    \end{itemize}
+\end{minipage}
+\begin{itemize}
+    \item $\int x^r \dx = \begin{cases}
+        \frac{x^{r+1}}{r+1} + C & \text{ if }r \neq -1, \\
+        \ln x + C & \text{ if }r = -1,
+        \end{cases}$
+    \begin{itemize}
+        \item if $r$ is irrational, then $x^r$ is only defined for $x \geq 0$.
+    \end{itemize}
+\end{itemize}
 
+\subsection{hyperbolic trigonometric functions}
+\begin{center}
+    $\sinh x = \frac{e^x - e^{-x}}{2}, \quad (\sinh x)' = \cosh x$
+    \\* $\cosh x = \frac{e^x + e^{-x}}{2}, \quad (\cosh x)' = \sinh x$
+\end{center}
+properties
+\begin{itemize}
+    \item $\cosh^2 x - \sinh^2 x = 1$
+    \item parametrization represents a \textbf{hyperbola} - 
+        \\* let $\begin{cases}
+            x = \cosh t, \\ y = \sinh t.
+        \end{cases}$ Then $x^2 - y^2 = 1$
+\end{itemize}
+\begin{minipage}{0.48\linewidth}   
+    \includegraphics[width=0.98\linewidth]{ma1102r-hyperbolic-trigonometric-functions.png}
+\end{minipage}
+\begin{minipage}{0.5\linewidth}
+    \begin{center}
+        $\tanh x = \frac{\sinh x}{\cosh x}$
+    \\* $\coth x = \frac{\cosh x}{\sinh x}$
+    \\* $\mathop{sech} x = \frac{1}{\cosh x}$
+    \\* $\mathop{csch} x = \frac{1}{\sinh x}$
+    \\ \ 
+    \\ inverse hyperbolic functions:
+    \\* $\sinh^{-1}x = y \Leftrightarrow x = \sinh y$
+    \\* $\cosh^{-1}x = y \Leftrightarrow x = \cosh y$
+    \end{center}
+\end{minipage}
+\begin{itemize}
+    \item properties
+    \begin{itemize}
+        \item $\frac{d}{dx} \sinh^{-1}x = \frac{1}{\sqrt{x^2 + 1}}$
+        \item $\frac{d}{dx} \cosh^{-1}x = \frac{1}{\sqrt{x^2 - 1}}$
+        \item $\sinh^{-1} x = \ln(x + \sqrt{x^2 + 1}), x \in \mathbb{R}$ 
+        \item $\cosh^{-1} x = \ln(x + \sqrt{x^2 - 1}), x \geq 1$ 
+        \item $\tanh^{-1} x = \frac{1}{2} \ln(\frac{1+x}{1-x}), \quad -1 < x < 1$
+    \end{itemize}
+\end{itemize}
+
+\section{07. APPLICATIONS OF INTEGRALS}
+\subsection{volume} 
+\begin{center}
+    \begin{multicols}{2}
+        \includegraphics[width=0.95\linewidth]{ma1102r-volume-revolution-x.png}
+        \\ rotate about the \textbf{x-axis}:
+        \\* ${\displaystyle{V = \pi \int^b_a (f(x))^2 \dx}}$
+        
+        \includegraphics[width=0.7\linewidth]{ma1102r-volume-revolution-y.png}
+        \\ rotate about the \textbf{y-axis}: 
+        \\* ${\displaystyle{V = \pi \int^b_a (f(y))^2 \mathop{dy}}}$
+    \end{multicols}
+\end{center}
+
+\subsubsection{method of cylindrical shells}
+\begin{center}
+    \includegraphics[width=0.4\linewidth]{ma1102r-volume-revolution-cylindrical.png}
+    \includegraphics[width=0.4\linewidth]{ma1102r-volume-revolution-cylindrical-y.png}
+    \\ rotation about \textbf{x-axis}:
+        \\* $V = \int^b_a 2\pi x f(x) \dx = \int 2\pi (radius \cdot height) \dx$
+    \\ rotation about \textbf{y-axis}:
+        \\* $V = \int^b_a 2\pi y f(y) \mathop{dy} = \int 2\pi (radius \cdot height) \mathop{dy}$
+\end{center}
+
+\subsection{arc length}
+\begin{minipage}{0.25\linewidth}
+    \includegraphics[width=0.95\linewidth]{ma1102r-arc-length.png}
+\end{minipage}
+\begin{minipage}{0.7\linewidth}
+    \begin{itemize}
+        \item a function $f$ is \textbf{smooth} if $f'$ is continuous.
+        \item arc length, 
+        \\ \noindent\fbox{%
+        \parbox{0.9\linewidth}{%
+        \begin{tightcenter}
+            ${\displaystyle{L = \int^b_a \sqrt{1 + (f'(x))^2} \dx}}$
+        \end{tightcenter}
+        }
+        }%
+    \end{itemize}
+\end{minipage}
+
+\subsection{surface area of revolution}
+\begin{center}
+    Let $f$ be a smooth function such that $f(x) \geq 0$ on $[a, b]$. 
+    \\ Then the area of the surface obtained by rotating the curve $y = f(x),  a \leq x \leq b$ about the $x$-axis is
+    \noindent\fbox{%
+    \parbox{0.9\linewidth}{%
+    \begin{tightcenter}
+        ${\displaystyle{A = \int^b_a 2\pi f(x) \sqrt{1 + (f'(x))^2} \dx}}$
+    \end{tightcenter}
+    }
+    }%
+\end{center}
 
 \subsection{misc}
 \subsubsection{triangle inequality}
