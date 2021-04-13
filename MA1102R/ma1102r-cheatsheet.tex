@@ -1192,7 +1192,7 @@ properties
         \end{cases}$ Then $x^2 - y^2 = 1$
 \end{itemize}
 \begin{minipage}{0.48\linewidth}   
-    \includegraphics[width=0.98\linewidth]{ma1102r-hyperbolic-trigonometric-functions.png}
+    \includegraphics[width=0.9\linewidth]{ma1102r-hyperbolic-trigonometric-functions.png}
 \end{minipage}
 \begin{minipage}{0.5\linewidth}
     \begin{center}
@@ -1221,11 +1221,11 @@ properties
 \subsection{volume} 
 \begin{center}
     \begin{multicols}{2}
-        \includegraphics[width=0.95\linewidth]{ma1102r-volume-revolution-x.png}
+        \includegraphics[width=0.85\linewidth]{ma1102r-volume-revolution-x.png}
         \\ rotate about the \textbf{x-axis}:
         \\* ${\displaystyle{V = \pi \int^b_a (f(x))^2 \dx}}$
         
-        \includegraphics[width=0.7\linewidth]{ma1102r-volume-revolution-y.png}
+        \includegraphics[width=0.6\linewidth]{ma1102r-volume-revolution-y.png}
         \\ rotate about the \textbf{y-axis}: 
         \\* ${\displaystyle{V = \pi \int^b_a (f(y))^2 \mathop{dy}}}$
     \end{multicols}
@@ -1233,12 +1233,17 @@ properties
 
 \subsubsection{method of cylindrical shells}
 \begin{center}
-    \includegraphics[width=0.4\linewidth]{ma1102r-volume-revolution-cylindrical.png}
-    \includegraphics[width=0.4\linewidth]{ma1102r-volume-revolution-cylindrical-y.png}
+    \includegraphics[width=0.35\linewidth]{ma1102r-volume-revolution-cylindrical.png}
+    \includegraphics[width=0.35\linewidth]{ma1102r-volume-revolution-cylindrical-y.png}
     \\ rotation about \textbf{x-axis}:
         \\* $V = \int^b_a 2\pi x f(x) \dx = \int 2\pi (radius \cdot height) \dx$
     \\ rotation about \textbf{y-axis}:
         \\* $V = \int^b_a 2\pi y f(y) \mathop{dy} = \int 2\pi (radius \cdot height) \mathop{dy}$
+\end{center}
+
+\subsubsection{washer method}
+\begin{center}
+    $V = \pi \int^b_a \left[f(x)\right]^2 \dx \quad$ where $f(x)$ is the radius of the disc
 \end{center}
 
 \subsection{arc length}
@@ -1312,7 +1317,7 @@ general equation: $\frac{dy}{dx} + p(x) y = q(x)$
     \item find $P(x) = \int p(x) \dx$
     \item multiply both sides by integrating factor $v(x) = e^{P(x)}$:
         \begin{itemize}
-            \item $e^{P(x)} \frac{dy}{dx} + e^{P(x)}p(x)y = e^{P(x) q(x)}$
+            \item $e^{P(x)} \frac{dy}{dx} + e^{P(x)}p(x)y = e^{P(x)} q(x)$
             \item $\frac{d}{dx} (e^{P(x)}y) = e^{P(x)}q(x)$
         \end{itemize}
     \item integrate with respect to $x$
