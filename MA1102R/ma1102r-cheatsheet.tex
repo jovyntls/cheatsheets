@@ -1219,32 +1219,28 @@ properties
 
 \section{07. APPLICATIONS OF INTEGRALS}
 \subsection{volume} 
-\begin{center}
+\subsubsection{disk/washer method}
+\begin{tightcenter}
     \begin{multicols}{2}
         \includegraphics[width=0.85\linewidth]{ma1102r-volume-revolution-x.png}
         \\ rotate about the \textbf{x-axis}:
-        \\* ${\displaystyle{V = \pi \int^b_a (f(x))^2 \dx}}$
+        \\* ${\displaystyle{V = \pi \int^b_a [f(x)]^2 \dx}}$
         
         \includegraphics[width=0.6\linewidth]{ma1102r-volume-revolution-y.png}
         \\ rotate about the \textbf{y-axis}: 
-        \\* ${\displaystyle{V = \pi \int^b_a (f(y))^2 \mathop{dy}}}$
+        \\* ${\displaystyle{V = \pi \int^d_c [f(y)]^2 \mathop{dy}}}$
     \end{multicols}
-\end{center}
+\end{tightcenter}
 
 \subsubsection{method of cylindrical shells}
-\begin{center}
+\begin{tightcenter}
     \includegraphics[width=0.35\linewidth]{ma1102r-volume-revolution-cylindrical.png}
     \includegraphics[width=0.35\linewidth]{ma1102r-volume-revolution-cylindrical-y.png}
-    \\ rotation about \textbf{x-axis}:
-        \\* $V = \int^b_a 2\pi x f(x) \dx = \int 2\pi (radius \cdot height) \dx$
-    \\ rotation about \textbf{y-axis}:
-        \\* $V = \int^b_a 2\pi y f(y) \mathop{dy} = \int 2\pi (radius \cdot height) \mathop{dy}$
-\end{center}
-
-\subsubsection{washer method}
-\begin{center}
-    $V = \pi \int^b_a \left[f(x)\right]^2 \dx \quad$ where $f(x)$ is the radius of the disc
-\end{center}
+    \\ rotation about \textbf{x-axis} from $y=a$ to $y=b$:
+        \\* ${\displaystyle{V = 2\pi \int^b_a y f(y) \mathop{dy} = 2\pi \int (radius \cdot height) \mathop{dy}}}$
+    \\ rotation about \textbf{y-axis} from $x=a$ to $x=b$:
+        \\* ${\displaystyle{V = 2\pi \int^b_a x f(x) \dx = 2\pi \int (radius \cdot height) \dx}}$
+\end{tightcenter}
 
 \subsection{arc length}
 \begin{minipage}{0.25\linewidth}
