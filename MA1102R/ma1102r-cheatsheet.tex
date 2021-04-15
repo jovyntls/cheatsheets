@@ -1192,7 +1192,7 @@ properties
         \end{cases}$ Then $x^2 - y^2 = 1$
 \end{itemize}
 \begin{minipage}{0.48\linewidth}   
-    \includegraphics[width=0.98\linewidth]{ma1102r-hyperbolic-trigonometric-functions.png}
+    \includegraphics[width=0.9\linewidth]{ma1102r-hyperbolic-trigonometric-functions.png}
 \end{minipage}
 \begin{minipage}{0.5\linewidth}
     \begin{center}
@@ -1219,27 +1219,28 @@ properties
 
 \section{07. APPLICATIONS OF INTEGRALS}
 \subsection{volume} 
-\begin{center}
+\subsubsection{disk/washer method}
+\begin{tightcenter}
     \begin{multicols}{2}
-        \includegraphics[width=0.95\linewidth]{ma1102r-volume-revolution-x.png}
+        \includegraphics[width=0.85\linewidth]{ma1102r-volume-revolution-x.png}
         \\ rotate about the \textbf{x-axis}:
-        \\* ${\displaystyle{V = \pi \int^b_a (f(x))^2 \dx}}$
+        \\* ${\displaystyle{V = \pi \int^b_a [f(x)]^2 \dx}}$
         
-        \includegraphics[width=0.7\linewidth]{ma1102r-volume-revolution-y.png}
+        \includegraphics[width=0.6\linewidth]{ma1102r-volume-revolution-y.png}
         \\ rotate about the \textbf{y-axis}: 
-        \\* ${\displaystyle{V = \pi \int^b_a (f(y))^2 \mathop{dy}}}$
+        \\* ${\displaystyle{V = \pi \int^d_c [f(y)]^2 \mathop{dy}}}$
     \end{multicols}
-\end{center}
+\end{tightcenter}
 
 \subsubsection{method of cylindrical shells}
-\begin{center}
-    \includegraphics[width=0.4\linewidth]{ma1102r-volume-revolution-cylindrical.png}
-    \includegraphics[width=0.4\linewidth]{ma1102r-volume-revolution-cylindrical-y.png}
-    \\ rotation about \textbf{x-axis}:
-        \\* $V = \int^b_a 2\pi x f(x) \dx = \int 2\pi (radius \cdot height) \dx$
-    \\ rotation about \textbf{y-axis}:
-        \\* $V = \int^b_a 2\pi y f(y) \mathop{dy} = \int 2\pi (radius \cdot height) \mathop{dy}$
-\end{center}
+\begin{tightcenter}
+    \includegraphics[width=0.35\linewidth]{ma1102r-volume-revolution-cylindrical.png}
+    \includegraphics[width=0.35\linewidth]{ma1102r-volume-revolution-cylindrical-y.png}
+    \\ rotation about \textbf{x-axis} from $y=a$ to $y=b$:
+        \\* ${\displaystyle{V = 2\pi \int^b_a y f(y) \mathop{dy} = 2\pi \int (radius \cdot height) \mathop{dy}}}$
+    \\ rotation about \textbf{y-axis} from $x=a$ to $x=b$:
+        \\* ${\displaystyle{V = 2\pi \int^b_a x f(x) \dx = 2\pi \int (radius \cdot height) \dx}}$
+\end{tightcenter}
 
 \subsection{arc length}
 \begin{minipage}{0.25\linewidth}
@@ -1272,6 +1273,106 @@ properties
     }%
 \end{center}
 
+
+\section{08. ORDINARY DIFFERENTIAL EQUATIONS}
+\begin{center}
+    $\frac{dy}{dx} = f(x) \then y = \int f(x) \dx$
+    $\frac{dy}{dx} = f(y) \then x = \int \frac{1}{f(y)} \mathop{dy}$
+\end{center}
+
+\subsection{separation of variables}
+\begin{align*}
+    \frac{dy}{dx} = f(x)g(y) &\then \frac{1}{g(y)} \mathop{dy} = f(x) \dx
+    \\ &\then \int \frac{1}{g(y)} \mathop{dy} = \int f(x) \dx
+\end{align*}
+\subsubsection{singular solution}
+\begin{itemize}
+    \item if $y = C$ is a solution to $g(y) = 0$, then it is a \textbf{singular solution} to $\frac{dy}{dx} = f(x) g(x)$.
+    \item singular solution disappears if the equation is $\frac{1}{g(x)} \frac{dy}{dx} = f(x)$
+    \item (can ignore singular solutions in this course)
+\end{itemize}
+
+\subsection{homogenous equations}
+Suppose $\frac{dy}{dx} = F(x, y)$ is not separable.
+\begin{itemize}
+    \item suppose $F(x, y)$ is \textbf{homogenous of degree zero}
+    \begin{itemize}
+        \item i.e. $F(x, y) = F(tx, ty)$ for all $t \in \mathbb{R}\backslash \{0\}$
+    \end{itemize}
+    \item let $z =\frac{y}{x}$. Then 
+    \begin{itemize}
+        \item $y = xz$ and $\frac{dy}{dx} = x\frac{dz}{dx} + z$
+        \item $F(x, y) = F(\frac{x}{x}, \frac{y}{x}) = F(1, z)$
+    \end{itemize}
+    \item $x\frac{dz}{dx} + z = F(1, z) \Rightarrow$ separable!
+\end{itemize}
+
+\subsection{first order linear differential equations}
+general equation: $\frac{dy}{dx} + p(x) y = q(x)$
+\begin{enumerate}
+    \item find $P(x) = \int p(x) \dx$
+    \item multiply both sides by integrating factor $v(x) = e^{P(x)}$:
+        \begin{itemize}
+            \item $e^{P(x)} \frac{dy}{dx} + e^{P(x)}p(x)y = e^{P(x)} q(x)$
+            \item $\frac{d}{dx} (e^{P(x)}y) = e^{P(x)}q(x)$
+        \end{itemize}
+    \item integrate with respect to $x$
+    \begin{itemize}
+        \item $e^{P(x)} = \int e^{P(x)}q(x)\dx$
+    \end{itemize}
+\end{enumerate}
+\begin{tightcenter}
+    \noindent\fbox{%
+    \parbox{0.9\linewidth}{%
+    \begin{tightcenter}
+        ${\displaystyle{y = \frac{1}{e^{P(x)}} \int e^{P(x)} q(x) \dx}}$
+    \end{tightcenter}
+    }
+    }%
+\end{tightcenter}
+note: if the equation is not linear in $y$ but is linear in $x$, can take the reciprocal and use $\frac{dx}{dy}$ instead.
+
+\subsection{Bernoulli's equation}
+\begin{center}
+    $\frac{dy}{dx} + p(x)y = q(x)y^n$
+\end{center}
+\begin{itemize}
+    \item if $n = 0$ or $n = 1$:
+    \begin{itemize}
+        \item the system is linear
+    \end{itemize}
+    \item if $n \neq 0, 1$:
+    \begin{itemize}
+        \item let $z = y^{1-n} \Rightarrow \frac{dz}{dx} = (1-n) y^{-n} \frac{dy}{dx}$
+        \item multiply both sides of the equation by $(1-n)y^{-n}$
+        \item equation is reduced to a linear equation
+        \begin{itemize}
+            \item $\frac{dz}{dx} + (1-n) p(x) z = (1-n) q(x) $
+        \end{itemize}
+    \end{itemize}
+\end{itemize}
+
+\subsection{applications}
+\begin{itemize}
+    \item compound interest - let $r$ be the interest rate, $A$ be the money
+    \begin{itemize}
+        \item ODE: $\frac{dA}{dt} = rA; \quad A(0) = C$
+        \item solve for $A(t) = Ce^{rt}$
+    \end{itemize}
+    \item radiocarbon dating - let $\lambda$ be the half life, $C$ be Carbon left
+    \begin{itemize}
+        \item ODE: $\frac{dC}{dt} = kC; \quad C(0) = 1; \quad k = -\frac{\ln 2}{\lambda}$
+        \item solve $C(t) = e^{kt}$
+    \end{itemize}
+    \item population growth - let $M$ be max. population (carrying capacity), $r$ be the rate of change of population
+    \begin{itemize}
+        \item ODE: $\frac{dP}{dt} = r(M-P)P$
+        \item solve $P(t) = \frac{M}{1 + (\frac{M}{P(0)} - 1)e^{-rt}}$
+    \end{itemize}
+\end{itemize}
+
+
+
 \subsection{misc}
 \subsubsection{triangle inequality}
 \begin{center}
@@ -1279,7 +1380,7 @@ properties
 \end{center}
 
 \subsubsection{binomial theorem}
-\begin{center}
+\begin{center} 
     $\displaystyle{(a+b)^n = \sum^n_{k=0}\binom{n}{k}a^{n-k}b^k}$
     \\* $= a^n + \binom{n}{1}a^{n-1}{b} + \dots + \binom{n}{n-1} ab^{n-1} + b^n$
 \end{center}
