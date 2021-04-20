@@ -14,7 +14,7 @@
 \setlist{nosep}
 
 % for including images
-\graphicspath{ {./images/} }
+\graphicspath{ {../images/} }
 
 
 \pdfinfo{
@@ -66,7 +66,7 @@
 \newcommand{\Mod}[1]{\ \mathrm{mod}\ #1}
 %  for logical not operator, iff symbol, convenient "if/then"
 \renewcommand{\lnot}{\mathord{\sim}}
-\let\then\Rightarrow
+\let\then\rightarrow
 \let\Then\Rightarrow
 %  vectors
 \newcommand{\vv}[1]{\boldsymbol{#1}}
@@ -92,7 +92,6 @@
 \setlength{\leftmargini}{0.5cm}
 \setlength{\leftmarginii}{0.4cm}
 \setlength{\leftmarginiii}{0.5cm}
-\setlist[enumerate,1]{leftmargin=2mm,labelindent=1mm,labelsep=1mm}
 \setlist[itemize,1]{leftmargin=2mm,labelindent=1mm,labelsep=1mm}
 \setlist[itemize,2]{leftmargin=3mm,labelindent=1mm,labelsep=1mm}
 \setlist[itemize,3]{leftmargin=3mm,labelindent=1mm,labelsep=1mm}
@@ -120,7 +119,7 @@
     \fbox{%
         \parbox{0.8\linewidth}{\centering \textcolor{black}{
             {\Large\textbf{CS2040S}}
-            \\ \normalsize{AY20/21 sem 2}}
+            \\ \normalsize{AY20/21 sem 2 midterms}}
             \\ {\footnotesize \textcolor{myblue}{github.com/jovyntls}}
         }%
     }
@@ -193,7 +192,7 @@ $= \begin{cases}
     \item \textbf{QuickSort}
     \begin{itemize}
         \item partition algorithm: $O(n)$
-        \item stable quicksort: $O(\log n)$ space (due to recursion stack)
+        \item stable quicksort: $O(\log n)$ space
         \begin{itemize}
             \item first element as partition. 2 pointers from left to right
             \begin{itemize}
@@ -449,11 +448,11 @@ $= \begin{cases}
 \end{itemize}
 
 \section{HASH TABLES}
-% \begin{itemize}
-%     \item disadvantage: no successor/predecessor operation
-% \end{itemize}
+\begin{itemize}
+    \item disadvantage: no successor/predecessor operation
+\end{itemize}
 
-% \subsection{hashing}
+\subsection{hashing}
 Let the $m$ be the table size; 
 let $n$ be the number of items;
 let $cost(h)$ be the cost of the hash function
@@ -463,16 +462,6 @@ let $cost(h)$ be the cost of the hash function
     \begin{itemize}
         \item = average number of items per bucket
         \item = expected number of items per bucket 
-    \end{itemize}
-    \item designing hashing techniques
-    \begin{itemize}
-        \item \textbf{division method}: $h(k) = k \Mod{m}$ ($m$ is prime)
-        \begin{itemize}
-            \item don't choose $m = 2^x$
-            \item if $k$ and $m$ have common divisor $d$, only $\frac{1}{d}$ of the table will be used
-        \end{itemize}
-        \item \textbf{multiplication method} - $h(k) = (Ak) \Mod{2^w} \gg (w-r)$ 
-        for odd constant $A$ and $m = 2^r$ and $w$ = size of a key in bits
     \end{itemize}
 \end{itemize}
 
@@ -502,7 +491,7 @@ let $cost(h)$ be the cost of the hash function
 \subsection{hashCode}
 \textbf{rules for the \code{hashCode()} method}
 \begin{enumerate}
-    \item always returns the same value, if object hasn't changed
+    \item always returns the same value, if the object hasn't changed
     \item if two objects are equal, they return the same hashCode
 \end{enumerate}
 
@@ -517,17 +506,21 @@ let $cost(h)$ be the cost of the hash function
 
 \subsection{chaining}
 \begin{itemize}
-    \item \code{insert(key, value)} - $O(1 + cost(h)) \Then O(1)$
+    \item time complexity
     \begin{itemize}
-        \item for $n$ items: expected maximum cost $= O(\log n)$
+        \item \code{insert(key, value)} - $O(1 + cost(h)) \Then O(1)$
         \begin{itemize}
-            \item $= \Theta(\frac{\log n}{\log(\log(n))})$
+            \item for $n$ items: expected maximum cost 
+            \begin{itemize}
+                \item $= O(\log n)$
+                \item $= \Theta(\frac{\log n}{\log(\log(n))})$
+            \end{itemize}
         \end{itemize}
-    \end{itemize}
-    \item \code{search(key)} 
-    \begin{itemize}
-        \item worst case: $O(n + cost(h)) \Then O(n)$
-        \item expected case: $O(\frac{n}{m} + cost(h)) \Then O(1)$
+        \item \code{search(key)} 
+        \begin{itemize}
+            \item worst case: $O(n + cost(h)) \Then O(n)$
+            \item expected case: $O(\frac{n}{m} + cost(h)) \Then O(1)$
+        \end{itemize}
     \end{itemize}
     \item total space: $O(m + n)$
 \end{itemize}
@@ -535,13 +528,15 @@ let $cost(h)$ be the cost of the hash function
 \subsection{open addressing - linear probing}
 \begin{itemize}
     \item redefined hash function: $h(k, i) = h(k, 1) + i \Mod{m}$
-    \item \code{delete(key)}: use a \textit{tombstone value} - DON'T set to \code{null}
+    \item \code{delete(key)}
+    \begin{itemize}
+        \item use a \textbf{tombstone value} - DON'T set to \code{null}
+    \end{itemize}
     \item \textbf{performance}
     \begin{itemize}
         \item if the table is $\frac{1}{4}$ full, there will be clusters of size $\Theta(\log n)$
         \item expected cost of an operation, $E[\# probes] \leq \frac{1}{1 - \alpha}$
             \\* (assume $\alpha < 1$ and uniform hashing)
-        \item degrades badly as $\alpha \to 1$
     \end{itemize}
     \item \textbf{advantages}
     \begin{itemize}
@@ -584,40 +579,6 @@ $n =$ number of elements in the hash table
         \end{tabular}
 \end{itemize}
 
-\section{SET ADT}
-\begin{itemize}
-    \item $\checkmark$ speed $\checkmark$ space $\quad\quad \times$ no ordering
-    \item $\checkmark$ no false negatives $\quad \times$ may have false positives
-    \item \textbf{hash table}: more space, but resolves collisions
-\end{itemize}
-
-\subsection{fingerprint hash table}
-\begin{itemize}
-    \item only stores $m$ bits - does not store the key in a table
-    \item $P($no false positives$)$ with SUHA $= (1-\frac{1}{m})^n \approx (\frac{1}{e}^{n/m})$
-    \begin{itemize}
-        \item i.e. probability of nothing else in the given (same) bucket
-        \item for $P($no false positives$) < p$, need $\frac{n}{m} \leq \log(\frac{1}{1-p})$
-    \end{itemize}
-\end{itemize}
-
-\subsubsection{bloom filter}
-\begin{itemize}
-    \item 2 hash functions - requires 2 collisions for a false positive
-    \item for $k$ hash functions (assume independent slots):
-    \begin{itemize}
-        \item $P($a given bit is \textbf{0}$) = (1-\frac{1}{m})^{kn} \approx (\frac{1}{e})^{kn/m}$
-        \item $P($false positive$) = (1-(\frac{1}{e})^{kn/m})^k$ 
-        \item $P($no false positives$) < p$, need $\frac{n}{m} \leq \frac{1}{k}\log(\frac{1}{1-p^{1/k}})$
-    \end{itemize}
-    \item optimal $k = \frac{m}{n}\ln 2 \quad \then $ error probability $= 2^{-k}$
-    \item delete operation: store counter instead of 1 bit
-    \item \code{insert, delete, query} $\then O(k)$ 
-    \item \code{intersection} (bitwise AND), \code{union} (OR) $\then O(m)$
-    \begin{itemize}
-        \item gives the same false positives as both 
-    \end{itemize}
-\end{itemize}
 
 
 \section{PROBABILITY THEORY}
@@ -636,221 +597,6 @@ $n =$ number of elements in the hash table
     \item probability of an item remaining in its initial position $= \frac{1}{n}$
     \item \textbf{KnuthShuffle} $\Then O(n)$ - for every element in array $A$, swap it with a random index in array $A$. 
 \end{itemize}
-
-\section{AMORTIZED ANALYSIS}
-\begin{tightcenter}
-    an operation has \textbf{amortized cost} $T(n)$ if 
-    \\* for every integer $k$, the cost of $k$ operations is $\leq kT(n)$.
-\end{tightcenter}
-\begin{itemize}
-    \item \textbf{binary counter ADT}: increment $\then O(1)$
-    \item \textbf{hash table resizing}: $O(k)$ for $k$ insertions $\then O(1)$
-    \begin{itemize}
-        \item search operation: \textit{expected} $O(1)$ (not amortized)
-    \end{itemize}
-\end{itemize}
-
-\section{GRAPHS}
-\begin{itemize}
-    \item \textbf{degree (node)}: number of adjacent edges
-    \item \textbf{degree (graph)}: max. degree of a node
-    \item \textbf{in-/out-degree}: number of incoming/outgoing edges
-    \item \textbf{diameter}: max. shortest path
-    \item even cycles are bipartite!
-    \item graph is \textbf{dense} if $\abs{E} = \theta(V^2)$
-\end{itemize}
-\begin{tabular}{| c | c | c | c | c |}\hline
-    adj & \textbf{space} & \textbf{(cycle)} & \textbf{(clique)} & \textbf{use for}\\\hline
-    \text{list} & $O(V+E)$ & $O(V)$ & $O(V^2)$ & sparse \\\hline
-    \text{matrix} & $O(V^2)$ & $O(V^2)$ & $O(V^2)$ & dense \\\hline
-\end{tabular}
-
-\subsection{searching}
-\begin{itemize}
-    \item \textbf{breadth-first search} $\then O(V+E)$
-    \begin{itemize}
-        \item $O(V)$ - every vertex is added exactly once to a frontier
-        \item $O(E)$ - every neighbourList is enumerated once
-        \item parent edges form a tree \& shortest path from $S$
-        \item implement with queue
-    \end{itemize}
-    \item \textbf{depth-first search} $\then O(V+E)$
-    \begin{itemize}
-        \item $O(V)$ - \code{DFSvisit} is called exactly once per node
-        \item $O(E)$ - \code{DFSvisit} enumerates each neighbour
-        \begin{itemize}
-            \item with adjacency matrix: $O(V)$ per node $\then$ total $O(V^2)$
-        \end{itemize} 
-        \item implement with stack
-    \end{itemize}
-\end{itemize}
-
-\subsection{shortest paths}
-\begin{itemize}
-    \item \textbf{Bellman-Ford} $\then O(VE)$
-    \begin{itemize}
-        \item $\abs{V}$ iterations of relaxing every edge - terminate when an entire sequence of $\abs{E}$ operations have no effect
-    \end{itemize}
-    \item \textbf{Dijkstra} $\then O((V+E)\log V) = O(E\log V)$
-    \begin{itemize}
-        \item using a PQ to track the min-estimate node, relax its outgoing edges and add incoming nodes to the PQ
-        \item no negative weight edges!
-        \item $\abs{V}$ times of \code{insert/deleteMin} ($\log V$ each)
-        \item $\abs{E}$ times of \code{relax/decreaseKey} ($\log V$ each)
-        \item with fibonacci heap $\then O(E + V \log V)$
-    \end{itemize}
-    \item \textbf{for DAG} $\then O(E)$ (topo-sort and relax in this order)
-    \begin{itemize}
-        \item longest path: negate the edges/modify relax function
-    \end{itemize}
-    \item \textbf{for Trees} $\then O(V)$ (relax each edge in BFS/DFS order)
-\end{itemize}
-
-\subsection{topological ordering}
-\begin{itemize}
-    \item \textbf{post-order DFS} $\then O(V+E)$
-    \begin{itemize}
-        \item prepend each node from the post-order traversal
-    \end{itemize}
-    \item \textbf{Kahn's algorithm (lecture vers.)} $\then O(E \log V)$
-    \begin{itemize}
-        \item add nodes without incoming edges to the topological order
-        \item  remove min-degree node from PQ $\then O(V\log V)$
-        \item  decreaseKey (in-degree) of its children $\then O(E\log V)$
-    \end{itemize}
-    \item \textbf{Kahn's algorithm (tutorial vers.)} $\then O(E + V)$
-    \begin{itemize}
-        \item add nodes with in-degree=0 to a queue; decrement the in-degree of its adjacent nodes. dequeue \& repeat
-    \end{itemize}
-\end{itemize}
-
-\subsection{spanning trees}
-\begin{itemize}
-    \item any 2 subtrees of the MSTs are also MSTs
-    \item for every cycle, the maximum weight edge is NOT in the MST
-    \item for every partition of the nodes, the minimum weight edge across the cut is in the MST
-    \begin{itemize}
-        \item for every vertex, the minimum outgoing edge is in the MST.
-    \end{itemize}
-    \item \textbf{Steiner Tree}: (NP-hard) MST containing a given set of nodes
-    \begin{enumerate}
-        \item calculate the shortest path between any 2 vertices
-        \item construct new graph on required nodes
-        \item MST the new graph and map edges back to original
-    \end{enumerate}
-\end{itemize}
-
-\subsection{MST algorithms}
-\begin{itemize}
-    \item \textbf{Prim's} - $O(E \log V)$
-    \begin{itemize}
-        \item add the minimum edge across the cut to MST
-        \item PQ to store nodes (priority: lowest incoming edge weight)
-        \item each vertex: one insert/extractMin $\then O(V \log V)$
-        \item each edge: one decreaseKey $\then O(E \log V)$
-    \end{itemize}
-    \item \textbf{Kruskal's} - $O(E \log V)$
-    \begin{itemize}
-        \item sort edges by weight, add edges if unconnected
-        \item sorting $\then O(E \log E) = O(E \log V)$
-        \item each edge: find/union $\then O(\log V)$ using union-find DS
-    \end{itemize}
-    \item \textbf{Boruvka's} - $O(E \log V)$
-    \begin{itemize}
-        \item each node: store a componentId $\then O(V)$
-        \item one Boruvka step: for each cc, add minimum weight outgoing edge to merge cc's $\then O(V + E)$ dfs/bfs
-        \begin{itemize}
-            \item at most $O(\log V)$ Boruvka steps
-        \end{itemize}
-        \item update componentIds $\then O(V)$
-    \end{itemize}
-    \item \textbf{directed MST with one root} $\then O(E)$
-    \begin{itemize}
-        \item for every node, add minimum weight \textbf{incoming} edge
-    \end{itemize}
-\end{itemize}
-
-\section{HEAPS}
-\begin{itemize}
-    \item 2 properties:
-    \begin{enumerate}
-        \item \textbf{heap ordering} - priority[parent] $\geq$ priority[child]
-        \item \textbf{complete binary tree} - every level (except last level) is full; all nodes as far left as possible
-    \end{enumerate}
-    \item operations: all $O($max height$) = O(\floor{\log n})$
-    \begin{itemize}
-        \item \code{insert}: insert as leaf, bubble up to fix ordering
-        \item \code{increase/decreaseKey}: bubble up/down leftwards
-        \item \code{delete}: swap w bottomrightmost in subtree; bubble down
-        \begin{itemize}
-            \item \code{extractMax}: \code{delete(root)} 
-        \end{itemize} 
-    \end{itemize}
-    \item heap \textbf{as an array}:
-    \begin{itemize}
-        \item \code{left(x)} $= 2x + 1$, $\quad$ \code{right(x)} $= 2x + 2$
-        \item \code{parent(x)} $= \floor{\frac{x-1}{2}}$
-    \end{itemize}
-    \item \textbf{HeapSort}: $\then O(n \log n)$ always
-    \begin{itemize}
-        \item unsorted array to heap: $O(n)$ (bubble down, low to high)
-        \item heap to sorted array: $O(n \log n)$ (extractMax, swap to back)
-    \end{itemize}
-\end{itemize}
-
-\section{UNION-FIND}
-\begin{itemize}
-    \item \textbf{union} - connect 2 objects
-    \item \textbf{find} - check if objects are connected
-    \item \textbf{quick-find} - \code{int[] componentId}, flat trees
-    \begin{itemize}
-        \item $O(1)$ find - check if objects have the same componentId
-        \item $O(n)$ union - enumerate all items in array to update id
-    \end{itemize}
-    \item \textbf{quick-union} - \code{int[] parent}, deeper trees
-    \begin{itemize}
-        \item $O(n)$ find - check for same root (common parent)
-        \item $O(n)$ union - add as a subtree of the root
-    \end{itemize}
-    \item \textbf{weighted union} - \code{int[] parent}, \code{int[] size}
-    \begin{itemize}
-        \item $O(\log n)$ find - check for same root (common parent)
-        \item $O(\log n)$ union - add as a smaller tree as subtree of root
-    \end{itemize}
-    \item \textbf{path compression} - set parent of each traversed node to the root - $O(\log n)$ find, $O(\log n)$ union
-    \begin{itemize}
-        \item a binomial tree remains a binomial tree
-    \end{itemize}
-    \item \textbf{weighted union + path compression} - for $m$ union/find operations on $n$ objects: $O(n + m\alpha (m, n))$
-    \begin{itemize}
-        \item $O(\alpha (m, n))$ find, $O(\alpha (m, n))$ union
-    \end{itemize}
-\end{itemize}
-
-\section{DYNAMIC PROGRAMMING}
-\begin{enumerate}
-    \item \textbf{optimal sub-structure} - optimal solution can be constructed from optimal solutions to smaller sub-problems
-    \begin{itemize}
-        \item greedy algorithms / divide-and-conquer algorithms
-    \end{itemize}
-    \item \textbf{overlapping sub-problems} - can memoize
-    \begin{itemize}
-        \item optimal substructure but no overlapping subproblems = divide-and-conquer
-    \end{itemize}
-\end{enumerate}
-\begin{itemize}
-    \item prize collecting: $\then O(kE)$ or $O(kV^2)$ for k steps
-    \item vertex cover (set of nodes where every edge is adjacent to at least one node) of a tree: $\then O(V)$ or $O(V^2)$
-    \item all pairs shortest path: dijksytra all $\then O(VE\log V)$
-    \item diameter of a graph: SSSP all $\then O(V^2 \log V)$
-    \item floyd warshall $\then O(V^3)$
-    \begin{itemize}
-        \item $S[v, w, P_k]$ = shortest path from $v$ to $w$ only using nodes from set $P$
-        \item $S[v, w, P_8] = \min(S[v, w, P_7], S[v, 8, P_7] + S[8, w, P_7])$
-    \end{itemize}
-\end{itemize}
-
-
 
 \end{multicols}
 
@@ -871,8 +617,6 @@ $n =$ number of elements in the hash table
             \\\hline\text{merge} & \Omega(n\log n) & O(n\log n) & O(n\log n) & \checkmark & O(n)
             
             \\\hline\text{quick} & \Omega(n\log n) & O(n\log n) & O(n^2) & \times & O(1)
-
-            \\\hline\text{heap} & \Omega(n\log n) & O(n\log n) & O(n\log n) & \times & O(n)
             \\\hline
         \end{array} 
         $\
@@ -905,13 +649,10 @@ $n =$ number of elements in the hash table
             linked list & $O(n)$ & $O(1)$ \\\hline
             tree (kd/(a, b)/binary) & $O(\log n)$ or $O(h)$ & $O(\log n)$ or $O(h)$ \\\hline
             trie & $O(L)$ & $O(L)$ \\\hline
-            heap & $O(\log n)$ or $O(h)$ & $O(\log n)$ or $O(h)$ \\\hline
             dictionary & $O(\log n)$ & $O(\log n)$ \\\hline
             symbol table & $O(1)$ & $O(1)$ \\\hline
             chaining & $O(n)$ & $O(1)$ \\\hline
             open addressing & $\frac{1}{1-\alpha} = O(1)$ & $O(1)$ \\\hline
-            priority queue & (contains) $O(1)$ & $O(\log n)$ \\\hline
-            skip list & $O(\log n)$ & $O(\log n)$ \\\hline
         \end{tabular}
 
         \ 
