@@ -10,6 +10,7 @@ TEMPLATE/*
 TEMPLATE
 # **/\_\_*_temp.tex
 # **/\_\_*_temp.pdf
+ignore/*
 
 
 # exception: ignore this
