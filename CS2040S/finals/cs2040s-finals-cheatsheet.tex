@@ -690,10 +690,10 @@ assume chaining \& simple uniform hashing
     \item operations: all $O($max height$) = O(\floor{\log n})$
     \begin{itemize}
         \item \code{insert}: insert as leaf, bubble up to fix ordering
-        \item \code{increase/decreaseKey}: bubble up/down leftwards
+        \item \code{increase/decreaseKey}: bubble up/down larger key
         \item \code{delete}: swap w bottomrightmost in subtree; bubble down
         \begin{itemize}
-            \item \code{extractMax}: \code{delete(root)} 
+            \item \code{extractMax}: \code{delete(root)}, bubble down larger key
         \end{itemize} 
     \end{itemize}
     \item heap \textbf{as an array}:
@@ -846,7 +846,7 @@ assume chaining \& simple uniform hashing
             \item prize collecting: $\then O(kE)$ or $O(kV^2)$ for k steps
             \item vertex cover (set of nodes where every edge is adjacent to at least one node) of a tree: $\then O(V)$ or $O(V^2)$
             \item diameter of a graph: SSSP all $\then O(V^2 \log V)$
-            \item APSP: dijkstra all $\then O(VE\log V)$
+            \item APSP: dijkstra all $\then O(VE\log V)$ or $O(V^2E)$
             \item APSP: floyd warshall $\then O(V^3)$
             \begin{itemize}
                 \item $S[v, w, P_k]$ = shortest path from $v$ to $w$ only using nodes from set $P$
