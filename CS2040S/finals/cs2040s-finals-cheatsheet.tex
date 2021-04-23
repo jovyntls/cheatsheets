@@ -11,6 +11,7 @@
 \usepackage{enumitem}
 \usepackage[table]{xcolor}
 \usepackage{mathtools}
+\usepackage{xfrac}
 \setlist{nosep}
 
 % for including images
@@ -147,6 +148,7 @@ Let $T(n) = O(f(n))$ and $S(n) = O(g(n))$
     \item if/else statements: $\text{cost} = \max(c1, c2) \leq c1+c2$
     \item max: $\max(f(n), g(n)) \leq f(n) + g(n)$
     \item $\Theta(f(n))$ time complexity $\Then O(f(n))$ space complexity
+    \item space complexity: once we exit the function, release all memory that was used
 \end{itemize}
 
 % \subsubsection{notable}
@@ -331,7 +333,7 @@ Let $T(n) = O(f(n))$ and $S(n) = O(g(n))$
 
 \subsection{(a, b)-trees}
 {\scriptsize{e.g. a (2, 4)-tree storing 18 keys}}
-\includegraphics[width=1\linewidth]{cs2040s-ab-tree.png}
+\includegraphics[width=0.8\linewidth]{cs2040s-ab-tree.png}
 \begin{itemize}
     \item rules
     \begin{enumerate}
@@ -466,11 +468,10 @@ let $cost(h)$ be the cost of the hash function
 \begin{itemize}
     \item redefined hash function: $h(k, i) = h(k, 1) + i \Mod{m}$
     \item \code{delete(key)}: use a \textit{tombstone value} - DON'T set to \code{null}
-    \item \textbf{performance}
+    \item \textbf{performance} (assume $\alpha < 1$ and uniform hashing)
     \begin{itemize}
         \item if the table is $\frac{1}{4}$ full, there will be clusters of size $\Theta(\log n)$
         \item expected cost of an operation, $E[\# probes] \leq \frac{1}{1 - \alpha}$
-            \\* (assume $\alpha < 1$ and uniform hashing)
         % \item degrades badly as $\alpha \to 1$
     \end{itemize}
 \end{itemize}
@@ -567,7 +568,7 @@ assume chaining \& simple uniform hashing
     % \item \textbf{degree (node)}: number of adjacent edges
     % \item \textbf{degree (graph)}: max. degree of a node
     % \item \textbf{in-/out-degree}: number of incoming/outgoing edges
-    \item \textbf{diameter}: max. shortest path
+    % \item \textbf{diameter}: max. shortest path
     % \item even cycles are bipartite!
     \item graph is \textbf{dense} if $\abs{E} = \theta(V^2)$
 \end{itemize}
@@ -603,8 +604,8 @@ assume chaining \& simple uniform hashing
     \end{itemize}
     \item \textbf{Dijkstra} $\then O((V+E)\log V) = O(E\log V)$
     \begin{itemize}
-        \item using a PQ to track the min-estimate node, relax its outgoing edges and add incoming nodes to the PQ
         \item no negative weight edges!
+        \item using a PQ to track the min-estimate node, relax its outgoing edges and add incoming nodes to the PQ
         \item $\abs{V}$ times of \code{insert/deleteMin} ($\log V$ each)
         \item $\abs{E}$ times of \code{relax/decreaseKey} ($\log V$ each)
         \item with fibonacci heap $\then O(E + V \log V)$
@@ -742,7 +743,7 @@ assume chaining \& simple uniform hashing
     linked list & $O(n)$ & $O(1)$ \\\hline
     tree (kd/(a, b)/bst) & $O(\log n)$, $O(h)$ & $O(\log n)$, $O(h)$ \\\hline
     trie & $O(L)$ & $O(L)$ \\\hline
-    heap & $O(\log n)$, $O(h)$ & $O(\log n)$, $O(h)$ \\\hline
+    heap & $O(n)$ & $O(\log n)$, $O(h)$ \\\hline
     dictionary & $O(\log n)$ & $O(\log n)$ \\\hline
     symbol table & $O(1)$ & $O(1)$ \\\hline
     chaining & $O(n)$ & $O(1)$ \\\hline
@@ -772,15 +773,25 @@ assume chaining \& simple uniform hashing
 %         \item $S[v, w, P_8] = \min(S[v, w, P_7], S[v, 8, P_7] + S[8, w, P_7])$
 %     \end{itemize}
 % \end{itemize}
-\begin{align*}T(n) &= 2T(\frac{n}{2}) + O(n) &\Rightarrow O(n \log n)
-    \\ T(n) &= T(\frac{n}{2}) + O(n) &\Rightarrow O(n)
-    \\ T(n) &= 2T(\frac{n}{2}) + O(1) &\Rightarrow O(n)
-    \\ T(n) &= T(\frac{n}{2}) + O(1) &\Rightarrow O(\log n)
+\begin{align*}T(n) &= 2T(\sfrac{n}{2}) + O(n) &\Rightarrow O(n \log n)
+    \\ T(n) &= T(\sfrac{n}{2}) + O(n) &\Rightarrow O(n)
+    \\ T(n) &= 2T(\sfrac{n}{2}) + O(1) &\Rightarrow O(n)
+    \\ T(n) &= T(\sfrac{n}{2}) + O(1) &\Rightarrow O(\log n)
     \\ T(n) &= 2T(n - 1) + O(1) &\Rightarrow O(2^n)
-    \\ T(n) &= 2T(\frac{n}{2}) + O(n \log n) &\Rightarrow O(n(\log n)^2)
-    \\ T(n) &= 2T(\frac{n}{4}) + O(1) &\Rightarrow O(\sqrt{n})
+    \\ T(n) &= 2T(\sfrac{n}{2}) + O(n \log n) &\Rightarrow O(n(\log n)^2)
+    \\ T(n) &= 2T(\sfrac{n}{4}) + O(1) &\Rightarrow O(\sqrt{n})
     \\ T(n) &= T(n - c) + O(n) &\Rightarrow O(n^2)
 \end{align*}
+\textbf{master theorem}
+    \\* $T(n) = aT(\frac{n}{b}) + f(n) \quad a \geq 0, b > 1$
+    $= \begin{cases}
+        \Theta(n^{\log_ba}) & \quad \text{ if } f(n) < n^{\log_ba} \text{ polynomially}
+        \\ \Theta(n^{\log_ba} \log n) & \quad \text{ if } f(n) = n^{\log_ba} 
+        \\ \Theta(f(n)) & \quad \text{ if } f(n) > n^{\log_ba} \text{ polynomially}
+    \end{cases}$
+\textbf{orders of growth}
+\\* $1 < \log n < \sqrt{n} < n < n \log n < n^2 < 2^n < 2^{2n}$
+\\* $\log_a n < n^a < a^n < n! < n^n$ 
 \end{tightcenter}
 
 
@@ -821,35 +832,28 @@ assume chaining \& simple uniform hashing
         \end{tabular} 
     \end{tightcenter}
 \end{minipage}
-\begin{minipage}{0.23\linewidth}   
-    \begin{tightcenter}
-        \textbf{master theorem}
-            \\* $T(n) = aT(\frac{n}{b}) + f(n) \quad a \geq 0, b > 1$
-            $= \begin{cases}
-                \Theta(n^{\log_ba}) & \quad \text{ if } f(n) < n^{\log_ba} \text{ polynomially}
-                \\ \Theta(n^{\log_ba} \log n) & \quad \text{ if } f(n) = n^{\log_ba} 
-                \\ \Theta(f(n)) & \quad \text{ if } f(n) > n^{\log_ba} \text{ polynomially}
-            \end{cases}$
-    \end{tightcenter}
+\begin{minipage}{0.48\linewidth}   
+    \begin{multicols}{2}
+       \section{DYNAMIC PROGRAMMING}
+        \begin{enumerate}
+            \item \textbf{optimal sub-structure} - optimal solution can be constructed from optimal solutions to smaller sub-problems
+            \item \textbf{overlapping sub-problems} - can memoize
+            \begin{itemize}
+                \item optimal substructure but no overlapping subproblems = divide-and-conquer
+            \end{itemize}
+        \end{enumerate}
+        \begin{itemize}
+            \item prize collecting: $\then O(kE)$ or $O(kV^2)$ for k steps
+            \item vertex cover (set of nodes where every edge is adjacent to at least one node) of a tree: $\then O(V)$ or $O(V^2)$
+            \item diameter of a graph: SSSP all $\then O(V^2 \log V)$
+            \item APSP: dijkstra all $\then O(VE\log V)$
+            \item APSP: floyd warshall $\then O(V^3)$
+            \begin{itemize}
+                \item $S[v, w, P_k]$ = shortest path from $v$ to $w$ only using nodes from set $P$
+                \item ${\scriptstyle S[v, w, P_8] = \min(S[v, w, P_7], S[v, 8, P_7] + S[8, w, P_7])}$
+            \end{itemize}
+        \end{itemize}
+    \end{multicols}
 \end{minipage}
-\begin{minipage}{0.23\linewidth}   
-    \begin{tightcenter}
-    \textbf{orders of growth}
-        \\* $1 < \log n < \sqrt{n} < n < n \log n < n^2 < 2^n < 2^{2n}$
-        \\* $\log_a n < n^a < a^n < n! < n^n$
-    \end{tightcenter}
-\end{minipage}
-        % \begin{tabular}{| c | c |}
-        %     \multicolumn{2}{c}{searching}\\\hline
-        %     \textbf{search} & \textbf{average} \\\hline
-        %     linear & $O(n)$ \\\hline
-        %     binary & $O(\log n)$ \\\hline
-        %     quickSelect & $O(n)$ \\\hline
-        %     interval & $O(\log n)$ \\\hline
-        %     all-overlaps & $O(k\log n)$ \\\hline
-        %     1D range & $O(k + \log n)$ \\\hline
-        %     2D range & $O(k + \log^2 n)$ \\\hline
-        % \end{tabular}
 
-% \end{multicols}
 \end{document}
