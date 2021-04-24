@@ -1,0 +1,206 @@
+\documentclass[10pt, portrait]{article}
+\usepackage[scaled=0.92]{helvet}
+\usepackage{calc}
+\usepackage{multicol}
+\usepackage{ifthen}
+\usepackage[a4paper,margin=3mm,landscape]{geometry}
+\usepackage{amsmath,amsthm,amsfonts,amssymb}
+\usepackage{color,graphicx,overpic}
+\usepackage{hyperref}
+\usepackage{newtxtext} 
+\usepackage{enumitem}
+\usepackage[table]{xcolor}
+\usepackage{mathtools}
+\usepackage{nicematrix}
+% for drawing diragrams/graphs
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta}
+\usetikzlibrary{calc}
+\setlist{nosep}
+
+% ADDITIONAL USEFUL PACKAGES:
+% for matrices
+
+% for relations
+\usepackage{cancel}
+\usepackage{ mathrsfs }
+% for including images
+\graphicspath{ {./images/} }
+
+
+\pdfinfo{
+  /Title (MA1101R.pdf)
+  /Creator (TeX)
+  /Producer (pdfTeX 1.40.0)
+  /Author (Jovyn)
+  /Subject (MA1101R)
+  /Keywords (MA1101R, nus,cheatsheet,pdf)}
+
+% Turn off header and footer
+\pagestyle{empty}
+
+\newenvironment{tightcenter}{%
+  \setlength\topsep{0pt}
+  \setlength\parskip{0pt}
+  \begin{center}
+}{%
+  \end{center}
+}
+
+% redefine section commands to use less space
+\makeatletter
+\renewcommand{\section}{\@startsection{section}{1}{0mm}%
+                                {-1ex plus -.5ex minus -.2ex}%
+                                {0.5ex plus .2ex}%x
+                                {\normalfont\large\bfseries}}
+\renewcommand{\subsection}{\@startsection{subsection}{2}{0mm}%
+                                {-1explus -.5ex minus -.2ex}%
+                                {0.5ex plus .2ex}%
+                                {\normalfont\normalsize\bfseries}}
+\renewcommand{\subsubsection}{\@startsection{subsubsection}{3}{0mm}%
+                                {-1ex plus -.5ex minus -.2ex}%
+                                {1ex plus .2ex}%
+                                {\normalfont\small\bfseries}}%
+\renewcommand{\familydefault}{\sfdefault}
+\renewcommand\rmdefault{\sfdefault}
+%  makes nested numbering (e.g. 1.1.1, 1.1.2, etc)
+\renewcommand{\labelenumii}{\theenumii}
+\renewcommand{\theenumii}{\theenumi.\arabic{enumii}.}
+\renewcommand\labelitemii{•}
+%  highlighting for math
+\newcommand{\mathcolorbox}[2]{\colorbox{#1}{$\displaystyle #2$}}
+%  convenient absolute value symbol
+\newcommand{\abs}[1]{\vert #1 \vert}
+%  convenient floor and ceiling
+\newcommand{\floor}[1]{\lfloor #1 \rfloor}
+\newcommand{\ceil}[1]{\lceil #1 \rceil}
+%  convenient modulo
+\newcommand{\Mod}[1]{\ \mathrm{mod}\ #1}
+%  for logical not operator, iff symbol, convenient "if/then"
+\renewcommand{\lnot}{\mathord{\sim}}
+\let\iff\leftrightarrow
+\let\Iff\Leftrightarrow
+\let\then\rightarrow
+\let\Then\Rightarrow
+%  vectors
+\newcommand{\vv}[1]{\boldsymbol{#1}}
+\newcommand{\VV}[1]{\overrightarrow{#1}}
+%  column vector
+\newcommand{\cvv}[1]{\left(\begin{smallmatrix}#1\end{smallmatrix}\right)}
+%  cell colours
+\newcommand\bggreen{\cellcolor{green!10}}
+
+\makeatother
+\definecolor{myblue}{cmyk}{1,.72,0,.38}
+\everymath\expandafter{\the\everymath \color{myblue}}
+% Define BibTeX command
+\def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
+    T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
+
+% Don't print section numbers
+\setcounter{secnumdepth}{0}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0pt plus 0.5ex}
+%% this changes all items (enumerate and itemize)
+\setlength{\leftmargini}{0.5cm}
+\setlength{\leftmarginii}{0.5cm}
+\setlist[itemize,1]{leftmargin=2mm,labelindent=1mm,labelsep=1mm}
+\setlist[itemize,2]{leftmargin=2mm,labelindent=1mm,labelsep=1mm}
+
+%My Environments
+\newtheorem{example}[section]{Example}
+% -----------------------------------------------------------------------
+
+\begin{document}
+\raggedright
+\footnotesize
+
+
+% multicol parameters
+% These lengths are set only within the two main columns
+\setlength{\columnseprule}{0.25pt}
+\setlength{\premulticols}{1pt}
+\setlength{\postmulticols}{1pt}
+\setlength{\multicolsep}{1pt}
+\setlength{\columnsep}{2pt}
+
+\begin{center}
+    \fbox{%
+        \parbox{0.4\linewidth}{\centering \textcolor{black}{
+            {\Large\textbf{MA1101R}}
+            \\ \normalsize{AY20/21 sem 2}}
+            \\ {\footnotesize \textcolor{myblue}{by jovyntls}}
+        }%
+    }
+\end{center}
+
+
+\begin{itemize}
+    \item \textbf{Ex2.24} 
+    \begin{itemize}
+        \item (a) if $A$ and $B$ are diagonal matrices of the same size, then $AB = BA$
+        \item (b) if $A$ is a square matrix, then $(A+A^T)$ is symmetric.
+        \item (g) if $AA^T=0$, then $A=0$.
+    \end{itemize}
+    \item \textbf{Ex2.61} - if $A=PBP^{-1}$ then $\det(A)=\det(B)$.
+    \item \textbf{Ex3.24} - if $V$ and $W$ are subspaces of $\mathbb{R}^n$,
+    \begin{itemize}
+        \item $V \cap W$ is a subspace of $\mathbb{R}^n$
+        \item $V \cup W$ is a subspace of $\mathbb{R}^n \iff V \subseteq W$ or $W \subseteq V$
+    \end{itemize}
+    \item \textbf{Ex3.30} - let $u_1, u_2, \dots, u_k$ be vectors in $\mathbb{R}^n$ and $P$ be a square matrix of order $n$.
+    \begin{itemize}
+        \item if $Pu_1, Pu_2, \dots, Pu_k$ are linearly independent, then $u_1, u_2, \dots, u_k$ are linearly independent
+        \item if $P$ is invertible and $u_1, u_2, \dots, u_k$ are linearly independent, then $Pu_1, Pu_2, \dots, Pu_k$ are linearly independent
+        \item if $P$ is NOT invertible and $u_1, u_2, \dots, u_k$ are linearly independent, then $Pu_1, Pu_2, \dots, Pu_k$ are NOT necessarily linearly independent
+    \end{itemize}
+    \item \textbf{Ex4.10} - the linear relations between columns are not changed by row operations.
+    \item \textbf{Ex4.22} - let $A$ be a $m \times n$ matrix and $P$ be a $m \times m$ matrix. if $P$ is invertible, $rank(PA) = rank(A)$
+    \item \textbf{Ex4.25} - let $A$ be a $m \times n$ matrix. 
+    \begin{itemize}
+        \item The nullspace of $A$ is equal to the nullspace of $A^TA$.
+        \item nullity($A$) = nullity($A^TA$)
+        \item rank($A$) = rank($A^TA$)
+    \end{itemize}
+    \item \textbf{Ex5.32} - Let $A$ be an orthogonal matrix. $u, v$ are vectors in $\mathbb{R}^n$.
+    \begin{itemize}
+        \item $\| u \| = \| Au \|$
+        \item $d(u, v) = d(Au, Av)$
+        \item angle between $u$ and $v$ = angle between $Au$ and $Av$ 
+    \end{itemize}
+    \item \textbf{Ex5.32} - Let $A$ be an orthogonal matrix and $S = \{u_1, u_2, \dots, u_n\}$ be a basis for $\mathbb{R}^n$.
+    \begin{itemize}
+        \item $T = \{Au_1, Au_2, \dots, Au_n\}$ is a basis for $\mathbb{R}^n$.
+        \item if $S$ is orthogonal, $T$ is orthogonal. 
+        \item if $S$ is orthonormal, $T$ is orthonormal. 
+    \end{itemize}
+    \item \textbf{Ex6.23} - if $A$ is diagonalisable, $A^T$ is diagonalisable
+    \item \textbf{Ex6.26} - if $A$ is symmetric and $u, v$ are 2 eigenvectors of $A$ associated with $\lambda$ and $\mu$, where $\lambda \neq \mu$, then $u \cdot v = 0$.
+    \item \textbf{Ex7.10} - a linear operator $T$ is an isometry if $\|T(u)\| = \|u\|$ for all $u \in \mathbb{R}^n$.
+    \begin{itemize}
+        \item (a) $T(u) \cdot T(v) = u \cdot v$ for all $u, v \in \mathbb{R}^n$
+        \item (b) $T$ is an isometry $\iff$ the standard matrix is an orthogonal matrix
+        \item (c) all isometries on $\mathbb{R}^n$ are of the form
+            \\* $T(\begin{pmatrix}
+                x\\y
+            \end{pmatrix}) = \begin{pmatrix}
+                x\cos\theta + \delta y\sin\theta \\
+                y\sin\theta - \delta y\cos\theta
+            \end{pmatrix}$ for $\begin{pmatrix}
+                x\\y
+            \end{pmatrix} \in \mathbb{R}^2$
+            where $\delta = \pm 1$ and $0 \leq \theta < 2\pi$
+    \end{itemize}
+    \item \textbf{LAB4} - if $AA^T$ is a diagonal matrix, then the rows of $A$ form an orthogonal set.
+    \item \textbf{LAB4} - if $AA^T$ is an identity matrix, then the rows of $A$ form an orthonormal set.
+\end{itemize}
+
+\begin{itemize}
+    \item to show $A$ is invertible: show $\exists B$ s.t. $AB = I$ and $BA=I$
+\end{itemize}
+
+
+
+
+\end{document}
