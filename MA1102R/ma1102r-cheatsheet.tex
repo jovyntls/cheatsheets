@@ -112,8 +112,7 @@
 \begin{document}
 \raggedright
 \footnotesize
-\begin{multicols}{4
-    '}
+\begin{multicols}{4}
 
 
 % multicol parameters
@@ -129,7 +128,7 @@
         \parbox{0.8\linewidth}{\centering \textcolor{black}{
             {\Large\textbf{MA1102R}}
             \\ \normalsize{AY20/21 sem 2}}
-            \\ {\footnotesize \textcolor{myblue}{by jovyntls}}
+            \\ {\footnotesize \textcolor{myblue}{github.com/jovyntls}}
         }%
     }
 \end{center}
@@ -278,7 +277,7 @@ informally,
     \noindent\fbox{%
     \parbox{0.8\linewidth}{%
         you cannot apply any laws on limits 
-        UNLESS you have shown that the limit exists!!
+        UNLESS you have shown that the limit exists!
         }
     }%
 \end{tightcenter}
@@ -297,22 +296,11 @@ Suppose $\displaystyle{\lim_{x \to a} f(x) = L}$ and $\displaystyle{\lim_{x \to 
     \item $\displaystyle{\lim_{x \to a} \sqrt[n]{f(x)} = \sqrt[n]{\lim_{x \to a} f(x)}}$
 \end{itemize}
 
-\begin{center}
+\begin{tightcenter}
     \fbox{
         if $\displaystyle{\lim_{x \to a} \frac{f(x)}{g(x)}}$ exists and $\displaystyle{\lim_{x \to a} g(x) = 0}$, then $\displaystyle{\lim_{x \to a} f(x) = 0}$
     }
-\end{center}
-
-\subsubsection{inequalities on limits}
-Suppose $\displaystyle{\lim_{x \to a} f(x) = L}$ and $\displaystyle{\lim_{x \to a} g(x) = M}$. 
-\begin{center}
-    \textbf{lemma}
-    \\* if $f(x) \leq g(x)$ for all $x$ near $a$ (except possibly at $a$), 
-    \\* then $L \leq M$.
-
-    \textbf{lemma}
-    \\* If $f(x) \geq 0$ for all $x$, then $L \geq 0$.
-\end{center}
+\end{tightcenter}
 
 \subsubsection{direct substitution property}
 Let $f$ be a polynomial or rational function. 
@@ -326,17 +314,28 @@ Let $f$ be a polynomial or rational function.
 
 If $a$ is not in the domain (e.g. 0 denominator), don't apply directly - convert to an equivalent function and then sub in
 
+\subsubsection{inequalities on limits}
+Suppose $\displaystyle{\lim_{x \to a} f(x) = L}$ and $\displaystyle{\lim_{x \to a} g(x) = M}$. 
+\begin{center}
+    \textbf{lemma}
+    \\* if $f(x) \leq g(x)$ for all $x$ near $a$ (except possibly at $a$), 
+    \\* then $L \leq M$.
+
+    \textbf{lemma}
+    \\* If $f(x) \geq 0$ for all $x$, then $L \geq 0$.
+\end{center}
+
 \subsection{one-sided limits}
 \begin{itemize}
     \item limit laws also hold for one-sided limits
 \end{itemize}
-\begin{center}
-    If as $x$ is close to $a$ from the right, $f(x)$ is close to L, the right-hand limit of $f$ as $x$ approaches $a$ equals $L$.
-    \\* $\displaystyle{\left( x \to a^+ \Then f(x) \to L \right) \Then \lim_{x \to a^+} f(x) = L}$
-    \\ \ 
-    \\ If as $x$ is close to $a$ from the left, $f(x)$ is close to L, the left-hand limit of $f$ as $x$ approaches $a$ equals $L$.
-    \\* $\displaystyle{\left( x \to a^- \Then f(x) \to L \right) \Then \lim_{x \to a^-} f(x) = L}$
-\end{center}
+% \begin{center}
+%     If as $x$ is close to $a$ from the right, $f(x)$ is close to L, the right-hand limit of $f$ as $x$ approaches $a$ equals $L$.
+%     \\* $\displaystyle{\left( x \to a^+ \Then f(x) \to L \right) \Then \lim_{x \to a^+} f(x) = L}$
+%     \\ \ 
+%     \\ If as $x$ is close to $a$ from the left, $f(x)$ is close to L, the left-hand limit of $f$ as $x$ approaches $a$ equals $L$.
+%     \\* $\displaystyle{\left( x \to a^- \Then f(x) \to L \right) \Then \lim_{x \to a^-} f(x) = L}$
+% \end{center}
 \begin{center}
     \fbox{
         $\displaystyle{\lim_{x \to a} f(x) = L \iff \lim_{x \to a^+} f(x) = \lim_{x \to a^-} f(x) = L}$
@@ -347,7 +346,7 @@ If $a$ is not in the domain (e.g. 0 denominator), don't apply directly - convert
     \end{cases}$
 \end{center}
 
-\subsubsection{definition of one-sided limits}
+\subsubsection{definition of one-sided limits ($\lim f(x) = \infty$)}
 \begin{center}
     \textbf{LH Limit}: $\displaystyle{\lim_{x \to a^-} f(x) = L}$ 
     \\* if for every $\epsilon > 0$ there exists $\delta > 0$ such that
@@ -371,7 +370,7 @@ If $a$ is not in the domain (e.g. 0 denominator), don't apply directly - convert
     \item $\infty$ is NOT a number $\Then$ an infinite limit does NOT exist
 \end{itemize}
 
-\subsubsection{limits to infinity}
+\subsubsection{limits to infinity ($\lim_{x \to \infty}$)}
 Suppose $f$ is defined on $[M, \infty)$ for some $M \in \mathbb{R}$:
 \begin{center}
     $\displaystyle{\lim_{x \to \infty}f(x) = L}$: 
@@ -411,11 +410,11 @@ Suppose $f(x)$ is bounded by $g(x)$ and $h(x)$ where
 \begin{center}
     a function $f$ is \textbf{continuous at $a$} $\iff$ 
     \\* $f$ is continuous from the left and from the right at $a$.
-    \\* $\displaystyle{\lim_{x \to a} f(x) = f(a)}$
-    \begin{itemize}
-        \item $f$ is continuous from the right at $a$ if $\displaystyle{\lim_{x \to a^+} f(x) = a}$
-        \item $f$ is continuous from the left at $a$ if $\displaystyle{\lim_{x \to a^-} f(x) = a}$
-    \end{itemize}
+    \\* $\displaystyle{\lim_{x \to a} f(x) = \lim_{x \to a^+} f(x) = \lim_{x \to a^-} f(x) = f(a)}$
+    % \begin{itemize}
+    %     \item $f$ is continuous from the right at $a$ if $\displaystyle{\lim_{x \to a^+} f(x) = f(a)}$
+    %     \item $f$ is continuous from the left at $a$ if $\displaystyle{\lim_{x \to a^-} f(x) = f(a)}$
+    % \end{itemize}
 \end{center}
 
 a function $f$ is \textbf{continuous at an interval} if it is continuous at every number in the interval.
@@ -423,14 +422,14 @@ a function $f$ is \textbf{continuous at an interval} if it is continuous at ever
     $f$ is continuous on \textbf{open interval} $(a, b)$
     \\* $\Iff f$ is continuous at every $x \in (a, b)$
     \\ $f$ is continuous on \textbf{closed interval} $[a, b]$
-    $\Iff \begin{cases}
+    \\* $\Iff \begin{cases}
         f $ is continuous at every $x \in (a, b) \\
-        f $ is continuous from the right at $ a \\
-        f $ is continuous from the left at $ b
+        f $ is continuous from the right at $ a  \\
+        f $ is continuous from the left at $ b 
     \end{cases}$
 \end{center}
 
-\subsubsection{precise definition of continuity}
+\subsection{precise definition of continuity}
 \begin{center}
     a function $f$ is \textbf{continuous} at a number $a$ if 
     \\* for all $\epsilon > 0$, there exists $\delta > 0$ such that 
@@ -497,26 +496,40 @@ let $f$ and $g$ be functions continuous at $a$. let $c$ be a constant.
 \subsection{composite of continuous functions}
 \begin{center}
     if $f$ is continuous at $b$ and $\displaystyle{\lim_{x \to a} g(x) = b}$, then 
-    \\* $\displaystyle{\lim_{x \to a} f(g(x)) = f(\lim_{x \to a} g(x)) = f(b)}$
-\end{center}
-\begin{center}
+    \begin{tightcenter}
+        \noindent\fbox{%
+            \parbox{0.7\linewidth}{%
+                \begin{tightcenter}
+                    $\displaystyle{\lim_{x \to a} f(g(x)) = f(\lim_{x \to a} g(x)) = f(b)}$
+                \end{tightcenter}
+                }
+            }%
+    \end{tightcenter}
     if $g$ is continuous at $a$ and $f$ is continuous at $g(a)$,
     \\* then $f \circ g$ is continuous at $a$.
-    \\* $\displaystyle{\lim_{x \to a} (f \circ g)(x) = (f \circ g)(a)}$
+    \begin{tightcenter}
+        \noindent\fbox{%
+            \parbox{0.7\linewidth}{%
+                \begin{tightcenter}
+                    $\displaystyle{\lim_{x \to a} (f \circ g)(x) = (f \circ g)(a)}$
+                \end{tightcenter}
+                }
+            }%
+    \end{tightcenter}
 \end{center}
 
 \subsection{substitution theorem}
 Suppose $y = f(x)$ such that $\displaystyle{\lim_{x \to a}f(x) = b}$. If
 \begin{enumerate}
     \item $g$ is continuous at $b$, OR 
-    \item $\forall x$ near $a$, except at $a$, $f(x) \neq b$ and $\displaystyle{\lim_{y \to b} g(y)}$ exists
+    \item $\displaystyle{\lim_{y \to b}g(y)}$ exists and $f$ is one-to-one.
     \begin{itemize}
-        \item aka, $\displaystyle{\lim_{y \to b}g(y)}$ exists and $f$ is one-to-one.
+        \item $\forall x$ near $a$, except at $a$, $f(x) \neq b$ and $\displaystyle{\lim_{y \to b} g(y)}$ exists
     \end{itemize}
 \end{enumerate}
 Then $\displaystyle{\lim_{x \to a} g(f(x)) = \lim_{y \to b} g(y)}$
 
-\subsection{intermediate value theorem}\
+\subsection{intermediate value theorem}
 \begin{center}
     Let $f$ be a function continuous on $[a, b]$ with $f(a) \neq f(b)$. 
     \\* Let $N$ be a number between $f(a)$ and $f(b)$.
@@ -525,15 +538,6 @@ Then $\displaystyle{\lim_{x \to a} g(f(x)) = \lim_{y \to b} g(y)}$
 \end{center}
 
 \section{03. DERIVATIVES}
-
-\subsection{tangent line}
-\begin{center}
-    the \textbf{tangent line} to $y=f(x)$ at $(a, f(a))$ is 
-    \\* the line passing through $(a, f(a))$ with slope $f'(a)$:
-    \fbox{
-        $y = f'(a)(x-a) + f(a)$
-    }
-\end{center}
 
 \subsection{definition of derivatives}
 \begin{itemize}
@@ -558,6 +562,15 @@ Then $\displaystyle{\lim_{x \to a} g(f(x)) = \lim_{y \to b} g(y)}$
         }%
 \end{tightcenter}
 
+\subsubsection{tangent line}
+\begin{center}
+    the \textbf{tangent line} to $y=f(x)$ at $(a, f(a))$ is 
+    \\* the line passing through $(a, f(a))$ with slope $f'(a)$:
+    \fbox{
+        $y = f'(a)(x-a) + f(a)$
+    }
+\end{center}
+
 \subsection{differentiable functions}
 \begin{itemize}
     \item $f$ is differentiable at $a$ if 
@@ -579,7 +592,7 @@ Then $\displaystyle{\lim_{x \to a} g(f(x)) = \lim_{y \to b} g(y)}$
     \item continuity $\nRightarrow$ differentiability
 \end{itemize}
 
-\subsection{differentiation}
+\subsubsection{differentiability}
 \begin{itemize}
     \item every polynomial and rational function is differentiable on its domain
     \begin{itemize}
@@ -588,13 +601,14 @@ Then $\displaystyle{\lim_{x \to a} g(f(x)) = \lim_{y \to b} g(y)}$
     \item trigonometric functions are differentiable on the domain
 \end{itemize}
 
+\subsection{differentiation}
 \subsubsection{differentiation of trigonometric functions}
-\begin{center}
+\begin{tightcenter}
     \begin{multicols}{2}
         ${\displaystyle{\lim_{\theta \to 0}} \frac{\sin\theta}{\theta} = 1}$
         \\ ${\displaystyle{\lim_{\theta \to 0}} \frac{1 - \cos\theta}{\theta} = 0}$
     \end{multicols}
-\end{center}
+\end{tightcenter}
 
 \subsubsection{chain rule}
 \begin{center}
@@ -624,13 +638,13 @@ $h$ is differentiable at $a$; $g$ is differentiable at $B = h(a)$; $f$ is differ
     \item assumes that $\frac{dy}{dx}$ exists
 \end{itemize}
 
-\subsection{second derivative}
+\subsubsection{second derivative}
 \begin{center}
     $f''(x) = \frac{d}{dx}(\frac{dy}{dx}) = \frac{d^2y}{dx^2}$
     \\* $f' = D(f) \Rightarrow f'' := D^2(f)$
 \end{center}
 
-\subsection{higher derivatives}
+\subsubsection{higher derivatives}
 \begin{center}
     $f^{(0)} := f$
     \\* For any positive integer $n$, $f^{(n)} := (f^{(n-1)})'$
@@ -648,11 +662,14 @@ $h$ is differentiable at $a$; $g$ is differentiable at $B = h(a)$; $f$ is differ
 
 \subsection{extreme values of functions}
 Let $f$ be a function with domain $D$.
+\begin{itemize}
+    \item local max/min $\nRightarrow$ global max/min
+    \item global max/min $\nRightarrow$ local max/min
+\end{itemize}
 
 \subsubsection{global (absolute) max/min}
 \begin{itemize}
-    \item aka absolute max/min
-    \item extreme values = absolute maximum and absolute minimum
+    \item aka extreme values
 \end{itemize}
 \begin{center}
     $f$ has a global \textbf{maximum} at $c \in D$
@@ -661,9 +678,9 @@ Let $f$ be a function with domain $D$.
     \\* $\Iff f(c) \leq f(x)$ for all $x \in D$
 \end{center}
 
-\subsubsection{local max/min}
+\subsubsection{local (relative) max/min}
 \begin{itemize}
-    \item aka relative max/min aka "turning points"
+    \item aka "turning points"
     \item "all $x$ near $c$" = for all $x$ in an open interval containing $c$
 \end{itemize}
 \begin{center}
@@ -672,48 +689,46 @@ Let $f$ be a function with domain $D$.
     \\ $f$ has a local \textbf{minimum} at $c \in D$ 
     \\* $\Iff f(c) \leq f(x)$ for all $x$ near $c$
 \end{center}
-\begin{itemize}
-    \item local max/min $\nRightarrow$ global max/min
-    \item global max/min $\nRightarrow$ local max/min
-\end{itemize}
 
 \subsection{extreme value theorem}
 \begin{center}
     \textbf{existence}
     \\* if $f$ is \textit{continuous} on a \textit{finite closed} interval $[a, b]$,
-    \\* then $f$ attains extreme values on $[a, b]$.
+    \\* then $f$ attains \underline{extreme values} on $[a, b]$.
 
     \textbf{value}
     \\* the extreme value occurs at either 
-    \\* \textit{critical numbers} or the \textit{endpoints} ($x=a, x=b$).
+    \\* \underline{critical numbers} or the \underline{endpoints} ($x=a, x=b$).
 \end{center}
 
 \subsection{critical numbers}
 \begin{center}
-    $c \in D$ is a \textit{critical number} of $f$ if 
+    $c \in D$ is a \textbf{critical number} of $f$ if 
     \\* $f'(c) = 0$, or $f'(c)$ does not exist.
 \end{center}
 \begin{center}
     \textbf{fermat's theorem}
-    \\* If $f$ has a local maximum or minimum at $c$, 
-    \\* then $c$ is a critical number.
-    \\* If $f'(c)$ exists, then $f'(c)=0$.
+    \\* If $f$ has a local maximum or minimum at $c$, then
+    \\* 1. $c$ is a critical number.
+    \\* 2. If $f'(c)$ exists, then $f'(c)=0$.
 \end{center}
 
 \subsection{Rolle's Theorem}
 \begin{center}
-    Let $f$ be a function such that $f$ is \textit{continuous} on $[a, b]$, $f$ is \textit{differentiable} on $(a, b)$, and $f(a) = f(b)$.
+    Let $f$ be a function such that $f$ is \textit{continuous} on $[a, b]$, 
+    $f$ is \textit{differentiable} on $(a, b)$, and $f(a) = f(b)$.
     \\* Then there is a number $c \in (a, b)$ such that $f'(c) = 0$.
+    \includegraphics[width=0.8\linewidth]{ma1102r-rolle-theorem.png}
 \end{center}
 
 \subsection{mean value theorem}
 \begin{center}
-    Let $f$ be a function such that 
-    \\* $f$ is \textit{continuous} on $[a, b]$ and $f$ is \textit{differentiable} on $(a, b)$.
+    Let $f$ be a function such that $f$ is \textit{continuous} on $[a, b]$ 
+    \\* and $f$ is \textit{differentiable} on $(a, b)$.
     \\* Then there exists $c \in (a, b)$ such that 
     \\* $f'(c) = \frac{f(b) - f(a)}{b-a}$
+    \includegraphics[width=0.9\linewidth]{ma1102r-mean-value-theorem.png}
 \end{center}
-\includegraphics[width=0.9\linewidth]{ma1102r-mean-value-theorem.png}
 \begin{itemize}
     \item generalisation of Rolle's theorem when $f(a) = f(b)$.
 \end{itemize}
@@ -730,18 +745,19 @@ Let $f$ be continuous on $[a, b]$ and differentiable on $(a, b)$.
 \begin{itemize}
     \item $f'(x) > 0$ for any $x \in (a, b) \Then f$ is increasing.
     \begin{itemize}
-        \item $f$ is increasing $\Then f(x) \geq 0$
+        \item $f$ is increasing $\Then f'(x) \geq 0$ on $(a, b)$
     \end{itemize}
     \item $f'(x) < 0$ for any $x \in (a, b) \Then f$ is decreasing.
     \begin{itemize}
-        \item $f$ is decreasing $\Then f(x) \leq 0$
+        \item $f$ is decreasing $\Then f'(x) \leq 0$ on $(a, b)$
     \end{itemize}
     \item $f'(x) = 0 \Then f$ could be increasing OR decreasing.
 \end{itemize}
 
 \subsection{first derivative test}
-Let $f$ be continuous and $c$ be a critical number of $f$. Suppose $f$ is differentiable near $c$ (except possibly at $c$).
-At $c$, if $f'$ changes from:
+Let $f$ be continuous and $c$ be a critical number of $f$. 
+\\* Suppose $f$ is differentiable near $c$ (except possibly at $c$).
+\\* At $c$, if $f'$ changes from:
 \begin{itemize}
     \item (+) to (-) $\then f$ has a local \textbf{maximum} at $c$
     \item (-) to (+) $\then f$ has a local \textbf{minimum} at $c$
@@ -751,18 +767,19 @@ At $c$, if $f'$ changes from:
 \subsection{concavity}
 \begin{center}
     \includegraphics[width=0.8\linewidth]{ma1102r-concavity.png}
-    \\ $f$ is \textbf{concave up} on an open interval $I$ 
-    \\* if $f(x) > f'(y)(x-y) + f(y)$ for any $x \neq y \in I$
-    \\* for $a < b \in I$, $f'(a) < f'(b)$
-    \\* concave up $\Iff f'$ is increasing
+\end{center}
 
-    $f$ is \textbf{concave down} on an open interval $I$
-    \\* if $f(x) < f'(y)(x-y) + f(y)$ for any $x \neq y \in I$
-    \\* for $a < b \in I$, $f'(a) > f'(b)$
-    \\* concave down $\Iff f'$ is decreasing
+\begin{tightcenter}
+    $f$ is \textbf{concave up} on an open interval $I \Iff f'$ is increasing
+    \\* $\Iff$ for $a < b \in I$, $f'(a) < f'(b)$
+    \\* $\Iff f(x) > f'(y)(x-y) + f(y)$ for any $x \neq y \in I$
+    \\ \ 
+    \\ $f$ is \textbf{concave down} on an open interval $I \Iff f'$ is decreasing
+    \\* $\Iff$ for $a < b \in I$, $f'(a) > f'(b)$
+    \\* $\Iff f(x) < f'(y)(x-y) + f(y)$ for any $x \neq y \in I$
 
     \includegraphics[width=0.9\linewidth]{ma1102r-concavity-shortcut.png}
-\end{center}
+\end{tightcenter}
 
 \subsubsection{concavity test}
 \begin{itemize}
@@ -791,7 +808,7 @@ If $f'(c) = 0$ and $f''(c)$ exists,
 \subsection{Taylor's Theorem}
 \begin{center}
     $f(x) = f(a) + f'(a)(x-a) + \frac{f''(a)}{2}(x-a)^2 + \dots + \frac{f^{(n)}(a)}{n!}(x-a)^n + R_n,$
-    \\* where $R_n = \frac{f^{(n+1)}(a)}{(n+1)!}(x-a)^{(n+1)}$ for $c$ between $x$ and $a$
+    \\* where $R_n = \frac{f^{(n+1)}(c)}{(n+1)!}(x-a)^{(n+1)}$ for $c$ between $x$ and $a$
 \end{center}
 \subsubsection{Taylor Series}
 \begin{center}
@@ -799,23 +816,13 @@ If $f'(c) = 0$ and $f''(c)$ exists,
     \\* $\displaystyle{f(x) = \sum^\infty_{n=0} \frac{f^{(n)}(a)}{n!}(x-a)^n}$
 \end{center}
 
-\subsection{L'Hopital's Rule $(\frac{0}{0})$}
+\subsection{L'Hopital's Rule}
 Let $f$ and $g$ be functions such that 
 \begin{itemize}
-    \item $\displaystyle{\lim_{x \to a}f(x) = \lim_{x \to a}g(x) = 0}$ 
-    \item $f$ and $g$ are differentiable near $a$ (except at $a$).
-\end{itemize}
-\begin{tightcenter}
-    Then $\displaystyle{\lim_{x \to a}\frac{f(x)}{g(x)} = \lim_{x \to a}\frac{f'(x)}{g'(x)}}$,
-    \\* provided that the RHS limit exists or is $\pm \infty$
-\end{tightcenter}
-
-\subsection{L'Hopital's Rule $(\frac{\infty}{\infty})$}
-Suppose that 
-\begin{itemize}
-    \item $\displaystyle{\lim_{x \to a}\abs{f(x)} = \lim_{x \to a}\abs{g(x)} = \infty}$,
-    \item $f$ and $g$ are differentiable near $a$ (except at $a$), 
-    \item $g'(x) \neq 0$ near $a$ (except at $a$)
+    \item ($\frac{0}{0}$) $\displaystyle{\lim_{x \to a}f(x) = \lim_{x \to a}g(x) = 0}$, OR
+    \\* ($\frac{\infty}{\infty}$) $\displaystyle{\lim_{x \to a}\abs{f(x)} = \lim_{x \to a}\abs{g(x)} = \infty}$,
+    \item $f$ and $g$ are differentiable near $a$ (except at $a$),
+    \item $g'(x) \neq 0$ near $a$ (except at $a$).
 \end{itemize}
 \begin{tightcenter}
     Then $\displaystyle{\lim_{x \to a}\frac{f(x)}{g(x)} = \lim_{x \to a}\frac{f'(x)}{g'(x)}}$
@@ -824,8 +831,8 @@ Suppose that
 
 \subsection{Cauchy's Mean Value Theorem}
 \begin{center}
-    Let $f, g$ be continuous on $[a, b]$, differentiable on $(a, b)$, 
-    \\* and $g'(x) \neq 0$ for any $x \in (a, b)$.
+    Let $f, g$ be continuous on $[a, b]$, differentiable on $(a, b)$, and 
+    $g'(x) \neq 0$ for any $x \in (a, b)$. Consider a curve defined by $t \mapsto (g(t), f(t))$.
     \\* Then there exists $c \in (a, b)$ such that 
     \\* $\frac{f'(c)}{g'(c)} = \frac{f(b) - f(a)}{g(b) - g(a)}$
     \includegraphics[width=0.9\linewidth]{ma1102r-cauchy-mvt.png}
@@ -862,6 +869,12 @@ Let $f$ be a continuous function on $[a, b]$ divided into $n$ intervals.
     \item $\int^b_a f(x) dx = - \int^a_b f(x) dx$
     \item $\int^a_a f(x) dx = 0$
 \end{itemize}
+
+\subsubsection{geometric meaning}
+\begin{tightcenter}
+    \includegraphics[width=0.8\linewidth]{ma1102r-integration-geometric.png}
+    \\ ${\displaystyle{\int^b_a f(x) \dx = A^+ - A^-}}$ (net area)
+\end{tightcenter}
 
 \subsubsection{properties}
 let $f$ and $g$ be continuous functions.
@@ -1062,6 +1075,18 @@ for $f = \frac{A(x)}{B(x)}$,
     \end{itemize}
 \end{itemize}
 
+\subsubsection{partial fractions}
+\begin{itemize}
+    \item for each linear factor $(x+a)^k$: 
+    \begin{itemize}
+        \item $\frac{A_1}{x+a} + \frac{A_2}{(x+a)^2} + \dots + \frac{A_k}{(x+a)^k}$
+    \end{itemize}
+    \item for each quadratic factor $(x^2 + bx + c)^r$:
+    \begin{itemize}
+        \item $\frac{B_1x+C_1}{x^2 + bx + c} + \dots + \frac{B_rx+C_r}{(x^2+bx+c)^r}$
+    \end{itemize}
+\end{itemize}
+
 \subsubsection{universal trigonometric substitution}
 \begin{center}
     any rational expression in $\sin x$ and $\cos x$ can be integrated using the substitution $t = \tan \frac{x}{2}, \quad x \in (-\pi, \pi)$.
@@ -1183,7 +1208,7 @@ aka take $\ln$ on both sides and implicitly differentiate
     $\sinh x = \frac{e^x - e^{-x}}{2}, \quad (\sinh x)' = \cosh x$
     \\* $\cosh x = \frac{e^x + e^{-x}}{2}, \quad (\cosh x)' = \sinh x$
 \end{center}
-properties
+
 \begin{itemize}
     \item $\cosh^2 x - \sinh^2 x = 1$
     \item parametrization represents a \textbf{hyperbola} - 
@@ -1209,11 +1234,12 @@ properties
 \begin{itemize}
     \item properties
     \begin{itemize}
-        \item $\frac{d}{dx} \sinh^{-1}x = \frac{1}{\sqrt{x^2 + 1}}$
-        \item $\frac{d}{dx} \cosh^{-1}x = \frac{1}{\sqrt{x^2 - 1}}$
         \item $\sinh^{-1} x = \ln(x + \sqrt{x^2 + 1}), x \in \mathbb{R}$ 
         \item $\cosh^{-1} x = \ln(x + \sqrt{x^2 - 1}), x \geq 1$ 
         \item $\tanh^{-1} x = \frac{1}{2} \ln(\frac{1+x}{1-x}), \quad -1 < x < 1$
+        \item $\frac{d}{dx} \sinh^{-1}x = \frac{1}{\sqrt{x^2 + 1}}$
+        \item $\frac{d}{dx} \cosh^{-1}x = \frac{1}{\sqrt{x^2 - 1}}$
+        \item $\frac{d}{dx} \tanh^{-1}x = \mathop{sech}x$
     \end{itemize}
 \end{itemize}
 
@@ -1259,6 +1285,10 @@ properties
         }%
     \end{itemize}
 \end{minipage}
+\begin{tightcenter}
+    parametric curves:
+    \\* arc length = ${\displaystyle{\int\sqrt{(\frac{dx}{dt})^2 + (\frac{dy}{dt})^2} \mathop{dt}}}$
+\end{tightcenter}
 
 \subsection{surface area of revolution}
 \begin{center}
@@ -1354,20 +1384,34 @@ note: if the equation is not linear in $y$ but is linear in $x$, can take the re
 
 \subsection{applications}
 \begin{itemize}
-    \item compound interest - let $r$ be the interest rate, $A$ be the money
+    \item compound interest
     \begin{itemize}
+        \item let $r$ be the interest rate (\%), $A$ be the money
         \item ODE: $\frac{dA}{dt} = rA; \quad A(0) = C$
         \item solve for $A(t) = Ce^{rt}$
     \end{itemize}
-    \item radiocarbon dating - let $\lambda$ be the half life, $C$ be Carbon left
+    \item radiocarbon dating 
     \begin{itemize}
+        \item let $\lambda$ be the half life, $C$ be \% of Carbon left
         \item ODE: $\frac{dC}{dt} = kC; \quad C(0) = 1; \quad k = -\frac{\ln 2}{\lambda}$
         \item solve $C(t) = e^{kt}$
     \end{itemize}
     \item population growth - let $M$ be max. population (carrying capacity), $r$ be the rate of change of population
     \begin{itemize}
-        \item ODE: $\frac{dP}{dt} = r(M-P)P$
+        \item ODE: $\frac{dP}{dt} = rP(M-P)$
         \item solve $P(t) = \frac{M}{1 + (\frac{M}{P(0)} - 1)e^{-rt}}$
+    \end{itemize}
+    \item newton's law of cooling
+    \begin{itemize}
+        \item let $T_S$ be the surrounding temperature, $r > 0$ be the rate of heat loss
+        \item ODE: $\frac{dT}{dt} = -r \cdot (T - T_S)$
+        \item $\ln \abs{T - T_S} = -rt + C$
+    \end{itemize}
+    \item draining tank problem (torricelli's law)
+    \begin{itemize}
+        \item the rate at which water flows out is proportional to the square root of the water's depth
+        \item let $A$ be the base area of the tank, $R$ be the rate of flow
+        \item ODE: $A \frac{dh}{dt} = -R$
     \end{itemize}
 \end{itemize}
 
@@ -1399,6 +1443,7 @@ note: if the equation is not linear in $y$ but is linear in $x$, can take the re
 \subsubsection{misc}
 \begin{itemize}
     \item $\forall x \in (0, \frac{\pi}{2}), \sin x < x < \tan x$
+    \item $\sin\theta = \frac{\tan\theta}{\sqrt{\tan^2\theta + 1}}$
 \end{itemize}
 
 \end{multicols}
