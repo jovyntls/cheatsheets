@@ -1043,16 +1043,10 @@ let $f$ be a \textit{one-to-one continuous} function on an open interval $I$.
     \end{tightcenter}
     }
     }%
-    \\ \includegraphics[width=0.5\linewidth]{ma1102r-inverse-functions.png}
+    \\ \includegraphics[width=0.45\linewidth]{ma1102r-inverse-functions.png}
 \end{tightcenter}
 
 \subsection{techniques of integration}
-\subsubsection{common trigonometric substitutions}
-\begin{itemize}
-    \item $\sqrt{a^2 - x^2}, \quad x = a\sin t, \quad t \in [-\frac{\pi}{2}, \frac{\pi}{2}]$
-    \item $\sqrt{x^2 - a^2}, \quad x = a\sec t, \quad t \in [0, -\frac{\pi}{2}) \cup (\pi, \frac{3\pi}{2}]$
-    \item $a^2 + x^2, \quad x = a\tan t, \quad t \in (-\frac{\pi}{2}, \frac{\pi}{2})$
-\end{itemize}
 
 \subsubsection{integration of rational functions}
 for $f = \frac{A(x)}{B(x)}$,
@@ -1085,6 +1079,13 @@ for $f = \frac{A(x)}{B(x)}$,
     \begin{itemize}
         \item $\frac{B_1x+C_1}{x^2 + bx + c} + \dots + \frac{B_rx+C_r}{(x^2+bx+c)^r}$
     \end{itemize}
+\end{itemize}
+
+\subsubsection{common trigonometric substitutions}
+\begin{itemize}
+    \item $\sqrt{a^2 - x^2}, \quad x = a\sin t, \quad t \in [-\frac{\pi}{2}, \frac{\pi}{2}]$
+    \item $\sqrt{x^2 - a^2}, \quad x = a\sec t, \quad t \in [0, -\frac{\pi}{2}) \cup (\pi, \frac{3\pi}{2}]$
+    \item $a^2 + x^2, \quad x = a\tan t, \quad t \in (-\frac{\pi}{2}, \frac{\pi}{2})$
 \end{itemize}
 
 \subsubsection{universal trigonometric substitution}
@@ -1445,6 +1446,44 @@ note: if the equation is not linear in $y$ but is linear in $x$, can take the re
     \item $\forall x \in (0, \frac{\pi}{2}), \sin x < x < \tan x$
     \item $\sin\theta = \frac{\tan\theta}{\sqrt{\tan^2\theta + 1}}$
 \end{itemize}
+
+\section{differentiation}
+\begin{center}
+    \begin{tabular}{|>{\color{black}}c | >{\color{black}}c|}
+        \hline
+        $f(x)$ & $f'(x)$
+        \\ \hline
+        \rule{0pt}{2.3ex}  % top spacing
+            $\tan x$ & $\sec ^2 x$ \\
+            $\csc x$ & $-\csc x \cot x$ \\
+            $\sec x$ & $\sec x \tan x$ \\
+            $\cot x$ & $- \csc ^2 x$
+        \\[1ex] \hline
+        \rule{0pt}{3ex}  % top spacing
+            $\sin^{-1} f(x)$ & $\frac{f'(x)}{\sqrt{1-[f(x)]^2}}, \ \ _{\vert f(x) \vert < 1}$ \\[1.5ex]
+            $\cos^{-1} f(x)$ & $-\frac{f'(x)}{\sqrt{1-[f(x)]^2}}, \ \ _{\vert f(x) \vert < 1}$ \\[1.5ex]
+            $\tan^{-1} f(x)$ & $\frac{f'(x)}{1 + [f(x)]^2}$ \\[1.5ex]
+            $\cot^{-1} f(x)$ & $-\frac{f'(x)}{1 + [f(x)]^2}$ \\[1.5ex]
+            $\sec^{-1} f(x)$ & $\frac{f'(x)}{\vert f(x) \vert \sqrt{[f(x)]^2-1}}$ \\[1.5ex]
+            $\csc^{-1} f(x)$ & $-\frac{f'(x)}{\vert f(x) \vert \sqrt{[f(x)]^2-1}}$ \\[2ex]
+        \hline
+    \end{tabular}
+\end{center}
+
+\section{integration}
+\begin{center}
+    \def\arraystretch{1.2}
+    \begin{tabular}{|>{\color{black}}c | >{\color{black}}c|}
+        \hline
+        $f(x)$ & $\int f(x)$
+        \\ \hline
+            $\tan x$ & $\ln (\sec x),$ \tiny{${\vert x \vert < \frac{\pi}{2}}$} \\
+            $\cot x$ & $\ln (\sin x),$ \tiny{$0 < x < \pi $} \\
+            $\csc x$ & $-\ln (\csc x + \cot x),$ \tiny{$0 < x < \pi $} \\
+            $\sec x$ & $\ln (\sec x + \tan x),$ \tiny{$\vert x \vert < \frac{\pi}{2} $}
+        \\[0.5ex] \hline
+    \end{tabular}
+\end{center}
 
 \end{multicols}
 
