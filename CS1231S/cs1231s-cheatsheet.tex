@@ -97,8 +97,7 @@
 \begin{document}
 \raggedright
 \footnotesize
-\begin{multicols}{4
-    '}
+\begin{multicols}{4}
 
 
 % multicol parameters
@@ -114,7 +113,7 @@
         \parbox{0.8\linewidth}{\centering \textcolor{black}{
             {\Large\textbf{CS1231S}}
             \\ \normalsize{AY20/21 sem 1}}
-            \\ {\footnotesize \textcolor{myblue}{by jovyntls}}
+            \\ {\footnotesize \textcolor{myblue}{github.com/jovyntls}} 
         }%
     }
 \end{center}
@@ -928,92 +927,7 @@ Let $A$ be the event that the person test positive for a disease.
 \end{itemize}
 
 \begin{center}
-\begin{multicols}{3}    
-    simple graph
-    \\
-    \begin{tikzpicture}[scale=0.7, every node/.style={transform shape}]
-        \node[fill, circle, minimum size=1mm, inner sep=0] (v1) at (0,0) {};
-        \node[fill, circle, minimum size=1mm, inner sep=0] (v2) at (0,1) {};
-        \node[fill, circle, minimum size=1mm, inner sep=0] (v3) at (1,1) {};
-        \node[fill, circle, minimum size=1mm, inner sep=0] (v4) at (1,0) {};
-        \draw (v1) -- (v2) -- (v3) -- (v1) -- (v3) -- (v4);
-    \end{tikzpicture}
-
-    non simple graph
-    \\
-    \begin{tikzpicture}[scale=0.7, every node/.style={transform shape}]
-        \node[fill, circle, minimum size=1mm, inner sep=0] (v1) at (0,0) {};
-        \node[fill, circle, minimum size=1mm, inner sep=0] (v2) at (0,1) {};
-        \node[fill, circle, minimum size=1mm, inner sep=0] (v3) at (1,1) {};
-        \node[fill, circle, minimum size=1mm, inner sep=0] (v4) at (1,0) {};
-        \draw[blue] (v1) to[in=-150,out=-230, loop] node[left] {} (v1);
-        \draw (v3) -- (v2) -- (v1) -- (v3);
-        \draw[blue] (v3) to[in=50,out=-50] node[left] {} (v4);
-        \draw[blue] (v4) to[in=240,out=-200] node[left] {} (v3);
-    \end{tikzpicture}
-
-    complete graph
-    \\
-    \begin{tikzpicture}[scale=0.25, every node/.style={transform shape}]
-        \node[fill, circle, minimum size=2mm, inner sep=0] (v1) at (0,-2) {};
-        \node[fill, circle, minimum size=2mm, inner sep=0] (v2) at (-1.9, -0.62) {};
-        \node[fill, circle, minimum size=2mm, inner sep=0] (v3) at (-1.18, 1.62) {};
-        \node[fill, circle, minimum size=2mm, inner sep=0] (v4) at (1.18, 1.62) {};
-        \node[fill, circle, minimum size=2mm, inner sep=0] (v5) at (1.9, -0.62) {};
-        \draw (v1) -- (v3) -- (v5) -- (v2) -- (v4) -- (v1);
-        \draw (v1) -- (v2) -- (v3) -- (v4) -- (v5) -- (v1);
-    \end{tikzpicture}
-
-    subgraph
-    \\
-    \begin{tikzpicture}[scale=0.7, every node/.style={transform shape}]
-        \node[fill, circle, minimum size=1mm, inner sep=0] (v1) at (0,0) {};
-        \node[fill, circle, minimum size=1mm, inner sep=0] (v2) at (0,0.4) {};
-        \node[fill, circle, minimum size=1mm, inner sep=0] (v3) at (1,0.8) {};
-        \node[fill, circle, minimum size=1mm, inner sep=0] (v4) at (0.7,0) {};
-        \node[blue, fill, circle, minimum size=1mm, inner sep=0] (v5) at (1.7, 0.5) {};
-        \node[blue, fill, circle, minimum size=1mm, inner sep=0] (v6) at (1.8, 0) {};
-        \draw (v1) -- (v2) -- (v3) -- (v1) -- (v3) -- (v4);
-        \draw[blue] (v5) -- (v6);
-    \end{tikzpicture}
-    \\* \begin{tiny} Graph with 2 subgraphs \end{tiny}
     
-    bipartite graph
-    \\
-    \begin{tikzpicture}[scale=0.5, every node/.style={transform shape}]
-        \node[fill, circle, minimum size=1mm, inner sep=0] (a1) at (0, 0.5) {};
-        \node[fill, circle, minimum size=1mm, inner sep=0] (a2) at (0,0) {};
-        \node[fill, circle, minimum size=1mm, inner sep=0] (a3) at (0, -0.5) {};
-        \node[blue, fill, circle, minimum size=1mm, inner sep=0] (b1) at (2, 0.75) {};
-        \node[blue, fill, circle, minimum size=1mm, inner sep=0] (b2) at (2, 0.25) {};
-        \node[blue, fill, circle, minimum size=1mm, inner sep=0] (b3) at (2, -0.25) {};
-        \node[blue, fill, circle, minimum size=1mm, inner sep=0] (b4) at (2, -0.75) {};
-        \draw (a1) -- (b1) -- (a2) -- (b3) -- (a3);
-        \draw (b1) -- (a2) -- (b4);
-        \draw (b1) -- (a3) -- (b2);
-    \end{tikzpicture}
-
-    complete bipartite graph
-    \\
-    \begin{tikzpicture}[scale=0.5, every node/.style={transform shape}]
-        \node[fill, circle, minimum size=1mm, inner sep=0] (a1) at (0, 0.4) {};
-        \node[fill, circle, minimum size=1mm, inner sep=0] (a2) at (0,-0.4) {};
-        \node[blue, fill, circle, minimum size=1mm, inner sep=0] (b1) at (2, 0.75) {};
-        \node[blue, fill, circle, minimum size=1mm, inner sep=0] (b2) at (2, 0.25) {};
-        \node[blue, fill, circle, minimum size=1mm, inner sep=0] (b3) at (2, -0.25) {};
-        \node[blue, fill, circle, minimum size=1mm, inner sep=0] (b4) at (2, -0.75) {};
-        \draw (a1) -- (b1);
-        \draw (a1) -- (b2);
-        \draw (a1) -- (b3);
-        \draw (a1) -- (b4);
-        \draw (a2) -- (b1);
-        \draw (a2) -- (b2);
-        \draw (a2) -- (b3);
-        \draw (a2) -- (b4);
-    \end{tikzpicture}
-
-
-\end{multicols}
 \end{center}
 
 \subsubsection{simple graph}
@@ -1146,21 +1060,10 @@ The adjacency matrix of a \textbf{directed graph} $G$
 
     \setlength{\columnseprule}{0pt} 
     \begin{multicols}{2}
-        \begin{tikzpicture}[scale=0.7, every node/.style={transform shape}]
-            \node[fill, circle, minimum size=1mm, inner sep=0] (O) at (0,0) {};
-            \node[label=above:{$v_2$}, fill, circle, minimum size=1mm, inner sep=0] (v2) at (1.2,1) {};
-            \node[label=left:{$v_1$}, fill, circle, minimum size=1mm, inner sep=0] (v1) at (0,0) {};
-            \node[label=below:{$v_3$}, fill, circle, minimum size=1mm, inner sep=0] (v3) at (1.7,-0.2) {};
-            \draw[->,>=stealth] (v2) -- node[left] {$e_1$} (v1);
-            \draw[->,>=stealth] (v3) -- node[below] {$e_2$} (v1);
-            \draw[->,>=stealth] (v2) to[out=20, in=10] node[right] {$e_3$} (v3);
-            \draw[->,>=stealth] (v2) to[out=-100, in=120] node[left] {$e_4$} (v3);
-            \draw[->,>=stealth] (v2) to[in=-150,out=-230, loop] node[left] {$e_5$} (v2);
-            \draw[->,>=stealth] (v1) to[in=-50,out=-130, loop] node[below] {$e_6$} (v1);
-        \end{tikzpicture}
+        
 
         \ 
-        \\ $A =$ \tiny $\begin{bNiceArray}{CCC}%
+        \\ $A =$ \tiny $\begin{bNiceArray}{ccc}%
             [first-col,
              first-row,
              code-for-first-col = \color{black},
@@ -1190,7 +1093,7 @@ The adjacency matrix of a \textbf{directed graph} $G$
             \draw (v4) to[in=210,out=150, loop] node[below] {} (v4);
         \end{tikzpicture}
 
-        $A =$ \tiny $\begin{bNiceArray}{CCCC}%
+        $A =$ \tiny $\begin{bNiceArray}{cccc}%
             [first-col,
             first-row,
             code-for-first-col = \color{black},
