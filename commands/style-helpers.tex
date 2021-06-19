@@ -1,0 +1,23 @@
+% tightcenter
+\newenvironment{tightcenter}{%
+  \setlength\topsep{0pt}
+  \setlength\parskip{0pt}
+  \begin{center}
+    }{%
+  \end{center}
+}
+
+% boxed
+\newenvironment{cbox}{%
+  \setlength\topsep{0pt}
+  \setlength\parskip{0pt}
+  \begin{center}
+    \begin{tabular}{|@{\hspace{\dimexpr\fboxsep+0.5\arrayrulewidth}}c@{\hspace{\dimexpr\fboxsep+0.5\arrayrulewidth}}|}
+      \hline
+    }
+    {%
+      ⏎ \hline
+    \end{tabular}
+  \end{center}
+}
+
