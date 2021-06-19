@@ -8,7 +8,7 @@
 }
 
 % boxed
-\newenvironment{cbox}{%
+\newenvironment{tightbox}{%
   \setlength\topsep{0pt}
   \setlength\parskip{0pt}
   \begin{center}
@@ -18,6 +18,19 @@
     {%
       ⏎ \hline
     \end{tabular}
+  \end{center}
+}
+
+% fixed width box
+\newenvironment{fixedbox}[1][0.7]{
+  \setlength\topsep{0pt}
+  \setlength\parskip{0pt}
+  \begin{center}
+    \begin{tabular}{|>{\centering\arraybackslash}m{#1\linewidth}|}
+    \hline
+  }{
+  \\ \hline
+  \end{tabular}
   \end{center}
 }
 
