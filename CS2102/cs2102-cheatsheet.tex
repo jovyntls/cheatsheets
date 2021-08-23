@@ -1,0 +1,445 @@
+\documentclass[10pt, landscape]{article}
+\usepackage[scaled=0.92]{helvet}
+\usepackage{calc}
+\usepackage{multicol}
+\usepackage[a4paper,margin=3mm,landscape]{geometry}
+\usepackage{amsmath,amsthm,amsfonts,amssymb}
+\usepackage{color,graphicx,overpic}
+\usepackage{hyperref}
+\usepackage{newtxtext} 
+\usepackage{enumitem}
+\usepackage[table]{xcolor}
+\usepackage{mathtools}
+\setlist{nosep}
+
+% ADDITIONAL USEFUL PACKAGES:
+% for matrices
+\usepackage{nicematrix}
+% for relations
+\usepackage{cancel}
+\usepackage{ mathrsfs }
+% for including images
+\graphicspath{ {./images/} }
+
+
+\pdfinfo{
+  /Title (CS2102.pdf)
+  /Creator (TeX)
+  /Producer (pdfTeX 1.40.0)
+  /Author (Jovyn Tan)
+  /Subject (CS2102)
+/Keywords (CS2102, nus,cheatsheet,pdf)}
+
+% Turn off header and footer
+\pagestyle{empty}
+
+% redefine section commands to use less space
+\makeatletter
+\renewcommand{\section}{\@startsection{section}{1}{0mm}%
+  {-1ex plus -.5ex minus -.2ex}%
+  {0.5ex plus .2ex}%x
+{\normalfont\large\bfseries}}
+\renewcommand{\subsection}{\@startsection{subsection}{2}{0mm}%
+  {-1explus -.5ex minus -.2ex}%
+  {0.5ex plus .2ex}%
+{\normalfont\normalsize\bfseries}}
+\renewcommand{\subsubsection}{\@startsection{subsubsection}{3}{0mm}%
+  {-1ex plus -.5ex minus -.2ex}%
+  {1ex plus .2ex}%
+{\normalfont\small\bfseries}}%
+\makeatother
+
+\renewcommand{\familydefault}{\sfdefault}
+\renewcommand\rmdefault{\sfdefault}
+%  makes nested numbering (e.g. 1.1.1, 1.1.2, etc)
+\renewcommand{\labelenumii}{\theenumii}
+\renewcommand{\theenumii}{\theenumi.\arabic{enumii}.}
+\renewcommand\labelitemii{•}
+\renewcommand\labelitemiii{•}
+
+\definecolor{mathblue}{cmyk}{1,.72,0,.38}
+\everymath\expandafter{\the\everymath \color{mathblue}}
+
+% Don't print section numbers
+\setcounter{secnumdepth}{0}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0pt plus 0.5ex}
+%% this changes all items (enumerate and itemize)
+\setlength{\leftmargini}{0.5cm}
+\setlength{\leftmarginii}{0.5cm}
+\setlist[itemize,1]{leftmargin=2mm,labelindent=1mm,labelsep=1mm}
+\setlist[itemize,2]{leftmargin=4mm,labelindent=1mm,labelsep=1mm}
+
+% adding my commands
+\input{../commands/style-helpers.tex}
+\input{../commands/code.tex}
+\input{../commands/math.tex}
+\input{../commands/joins.tex}
+% -----------------------------------------------------------------------
+
+\begin{document}
+\raggedright
+\footnotesize
+\begin{multicols}{3}
+
+  % multicol parameters
+  % These lengths are set only within the two main columns
+  \setlength{\columnseprule}{0.25pt}
+  \setlength{\premulticols}{1pt}
+  \setlength{\postmulticols}{1pt}
+  \setlength{\multicolsep}{1pt}
+  \setlength{\columnsep}{2pt}
+
+  \begin{center}
+    \fbox{%
+      \parbox{0.8\linewidth}{\centering \textcolor{black}{
+          {\Large\textbf{CS2102}}
+        \\ \normalsize{AY21/22 SEM 1}}
+        \\ {\footnotesize \textcolor{gray}{github/jovyntls}}
+      }%
+    }
+  \end{center}
+
+  \section{01. DBMS: DATABASE MANAGEMENT SYSTEMS}
+  \begin{itemize}
+    \item set of universal and powerful \textbf{functionalities}  for data management
+    \item \textbf{database system}: DBMS (functionality) supporting several databases
+      \begin{itemize}
+        \item DBS = DMBS + n*DB
+      \end{itemize}
+    \item \textbf{data model}: framework to specify the structure of a DB
+    \item \textbf{schema}: describes the DB structure using concepts provided by the data model
+    \item \textbf{schema instance}: content of a DB at a particular time
+  \end{itemize}
+
+  \subsection{Transactions}
+  \begin{itemize}
+    \item \textbf{transaction}, \(T\): a finite sequence of database operations
+      \begin{itemize}
+        \item smallest logical unit of work from an application perspective
+      \end{itemize}
+    \item guarantees the \textbf{ACID} properties
+  \end{itemize}
+  \begin{tightcenter}
+    \includegraphics[width=0.9\linewidth]{cs2102-transition-graph.png}
+  \end{tightcenter}
+
+  \subsubsection{ACID properties}
+  \begin{enumerate}
+    \item \textbf{Atomicity} \(\rightarrow\) either all effects of $ T $ are reflected in the database, or none
+    \item \textbf{Consistency}  \(\rightarrow\) the execution of $ T $ guarantees to yield a \textit{correct state} of the DB
+    \item \textbf{Isolation} \(\rightarrow\)  execution of T is \textit{isolated} from the effects of concurrent transactions
+    \item \textbf{Durability} \(\rightarrow\) after the commit of $ T $, its effects are \textit{permanent}  in case of failures
+  \end{enumerate}
+
+  \subsection{Serial vs Concurrent Execution}
+  \subsubsection{Serial Execution}
+  \begin{itemize}
+    \item $ \checkmark $ \textit{correct} final result
+    \item $ \times $ less (unoptimised) resource utilisation; low throughput
+  \end{itemize}
+
+  \subsubsection{Serializability}
+  \begin{itemize}
+    \item Requirement for Concurrent Execution: \textbf{serializable transaction execution} 
+      \begin{itemize}
+        \item (concurrent execution of a set of transactions is) \textbf{serializable} \(\rightarrow\) execution is equivalent to some serial execution of the same set of transactions
+        \item \textbf{equivalent} \(\rightarrow\) they have the same \textit{effect}  on the data
+      \end{itemize}
+  \end{itemize}
+
+  \subsubsection{Core tasks of DBMS}
+  \begin{itemize}
+    \item Support \textit{concurrent executions} of transactions - to optimise performance
+    \item enforce \textit{serializability} of concurrent executions - to ensure integrity of data
+  \end{itemize}
+
+  \section{01-1. RELATIONAL MODEL}
+  \begin{itemize}
+    \item \definition{relation schema} defines a relation
+      \begin{itemize}
+        \item specifies the \textbf{attributes} (columns) and data constraints
+        \item \definition{data constraints} limits the kind of data you can put into the database
+      \end{itemize}
+    \item \definition{relational database schema} set of relation schemas + data constraints
+      \begin{itemize}
+        \item TableName(col\_1, col\_2, col\_3) with dom(col\_1) = \{x, y, z\}, ...
+      \end{itemize}
+    \item \definition{relational database} collection of tables
+  \end{itemize}
+
+  \begin{itemize}
+    \item \definition{domain} a set of \textit{atomic} values
+      \begin{itemize}
+        \item domain of attribute $ A_i $, $ dom(A_i) =$ set of possible values for $ A_i $
+        \item for each value $ v $ of attribute $ A_i $, $ v \in dom(A_i) $ or $ v = $ \code{null}
+          \begin{itemize}
+            \item \code{null}: special value indicating that $ v $ is not known or specified
+          \end{itemize}
+        \item e.g. dom(course) = \{cs2102, cs2030, cs2040\}
+      \end{itemize}
+    \item \definition{relation} a set of \textit{tuples} 
+      \begin{itemize}
+        \item $ R(A_1, A_2, \dots, A_n) $ : relation schema with name $ R $ and $ n $ attributes $ A_1, A_2, \dots, A_n $
+        \item each instance of schema $ R $ is a relation which is a subset of $ \{(a_1, a_2, \dots, a_n) \mid a_i \in dom(A_i) \cup \{null\}\} $
+      \end{itemize}
+  \end{itemize}
+
+
+  \section{01-2. ENSURING DATA INTEGRITY}
+  \begin{itemize}
+    \item \definition{integrity constraint} condition that restricts what constitutes valid data
+      \begin{itemize}
+        \item DBMS will check that tables only ever contain valid data
+      \end{itemize}
+    \item \definition{structural} (integrity) inherent to the data model 
+    \item 3 main strucutral integrity constraints of the Relation Model
+      \begin{enumerate}
+        \item Domain constraints
+        \item Key constraints
+        \item Foreign key constraints
+      \end{enumerate}
+  \end{itemize}
+
+  \subsection{Key Constraints}
+  \begin{itemize}
+    \item \definition{superkey} subset of attributes that \textit{uniquely} identifies a tuple in a relation
+      \begin{itemize}
+        \item e.g. \{id, title\}
+      \end{itemize}
+    \item \definition{key} superkey that is also \textbf{minimal} 
+      \begin{itemize}
+        \item no proper subset of the key is a superkey
+        \item e.g. \{id\}
+      \end{itemize}
+    \item \definition{candidate keys} set of all keys for a relation
+    \item \definition{primary key} selected candidate key for a relation
+      \begin{itemize}
+        \item \textit{cannot} be \code{null} $ \Rightarrow $  \textbf{entity integrity constraint} 
+      \end{itemize}
+  \end{itemize}
+
+  \subsection{Foreign Key Constraints}
+  \begin{itemize}
+    \item \definition{foreign key} subset of attributes of relation $ A $ if it refers to the \textit{primary key}  in a relation $ B $.
+    \item each foreign key in a relation must:
+      \begin{enumerate}
+        \item appear as a \textbf{primary key} in the referenced relation, OR:
+        \item be a \code{null} value
+      \end{enumerate}
+  \end{itemize}
+
+  \section{01-3. SUMMARY}
+  \begin{tightcenter}
+    \includegraphics[width=0.9\linewidth]{cs2102-relational-model-example.png}
+  \end{tightcenter}
+
+  \section{02. RELATIONAL ALGEBRA}
+  \begin{itemize}
+    \item \definition{algebra} mathematical system of operands and operators
+      \begin{itemize}
+        \item \textbf{operands}: variables or values from which new values can be constructed
+        \item \textbf{operators}: symbols denoting procedures that construct new values from given values
+      \end{itemize}
+    \item \definition{relation algebra} procedural query language
+      \begin{itemize}
+        \item \textbf{operands}: relations or variables representing relations
+        \item \textbf{operators}: transform one or more input relations into one output relation
+      \end{itemize}
+  \end{itemize}
+
+  \subsection{Closure Property}
+  \begin{itemize}
+    \item \definition{closure} relations are \textit{closed}  under relational algebra
+      \begin{itemize}
+        \item all input operands and outputs of all operators are \textit{relations} 
+        \item the output of one operator can serve as input for subsequent operators
+      \end{itemize}
+    \item allows for nesting of relational operators $\Rightarrow$ \textbf{relational algebra expressions} 
+  \end{itemize}
+
+  \section{02-1. BASIC OPERATORS}
+  \subsection{UNARY OPERATORS}
+
+  \subsubsection{Selection, $ \sigma_c $}
+  \begin{itemize}
+    \item \definition{$\sigma_c(R)$} selects all tuples from a relation  $ R $ (i.e. rows from a table) that satisfy condition $ c $.
+      \begin{itemize}
+        \item for each tuple $ t \in R, t \in \sigma_c(R) \iff c $ evaluates to true on $ t $ 
+        \item input and output relation have the same schema
+      \end{itemize}
+    \item \definition{selection condition} 
+      \begin{itemize}
+        \item a \textit{boolean expression} of one of the following forms:
+          \begin{itemize}
+            \item constant selection - attribute \textbf{op} constant
+            \item attribute selection - attribute$_1$ \textbf{op} attribute$_2$
+            \item expr$_1 \land $ expr$ _2 ; \quad$ expr$_1 \lor $ expr$ _2 ; \quad$ item $ \lnot $ expr $ ; \quad $(expr)
+          \end{itemize}
+        \item with \textbf{op} $\in \{=, <>, <, \leq, \geq, >\}$
+          \begin{itemize}
+            \item \textbf{operator precedence}: (), \textbf{op}, $\lnot$, $\land$, $\lor$
+          \end{itemize}
+        \item handling \code{null} values
+          \begin{itemize}
+            \item comparison operation with \code{null} $\Rightarrow$ \textbf{unknown} 
+            \item arithmetic operation with \code{null} $\Rightarrow$ \code{null} 
+          \end{itemize}
+      \end{itemize}
+  \end{itemize}
+
+  \subsubsection{Projection, $\pi_\ell$}
+  \begin{itemize}
+    \item \definition{$\pi_\ell(R)$} projects all attributes of a given \textbf{relation}  specified in list $\ell$
+      \begin{itemize}
+        \item \textit{relation} = set of tuples $\Rightarrow$ duplicates removed from output relation!
+        \item \textbf{order} of attributes matters!
+        \item i.e. projects all columns of a table specified in list $\ell$
+      \end{itemize}
+  \end{itemize}
+
+  \subsubsection{Renaming, $\rho_\ell$}
+  \begin{itemize}
+    \item \definition{$\rho_\ell(R)$} renames the attributes of a relation  $R$ 
+      \\* $R$ is a relation with schema $R(A_1, A_2, \dots, A_n)$
+    \item 2 possible formats for $\ell$
+      \begin{itemize}
+        \item $\ell$ is the new \textit{schema} in terms of the new attribute names
+          \begin{itemize}
+            \item $\ell = (B_1, B_2, \dots, B_n)$; $B_i = A_i$ if attribute $A_i$ does not get renamed
+          \end{itemize}
+        \item $\ell$ is a list of attribute renamings of the form: $B_i \leftarrow A_i, \dots, B_k \leftarrow A_k$
+          \begin{itemize}
+            \item each renaming $B_j \leftarrow A_j$ renames attribute $A_j$ to attribute $B_j$
+            \item order of renaming doesn't matter
+          \end{itemize}
+      \end{itemize}
+  \end{itemize}
+
+  \subsection{SET OPERATORS}
+  \begin{itemize}
+    \item \definition{union} $R \cup S$ returns a relation with all tuples that are in both $R$ \textbf{or}  $S$
+    \item \definition{intersection} $R \cap S$ ... all tuples that are in both $R$ \textbf{and}  $S$ 
+    \item \definition{set difference} $R - S$ ... all the tuples that are in  $R$ \textbf{but not in}  $S$
+  \end{itemize}
+  ! requirement for all set operators: $R$ and $S$ must be \textbf{union-compatible} 
+
+  \subsubsection{Union Compatibility}
+  \begin{itemize}
+    \item two relations $R$ and $S$ are \definition{union-compatible} if
+      \begin{itemize}
+        \item $R$ and $S$ have the same number of attributes and
+        \item the corresponding attributes have the \textit{same or compatible domains} 
+        \item BUT $R$ and $S$ do not have to use the same attribute names
+      \end{itemize}
+  \end{itemize}
+
+  \subsection{CROSS PRODUCT}
+  \begin{itemize}
+    \item \definition{cross product} combines two relations $R$ and $S$ by forming all pairs of tuples from the two relations
+      \begin{itemize}
+        \item given two relations $R(A, B, C)$ and $S(X, Y)$,  $R \times S$ returns a relation with schema $(A, B, C, X, Y)$ defined as 
+          \\* $R \times S = \{(a, b, c, x, y) \mid (a, b, c) \in R, (x, y) \in S\}$
+      \end{itemize}
+    \item \textbf{size} of cross product $= \abs{R}*\abs{S}$
+  \end{itemize}
+
+  \section{02-2. JOIN OPERATORS}
+
+  \subsection{Inner Joins $\theta$-join}
+  \begin{itemize}
+    \item eliminate all tuples that do not satisfy a matching criteria (i.e. \textbf{attribute selection} )
+  \end{itemize}
+  $\theta$-join
+  \begin{itemize}
+    \item the $\theta$-join $R\bowtie_\theta S$ of two relations $R$ and $S$ is defined as
+      \begin{tightcenter}
+        \( {\displaystyle{R \bowtie_\theta S = \sigma_\theta(R \times S)}} \) 
+      \end{tightcenter}
+  \end{itemize}
+
+  Equi Join  $\Join$
+  \begin{itemize}
+    \item special case of $\theta$-join defined over the  \textbf{equality} operator ($=$) only
+  \end{itemize}
+
+  Natural Join $\Join$ 
+  \begin{itemize}
+    \item the \definition{natural join} (of two relations $R$ and $S$) is defined as 
+      \\* $R \Join S = \pi_\ell(R\Join_c \rho_{b_i \leftarrow a_i, \dots, b_k \leftarrow a_k}(S))$
+      \begin{itemize}
+        \item $A=\{a_i, \dots, a_k\}$ is the set of attributes that $R$ and $S$ have in common
+        \item $c = ((a_i = b_i) \land \dots \land (a_k = b_k))$
+        \item $\ell =$ list of all attributes of $R$ + list of all attributes in $S$ that are \textbf{not in}  $A$
+      \end{itemize}
+    \item performed over all attributes that $R$ and $S$ have in common
+      \begin{itemize}
+        \item no explicit matching criteria has to be specified
+      \end{itemize}
+    \item output relation contains the common attributes of $R$ and $S$ only \textit{once} 
+  \end{itemize}
+
+  \subsection{Outer Joins}
+  \begin{itemize}
+    \item \definition{dangling tuples} tuples in $R$ or $S$ that do not match with tuples in the other relation
+      \begin{itemize}
+        \item \definition{$\textit{dangle}(R \Join_\theta S)$} set of dangling tuples in  $R$ wrt to $R \Join_\theta S$
+          \begin{itemize}
+            \item $\textit{dangle}(R \Join_\theta S) \subseteq R$
+          \end{itemize}
+        \item always removed by inner joins, kept by outer joins
+        \item missing attribute values are padded with \code{null} 
+      \end{itemize}
+    \item \definition{$null(R)$} $n$-component \textbf{tuple}  of \code{null} values where $n$ is the number of attributes of $R$
+  \end{itemize}
+
+  \subsubsection{Definitions}
+  \begin{itemize}
+    \item \definition{left outer join}$R \lojoin_\theta S = R \Join_\theta S \cup (\textit{dangle}(R \Join_\theta S) \times \{\textit{null}(S)\}) $
+    \item \definition{right outer join}$R \rojoin_\theta S = R \Join_\theta S \cup (\{\textit{null}(R)\} \times \textit{dangle}(S \Join_\theta R))$
+    \item \definition{full outer join}$R \lojoin_\theta S$
+      \\* $= R \Join_\theta S \cup (\textit{dangle}(R \Join_\theta S) \times \{\textit{null}(S)\}) \cup (\{\textit{null}(R)\} \times \textit{dangle}(S \Join_\theta R))$
+  \end{itemize}
+
+  \subsubsection{Natural Outer Joins}
+  \begin{itemize}
+    \item only equality operator is used for the join condition
+    \item join is performed over all attributes that R and S have in common
+    \item  output relation contains the common attributes of R and S only once
+  \end{itemize}
+
+
+
+
+\end{multicols}
+
+\hrulefill \\
+% \dotfill
+
+\begin{multicols}{2}
+  \section{SUMMARY: RELATIONAL MODEL}
+  \begin{center}
+    {\rowcolors{2}{gray!15}{gray!5}\begin{tabular}
+        {ll}
+        \rowcolor{cyan!10}
+        \textbf{Term} & \textbf{Description} \\ \hline
+        attribute & column of a table \\
+        domain & set of possible values for an attribute \\
+        attribute value & element of a domain \\ 
+        relation schema & set of attributes (with their data types + relation name) \\
+        relation & set of tuples \\
+        tuple & roles of a table \\
+        database schema & set of relation schemas \\
+        database & set of relations / tables \\ 
+        key & minimal set of attributes uniquely identifying a tuple in a relation \\
+        primary key & selected key (in case of multiple candidate keys) \\
+        foreign key & set of attributes that is a key in referenced relation \\
+        prime attribute & attribute of a key \\
+        \hline
+      \end{tabular}
+    }
+  \end{center}
+\end{multicols}
+
+\end{document}
