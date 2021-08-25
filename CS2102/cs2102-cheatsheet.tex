@@ -12,12 +12,6 @@
 \usepackage{mathtools}
 \setlist{nosep}
 
-% ADDITIONAL USEFUL PACKAGES:
-% for matrices
-\usepackage{nicematrix}
-% for relations
-\usepackage{cancel}
-\usepackage{ mathrsfs }
 % for including images
 \graphicspath{ {./images/} }
 
@@ -409,6 +403,366 @@
     \item  output relation contains the common attributes of R and S only once
   \end{itemize}
 
+  \section{03. SQL}
+  \subsection{Overview}
+  \begin{itemize}
+    \item \textbf{domain-specific language} - used for relational databases
+    \item \textbf{declarative language} - focuses on \textit{what} to compute, not \textit{how} to compute
+  \end{itemize}
+
+  \subsection{Data Types (psql)}
+  \begin{itemize}
+    \item user-defined types
+    \item basic data types
+      \begin{tightcenter}
+        {\rowcolors{2}{gray!15}{gray!5}\begin{tabular}
+            {ccc}
+            \rowcolor{cyan!10} 
+            \textbf{type} & \textbf{description} \\ \hline 
+            boolean & logical Boolean \\ 
+            integer & signed 4-byte integer \\
+            float8 & double precision floating point number (8 bytes) \\
+            numeric[(p, s)] & exact numeric of selectable preciison \\
+            char(n) & fixed-length character string \\
+            varchar(n) & variable-length character string \\
+            text & variable-length character string \\
+            date & calendar date (year month day) \\
+            timestamp & date and time \\
+            \hline
+          \end{tabular}
+        }
+      \end{tightcenter}
+    \item char, varchar, text: different sizes to optimise storage
+      \begin{itemize}
+        \item \code{varchar(n)} - $n$ is the maximum length 
+        \item \code{char(n)} - storage size = maximum size = n (will be padded up to $n$ bytes)
+        \item \code{text} - usually for very long strings
+      \end{itemize}
+  \end{itemize}
+
+  \subsection{Types of Commands/Statements}
+  \begin{tightcenter}
+    \includegraphics[width=0.9\linewidth]{cs2102-sql-query-types.png}
+  \end{tightcenter}
+
+  \subsection{DDL (Data Definition)}
+
+  \subsubsection{Create Tables}
+  \begin{lstlisting}[style=mySQL]
+CREATE TABLE Employees (
+id     INTEGER,
+name   VARCHAR(50),
+age    INTEGER,
+role   VARCHAR(50)
+);
+  \end{lstlisting}
+
+  \subsubsection{Insert Data}
+  \begin{lstlisting}[style=mySQL]
+-- specifying all attribute values
+INSERT INTO Employees VALUES (101, 'John', 25, 'developer');
+-- specifying selected attribute values
+INSERT INTO Employees (id, name) VALUES (102, 'Smith');
+  \end{lstlisting}
+
+  \subsubsection{Modify Schema}
+  \begin{lstlisting}[style=mySQL]
+-- change data type 
+ALTER TABLE Projects ALTER COLUMN name TYPE VARCHAR(200); 
+-- set default value 
+ALTER TABLE Projects ALTER COLUMN start_year SET DEFAULT 2021; 
+-- drop default value
+ALTER TABLE Projects ALTER COLUMN start_year DROP DEFAULT; 
+-- add new column with a default value
+ALTER TABLE Projects ADD COLUMN budget NUMERIC DEFAULT 0.0; 
+-- drop column from table
+ALTER TABLE Projects DROP COLUMN budget; 
+-- add constraint
+ALTER TABLE Teams ADD CONSTRAINT eid_fkey FOREIGN KEY (eid) REFERENCES Employees (id);
+-- drop constraint
+ALTER TABLE Teams DROP CONSTRAINT eid_fkey; /* eid_fkey = name of constraint */
+  \end{lstlisting}
+
+  \subsubsection{Drop Tables}
+  \begin{lstlisting}[style=mySQL]
+DROP TABLE Projects;
+-- check first if table exists; avoids throwing an error
+DROP TABLE IF EXISTS Projects; 
+-- will also delete FK constraint (but not referencing tables)
+DROP TABLE Projects CASCADE; 
+  \end{lstlisting}
+
+  \subsection{DML (Data Manipulation)}
+
+  \subsubsection{Delete Data}
+  \begin{lstlisting}[style=mySQL]
+-- deletes all tuples 
+DELETE FROM Employees; 
+-- deletes selected tuples
+DELETE FROM Employees WHERE role='developer';
+  \end{lstlisting}
+
+  \subsubsection{Update Data}
+  \begin{lstlisting}[style=mySQL]
+UPDATE Employees 
+SET age = age + 1
+WHERE name = 'John';
+
+UPDATE Employees
+SET name=UPPER(name), 
+    job=UPPER(job);
+
+-- updates all values 
+UPDATE Employees 
+SET age = 0; 
+  \end{lstlisting}
+
+  \subsection{Handling NULLs}
+  \begin{itemize}
+    \item prerequisite for integrity constraints
+    \item \textbf{comparison} operation with \code{null} $\Rightarrow$ \textit{unknown}
+    \item \textbf{arithmetic} operation with \code{null} $\Rightarrow$ \code{null}
+  \end{itemize}
+
+  \subsubsection{IS (NOT) NULL comparison predicate}
+  \begin{itemize}
+    \item checks if values are equal to \code{null} 
+      \begin{itemize}
+        \item evaluates to true \textbf{iff} x is \code{null}
+      \end{itemize}
+    \item \code{x IS NOT NULL} $\equiv$ \code{NOT (x IS NULL)}
+  \end{itemize}
+
+  \subsubsection{IS (NOT) NOT DISTINCT comparison predicate}
+  \begin{itemize}
+    \item equivalent to $x <> y$ if $x$ and $ y$ are non-\code{null} values
+      \begin{itemize}
+        \item $x$ and $y$ both \code{null} $\Rightarrow$ \textit{false}
+        \item only one value is \code{null} $\Rightarrow$ \textit{true}
+      \end{itemize}
+    \item \code{x IS NOT DISTINCT FROM y} $\equiv$ \code{NOT (x IS DISTINCT FROM y)}
+  \end{itemize}
+  \begin{tightcenter}
+    {\rowcolors{2}{gray!15}{gray!5}\begin{tabular}
+        {cccc}
+        \rowcolor{cyan!10} 
+        \textbf{x} & \textbf{y} & xy & \texttt{x IS DISTINCT FROM y} \\ \hline 
+        1 & 1 & FALSE & FALSE \\ 
+        1 & 2 & TRUE & TRUE \\
+        \textit{null} & 1 & \textit{null} & TRUE \\
+        \textit{null} & \textit{null} & \textit{null} & FALSE \\
+        \hline
+      \end{tabular}
+    }
+  \end{tightcenter}
+
+  \section{03-1. CONSTRAINTS}
+  \begin{itemize}
+    \item \textbf{named}: name assigned by DBMS
+    \item \textbf{unnamed}: name is specified - easier bookkeeping
+    \item all column constraints can be specified as table constraints, except \code{NOT NULL}
+      \begin{itemize}
+        \item table constraints referring to a single column can be writen as column constraints
+        \item column and table constraints can be combined
+          \begin{lstlisting}[style=mySQL]
+            ... id INTEGER NOT NULL,
+            ...
+            UNIQUE(id)
+          \end{lstlisting}
+      \end{itemize}
+  \end{itemize}
+  \subsection{Not-Null Constraints}
+  \begin{lstlisting}[style=mySQL]
+CREATE TABLE Employees (
+  id   INTEGER NOT NULL, /* unnamed */
+  name VARCHAR(50) CONSTRAINT nn_name NOT NULL, /* named */
+  age  INTEGER,
+  job  VARCHAR(50),
+);
+  \end{lstlisting}
+
+  \subsection{Unique Constraints}
+  \begin{itemize}
+    \item \textbf{violation} (of a unique constraint defined on attributes $A$ and $B$):
+      \begin{itemize}
+        \item For any two tuples $t_i, t_k \in$ R, \\*
+          $(t_i\cdot A <> t_k\cdot A)$ or  $(t_i\cdot B <> t_k \cdot B)$ evaluates to  \textbf{false}
+        \item  !!! \code{null} rows will NOT violate unique key constraints
+      \end{itemize}
+    \item (un)named column constraint \\*
+      \begin{lstlisting}[style=mySQL]
+CREATE TABLE Employees (
+  id   INTEGER UNIQUE, /* unnamed */
+  pid  INTEGER CONSTRAINT u_id UNIQUE, /* named */
+  name VARCHAR(50), age INTEGER,
+  role VARCHAR(50)
+);
+      \end{lstlisting}
+    \item (un)named table constraint
+      \begin{lstlisting}[style=mySQL]
+CREATE TABLE Employees (
+  id   INTEGER,
+  name VARCHAR(50), 
+  UNIQUE(id),  /* unnamed */,
+  CONTRAINT u_name UNIQUE (name) /* named */
+);
+      \end{lstlisting}
+    \item unique constraints for multiple attributes: can only be specified using \textbf{table} constraints
+      \begin{lstlisting}[style=mySQL]
+CREATE TABLE Employees (
+  id     INTEGER,
+  name   VARCHAR(50),
+  UNIQUE (id, name), /* unnamed */
+  CONSTRAINT u_allocation (id, name)  /* named */
+)
+      \end{lstlisting}
+  \end{itemize}
+
+  \subsection{Primary Key Constraints}
+  \begin{itemize}
+    \item \definition{prime attributes} attributes of the primary key 
+      \begin{itemize}
+        \item cannot be null
+      \end{itemize}
+    \item primary key vs \code{UNIQUE NOT NULL}
+      \begin{itemize}
+        \item \code{UNIQUE NOT NULL} is a candidate key
+        \item max 1 primary key, but any number of \code{UNIQUE NOT NULL} constraints
+        \item FK constraints are only applicable to PKs in referenced table
+      \end{itemize}
+    \item PK contraint for one attribute:
+      \begin{lstlisting}[style=mySQL]
+CREATE TABLE Teams (
+  eid INTEGER PRIMARY KEY, 
+  ... 
+);
+      \end{lstlisting}
+    \item PK constraint for multiple attributes:
+      \begin{lstlisting}[style=mySQL]
+CREATE TABLE Teams (
+  eid INTEGER,
+  pname VARCHAR(100),
+  PRIMARY KEY (ename, pname), /* unnamed */
+  CONSTRAINT pk_alloc PRIMARY KEY (eid, pname) /* named */
+);
+      \end{lstlisting}
+  \end{itemize}
+
+  \subsection{Foreign Key Constraints}
+  \begin{itemize}
+    \item each FK in the referencing relation \textbf{must}:
+      \begin{itemize}
+        \item appear as a PK in the referenced relation, OR
+        \item be a \code{null} value
+      \end{itemize}
+  \end{itemize}
+  \begin{lstlisting}[style=mySQL]
+CREATE TABLE Teams (
+  eid INTEGER,
+  pname VARCHAR(100),
+  hours INTEGER,
+  PRIMARY KEY (ename, pname),
+  /* Teams.eid -> Employees.id */
+  FOREIGN KEY (eid) REFERENCES Employees (id), 
+  /* Teams.pname -> Projects.name */
+  FOREIGN KEY (pname) REFERENCES Projects (name)
+);
+  \end{lstlisting}
+
+  \subsubsection{specifications for table changes}
+  \begin{itemize}
+    \item \code{ON DELETE/UPDATE}: Specify action in case of the violation of a foreign key constraint
+      \begin{itemize}
+        \item attempting to delete primary key will throw error if ON DELETE not specified
+        \item specify behavior when data in referenced table changes
+      \end{itemize}
+    \item possible actions:
+      \begin{itemize}
+        \item \code{NO ACTION}: (\textbf{default value}) - rejects the delete/update if it violates constraint
+        \item \code{RESTRICT}: similar to \code{NO ACTION}; checks that constraint cannot be deferred
+        \item \code{CASCADE}: propagates delete/update to referencing tuples
+        \item \code{SET DEFAULT}: updates FKs of referencing tuples to a specified default value
+          \begin{itemize}
+            \item !! default value must be a PK in the referenced table !!
+          \end{itemize}
+        \item \code{SET NULL}: update FKs of referencing tuples to \code{null}
+          \begin{itemize}
+            \item be careful for primary attributes
+            \item corresponding column must be allowed to contain \code{null} values!
+          \end{itemize}
+      \end{itemize}
+  \end{itemize}
+  \begin{lstlisting}[style=mySQL]
+CREATE TABLE Teams (
+  eid INTEGER,
+  pname VARCHAR(100),
+  hours INTEGER,
+  PRIMARY KEY (ename, pname),
+  FOREIGN KEY (eid) REFERENCES Employees (id) ON DELETE <action> ON UPDATE <action>,
+  FOREIGN KEY (pname) REFERENCES Projects (name) ON DELETE NO ACTION ON UPDATE CASCADE 
+  /* 'NO ACTION' is optional since it's default */
+);
+  \end{lstlisting}
+
+  \subsection{Check Constraint}
+  \begin{itemize}
+    \item specify that column values must satisfy a boolean expression
+    \item scope: one table, single row
+    \item not a structural integrity constraint
+    \item column constraint:
+      \begin{lstlisting}[style=mySQL]
+CREATE TABLE Teams (
+  eid INTEGER,
+  hours INTEGER check (hours > 0), /* unnamed */
+  minutes INTEGER constraint positive_hours check (hours > 0) /* named */
+);  
+      \end{lstlisting}
+    \item table constraint:
+      \begin{lstlisting}[style=mySQL]
+CREATE TABLE Teams (
+  eid INTEGER,
+  ...
+  CHECK (hours <= end_year), /* unnamed table */
+  CONSTRAINT valid_lifetime CHECK (start_year <= end_year) /* named table */
+);  
+      \end{lstlisting}
+    \item \code{CHECK} constraints can be complex boolean expressions:
+      \begin{lstlisting}[style=mySQL]
+CREATE TABLE Teams (
+  ...
+  CHECK (
+    (pname = 'Hello' AND hours >= 30)
+    OR
+    (panme <> 'Hello' AND hours > 0)
+  )
+);  
+      \end{lstlisting}
+  \end{itemize}
+
+  \subsection{Deferrable Constraints}
+  \begin{itemize}
+    \item default behaviour for constraints: checked immediately at the end of SQL statement execution
+      \begin{itemize}
+        \item violation causes statement to be rolled back
+      \end{itemize}
+    \item \textbf{deferrable constraints}: relaxed constraint checks
+      \begin{itemize}
+        \item check will be deferred to the \textit{end} of the transaction
+        \item available for: \code{UNIQUE}, \code{PRIMARY KEY}, \code{FOREIGN KEY}
+      \end{itemize}
+    \item advantages
+      \begin{itemize}
+        \item no need to care about order of SQL statements within a transaction
+        \item allows for cyclic FK constraints
+        \item performance boost (when constraint checks are bottleneck)
+      \end{itemize}
+    \item disadvantages
+      \begin{itemize}
+        \item harder to troubleshoot
+        \item data definition is no longer unambiguous
+        \item performance penalty when performing queries
+      \end{itemize}
+  \end{itemize}
 
 
 
