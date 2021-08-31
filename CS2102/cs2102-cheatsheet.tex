@@ -11,6 +11,8 @@
 \usepackage[table]{xcolor}
 \usepackage{mathtools}
 \setlist{nosep}
+\usepackage{tikz}
+\usetikzlibrary{shapes.geometric}
 
 % for including images
 \graphicspath{ {./images/} }
@@ -565,9 +567,9 @@ SET age = 0;
         \item table constraints referring to a single column can be writen as column constraints
         \item column and table constraints can be combined
           \begin{lstlisting}[style=mySQL]
-            ... id INTEGER NOT NULL,
-            ...
-            UNIQUE(id)
+  ... id INTEGER NOT NULL,
+  ...
+  UNIQUE(id)
           \end{lstlisting}
       \end{itemize}
   \end{itemize}
@@ -764,6 +766,164 @@ CREATE TABLE Teams (
       \end{itemize}
   \end{itemize}
 
+  \section{04. ENTITY RELATIONSHIP MODEL}
+  \begin{itemize}
+    \item all data is described in terms of \textbf{entities} and their \textbf{relationships}
+    \item \definition{entity} objects that are distinguishable from other objects
+      \begin{itemize}
+        \item \definition{entity set} collection of entities of the same type
+      \end{itemize}
+    \item \definition{attribute} specific information describing an entity
+      \begin{itemize}
+        \item \definition{key attribute} uniquely identiifes each entity (underline)
+        \item \definition{composite attribute} composed of multiple other attributes (oval of ovals)
+        \item \definition{multivalued attribute} may comprise more than one value for a given entity (double-lined oval)
+        \item \definition{derived attribute} derived from other attributes dashed oval)
+      \end{itemize}
+    \item \definition{relationship} association among two or more entities
+      \begin{itemize}
+        \item \definition{relationship set} collection of relationships of the same type
+          \begin{itemize}
+            \item may have their own attributes that describe the relationship
+          \end{itemize}
+      \end{itemize}
+  \end{itemize}
+  \includegraphics[width=0.4\linewidth]{cs2102-entity-relationship-model.png} 
+  \includegraphics[width=0.5\linewidth]{cs2102-attribute-subtypes.png} 
+
+  \subsubsection{relationship sets}
+  \begin{itemize}
+    \item \definition{role} descriptor of an entity set's participation in a relationship
+      \begin{itemize}
+        \item explicit role labels
+          \\* \includegraphics[width=0.55\linewidth]{cs2102-relationship-role-label.png} 
+      \end{itemize}
+    \item \definition{degree} number of entity roles participating in a relationship 
+      \begin{itemize}
+        \item an $n$-ary relationship set involves $n$ entity roles (where $n$ is the degree of the relationship set)
+        \item binary/ternary relationship set
+        \item general $n$-ary relation:
+          \begin{itemize}
+            \item $n$ participating entity sets $E_1, E_2, \dots, E_n$ 
+            \item $k$ relationship attributes $A_1, A_2, \dots, A_k$
+            \item $Key(E_i)$  $\rightarrow$ the attribtues of the selected key of entity set $E_i$
+          \end{itemize}
+      \end{itemize}
+  \end{itemize}
+  \includegraphics[width=0.4\linewidth]{cs2102-relationship-set.png} 
+
+
+  \subsection{Cardinality Constraints}
+  \begin{itemize}
+    \item describes how often an entity can participate in a relationship \textbf{at most}
+    \item 3 basic cardinality constraints:
+      \begin{itemize}
+        \item many-to-many
+        \item many-to-one
+        \item one-to-one
+      \end{itemize}
+  \end{itemize}
+
+  \subsection{Participation Constraints}
+  \begin{itemize}
+    \item specifies if an entity has to participate in a relationship (lower bound)
+    \item \definition{partial participation constraint} participation (of an entity in a relationship) is not mandatory (0 or more)
+    \item \definition{total participation constraint} participation is mandatory (1 or more)
+  \end{itemize}
+  \begin{center}
+    \begin{multicols}{2}
+      \begin{tikzpicture}
+        \node[rectangle, draw, minimum width = 0.6cm] (e) at (0,0) {E};
+        \node[diamond, draw, aspect = 2] (r) at (2,0) {R};
+        \draw[-latex] (e) -- (r);
+      \end{tikzpicture}
+      \\* each instance of E participates in 
+      \\* \textbf{at most one} instance of R
+      \\ \ 
+
+      \begin{tikzpicture}
+        \node[rectangle, draw, minimum width = 0.6cm] (e) at (0,0) {E};
+        \node[diamond, draw, aspect = 2] (r) at (2,0) {R};
+        \draw[-stealth, double, double distance = 1.2pt] (e) -- (r);
+      \end{tikzpicture}
+      \\* each instance of E participates in 
+      \\* \textbf{exactly one} instance of R
+
+      \begin{tikzpicture}
+        \node[rectangle, draw, minimum width = 0.6cm] (e) at (0,0) {E};
+        \node[diamond, draw, aspect = 2] (r) at (2,0) {R};
+        \draw[double, double distance=1.2pt] (e) -- (r);
+      \end{tikzpicture}
+      \\* each instance of E participates in 
+      \\* \textbf{at least one} instance of R
+      \\ \ 
+
+      \begin{tikzpicture}
+        \node[rectangle, double, draw, minimum width = 0.6cm, double distance=1pt] (e) at (0,0) {E};
+        \node[diamond, double, draw, aspect = 2, double distance=1pt] (r) at (1.5,0) {R};
+        \node[rectangle, draw, minimum width = 0.6cm] (e2) at (3,0) {E'};
+        \draw[-stealth, double, double distance=1.2pt] (e) -- (r);
+        \draw[-] (r) -- (e2);
+      \end{tikzpicture}
+      \\* E is a \textbf{weak entity set} 
+      with identifying owner E' 
+      \& identifying relationship set R.
+    \end{multicols}
+  \end{center}
+
+  \subsection{Dependency Constraints}
+  \begin{itemize}
+    \item \definition{weak entity sets} entity set that does not have its own key 
+      \begin{itemize}
+        \item can only be uniquely identified through the primary key of its \textbf{owner entity}
+        \item existence depends on the existence of its owner entity
+      \end{itemize}
+  \end{itemize}
+
+  \subsection{Alternative Representations}
+  \begin{tightcenter}
+    \includegraphics[width=0.9\linewidth]{cs2102-alternative-representation-cardinality-constraint.png} 
+    \\ \textbf{Min/Max notation}
+    \\* \includegraphics[width=0.4\linewidth]{cs2102-alternative-representation-minmax.png} 
+  \end{tightcenter}
+
+  \section{04-1. RELATIONAL MAPPING} 
+  \begin{itemize}
+    \item entity set $\rightarrow$ table
+    \item handling composite/multivalued attributes
+      \begin{enumerate}
+        \item convert to a set of single-valued attributes (e.g. phone $\rightarrow$ phone1, phone2)
+        \item additional table with FK constraint (e.g. PhoneNumbers with user\_id, phone)
+        \item convert to one single-valued attribute (e.g. string containing everything)
+      \end{enumerate}
+  \end{itemize}
+
+  \section{04-2. EXTENDED CONCEPTS}
+  \subsection{ISA Hierarchy}
+  \begin{itemize}
+    \item "is a" relationship used to model generalisation/specialisation of entity sets
+    \item every entity in a subclass is an entity in its superclass
+      \begin{itemize}
+        \item each subclass has specific attributes and/or relationships
+      \end{itemize}
+  \end{itemize}
+  \subsubsection{constraints}
+  \begin{itemize}
+    \item \definition{overlap contraint} a superclass entity can belong to \textbf{multiple} subclasses
+    \item \definition{covering constraint} a superclass entity \textbf{has to} belong to a subclass
+  \end{itemize}
+  \begin{tightcenter}
+    \includegraphics[width=0.45\linewidth]{cs2102-isa-hierarchy-general.png} 
+    \includegraphics[width=0.5\linewidth]{cs2102-isa-hierarchy-notations.png} 
+  \end{tightcenter}
+
+  \subsection{Aggregation}
+  \begin{itemize}
+    \item abstraction that treats relationships as higher-level entities
+      \begin{itemize}
+        \item e.g. treating 2 entities + 1 relationship as an entity set
+      \end{itemize}
+  \end{itemize}
 
 
 \end{multicols}
