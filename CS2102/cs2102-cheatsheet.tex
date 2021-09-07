@@ -410,6 +410,8 @@
   \begin{itemize}
     \item \textbf{domain-specific language} - used for relational databases
     \item \textbf{declarative language} - focuses on \textit{what} to compute, not \textit{how} to compute
+    \item built on top of RA
+    \item query = \code{SELECT} statement
   \end{itemize}
 
   \subsection{Data Types (psql)}
@@ -924,6 +926,232 @@ CREATE TABLE Teams (
         \item e.g. treating 2 entities + 1 relationship as an entity set
       \end{itemize}
   \end{itemize}
+
+  \section{05. SQL (QUERYING A DATABASE)}
+  \begin{itemize}
+    \item \definition{DQL} data query language
+    \item duplicate tuples are allowed!
+      \begin{itemize}
+        \item use \code{DISTINCT} to eliminate duplicates
+      \end{itemize}
+  \end{itemize}
+  \begin{minipage}[c]{0.3\linewidth}
+    \includegraphics[width=0.9\linewidth]{cs2102-sql-execution-diagram.png} 
+  \end{minipage}
+  \begin{minipage}[c]{0.5\linewidth}
+    \textbf{SELECT DISTINCT} $a_1, a_2, \dots, a_m$ \\* 
+    \textbf{FROM} $r_1, r_2, \dots, r_n$ \\* 
+    \textbf{WHERE} $c$
+
+    \begin{tightcenter}
+      $\Rightarrow$ corresponds to:
+      \( {\displaystyle{\pi_{a_1, a_2, \dots, a_m} (\sigma_c(r_1 \times r_2 \times \dots \times r_n)) }} \) 
+    \end{tightcenter}
+  \end{minipage}
+
+  \subsection{SELECT clause}
+  \begin{itemize}
+    \item wildcard \code{*} - include all attributes
+    \item \code{expr \textbf{BETWEEN} <lower> \textbf{AND} <upper>} - basic value range conditions
+      \begin{lstlisting}[style=mySQL]
+SELECT * FROM countries 
+WHERE (continent = 'Asia' OR continent = 'Europe')
+  AND (population BETWEEN 500 AND 600);
+      \end{lstlisting}
+    \item \code{\textbf{||}} - concatenate strings
+      \begin{lstlisting}[style=mySQL]
+SELECT name, '$S' || ROUND((gdp/population) * 1.35) AS gdp_per_capita
+FROM countries;
+      \end{lstlisting}
+    \item \code{\textbf{SELECT DISTINCT}} - remove duplicates
+      \begin{itemize}
+        \item tuples $(n_1, c_1)$ and $(n_2, c_2)$ are considered distinct 
+          \\* $\iff$ \code{\textbf{$n_1$ IS DISTINCT FROM $n_2$}} $\lor$ \code{\textbf{$c_1$ IS DISTINCT FROM $c_2$}}
+      \end{itemize}
+  \end{itemize}
+
+  \subsection{WHERE clause}
+  \begin{itemize}
+    \item \code{IS (NOT) NULL} 
+      \begin{itemize}
+        \item evaluates to true: \code{$null$ IS NULL}
+        \item evaluates false: \code{$null$ = NULL} (unknown), \code{$null$ <> NULL}
+      \end{itemize}
+    \item \code{(NOT) LIKE} - pattern matching
+      \begin{itemize}
+        \item \code{\_} - match any single character
+        \item \code{\%} - match any sequence of zero or more characters
+      \end{itemize}
+  \end{itemize}
+
+  \subsection{SET Operations} 
+  \begin{itemize}
+    \item \code{UNION}, \code{INTERSECT}, \code{EXCEPT}
+      \begin{itemize}
+        \item will eliminate duplicate tuples from result
+      \end{itemize}
+    \item \code{UNION ALL}, \code{INTERSECT ALL}, \code{EXCEPT ALL}
+      \begin{itemize}
+        \item will NOT eliminate duplicate tuples from result
+      \end{itemize}
+    \item no ordering of tuples
+  \end{itemize}
+
+  \subsection{JOIN Queries}
+  \begin{itemize}
+    \item \code{JOIN} - interpreted as \code{INNER JOIN} by default
+    \item \code{NATURAL JOIN} - identical attribute names can be reinforced with renaming
+      \begin{itemize}
+        \item joins based on attribute names
+      \end{itemize}
+    \item \code{LEFT OUTER JOIN} - same as \code{LEFT JOIN}
+      \begin{itemize}
+        \item keep only dangling tuples: \code{... WHERE c.country\_iso2 IS NULL;}
+      \end{itemize}
+    \item complex join queries
+    \item equivalent queries:
+      \begin{lstlisting}[style=mySQL]
+SELECT c.name, n.name 
+FROM cities AS c, countries AS n
+WHERE c.country_iso2 = n.iso2;
+
+SELECT c.name, n.name
+FROM cities c INNER JOIN countries n
+  ON c.country_iso2 = n.iso2;
+
+SELECT c.name, n.name
+FROM cities c JOIN countries n
+  ON c.country_iso2 = n.iso2;
+      \end{lstlisting}
+  \end{itemize}
+
+  \subsection{Subqueries}
+  \begin{itemize}
+    \item \definition{table alias} every subquery has to have a name to uniquely identify its attributes
+      \begin{itemize}
+        \item \textbf{column alias} is optional - \code{AS optional}
+      \end{itemize}
+
+    \item \code{\textbf{(NOT) IN}} - returns true if \textit{expr} matches \textbf{any} subquery row
+      \begin{itemize}
+        \item syntax: \code{expr \textbf{IN} (subquery)}, \code{expr \textbf{NOT IN} (subquery)}
+        \item subquery must return \textit{exactly one} column
+        \item \code{IN} can typically be replaced with (inner) joins
+        \item \code{NOT IN} can typically be replaced with (outer) joins
+          \begin{lstlisting}[style=mySQL]
+SELECT name FROM COUNTRIES
+WHERE name IN (SELECT name FROM cities)
+   OR name IN ('Singapore', 'Hong Kong');
+          \end{lstlisting}
+      \end{itemize}
+
+    \item \code{\textbf{ANY}} - returns true if comparison evaluates to true for \textit{at least one} subquery row
+      \begin{itemize}
+        \item syntax: \code{expr op \textbf{ANY} (subquery)}
+        \item subquery must return \textit{exactly one} column
+        \item expression is compared to each subquery row using \code{op} 
+          \begin{lstlisting}[style=mySQL]
+SELECT name, population FROM countries 
+WHERE population < ANY (SELECT population FROM cities
+                        WHERE country = 'GB');
+          \end{lstlisting}
+      \end{itemize}
+
+    \item \code{\textbf{ALL}} - returns true if comparison evaluates to true for \textit{all} subquery rows
+      \begin{itemize}
+        \item syntax: \code{expr op \textbf{ALL} subquery}
+          \begin{lstlisting}[style=mySQL]
+SELECT name, continent, gdp FROM countries c1
+WHERE gdp >= ALL(SELECT gdp FROM countries c2
+                 WHERE c2.continent = c1.continent); 
+                 -- c1 from outer query
+          \end{lstlisting}
+      \end{itemize}
+
+    \item \code{\textbf{EXISTS}} - returns true if the subquery returns \textit{at least one} tuple
+      \begin{itemize}
+        \item syntax: \code{\textbf{EXISTS} (subquery)}, \code{\textbf{NOT EXISTS} (subquery)}
+        \item \code{(NOT) EXISTS} subqueries are generally \textbf{correlated}
+          \begin{itemize}
+            \item uncorrelated $\Rightarrow$ will always give the same result $\Rightarrow$ redundant
+          \end{itemize}
+          \begin{lstlisting}[style=mySQL]
+SELECT n.name FROM countries n
+WHERE NOT EXISTS (SELECT * FROM cities c
+                  where c.country_iso2 = n.iso2);
+          \end{lstlisting}
+      \end{itemize}
+
+
+
+  \end{itemize}
+
+  \subsubsection{correlated subquery}
+  \begin{itemize}
+    \item \definition{correlated subquery} relies on value(s) from outer query
+    \item result of subquery depends on value of outer query
+      \begin{itemize}
+        \item potential performance issues
+        \item potential naming ambiguity - use table aliases
+      \end{itemize}
+    \item \textbf{scoping rules}
+      \begin{itemize}
+        \item a table alias declared in subquery $Q$ can only be used in $Q$ or subqueries nested within $Q$
+        \item if the same table alias is declared both in $Q$ and in an outer query (or undeclared), the declaration in Q is applied.
+          \begin{itemize}
+            \item aka when unsure, apply the smallest scope ("inner to outer")
+          \end{itemize}
+      \end{itemize}
+  \end{itemize}
+
+  \subsubsection{scalar subqueries}
+  \begin{itemize}
+    \item \definition{scalar subquery} returns a \textbf{single} value (1 row 1 column)
+    \item can be used as an expression in queries
+  \end{itemize}
+
+  \subsubsection{row constructors}
+  \begin{itemize}
+    \item allow subqueries to return more than one attribute/column
+    \item e.g. find all countries with higher population \textit{or} gdp than France \textit{or} Germany
+  \end{itemize}
+  \begin{lstlisting}[style=mySQL]
+SELECT name, population AS pop, gdp FROM countries
+WHERE ROW(pop, gdp) > ANY(SELECT population, gdp 
+                          FROM countries
+                          WHERE name IN ('Germany', 'France'));
+  \end{lstlisting}
+
+  \subsubsection{equivalent subqueries}
+  \begin{itemize}
+    \item \code{expr \textbf{IN} (subquery)} $\, \equiv \,$ \code{expr = \textbf{ANY} (subquery)}
+    \item \code{expr1 op \textbf{ANY} (\textbf{SELECT} expr2 \textbf{FROM} ... \textbf{WHERE} ...)} 
+      \\* $\, \equiv \,$ \code{\textbf{EXISTS} (\textbf{SELECT} * \textbf{FROM} ... \textbf{WHERE} ... \textbf{AND} expr1 op expr2)}
+  \end{itemize}
+
+  \subsection{Sorting}
+  \begin{itemize}
+    \item \code{ORDER BY} - sort by attribute(s), \code{ASC}/\code{DESC} 
+    \item e.g. \code{ORDER BY n.name ASC, c.population DESC}
+      \begin{itemize}
+        \item second criteria only affects result if first criteria has ambiguity
+      \end{itemize}
+  \end{itemize}
+
+  \subsection{Rank-based Selection}
+  \begin{itemize}
+    \item \code{LIMIT k} - return the first $k$ tuples of the result table
+    \item \code{OFFSET i} - specify the position of the "first" tuple to be considered
+      \begin{lstlisting}[style=mySQL]
+-- e.g. find the "second" top 5 countries by GDP per capita
+SELECT name, (gdp/population) AS gdp_per_capita FROM countries
+ORDER BY gdp_per_capita DESC 
+OFFSET 5 LIMIT 5;
+      \end{lstlisting}
+  \end{itemize}
+
+
+
 
 
 \end{multicols}
