@@ -1150,6 +1150,217 @@ OFFSET 5 LIMIT 5;
       \end{lstlisting}
   \end{itemize}
 
+  \section{06-1. SQL (AGGREGATION)}
+
+  \begin{itemize}
+    \item compute a single value from a set of tuples
+    \item e.g. \code{MIN()}, \code{MAX()}, \code{AVG()}, \code{COUNT()}, \code{SUM()} 
+      \begin{lstlisting}[style=mySQL]
+SELECT MIN(population) as lowest,
+       MAX(population) as highest,
+       SUM(population) as world
+FROM countries;
+      \end{lstlisting}
+  \end{itemize}
+
+  \subsection{handling null values}
+  \begin{tightcenter}
+    \includegraphics[width=0.9\linewidth]{cs2102-aggregation-functions-summary.png} 
+  \end{tightcenter}
+  Let $R$ be an empty relation; let $S$ be a non-empty relation with $n$ tuples but ONLY null values for $A$.
+  \begin{tightcenter}
+    \includegraphics[width=0.9\linewidth]{cs2102-aggregation-function-null.png} 
+  \end{tightcenter}
+
+  \subsection{signatures}
+  \begin{itemize}
+    \item \code{\textbf{MIN}}, \code{\textbf{MAX}} : defined for all data types, returns same data type as input
+    \item \code{\textbf{COUNT}} : defined for all \textbf{numeric} data types
+      \begin{itemize}
+        \item \code{\textbf{SUM}(INTEGER) -> BIGINT}, \code{\textbf{SUM}(REAL) -> REAL}
+      \end{itemize}
+    \item \code{\textbf{COUNT}} : defined for all datatypes; \code{\textbf{COUNT}(...) -> BIGINT}
+  \end{itemize}
+
+  \subsection{GROUP BY}
+  \begin{itemize}
+    \item given \code{GROUP BY $a_1, a_2, \dots, a_n$}, 2 tuples $t$ and $t'$ belong to the same group if 
+      \\* $\forall k \in (1, n)$,  \code{(t.a$_k$ \textbf{IS NOT DISTINCT FROM} t'.a$_k$)} evaluates to \code{TRUE}.
+    \item logical partition of relation into groups based on values for specified attributes
+    \item one result tuple for each group
+    \item if column $A_i$ or table $R$ appears in the SELECT clause, one of the following conditions must hold:
+      \begin{enumerate}
+        \item $A_i$ appears in the GROUP BY clause
+        \item $A_i$ appears as input of an aggregation function in the SELECT clause
+        \item the primary key of $R$ appears in the GROUP BY clause
+      \end{enumerate}
+  \end{itemize}
+  \begin{lstlisting}[style=mySQL]
+-- for each continent, find the lowest, highest and total country population and number of countries
+SELECT continent,
+  MIN(population) AS lowest,
+  MAX(population) AS highest,
+  SUM(population) AS overall,
+  COUNT(*)        AS number_of_countries,
+FROM countries
+GROUP BY continent;
+  \end{lstlisting}
+
+  \subsubsection{HAVING}
+  \begin{itemize}
+    \item conditions check for each group defined by \code{GROUP BY} clause
+      \begin{itemize}
+        \item cannot be used without a \code{GROUP BY} clause
+      \end{itemize}
+    \item if column $A_i$ of table $R$ apears in hte \code{HAVING} clause, one of the following conditions must hold:
+      \begin{enumerate}
+        \item $A_i$ appears in the GROUP BY clause
+        \item $A_i$ appears as input of an aggregation function in the HAVING clause
+        \item the primary key of $R$ appears in the GROUP BY clause
+      \end{enumerate}
+      \begin{lstlisting}[style=mySQL]
+-- find all routes served by >12 airlines
+SELECT from_code, to_code, COUNT(*) AS num_airlines
+FROM routes 
+GROUP BY from_code, to_code
+HAVING COUNT(*) > 12;
+      \end{lstlisting}
+  \end{itemize}
+
+  \section{06-2. SQL (CONDITIONAL EXPRESSION)}
+  \subsection{CASE}
+  \begin{itemize}
+    \item generic conditional expression, similar to if/else
+    \item two basic ways of formulating CASE expressions:
+  \end{itemize}
+  \begin{multicols}{2}
+    \begin{lstlisting}[style=mySQL]
+CASE
+  WHEN condition1 THEN result1
+  WHEN condition2 THEN result2
+  ...
+  WHEN condition_n THEN result_n
+  ELSE result0
+END
+    \end{lstlisting}
+    \begin{lstlisting}[style=mySQL]
+CASE expression
+  WHEN value1 THEN result1
+  WHEN value2 THEN result2
+  ...
+  WHEN condition_n THEN result_n
+  ELSE result0
+END
+    \end{lstlisting}
+  \end{multicols}
+
+  \subsection{COALESCE}
+  \begin{itemize}
+    \item \code{COALESCE(val1, val2, ...)} returns the first NON-NULL value in the list of input arguments
+    \item returns NULL if all values in the list of input arguments are NULL
+    \item e.g. \code{SELECT COALESCE(null, null, 1, null, 2) -> 1}
+  \end{itemize}
+
+  \subsection{NULLIF}
+  \begin{itemize}
+    \item \code{NULLIF(val1, val2)} returns NULL if \code{val1 = val2}; otherwise return \code{val1}
+  \end{itemize}
+
+  \section{06-3. SQL (STRUCTURING QUERIES)}
+  \subsection{Common Table Expressions (CTEs)}
+
+  \begin{minipage}[c]{0.2\linewidth}
+    general syntax:
+    \\ \textbf{WITH}
+    \\* $\quad$ C$_1$ \textbf{AS} (Q$_1$)
+    \\* $\quad$ C$_2$ \textbf{AS} (Q$_2$)
+    \\* $\quad \cdots,$ ...,
+    \\* $\quad$ C$_n$ \textbf{AS} (Q$_n$)
+  \end{minipage}
+  \begin{minipage}[c]{0.75\linewidth}
+    \begin{lstlisting}[style=mySQL]
+WITH CTE_name AS 
+  -- <CTE BODY>
+  (SELECT n.name AS country, ...
+   FROM ...
+   WHERE ...)
+  -- </CTE BODY>
+SELECT i.country, ...
+FROM CTE_name i   /* CTE usage */ 
+  LEFT OUTER JOIN routes r N i.code = r.to_code
+...
+    \end{lstlisting}
+  \end{minipage}
+
+  \begin{itemize}
+    \item general syntax
+      \begin{itemize}
+        \item each $C_i$ is the name of a temporary table defined by query $Q_i$ 
+        \item each $C_i$ can reference any other $C_j$ that has been declared \textit{before} $C_i$ 
+        \item SQL statement $S$ can reference any possible subset of all $C_i$
+      \end{itemize}
+  \end{itemize}
+
+  \subsection{Views}
+  \begin{itemize}
+    \item \textit{permanently} named \textbf{query} (virtual relation)
+      \begin{itemize}
+        \item query is stored (not the query result) $\Rightarrow$ re-executed whenever it is used
+      \end{itemize}
+    \item can be used like normal tables
+      \begin{itemize}
+        \item no restriction when used in SELECT statements
+        \item restrictions when using INSERT/UPDATE/DELETE
+      \end{itemize}
+  \end{itemize}
+  \begin{lstlisting}[style=mySQL]
+CREATE VIEW ViewName AS
+  SELECT ...
+  FROM ...
+  WHERE ... ;
+  \end{lstlisting}
+
+  \subsection{RECURSIVE QUERIES}
+  \begin{itemize}
+    \item using CTEs and \code{RECURSIVE}
+  \end{itemize}
+  \begin{lstlisting}[style=mySQL]
+WITH RECURSIVE CTE_name (col_a, col_b, col_c) AS (
+  SELECT ... , 0 as counter
+  FROM ...  WHERE ...
+  UNION ALL
+  SELECT ..., cte.counter + 1
+  FROM CTE_name cte, ... WHERE ...
+  AND cte.counter < 3  /* base case */
+)
+SELECT DISTINCT counter, ... 
+FROM CTE_name
+ORDER BY counter ASC;
+  \end{lstlisting}
+
+  \subsection{UNIVERSAL QUANTIFICATION}
+  \begin{itemize}
+    \item no direct support for universal quantification (e.g. find users who have visited \textit{all} countries)
+    \item possible workarounds:
+  \end{itemize}
+  \begin{multicols}{2}
+    \begin{lstlisting}[style=mySQL]
+SELECT n.iso2
+FROM countries n
+WHERE NOT EXISTS (SELECT 1
+ FROM visited v
+ WHERE v.iso2 = n.iso2
+AND v.user_id = x);
+    \end{lstlisting}
+
+    \begin{lstlisting}[style=mySQL]
+  SELECT u.user_id, u.name
+  FROM users u, visited v
+  WHERE u.user_id = v.user_id
+  GROUP BY u.user_id
+  HAVING COUNT(*) = (SELECT COUNT(*) FROM countries);
+    \end{lstlisting}
+  \end{multicols}
 
 
 
@@ -1182,6 +1393,9 @@ OFFSET 5 LIMIT 5;
       \end{tabular}
     }
   \end{center}
+
+  \section{CONCEPTUAL EVALUATION OF QUERIES}
+  \includegraphics[width=0.9\linewidth]{cs2102-conceptual-evaluation-of-queries.png} 
 \end{multicols}
 
 \end{document}
