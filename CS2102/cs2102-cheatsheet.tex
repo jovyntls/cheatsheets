@@ -1231,6 +1231,7 @@ OFFSET 5 LIMIT 5;
 
   \begin{itemize}
     \item compute a single value from a set of tuples
+    \item NOT allowed in WHERE
     \item e.g. \code{MIN()}, \code{MAX()}, \code{AVG()}, \code{COUNT()}, \code{SUM()} 
       \begin{lstlisting}[style=mySQL]
 SELECT MIN(population) as lowest,
@@ -1462,6 +1463,237 @@ AND v.user_id = x);
   HAVING COUNT(*) = (SELECT COUNT(*) FROM countries);
     \end{lstlisting}
   \end{multicols}
+
+  \section{07. PL/pgSQL}
+  \begin{itemize}
+    \item SQL-based Procedural Language implemented by PostgreSQL
+  \end{itemize}
+
+  \subsection{Functions}
+  \begin{itemize}
+    \item \code{CREATE OR REPLACE} - best practice (just \code{CREATE} is possible as well)
+    \item \code{<type>}: all data types in SQL, a tuple, a set of tuples, custom tuples, triggers
+      \begin{itemize}
+        \item to return nothing: \code{RETURNS VOID AS ...}
+      \end{itemize}
+    \item main body of function is enclosed within \code{\$\$}
+    \item functions are compiled $\rightarrow$ validity is not checked whenever you call the function
+      \begin{itemize}
+        \item vs CTE views - validity is checked by the engine every time it's called
+      \end{itemize}
+  \end{itemize}
+  \begin{lstlisting}[style=mySQL]
+-- define function
+CREATE OR REPLACE FUNCTION function_name(x INT, y INT)
+RETURNS CHAR(1) AS $$
+  SELECT CASE 
+    WHEN x >= 70 THEN 'A'
+    WHEN y >= 60 THEN 'B'
+    ELSE 'C'
+  END
+$$ LANGUAGE sql;
+
+-- call function
+SELECT function_name(65, 67);  /* returns a composite type, tuple */
+SELECT * FROM function_name(66, 68);  /* returns a table */
+SELECT name, function_name(marks1, marks2) AS grade FROM Scores;
+  \end{lstlisting}
+
+  \subsubsection{returning a set of tuples}
+  \begin{itemize}
+    \item by default, a function will only return the first tuple (similar to using \code{LIMIT 1})
+    \item to return a set of tuples: \code{SETOF}
+      \begin{lstlisting}[style=mySQL]
+-- returns a set of tuples
+CREATE OR REPLACE FUNCTION GradeStudents 
+  (Grade CHAR(1))
+RETURNS SETOF Scores AS $$ 
+  SELECT *
+  FROM Scores
+  WHERE convert(Mark) = Grade;
+$$ LANGUAGE sql;
+      \end{lstlisting}
+  \end{itemize}
+
+  \subsubsection{returning a custom tuple}
+  \begin{itemize}
+    \item specify \code{IN} and \code{OUT} for input and output parameters
+      \begin{lstlisting}[style=mySQL]
+-- returns a tuple (Mark, Count)
+CREATE OR REPLACE FUNCTION CountGradeStudents
+  (IN Grade CHAR(1) OUT Mark CHAR(1), OUT Count INT)
+RETURNS RECORD AS $$  /* use SETOF to return all tuples */
+  SELECT Grade, COUNT(*)
+  FROM Scores
+  WHERE convert(Mark) = Grade;
+$$ LANGUAGE sql;
+
+-- call the function
+SELECT CountGradeStudents('C');
+      \end{lstlisting}
+  \end{itemize}
+
+  \subsection{Procedures}
+  \begin{itemize}
+    \item no return value
+  \end{itemize}
+  \begin{lstlisting}[style=mySQL]
+-- define a procedure
+CREATE OR REPLACE PROCEDURE UpdateMark
+  (IN amount INTEGER)
+AS $$
+  UPDATE Scores SET Mark = Mark + amount;
+  ALTER TABLE Scores ADD COLUMN IF NOT EXISTS
+    Grade CHAR(1) DEFAULT NULL;
+  SELECT * FROM Scores;
+$$ LANGUAGE sql;
+
+-- call the procedure
+CALL UpdateMark(1);
+  \end{lstlisting}
+
+  \subsection{Variables}
+  \begin{lstlisting}[style=mySQL]
+CREATE OR REPLACE FUNCTION splitMarks  /* same for PROCEDURE */
+  (IN name1 VARCHAR(20), IN name2 VARCHAR(20), OUT mark1 INT, OUT mark2 INT)
+RETURNS TABLE(mark1 INT, mark2 INT) AS $$  /* return multiple tuples */
+DECLARE
+  newmark INT := 0;
+BEGIN
+  SELECT mark INTO mark1 FROM Scores WHERE name = name1;  /* selects into a mark1 variable */
+  SELECT mark INTO mark2 FROM Scores WHERE name = name2;  /* selects into a mark2 variable */
+
+  newmark := (mark1 + mark2) / 2;
+
+  UPDATE Scores SER mark = newmark WHERE name = name1 OR name = name2;
+  -- does NOT exit the function:
+  RETURN QUERY SELECT mark1, mark2;  /* returns values */
+  -- does NOT exit the function:
+  RETURN NEXT;  /* returns the defined output parameters */
+  -- returns output params and EXITS the function:
+  RETURN;  /* optional */
+END;
+$$ LANGUAGE plpgsql;  /* not sql */
+  \end{lstlisting}
+
+  \subsubsection{Return statements}
+  \begin{itemize}
+    \item without \code{RETURN}, function will end naturally and return output params
+    \item \code{RETURN;} - returns output params and \textbf{exits} the function
+      \item \code{RETURN QUERY <SELECT ...>;} - appends queried tuples to output table; does not exit function
+        \item \code{RETURN NEXT;} - appends output params to output table; does not exit function
+  \end{itemize}
+
+  \subsection{Control Flow}
+  \subsubsection{Conditionals}
+  \begin{lstlisting}[style=mySQL]
+CREATE OR REPLACE FUNCTION splitMarks  /* same for PROCEDURE */
+  (IN name1 VARCHAR(20), IN name2 VARCHAR(20), OUT mark1 INT, OUT mark2 INT)
+RETURNS TABLE(mark1 INT, mark2 INT) AS $$  
+DECLARE
+  newmark INT := 0;
+BEGIN
+  -- <SELECT statements />
+  newmark := (mark1 + mark2) / 2;
+  IF x > 60 THEN     x := x / 2;
+  ELSIF x > 50 THEN  x := x - 20;
+  ELSE               x := x - 10;
+  END IF;
+  -- <UPDATE statements />
+  RETURN QUERY SELECT mark1, mark2;  /* returns values */
+END;
+  \end{lstlisting}
+
+  \subsubsection{While}
+  \begin{lstlisting}[style=mySQL]
+BEGIN
+  -- <SELECT statements />
+  x := (mark1 + mark2) / 2;
+  WHILE x > 30 LOOP
+    x := x / 2;
+  END LOOP;
+  -- <UPDATE statements />
+  RETURN QUERY SELECT mark1, mark2;  
+END;
+  \end{lstlisting}
+
+  \subsubsection{Exit When}
+  \begin{itemize}
+    \item equivalent to \code{while True: if (cond): break;}
+  \end{itemize}
+  \begin{lstlisting}[style=mySQL]
+BEGIN
+  -- <SELECT statements />
+  LOOP
+    EXIT WHEN x < 30;
+    x := x / 2;
+  END LOOP;
+  -- <UPDATE statements />
+  RETURN QUERY SELECT mark1, mark2;  
+END;
+  \end{lstlisting}
+
+  \subsubsection{Foreach}
+  \begin{lstlisting}[style=mySQL]
+DECLARE
+  x INT := 0; d INT; denoms INT[] := ARRAY[1, 2, 3];
+BEGIN
+  -- <SELECT statements />
+  FOREACH d IN ARRAY denoms LOOP
+    x := x / d;
+  END LOOP;
+  -- <UPDATE statements />
+  RETURN QUERY SELECT mark1, mark2;  
+END;
+  \end{lstlisting}
+
+  \subsection{Cursor}
+  \begin{itemize}
+    \item allows us to access each individual row returned by a SELECT statement
+      \includegraphics[width=0.9\linewidth]{cs2102-plpgsql-cursor.png} 
+    \item e.g. Based on this ranking system of cryptocurrencies, I want to have daily record of first three coins from the TOP 10 cryptocurrencies that are down by more than 5\% in the past 7 days and are within 2 ranks apart from each other.
+    \begin{lstlisting}[style=mySQL]
+CREATE OR REPLACE FUNCTION consCryptosDown
+(IN num INT)
+RETURNS TABLE(rank INT, sym CHAR(4)) AS $$
+DECLARE
+  curs CURSOR FOR (SELECT * FROM cryptosRank
+                   WHERE changes < -5);
+  r1 RECORD;
+  r2 RECORD;
+BEGIN
+  OPEN curs;
+  LOOP 
+
+  -- move cursor
+  FETCH curs INTO r1;      /* loads tuples into r1 */
+  EXIT WHEN NOT FOUND;     /* check for end of table */
+  FETCH RELATIVE (num-1) FROM curs INTO r2;
+  EXIT WHEN NOT FOUND;
+
+  -- compare rows
+  IF r2.rank - r1.rank = 2 THEN
+    MOVE RELATIVE -(num) FROM curs;
+      FOR c IN 1..num LOOP
+      FETCH curs INTO r1;
+      rank := r1.rank;
+      sym := r1.symbol;
+      RETURN NEXT;
+    END LOOP;
+    CLOSE curs;
+    RETURN;
+  END IF;
+
+  MOVE RELATIVE -(num - 1) FROM curs;
+
+  END LOOP;
+  CLOSE curs;
+END;
+$$ LANGUAGE plpgsql;
+    \end{lstlisting}
+  \end{itemize}
+
+
 
 
 
