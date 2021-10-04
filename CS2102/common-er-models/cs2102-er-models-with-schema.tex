@@ -103,7 +103,7 @@
 
   \section{AGGREGATION}
   \begin{tightcenter}
-    \includegraphics[width=0.85\linewidth]{cs2102-er-model-aggregation.png} 
+    \includegraphics[width=0.80\linewidth]{cs2102-er-model-aggregation.png} 
   \end{tightcenter}
   \begin{lstlisting}[style=mySQL]
 DROP TABLE IF EXISTS A, B, C, D, R, S, T CASCADE;
@@ -134,7 +134,8 @@ CREATE TABLE R (
   PRIMARY KEY (a1, b1) 
 );
 
-CREATE TABLE S ( a1 INTEGER,
+CREATE TABLE S ( 
+  a1 INTEGER,
   b1 INTEGER,
   c1 INTEGER REFERENCES C,
   s1 INTEGER,
@@ -215,6 +216,55 @@ CREATE TABLE C (
   c2 INTEGER,
   PRIMARY KEY (a1, b1, c1),
   FOREIGN KEY (a1, b1) REFERENCES B ON DELETE CASCADE
+);
+  \end{lstlisting}
+
+\end{multicols*}
+
+\pagebreak
+
+\begin{multicols*}{3}
+  \section{PARTICIPATION CONSTRAINTS}
+  \begin{tightcenter}
+    \includegraphics[width=0.9\linewidth]{cs2102-er-model-participation-constraints.png} 
+  \end{tightcenter}
+  \begin{lstlisting}[style=mySQL]
+-- merge A and T
+CREATE TABLE B (
+  b1 	integer,
+  PRIMARY KEY (b1)
+);
+
+CREATE TABLE C (
+  c1 	integer,
+  PRIMARY KEY (c1)
+);
+
+CREATE TABLE AT (
+  a1 	integer,
+  c1 	integer NOT NULL,
+  t1 	integer NOT NULL,
+  PRIMARY KEY (a1),
+  UNIQUE (c1),
+  FOREIGN KEY (c1) REFERENCES C
+);
+
+CREATE TABLE S (
+  a1 	integer NOT NULL,
+  b1 	integer,
+  s1 	integer NOT NULL,
+  PRIMARY KEY (b1),
+  FOREIGN KEY (a1) REFERENCES AT,
+  FOREIGN KEY (b1) REFERENCES B
+);
+
+CREATE TABLE R (
+  b1 	integer,
+  c1 	integer NOT NULL,
+  r1 	integer NOT NULL,
+  PRIMARY KEY (b1),
+  FOREIGN KEY (c1) REFERENCES C,
+  FOREIGN KEY (b1) REFERENCES S
 );
   \end{lstlisting}
 
