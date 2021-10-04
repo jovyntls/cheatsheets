@@ -1,0 +1,11 @@
+\usepackage{amssymb}
+
+\DeclareRobustCommand{\ojoin}{\setbox0=\hbox{$\bowtie$}%
+  \rule[-.02ex]{.25em}{.4pt}\llap{\rule[\ht0]{.25em}{.4pt}}}
+\def\leftouterjoin{\mathbin{\ojoin\mkern-5.8mu\bowtie}}
+\def\rightouterjoin{\mathbin{\bowtie\mkern-5.8mu\ojoin}}
+\def\fullouterjoin{\mathbin{\ojoin\mkern-5.8mu\bowtie\mkern-5.8mu\ojoin}}
+
+\newcommand\lojoin{\leftouterjoin}
+\newcommand\rojoin{\rightouterjoin}
+\newcommand\fojoin{\fullouterjoin}
