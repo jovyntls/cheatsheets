@@ -1,4 +1,24 @@
 \usepackage{color, soul}
-\definecolor{lightgray}{gray}{0.9}
+\usepackage{listings}
+\usepackage{inconsolata}
 
-\newcommand{\code}[1]{\texttt{\sethlcolor{lightgray}\hl{$\,$#1$\,$}}}
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{HTML}{C42043}
+\definecolor{backcolour}{HTML}{F2F2F2}
+\definecolor{bookColor}{cmyk}{0,0,0,0.90}
+
+\newcommand{\code}[1]{\texttt{\sethlcolor{backcolour}\hl{$\,$#1$\,$}}}
+
+% SQL code blocks
+% define SQL styles
+\lstdefinestyle{mySQL}{%
+  language=SQL,
+  backgroundcolor=\color{backcolour},
+  commentstyle=\color{codegreen},
+  keywordstyle=\color{codepurple},
+  numberstyle=\numberstyle,
+  stringstyle=\color{codepurple},
+  basicstyle=\scriptsize\ttfamily,
+  breaklines=true,
+}
