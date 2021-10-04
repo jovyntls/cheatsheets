@@ -668,6 +668,7 @@ CREATE TABLE Teams (
         \item appear as a PK in the referenced relation, OR
         \item be a \code{null} value
       \end{itemize}
+    \item referenced columns must be a PK or declared to be \textbf{unique}
     \item \texttt{R.sid} $\rightarrow$ \texttt{S.id}: \texttt{R.sid} is a FK referencing PK \texttt{id} in S
   \end{itemize}
   \begin{lstlisting}[style=mySQL]
