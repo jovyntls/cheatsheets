@@ -150,7 +150,7 @@
     \item Requirement for Concurrent Execution: \textbf{serializable transaction execution} 
     \item (concurrent execution of a set of transactions is) \definition{serializable} execution is equivalent to some serial execution of the same set of transactions
       \begin{itemize}
-        \item \definition{equivalent} \(\rightarrow\) they have the same \textit{effect}  on the data
+        \item \definition{equivalent} they have the same \textit{effect}  on the data
       \end{itemize}
   \end{itemize}
 
@@ -353,7 +353,7 @@
 
   \subsection{Inner Joins} 
   \begin{itemize}
-    \item eliminate all tuples that do not satisfy a matching criteria (i.e. \textbf{attribute selection} )
+    \item eliminate all tuples that do not satisfy a matching criteria (i.e. \textbf{attribute selection})
   \end{itemize}
   \subsubsection{$\theta$-join}
   \begin{itemize}
@@ -527,6 +527,14 @@ UPDATE Employees
 SET age = 0; 
   \end{lstlisting}
 
+  \subsection{Create/Delete Database}
+  \begin{lstlisting}[style=mySQL]
+-- create database
+CREATE DATABASE db_name;
+-- delete database
+DROP DATABASE db_name;
+  \end{lstlisting}
+
   \subsection{Handling NULLs}
   \begin{itemize}
     \item prerequisite for integrity constraints
@@ -543,7 +551,7 @@ SET age = 0;
     \item \code{x IS NOT NULL} $\equiv$ \code{NOT (x IS NULL)}
   \end{itemize}
 
-  \subsubsection{IS (NOT) NOT DISTINCT comparison predicate}
+  \subsubsection{IS (NOT) DISTINCT FROM comparison predicate}
   \begin{itemize}
     \item equivalent to $x <> y$ if $x$ and $ y$ are non-\code{null} values
       \begin{itemize}
@@ -572,7 +580,7 @@ SET age = 0;
     \item \textbf{named}: name is specified - easier bookkeeping
     \item all column constraints can be specified as table constraints, except \code{NOT NULL}
       \begin{itemize}
-        \item table constraints referring to a single column can be writen as column constraints
+        \item table constraints referring to a single column can be written as column constraints
         \item column and table constraints can be combined
           \begin{lstlisting}[style=mySQL]
   ... id INTEGER NOT NULL,
@@ -607,7 +615,7 @@ CREATE TABLE Employees (
 CREATE TABLE Employees (
   id   INTEGER UNIQUE, /* unnamed */
   pid  INTEGER CONSTRAINT u_id UNIQUE, /* named */
-  name VARCHAR(50), age INTEGER,
+  name VARCHAR(50), 
   role VARCHAR(50)
 );
       \end{lstlisting}
@@ -668,7 +676,6 @@ CREATE TABLE Teams (
         \item appear as a PK in the referenced relation, OR
         \item be a \code{null} value
       \end{itemize}
-    \item referenced columns must be a PK or declared to be \textbf{unique}
     \item \texttt{R.sid} $\rightarrow$ \texttt{S.id}: \texttt{R.sid} is a FK referencing PK \texttt{id} in S
   \end{itemize}
   \begin{lstlisting}[style=mySQL]
@@ -831,7 +838,7 @@ COMMIT;
   \includegraphics[width=0.4\linewidth]{cs2102-entity-relationship-model.png} 
   \includegraphics[width=0.5\linewidth]{cs2102-attribute-subtypes.png} 
 
-  \subsubsection{relationship sets}
+  \subsubsection{Relationship Sets}
   \begin{itemize}
     \item \definition{role} descriptor of an entity set's participation in a relationship
       \begin{itemize}
@@ -1242,7 +1249,7 @@ FROM countries;
       \end{lstlisting}
   \end{itemize}
 
-  \subsection{handling null values}
+  \subsection{Handling Null Values}
   \begin{tightcenter}
     \includegraphics[width=0.9\linewidth]{cs2102-aggregation-functions-summary.png} 
   \end{tightcenter}
@@ -1387,7 +1394,7 @@ WITH CTE_name AS
   -- </CTE BODY>
 SELECT i.country, ...
 FROM CTE_name i   /* CTE usage */ 
-  LEFT OUTER JOIN routes r N i.code = r.to_code
+  LEFT OUTER JOIN routes r ON i.code = r.to_code
 ...
     \end{lstlisting}
   \end{minipage}
