@@ -1060,17 +1060,17 @@ FROM countries;
 
   \subsection{SET Operations} 
   \begin{minipage}[c]{0.63\linewidth}
-  \begin{itemize}
-    \item \code{UNION}, \code{INTERSECT}, \code{EXCEPT}
-      \begin{itemize}
-        \item \textcolor{black}{will eliminate duplicate tuples from result}
-      \end{itemize}
-    \item \code{UNION ALL}, \code{INTERSECT ALL}, \code{EXCEPT ALL}
-      \begin{itemize}
-        \item \textcolor{black}{will NOT eliminate duplicate tuples from result}
-      \end{itemize}
-    \item \textcolor{black}{no ordering of tuples}
-  \end{itemize}
+    \begin{itemize}
+      \item \code{UNION}, \code{INTERSECT}, \code{EXCEPT}
+        \begin{itemize}
+          \item \textcolor{black}{will eliminate duplicate tuples from result}
+        \end{itemize}
+      \item \code{UNION ALL}, \code{INTERSECT ALL}, \code{EXCEPT ALL}
+        \begin{itemize}
+          \item \textcolor{black}{will NOT eliminate duplicate tuples from result}
+        \end{itemize}
+      \item \textcolor{black}{no ordering of tuples}
+    \end{itemize}
   \end{minipage}
   \begin{minipage}[c]{0.35\linewidth}
     \begin{lstlisting}[style=mySQL]
@@ -1556,8 +1556,8 @@ $$ LANGUAGE sql;
   \begin{itemize}
     \item without \code{RETURN}, function will end naturally and return output params
     \item \code{RETURN;} - returns output params and \textbf{exits} the function
-      \item \code{RETURN QUERY <SELECT ...>;} - appends queried tuples to output table; does not exit function
-        \item \code{RETURN NEXT;} - appends output params to output table; does not exit function
+    \item \code{RETURN QUERY <SELECT ...>;} - appends queried tuples to output table; does not exit function
+    \item \code{RETURN NEXT;} - appends output params to output table; does not exit function
   \end{itemize}
 
   \subsection{Procedures}
@@ -1709,7 +1709,7 @@ FETCH RELATIVE -2 FROM curs INTO r;  -- n-2th tuple
 
   \begin{itemize}
     \item e.g. Based on this ranking system of cryptocurrencies, I want to have daily record of first three coins from the TOP 10 cryptocurrencies that are down by more than 5\% in the past 7 days and are within 2 ranks apart from each other.
-    \begin{lstlisting}[style=mySQL]
+      \begin{lstlisting}[style=mySQL]
 CREATE OR REPLACE FUNCTION consCryptosDown
 (IN num INT)
 RETURNS TABLE(rank INT, sym CHAR(4)) AS $$
@@ -1747,7 +1747,186 @@ BEGIN
   CLOSE curs;
 END;
 $$ LANGUAGE plpgsql;
+      \end{lstlisting}
+  \end{itemize}
+
+  \section{09. TRIGGERS}
+  \begin{minipage}[c]{0.33\linewidth}
+    \includegraphics[width=0.9\linewidth]{cs2102-triggers-flow.png} 
+  \end{minipage}
+  \begin{minipage}[c]{0.65\linewidth}
+    \begin{lstlisting}[style=mySQL]
+-- TRIGGER
+CREATE TRIGGER <trigger_name> 
+<timing> <event> ON <table> 
+FOR EACH <granularity> WHEN (<condition>)
+EXECUTE FUNCTION <function_name>();
+
+-- TRIGGER FUNCTION
+CREATE OR REPLACE FUNCTION <func_name>()
+RETURNS TRIGGER AS $$
+BEGIN 
+  <code>
+END;
+$$ LANGUAGE plpgsql
     \end{lstlisting}
+  \end{minipage}
+
+  \begin{itemize}
+    \item \textcolor{black}{an \textit{event-condition-action} (ECA) rule}
+      \begin{itemize}
+        \item \textcolor{black}{when an \textbf{event} occurs, test \textbf{condition} - if satisfied, execute \textbf{action}}
+        \item \textcolor{black}{event = trigger, action = trigger function}
+        \item condition = \code{WHEN} 
+          \begin{itemize}
+            \item restrictions: no SELECT, OLD/NEW; cannot be used in INSTEAD OF 
+          \end{itemize}
+      \end{itemize}
+    \item \textcolor{black}{\definition{trigger function} a func that returns a trigger}
+      \begin{itemize}
+        \item \textcolor{black}{actions to run when event occurred and conditions are satisfied}
+      \end{itemize}
+  \end{itemize}
+
+  \subsection{Syntax}
+  \begin{itemize}
+    \item trigger + trigger function
+    \item trigger is only applicable to \code{<table>}
+  \end{itemize}
+
+  \subsubsection{keywords}
+  \begin{itemize}
+    \item keywords only accessible by trigger functions:
+      \begin{itemize}
+        \item \code{TG\_OP} - operation
+        \item \code{TG\_TABLE\_NAME} - refers to table name
+      \end{itemize}
+    \item transition variables  
+      \begin{itemize}
+        \item \code{NEW} - the modified row \textit{after} the triggering event
+        \item \code{OLD} - the modified row \textit{before} the triggering event 
+      \end{itemize}
+  \end{itemize}
+
+  \subsubsection{trigger options}
+  \begin{itemize}
+    \item <timing>
+      \begin{itemize}
+        \item \code{AFTER} or \code{BEFORE} (the triggering event)
+        \item \code{INSTEAD OF} (the triggering event on views) - can only be defined on views
+          \begin{itemize}
+            \item \textbf{cannot} be done on statement-level
+          \end{itemize}
+      \end{itemize}
+    \item <event>
+      \begin{itemize}
+        \item \code{INSERT ON table} / \code{DELETE ON table}
+        \item \code{UPDATE ON table} / \code{UPDATE OF column ON table}
+        \item TG\_OP will be the corresponding INSERT/DELETE/UPDATE
+      \end{itemize}
+    \item <granularity>
+      \begin{itemize}
+        \item \code{FOR EACH ROW} (that is modified) - you can insert into multiple rows with a single INSERT statement
+        \item \code{FOR EACH STATEMENT} (that performs the modification)
+          \begin{itemize}
+            \item ignores the values returned by the trigger functions
+            \item e.g. \code{RETURN NULL} will \textbf{not} make the DB omit the subsequent operation !!
+          \end{itemize}
+      \end{itemize}
+  \end{itemize}
+
+  \subsection{Return Values}
+  \begin{itemize}
+    \item \code{NULL} - ignore all operations \code{on current row}
+    \item \code{NOT NULL} - signals the database to proceed as normal
+  \end{itemize}
+
+  \subsubsection{Raise Exceptions}
+  \begin{itemize}
+    \item \code{RAISE NOTICE} - database will give a prompt, but operation continues
+    \item \code{RAISE EXCEPTION} - stops operation
+  \end{itemize}
+
+  \subsection{Deferred Triggers}
+  \begin{itemize}
+    \item \definition{deferred trigger} check consistency constraint only at the end of a transaction (not end of statement)
+    \item ONLY works with \code{AFTER} and \code{FOR EACH ROW}
+    \item indicated by both \code{CONSTRAINT} and \code{DEFERRABLE} 
+      \begin{lstlisting}[style=mySQL]
+CREATE CONSTRAINT TRIGGER balance_check
+AFTER INSERT OR UPDATE OR DELETE ON Account
+DEFERRABLE INITIALLY DEFERRED
+FOR EACH ROW EXECUTE FUNCTION check_balance();
+      \end{lstlisting}
+      \begin{itemize}
+        \item \code{INITIALLY DEFERRED} - by default, the trigger is deferred 
+        \item \code{INITIALLY IMMEDIATE} - not deferred by default
+          \begin{itemize}
+            \item \code{SET CONSTRAINTS balance\_check DEFERRED;} to defer
+          \end{itemize}
+      \end{itemize}
+  \end{itemize}
+
+  \subsection{Multiple Triggers}
+  \begin{itemize}
+    \item multiple triggers defined on teh same event on the same table: depends on order of activation
+    \item \textbf{order of activation}:
+      \begin{itemize}
+        \item \code{BEFORE} statement-level triggers
+        \item \code{BEFORE} row-level triggers
+        \item \code{AFTER} statement-level triggers
+        \item \code{AFTER} row-level triggers
+        \item within each category, if multiple triggers exist: alphabetical order
+      \end{itemize}
+    \item if BEFORE row-level trigger returns NULL, then subsequent triggers in the same row are omitted
+  \end{itemize}
+
+
+
+  \subsubsection{triggers example}
+  \begin{tightcenter}
+    \includegraphics[width=0.9\linewidth]{cs2102-triggers-return-value.png} 
+  \end{tightcenter}
+
+  \begin{lstlisting}[style=mySQL]
+-- trigger
+CREATE TRIGGER score_log
+AFTER INSERT OR DELETE OR UPDATE ON Scores          /* event */
+FOR EACH ROW EXECUTE FUNCTION   /* action */
+  log_score(); 
+
+-- trigger function
+CREATE OR REPLACE FUNCTION log_score() 
+RETURNS TRIGGER AS $$
+BEGIN
+  IF (TG_OP = 'DELETE') THEN 
+    INSERT INTO Logs VALUES (OLD.Name, TG_OP, CURRENT_DATE);
+    RETURN OLD;
+  ELSE
+    INSERT INTO Logs VALUES (NEW.Name, TG_OP, CURRENT_DATE);
+    RETURN NEW;
+  END IF;
+END;
+$$ LANGUAGE plpgsql;
+  \end{lstlisting}
+
+  \subsection{INSTEAD OF Trigger}
+  \begin{itemize}
+    \item trigger function
+      \begin{lstlisting}[style=mySQL]
+CREATE OR REPLACE FUNCTION update_top_mark() RETURNS TRIGGER AS $$
+BEGIN
+  UPDATE Scores SET MARK = NEW.Mark WHERE Mark = OLD.Mark;
+  RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+      \end{lstlisting}
+    \item trigger
+      \begin{lstlisting}[style=mySQL]
+CREATE TRIGGER modify_top_mark
+INSTEAD OF UPDATE ON Top_Marks
+FOR EACH ROW EXECUTE FUNCTION update_top_mark();
+      \end{lstlisting}
   \end{itemize}
 
 
