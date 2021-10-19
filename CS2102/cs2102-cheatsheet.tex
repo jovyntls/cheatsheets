@@ -1929,6 +1929,100 @@ FOR EACH ROW EXECUTE FUNCTION update_top_mark();
       \end{lstlisting}
   \end{itemize}
 
+  \section{10. FUNCTIONAL DEPENDENCIES}
+  \begin{itemize}
+    \item an abstraction of what the key/superkey is
+  \end{itemize}
+
+  \subsection{Anomalies}
+  \begin{itemize}
+    \item \definition{normal form} a definition of minimum requirements in terms of \textbf{redundancy} 
+  \end{itemize}
+
+  \subsubsection{Normalisation}
+  \begin{itemize}
+    \item split the table to get rid of anomalies
+    \item removes redundancies and insertion/update/deletion anomalies
+    \item natural join to obtain original table
+      \includegraphics[width=0.95\linewidth]{cs2102-normalisation-example.png} 
+  \end{itemize}
+
+  \subsection{Functional Dependencies}
+  Let $A_1, A_2, \dots, A_m, B_1, B_2, \dots, B_n$ be some attributes
+  \begin{itemize}
+    \item \definition{uniquely identifies} $\{A_1 A_2 \dots A_m \} \rightarrow \{B_1 B_2 \dots B_n\}$ whenever 2 tuples have the same values on $A_1 A_2 \dots A_m$, they always have the same values on $B_1 B_2 \dots B_n$
+      \begin{itemize}
+        \item "A \textit{uniquely identifies} B": if you know A, then you will know B (but not the other way round)
+        \item $\{A\} \rightarrow \{B\}$ : functional dependency - $A$ decides/determines $B$ 
+      \end{itemize}
+    \item \textbf{transitivity} - $(\{A\} \rightarrow \{B\}) \land (\{B\} \rightarrow \{C\}) \Rightarrow (\{A\} \rightarrow \{C\})$
+
+  \end{itemize}
+
+  \subsubsection{Armstrong's Axioms}
+  \begin{itemize}
+    \item \definition{Armstrong's Axioms} 3 fundamental axioms for FD reasoning
+      \begin{enumerate}
+        \item axiom of \textbf{reflexivity}: set $\rightarrow$ a subset of attributes ($\{A, B\} \rightarrow \{A\}$)
+        \item axiom of \textbf{augmentation}: if $\{A\} \rightarrow \{B\}$, then $\forall C, \, \{AC\} \rightarrow \{BC\}$
+        \item axiom of \textbf{transitivity}: if $\{A\} \rightarrow \{B\}$ and $\{B\} \rightarrow \{C\}$, then $\{A\} \rightarrow \{C\}$
+      \end{enumerate}
+    \item \textbf{Extended Armstrong's Axioms}
+      \begin{itemize}
+        \item rule of \textbf{decomposition}: if $\{A\} \rightarrow \{BC\}$, then $\{A\} \rightarrow \{B\} \land \{A\} \rightarrow \{C\}$
+        \item rule of \textbf{union}: if $\{A\} \rightarrow \{B\} \land \{A\} \rightarrow \{C\}$, then $\{A\} \rightarrow \{BC\}$
+      \end{itemize}
+  \end{itemize}
+
+  \subsection{Closures}
+  \begin{itemize}
+    \item $B_1B_2\dots B_n$ is the closure of $A_1A_2\dots A_m$ denoted $\{A_1A_2\dots A_m\}^+$
+      \begin{itemize}
+        \item by \textit{rule of union}, we can find the largest $B_1B_2\dots B_n$ in $\{A_1A_2\dots A_m\} \rightarrow \{B_1B_2\dots B_n\}$
+          \begin{itemize}
+            \item find the maximal RHS by unioning all the RHS
+          \end{itemize}
+        \item by \textit{rule of decomposition}, the largest $B_1B_2\dots B_n$ implies individiual $\{A_1A_2\dots A_m\} \rightarrow \{B_1\}$, $\{A_1A_2\dots A_m\} \rightarrow \{B_2\}$, \dots, $\{A_1A_2\dots A_m\} \rightarrow \{B_n\}$
+          \begin{itemize}
+            \item focus on the portion of the RHS that is relevant
+          \end{itemize}
+        \item $\therefore$ knowing $B_1B_2\dots B_n$ is sufficient to know all that is determined by $\{A_1A_2\dots A_m\}$
+      \end{itemize}
+  \end{itemize}
+
+  \subsubsection{circuit diagram} 
+  \begin{tightcenter}
+    FD: $\{B\} \rightarrow \{D\}$, $\{BD\} \rightarrow \{A\}$ and $\{AD\} \rightarrow \{C\}$
+    \includegraphics[width=0.6\linewidth]{cs2102-closure-circuit-diagram.png} 
+    \\* $\{B\}^+ = \{A,B,C,D\}$
+  \end{tightcenter}
+
+  \subsubsection{hypergraph} 
+  \begin{tightcenter}
+    FD: $\{A\} \rightarrow \{B\}$, $\{C\} \rightarrow \{D\}$ and $\{BC\} \rightarrow \{E\}$
+    \begin{minipage}[c]{0.55\linewidth}
+      \includegraphics[width=0.95\linewidth]{cs2102-closure-hypergraph.png} 
+    \end{minipage}
+    \begin{minipage}[c]{0.42\linewidth}
+      \begin{itemize}
+        \item $\{A\}^+ = \{A, B\}$
+        \item $\{A, C\}^+ = \{A,B,C,D,E\}$ 
+        \item $\{B\}^+ = \{B\}$
+      \end{itemize}
+    \end{minipage}
+  \end{tightcenter}
+
+  \subsection{Keys \& Superkeys}
+  \begin{itemize}
+    \item FD: more formal way to define key and superkey
+    \item an attribute not in any RHS of any FD \textbf{must} be in every key
+      \item \definition{prime attribute} appears in at least one key = union of all keys
+  \end{itemize}
+
+
+
+
+
 
 
 
