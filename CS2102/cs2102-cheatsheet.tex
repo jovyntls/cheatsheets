@@ -2016,8 +2016,100 @@ FOR EACH ROW EXECUTE FUNCTION update_top_mark();
   \begin{itemize}
     \item FD: more formal way to define key and superkey
     \item an attribute not in any RHS of any FD \textbf{must} be in every key
-      \item \definition{prime attribute} appears in at least one key = union of all keys
+    \item \definition{prime attribute} appears in at least one key = union of all keys
   \end{itemize}
+
+
+  \section{11. BOYCE-CODD NORMAL FORMS (BCNF)}
+
+  \begin{itemize}
+    \item stronger than 3NF - has fewer redundancies
+    \item \textbf{normal forms} in increasing order of strictness:
+      \begin{itemize}
+        \item 1st NF (atomic), 2nd NF (fewer redundancies), 3NF, BCNF (always achievable), 4/5/6NF (not always achievable)
+      \end{itemize}
+    \item two attributes are \textbf{functionally equivalent} if either one can determine the other
+  \end{itemize}
+
+  \subsection{Non-Trivial and Decomposed FD}
+  \begin{itemize}
+    \item \definition{non-trivial} $\{A\} \rightarrow \{B\}$ where $\{A\} \not\subseteq \{B\}$
+    \item \definition{decomposed} $\{A\} \rightarrow \{B\}$ where $B$ is a single attribute
+      \begin{itemize}
+        \item a non-decomposed FD can always be transformed into the equivalent set of decomposed FD by the \textit{decomposition rule}
+      \end{itemize}
+    \item deriving non-trivial and decomposed FD from a table
+      \begin{enumerate}
+        \item consider all subset of attributes in R
+        \item compute the closure of each subset
+        \item remove 'trivial' attributes
+        \item decompose the remaining FDs (non-trivial and not empty) from each closure
+      \end{enumerate}
+  \end{itemize}
+
+  \subsection{BCNF}
+  \begin{itemize}
+    \item a table $R$ is in \definition{BCNF} if every \textit{non-trivial and decomposed FD} has a \textit{superkey} as its LHS
+      \begin{itemize}
+        \item aka any attribute can depend \textbf{only} on superkeys
+        \item proof: suppose $B$ depends on non-superkey $C_1 C_2 \dots C_n$. Since $C_1 C_2 \dots C_n$ is not a superkey, it can appear multiple times in the table. Then the same  $B$ would appear multiple times in the table $\Rightarrow$ redundancy
+      \end{itemize}
+    \item a table $R$ is \textbf{NOT in BCNF} if there exists at least one non-trivial and decomposed FD such that its LHS is \textit{NOT} a superkey
+    \item a table with exactly two attributes is always in BCNF!
+    \item properties of BCNF
+      \begin{itemize}
+        \item $\checkmark$ no update/deletion/insertion anomalies
+        \item $\checkmark$ small redundancies
+        \item $\checkmark$ \textbf{lossless join} - original table can always be reconstructed from decomposed tables (natural join)
+          \begin{itemize}
+            \item $R = R1 \Join R2 = \pi_{R1}(R) \Join \pi_{R2}(R)$
+          \end{itemize}
+      \end{itemize}
+  \end{itemize}
+
+  \subsection{Normalisation}
+  \begin{itemize}
+    \item decompose until all tables are in BCNF
+      \begin{itemize}
+        \item ensures that all BCNF violations are removed
+      \end{itemize}
+    \item if table does not contain all attributes:
+      \begin{enumerate}
+        \item compute closure of each subset of the table's attributes
+        \item remove RHS attributes not in the table
+      \end{enumerate}
+  \end{itemize}
+
+  \subsubsection{Normalisation Algorithm}
+  \begin{enumerate}
+    \item if $R$ is not in BCNF, $\exists$ an FD $\{A\} \rightarrow \{A\}^+$ that violates it
+      \begin{enumerate}
+        \item create table $R1($everything in  $\{A\}^+)$
+          \begin{itemize}
+            \item R1 contains the superkey
+          \end{itemize}
+        \item create table $R2(\{A\}$ and all attributes in $R$ not in  $\{A\}^+)$ 
+          \\* $\Rightarrow R2(\{A\} \cup (R - \{A\}^+))$ 
+          \begin{itemize}
+            \item FD becomes trivial: $\{A\} \rightarrow \{A\}^+$ no longer an FD on R2
+          \end{itemize}
+        \item recursively check $R1$ and $R2$ 
+        \item return the union of the result
+      \end{enumerate}
+    \item else, return $\{R\}$
+  \end{enumerate}
+  \textit{implicit} functional dependencies should be checked too! (because explicit FDs may not apply to R2 when R2 is missing attributes)
+
+  \begin{tightcenter}
+    \begin{minipage}[c]{0.47\linewidth}
+      \includegraphics[width=0.95\linewidth]{cs2102-bcnf-decomposition.png} 
+    \end{minipage}
+    \begin{minipage}[c]{0.47\linewidth}
+      \includegraphics[width=0.95\linewidth]{cs2102-bcnf-decomposition-example.png} 
+    \end{minipage}
+    e.g. $R(A,B,C,D)$ with $\{BC\} \rightarrow \{D\}$, $\{D\} \rightarrow \{A\}$,  $\{A\} \rightarrow \{B\}$
+  \end{tightcenter}
+
 
 
 
@@ -2031,7 +2123,6 @@ FOR EACH ROW EXECUTE FUNCTION update_top_mark();
 \end{multicols}
 
 \hrulefill \\
-% \dotfill
 
 \begin{multicols}{2}
   \section{SUMMARY: RELATIONAL MODEL}
