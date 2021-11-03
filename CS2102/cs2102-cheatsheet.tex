@@ -1969,9 +1969,10 @@ FOR EACH ROW EXECUTE FUNCTION update_top_mark();
       \end{enumerate}
     \item \textbf{Extended Armstrong's Axioms}
       \begin{itemize}
-        \item rule of \textbf{decomposition}: if $\{A\} \rightarrow \{BC\}$, then $\{A\} \rightarrow \{B\} \land \{A\} \rightarrow \{C\}$
+        \item rule of \textbf{decomposition}: if $\{A\} \rightarrow \{BC\}$ then $\{A\} \rightarrow \{B\} \land \{A\} \rightarrow \{C\}$
         \item rule of \textbf{union}: if $\{A\} \rightarrow \{B\} \land \{A\} \rightarrow \{C\}$, then $\{A\} \rightarrow \{BC\}$
       \end{itemize}
+    \item combined: $\{A\} \rightarrow \{BC\}$ $\Leftrightarrow$ $\{A\} \rightarrow \{B\} \land \{A\} \rightarrow \{C\}$
   \end{itemize}
 
   \subsection{Closures}
@@ -2060,10 +2061,15 @@ FOR EACH ROW EXECUTE FUNCTION update_top_mark();
       \begin{itemize}
         \item $\checkmark$ no update/deletion/insertion anomalies
         \item $\checkmark$ small redundancies
-        \item $\checkmark$ \textbf{lossless join} - original table can always be reconstructed from decomposed tables (natural join)
           \begin{itemize}
+            \item $\checkmark$ \textbf{lossless join} - original table can always be reconstructed from decomposed tables (natural join)
             \item $R = R1 \Join R2 = \pi_{R1}(R) \Join \pi_{R2}(R)$
           \end{itemize}
+      \end{itemize}
+    \item \definition{lossless decomposition} $\{R_1, R_2\}$ is lossless if $R_1 \cap R_2 \rightarrow R_1 \vert R_2$ 
+      \begin{itemize}
+        \item $R_1 \cap R_2$ uniquely identifies all the attributes in $R_1$ or $R_2$
+          \item closure of $R_1 \cap R_2 = R_1$ or $R_2$ 
       \end{itemize}
   \end{itemize}
 
@@ -2109,6 +2115,82 @@ FOR EACH ROW EXECUTE FUNCTION update_top_mark();
     \end{minipage}
     e.g. $R(A,B,C,D)$ with $\{BC\} \rightarrow \{D\}$, $\{D\} \rightarrow \{A\}$,  $\{A\} \rightarrow \{B\}$
   \end{tightcenter}
+
+  \section{3NF (THIRD NORMAL FORM)}
+  \begin{itemize}
+    \item BCNF decomposition (normalisation) may not preserve all FDs
+      \begin{itemize}
+        \item decomposed table may have no non-trivial \& decomposed FDs
+        \item exists FD that cannot be derived from FDs on R1 and R2
+      \end{itemize}
+    \item relaxed form of BCNF
+      \begin{itemize}
+        \item satisfies BCNF $\Rightarrow$ satisfies 3NF
+        \item violates 3NF $\Leftarrow$ violates BCNF
+        \item satisfies 3NF $\not\Rightarrow$ satisfies BCNF
+      \end{itemize}
+  \end{itemize}
+
+  \subsection{Functional Dependency Equivalence}
+  let F1 and F2 be sets of FDs.
+  \begin{itemize}
+    \item \definition{equivalence} F1 is equivalent to F2 ($F1 \equiv F2$) $\Leftrightarrow$ 
+      \begin{itemize}
+        \item $F2 \vdash F1$: every FD in F1 can be derived from F2
+        \item $F1 \dashv F2$: every FD in F2 can be derived from F1 
+      \end{itemize}
+    \item to get FDs from decomposed table: union of projection
+    \item to show that F1 can be derived from F2: closure/armstrong axioms
+  \end{itemize}
+
+  \subsection{3NF}
+  \begin{itemize}
+    \item a table is in \definition{3NF} if every \textit{non-trivial} and \textit{decomposed} FD:
+      \begin{itemize}
+        \item its LHS is a \textbf{superkey}, OR
+        \item its RHS is a \textbf{prime attribute} (any attribute in any key)
+      \end{itemize}
+    \item if all attributes are prime attributes, the table is in 3NF
+  \end{itemize}
+
+  \subsubsection{Minimal Basis}
+  \begin{itemize}
+    \item \definition{minimal basis} a \textit{simplified} version of F, $F_b$
+    \item \definition{simplified} 4 conditions
+      \begin{enumerate}
+        \item equivalence: $F \equiv F_b$ (every FD in $F_b$ can be derived from F and vice versa)
+        \item every FD in $F_b$ is non-trivial and decomposed
+        \item for each FD in $F_b$, none of the LHS attributes are redundant
+        \item no FD in $F_b$ is redundant
+      \end{enumerate}
+    \item \definition{redundant} can be removed without affecting the original FD (i.e. $F \equiv F_{b*}$ where  $F_{b*}$ is formed by removing the attribute)
+  \end{itemize}
+
+  \subsubsection{to obtain a minimal basis}
+  \begin{enumerate}
+    \item ensure equivalence
+    \item transform FDs to non-trivial and decomposed
+    \item remove redundant attributes
+      \begin{enumerate}
+        \item for an FD \{A\} $\rightarrow$ B for a \textbf{set} of attributes A, for an attribute C in A,
+        \item compute $\{A-C\}^+$ using F
+        \item if $B \in \{A-C\}^+$, then we can remove C
+      \end{enumerate}
+    \item remove redundant FDs
+      \begin{enumerate}
+        \item try removing and check for equivalence
+      \end{enumerate}
+  \end{enumerate}
+
+  \subsection{3NF Synthesis}
+  for table R and a set of FDs F,
+  \begin{enumerate}
+    \item derive \textit{minimal basis} $F_b$ of F
+    \item from the minimal basis, combine the FDs for which the LHS is the same 
+    \item create a table for each FDs remained in the minimal basis after union
+    \item if \textbf{none} of the tables contain a key for the original table R, create a table containing a key of R
+  \end{enumerate}
+
 
 
 
