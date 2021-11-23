@@ -1520,7 +1520,7 @@ SELECT name, get_grade(marks1, marks2) AS grade FROM Scores;
   \begin{lstlisting}[style=mySQL]
 RETURNS RECORD AS $$      -- returns single tuple
 RETURNS VOID AS $$        -- returns nothing
-RETURNS SETOF AS $$       -- retunrs a set of tuples
+RETURNS SETOF AS $$       -- returns a set of tuples
 RETURNS TABLE(x INT, y INT) AS $$  -- returns multiple tuples
   \end{lstlisting}
 
@@ -1869,7 +1869,7 @@ FOR EACH ROW EXECUTE FUNCTION check_balance();
 
   \subsection{Multiple Triggers}
   \begin{itemize}
-    \item multiple triggers defined on teh same event on the same table: depends on order of activation
+    \item multiple triggers defined on the same event on the same table: depends on order of activation
     \item \textbf{order of activation}:
       \begin{itemize}
         \item \code{BEFORE} statement-level triggers
