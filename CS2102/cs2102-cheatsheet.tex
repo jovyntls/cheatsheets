@@ -150,7 +150,7 @@
     \item Requirement for Concurrent Execution: \textbf{serializable transaction execution} 
     \item (concurrent execution of a set of transactions is) \definition{serializable} execution is equivalent to some serial execution of the same set of transactions
       \begin{itemize}
-        \item \definition{equivalent} \(\rightarrow\) they have the same \textit{effect}  on the data
+        \item \definition{equivalent} they have the same \textit{effect}  on the data
       \end{itemize}
   \end{itemize}
 
@@ -199,7 +199,7 @@
         \item DBMS will check that tables only ever contain valid data
       \end{itemize}
     \item \definition{structural} (integrity) inherent to the data model 
-    \item 3 main strucutral integrity constraints of the Relation Model
+    \item 3 main structural integrity constraints of the Relation Model
       \begin{enumerate}
         \item Domain constraints
         \item Key constraints
@@ -353,7 +353,7 @@
 
   \subsection{Inner Joins} 
   \begin{itemize}
-    \item eliminate all tuples that do not satisfy a matching criteria (i.e. \textbf{attribute selection} )
+    \item eliminate all tuples that do not satisfy a matching criteria (i.e. \textbf{attribute selection})
   \end{itemize}
   \subsubsection{$\theta$-join}
   \begin{itemize}
@@ -527,6 +527,14 @@ UPDATE Employees
 SET age = 0; 
   \end{lstlisting}
 
+  \subsection{Create/Delete Database}
+  \begin{lstlisting}[style=mySQL]
+-- create database
+CREATE DATABASE db_name;
+-- delete database
+DROP DATABASE db_name;
+  \end{lstlisting}
+
   \subsection{Handling NULLs}
   \begin{itemize}
     \item prerequisite for integrity constraints
@@ -543,7 +551,7 @@ SET age = 0;
     \item \code{x IS NOT NULL} $\equiv$ \code{NOT (x IS NULL)}
   \end{itemize}
 
-  \subsubsection{IS (NOT) NOT DISTINCT comparison predicate}
+  \subsubsection{IS (NOT) DISTINCT FROM comparison predicate}
   \begin{itemize}
     \item equivalent to $x <> y$ if $x$ and $ y$ are non-\code{null} values
       \begin{itemize}
@@ -572,7 +580,7 @@ SET age = 0;
     \item \textbf{named}: name is specified - easier bookkeeping
     \item all column constraints can be specified as table constraints, except \code{NOT NULL}
       \begin{itemize}
-        \item table constraints referring to a single column can be writen as column constraints
+        \item table constraints referring to a single column can be written as column constraints
         \item column and table constraints can be combined
           \begin{lstlisting}[style=mySQL]
   ... id INTEGER NOT NULL,
@@ -607,7 +615,7 @@ CREATE TABLE Employees (
 CREATE TABLE Employees (
   id   INTEGER UNIQUE, /* unnamed */
   pid  INTEGER CONSTRAINT u_id UNIQUE, /* named */
-  name VARCHAR(50), age INTEGER,
+  name VARCHAR(50), 
   role VARCHAR(50)
 );
       \end{lstlisting}
@@ -668,7 +676,6 @@ CREATE TABLE Teams (
         \item appear as a PK in the referenced relation, OR
         \item be a \code{null} value
       \end{itemize}
-    \item referenced columns must be a PK or declared to be \textbf{unique}
     \item \texttt{R.sid} $\rightarrow$ \texttt{S.id}: \texttt{R.sid} is a FK referencing PK \texttt{id} in S
   \end{itemize}
   \begin{lstlisting}[style=mySQL]
@@ -831,7 +838,7 @@ COMMIT;
   \includegraphics[width=0.4\linewidth]{cs2102-entity-relationship-model.png} 
   \includegraphics[width=0.5\linewidth]{cs2102-attribute-subtypes.png} 
 
-  \subsubsection{relationship sets}
+  \subsubsection{Relationship Sets}
   \begin{itemize}
     \item \definition{role} descriptor of an entity set's participation in a relationship
       \begin{itemize}
@@ -1053,17 +1060,17 @@ FROM countries;
 
   \subsection{SET Operations} 
   \begin{minipage}[c]{0.63\linewidth}
-  \begin{itemize}
-    \item \code{UNION}, \code{INTERSECT}, \code{EXCEPT}
-      \begin{itemize}
-        \item \textcolor{black}{will eliminate duplicate tuples from result}
-      \end{itemize}
-    \item \code{UNION ALL}, \code{INTERSECT ALL}, \code{EXCEPT ALL}
-      \begin{itemize}
-        \item \textcolor{black}{will NOT eliminate duplicate tuples from result}
-      \end{itemize}
-    \item \textcolor{black}{no ordering of tuples}
-  \end{itemize}
+    \begin{itemize}
+      \item \code{UNION}, \code{INTERSECT}, \code{EXCEPT}
+        \begin{itemize}
+          \item \textcolor{black}{will eliminate duplicate tuples from result}
+        \end{itemize}
+      \item \code{UNION ALL}, \code{INTERSECT ALL}, \code{EXCEPT ALL}
+        \begin{itemize}
+          \item \textcolor{black}{will NOT eliminate duplicate tuples from result}
+        \end{itemize}
+      \item \textcolor{black}{no ordering of tuples}
+    \end{itemize}
   \end{minipage}
   \begin{minipage}[c]{0.35\linewidth}
     \begin{lstlisting}[style=mySQL]
@@ -1242,7 +1249,7 @@ FROM countries;
       \end{lstlisting}
   \end{itemize}
 
-  \subsection{handling null values}
+  \subsection{Handling Null Values}
   \begin{tightcenter}
     \includegraphics[width=0.9\linewidth]{cs2102-aggregation-functions-summary.png} 
   \end{tightcenter}
@@ -1387,7 +1394,7 @@ WITH CTE_name AS
   -- </CTE BODY>
 SELECT i.country, ...
 FROM CTE_name i   /* CTE usage */ 
-  LEFT OUTER JOIN routes r N i.code = r.to_code
+  LEFT OUTER JOIN routes r ON i.code = r.to_code
 ...
     \end{lstlisting}
   \end{minipage}
@@ -1485,25 +1492,40 @@ AND v.user_id = x);
   \end{itemize}
   \begin{lstlisting}[style=mySQL]
 -- define function
-CREATE OR REPLACE FUNCTION function_name(x INT, y INT)
-RETURNS CHAR(1) AS $$
-  SELECT CASE 
-    WHEN x >= 70 THEN 'A'
-    WHEN y >= 60 THEN 'B'
-    ELSE 'C'
-  END
-$$ LANGUAGE sql;
+CREATE OR REPLACE FUNCTION get_grade(
+  IN x INT, IN y INT,  -- inputs
+  OUT grade CHAR(1)    -- outputs
+) RETURNS CHAR(1) AS $$
+  DECLARE              -- declare variables
+    varname INT;
+    varname2 := 0;
+  BEGIN                -- begin transactions
+    SELECT CASE 
+      WHEN x >= 70 THEN 'A'
+      WHEN y >= 60 THEN 'B'
+      ELSE 'C';
+  END                  -- end transactions
+$$ LANGUAGE plpgsql;
 
 -- call function
-SELECT function_name(65, 67);  /* returns a composite type, tuple */
-SELECT * FROM function_name(66, 68);  /* returns a table */
-SELECT name, function_name(marks1, marks2) AS grade FROM Scores;
+SELECT get_grade(65, 67);  -- returns a composite type, tuple 
+SELECT * FROM get_grade(66, 68);  -- returns a table 
+SELECT name, get_grade(marks1, marks2) AS grade FROM Scores;
   \end{lstlisting}
 
-  \subsubsection{returning a set of tuples}
+  \subsubsection{Return Types}
   \begin{itemize}
-    \item by default, a function will only return the first tuple (similar to using \code{LIMIT 1})
-    \item to return a set of tuples: \code{SETOF}
+    \item by default, a function will only return the first tuple (similar to \code{LIMIT 1})
+  \end{itemize}
+  \begin{lstlisting}[style=mySQL]
+RETURNS RECORD AS $$      -- returns single tuple
+RETURNS VOID AS $$        -- returns nothing
+RETURNS SETOF AS $$       -- returns a set of tuples
+RETURNS TABLE(x INT, y INT) AS $$  -- returns multiple tuples
+  \end{lstlisting}
+
+  \begin{itemize}
+    \item e.g. to return a set of tuples: \code{SETOF}
       \begin{lstlisting}[style=mySQL]
 -- returns a set of tuples
 CREATE OR REPLACE FUNCTION GradeStudents 
@@ -1514,24 +1536,28 @@ RETURNS SETOF Scores AS $$
   WHERE convert(Mark) = Grade;
 $$ LANGUAGE sql;
       \end{lstlisting}
-  \end{itemize}
-
-  \subsubsection{returning a custom tuple}
-  \begin{itemize}
-    \item specify \code{IN} and \code{OUT} for input and output parameters
-      \begin{lstlisting}[style=mySQL]
+    \item e.g. to return custom tuples
+      \begin{itemize}
+        \item specify \code{IN} and \code{OUT} for input and output parameters
+          \begin{lstlisting}[style=mySQL]
 -- returns a tuple (Mark, Count)
 CREATE OR REPLACE FUNCTION CountGradeStudents
   (IN Grade CHAR(1) OUT Mark CHAR(1), OUT Count INT)
-RETURNS RECORD AS $$  /* use SETOF to return all tuples */
-  SELECT Grade, COUNT(*)
-  FROM Scores
+RETURNS RECORD AS $$  
+  SELECT Grade, COUNT(*) FROM Scores
   WHERE convert(Mark) = Grade;
 $$ LANGUAGE sql;
+          \end{lstlisting}
+      \end{itemize}
+  \end{itemize}
 
--- call the function
-SELECT CountGradeStudents('C');
-      \end{lstlisting}
+
+  \subsubsection{Return Statements}
+  \begin{itemize}
+    \item without \code{RETURN}, function will end naturally and return output params
+    \item \code{RETURN;} - returns output params and \textbf{exits} the function
+    \item \code{RETURN QUERY <SELECT ...>;} - appends queried tuples to output table; does not exit function
+    \item \code{RETURN NEXT;} - appends output params to output table; does not exit function
   \end{itemize}
 
   \subsection{Procedures}
@@ -1555,35 +1581,32 @@ CALL UpdateMark(1);
 
   \subsection{Variables}
   \begin{lstlisting}[style=mySQL]
-CREATE OR REPLACE FUNCTION splitMarks  /* same for PROCEDURE */
-  (IN name1 VARCHAR(20), IN name2 VARCHAR(20), OUT mark1 INT, OUT mark2 INT)
-RETURNS TABLE(mark1 INT, mark2 INT) AS $$  /* return multiple tuples */
-DECLARE
-  newmark INT := 0;
-BEGIN
-  SELECT mark INTO mark1 FROM Scores WHERE name = name1;  /* selects into a mark1 variable */
-  SELECT mark INTO mark2 FROM Scores WHERE name = name2;  /* selects into a mark2 variable */
+CREATE OR REPLACE FUNCTION splitMarks (  -- same for PROCEDURE 
+  IN name1 VARCHAR(20), IN name2 VARCHAR(20), 
+  OUT mark1 INT, OUT mark2 INT
+) RETURNS TABLE(mark1 INT, mark2 INT) AS $$  
+  -- return multiple tuples 
+  DECLARE
+    newmark INT := 0;
+  BEGIN
+    /* selects into a mark1 variable */
+    SELECT mark INTO mark1 FROM Scores WHERE name = name1;  
+    /* selects into a mark2 variable */
+    SELECT mark INTO mark2 FROM Scores WHERE name = name2;  
 
-  newmark := (mark1 + mark2) / 2;
+    newmark := (mark1 + mark2) / 2;
+    UPDATE Scores SET mark = newmark 
+      WHERE name = name1 OR name = name2;
 
-  UPDATE Scores SER mark = newmark WHERE name = name1 OR name = name2;
-  -- does NOT exit the function:
-  RETURN QUERY SELECT mark1, mark2;  /* returns values */
-  -- does NOT exit the function:
-  RETURN NEXT;  /* returns the defined output parameters */
-  -- returns output params and EXITS the function:
-  RETURN;  /* optional */
-END;
+    -- does NOT exit the function:
+    RETURN QUERY SELECT mark1, mark2;  /* returns values */
+    -- does NOT exit the function:
+    RETURN NEXT;  /* returns the defined output parameters */
+    -- returns output params and EXITS the function:
+    RETURN;  /* (optional) */
+  END;
 $$ LANGUAGE plpgsql;  /* not sql */
   \end{lstlisting}
-
-  \subsubsection{Return statements}
-  \begin{itemize}
-    \item without \code{RETURN}, function will end naturally and return output params
-    \item \code{RETURN;} - returns output params and \textbf{exits} the function
-      \item \code{RETURN QUERY <SELECT ...>;} - appends queried tuples to output table; does not exit function
-        \item \code{RETURN NEXT;} - appends output params to output table; does not exit function
-  \end{itemize}
 
   \subsection{Control Flow}
   \subsubsection{Conditionals}
@@ -1652,8 +1675,41 @@ END;
   \begin{itemize}
     \item allows us to access each individual row returned by a SELECT statement
       \includegraphics[width=0.9\linewidth]{cs2102-plpgsql-cursor.png} 
+    \item basic e.g.
+      \begin{lstlisting}[style=mySQL]
+DECLARE
+  curs CURSOR FOR (SELECT sid, score FROM Exams ORDER BY sid);
+  r1 RECORD;
+BEGIN
+  ...
+  OPEN curs;
+  LOOP
+    FETCH curs INTO r1;
+    EXIT WHEN NOT FOUND;
+    /* <do things with r1 */
+  END LOOP;
+  CLOSE curs;
+END;
+      \end{lstlisting}
+  \end{itemize}
+
+  \subsubsection{Cursor Movements}
+  \begin{lstlisting}[style=mySQL]
+FETCH curs INTO r;              -- current tuple
+FETCH NEXT FROM curs INTO r;    -- next tuple
+FETCH PRIOR FROM curs INTO r;   -- previous tuple
+
+FETCH FIRST FROM curs INTO r;   -- first tuple
+FETCH LAST FROM curs INTO r;    -- last tuple
+  ``
+FETCH ABSOLUTE 3 FROM curs INTO r;   -- 3rd tuple
+FETCH RELATIVE -2 FROM curs INTO r;  -- n-2th tuple 
+
+  \end{lstlisting}
+
+  \begin{itemize}
     \item e.g. Based on this ranking system of cryptocurrencies, I want to have daily record of first three coins from the TOP 10 cryptocurrencies that are down by more than 5\% in the past 7 days and are within 2 ranks apart from each other.
-    \begin{lstlisting}[style=mySQL]
+      \begin{lstlisting}[style=mySQL]
 CREATE OR REPLACE FUNCTION consCryptosDown
 (IN num INT)
 RETURNS TABLE(rank INT, sym CHAR(4)) AS $$
@@ -1691,8 +1747,455 @@ BEGIN
   CLOSE curs;
 END;
 $$ LANGUAGE plpgsql;
-    \end{lstlisting}
+      \end{lstlisting}
   \end{itemize}
+
+  \section{09. TRIGGERS}
+  \begin{minipage}[c]{0.33\linewidth}
+    \includegraphics[width=0.9\linewidth]{cs2102-triggers-flow.png} 
+  \end{minipage}
+  \begin{minipage}[c]{0.65\linewidth}
+    \begin{lstlisting}[style=mySQL]
+-- TRIGGER
+CREATE TRIGGER <trigger_name> 
+<timing> <event> ON <table> 
+FOR EACH <granularity> WHEN (<condition>)
+EXECUTE FUNCTION <function_name>();
+
+-- TRIGGER FUNCTION
+CREATE OR REPLACE FUNCTION <func_name>()
+RETURNS TRIGGER AS $$
+BEGIN 
+  <code>
+END;
+$$ LANGUAGE plpgsql
+    \end{lstlisting}
+  \end{minipage}
+
+  \begin{itemize}
+    \item \textcolor{black}{an \textit{event-condition-action} (ECA) rule}
+      \begin{itemize}
+        \item \textcolor{black}{when an \textbf{event} occurs, test \textbf{condition} - if satisfied, execute \textbf{action}}
+        \item \textcolor{black}{event = trigger, action = trigger function}
+        \item condition = \code{WHEN} 
+          \begin{itemize}
+            \item restrictions: no SELECT, OLD/NEW; cannot be used in INSTEAD OF 
+          \end{itemize}
+      \end{itemize}
+    \item \textcolor{black}{\definition{trigger function} a func that returns a trigger}
+      \begin{itemize}
+        \item \textcolor{black}{actions to run when event occurred and conditions are satisfied}
+      \end{itemize}
+  \end{itemize}
+
+  \subsection{Syntax}
+  \begin{itemize}
+    \item trigger + trigger function
+    \item trigger is only applicable to \code{<table>}
+  \end{itemize}
+
+  \subsubsection{keywords}
+  \begin{itemize}
+    \item keywords only accessible by trigger functions:
+      \begin{itemize}
+        \item \code{TG\_OP} - operation
+        \item \code{TG\_TABLE\_NAME} - refers to table name
+      \end{itemize}
+    \item transition variables  
+      \begin{itemize}
+        \item \code{NEW} - the modified row \textit{after} the triggering event
+        \item \code{OLD} - the modified row \textit{before} the triggering event 
+      \end{itemize}
+  \end{itemize}
+
+  \subsubsection{trigger options}
+  \begin{itemize}
+    \item <timing>
+      \begin{itemize}
+        \item \code{AFTER} or \code{BEFORE} (the triggering event)
+        \item \code{INSTEAD OF} (the triggering event on views) - can only be defined on views
+          \begin{itemize}
+            \item \textbf{cannot} be done on statement-level
+          \end{itemize}
+      \end{itemize}
+    \item <event>
+      \begin{itemize}
+        \item \code{INSERT ON table} / \code{DELETE ON table}
+        \item \code{UPDATE ON table} / \code{UPDATE OF column ON table}
+        \item TG\_OP will be the corresponding INSERT/DELETE/UPDATE
+      \end{itemize}
+    \item <granularity>
+      \begin{itemize}
+        \item \code{FOR EACH ROW} (that is modified) - you can insert into multiple rows with a single INSERT statement
+        \item \code{FOR EACH STATEMENT} (that performs the modification)
+          \begin{itemize}
+            \item ignores the values returned by the trigger functions
+            \item e.g. \code{RETURN NULL} will \textbf{not} make the DB omit the subsequent operation !!
+          \end{itemize}
+      \end{itemize}
+  \end{itemize}
+
+  \subsection{Return Values}
+  \begin{itemize}
+    \item \code{NULL} - ignore all operations \code{on current row}
+    \item \code{NOT NULL} - signals the database to proceed as normal
+  \end{itemize}
+
+  \subsubsection{Raise Exceptions}
+  \begin{itemize}
+    \item \code{RAISE NOTICE} - database will give a prompt, but operation continues
+    \item \code{RAISE EXCEPTION} - stops operation
+  \end{itemize}
+
+  \subsection{Deferred Triggers}
+  \begin{itemize}
+    \item \definition{deferred trigger} check consistency constraint only at the end of a transaction (not end of statement)
+    \item ONLY works with \code{AFTER} and \code{FOR EACH ROW}
+    \item indicated by both \code{CONSTRAINT} and \code{DEFERRABLE} 
+      \begin{lstlisting}[style=mySQL]
+CREATE CONSTRAINT TRIGGER balance_check
+AFTER INSERT OR UPDATE OR DELETE ON Account
+DEFERRABLE INITIALLY DEFERRED
+FOR EACH ROW EXECUTE FUNCTION check_balance();
+      \end{lstlisting}
+      \begin{itemize}
+        \item \code{INITIALLY DEFERRED} - by default, the trigger is deferred 
+        \item \code{INITIALLY IMMEDIATE} - not deferred by default
+          \begin{itemize}
+            \item \code{SET CONSTRAINTS balance\_check DEFERRED;} to defer
+          \end{itemize}
+      \end{itemize}
+  \end{itemize}
+
+  \subsection{Multiple Triggers}
+  \begin{itemize}
+    \item multiple triggers defined on the same event on the same table: depends on order of activation
+    \item \textbf{order of activation}:
+      \begin{itemize}
+        \item \code{BEFORE} statement-level triggers
+        \item \code{BEFORE} row-level triggers
+        \item \code{AFTER} statement-level triggers
+        \item \code{AFTER} row-level triggers
+        \item within each category, if multiple triggers exist: alphabetical order
+      \end{itemize}
+    \item if BEFORE row-level trigger returns NULL, then subsequent triggers in the same row are omitted
+  \end{itemize}
+
+
+
+  \subsubsection{triggers example}
+  \begin{tightcenter}
+    \includegraphics[width=0.9\linewidth]{cs2102-triggers-return-value.png} 
+  \end{tightcenter}
+
+  \begin{lstlisting}[style=mySQL]
+-- trigger
+CREATE TRIGGER score_log
+AFTER INSERT OR DELETE OR UPDATE ON Scores          /* event */
+FOR EACH ROW EXECUTE FUNCTION   /* action */
+  log_score(); 
+
+-- trigger function
+CREATE OR REPLACE FUNCTION log_score() 
+RETURNS TRIGGER AS $$
+BEGIN
+  IF (TG_OP = 'DELETE') THEN 
+    INSERT INTO Logs VALUES (OLD.Name, TG_OP, CURRENT_DATE);
+    RETURN OLD;
+  ELSE
+    INSERT INTO Logs VALUES (NEW.Name, TG_OP, CURRENT_DATE);
+    RETURN NEW;
+  END IF;
+END;
+$$ LANGUAGE plpgsql;
+  \end{lstlisting}
+
+  \subsection{INSTEAD OF Trigger}
+  \begin{itemize}
+    \item trigger function
+      \begin{lstlisting}[style=mySQL]
+CREATE OR REPLACE FUNCTION update_top_mark() RETURNS TRIGGER AS $$
+BEGIN
+  UPDATE Scores SET MARK = NEW.Mark WHERE Mark = OLD.Mark;
+  RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+      \end{lstlisting}
+    \item trigger
+      \begin{lstlisting}[style=mySQL]
+CREATE TRIGGER modify_top_mark
+INSTEAD OF UPDATE ON Top_Marks
+FOR EACH ROW EXECUTE FUNCTION update_top_mark();
+      \end{lstlisting}
+  \end{itemize}
+
+  \section{10. FUNCTIONAL DEPENDENCIES}
+  \begin{itemize}
+    \item an abstraction of what the key/superkey is
+  \end{itemize}
+
+  \subsection{Anomalies}
+  \begin{itemize}
+    \item \definition{normal form} a definition of minimum requirements in terms of \textbf{redundancy} 
+  \end{itemize}
+
+  \subsubsection{Normalisation}
+  \begin{itemize}
+    \item split the table to get rid of anomalies
+    \item removes redundancies and insertion/update/deletion anomalies
+    \item natural join to obtain original table
+      \includegraphics[width=0.95\linewidth]{cs2102-normalisation-example.png} 
+  \end{itemize}
+
+  \subsection{Functional Dependencies}
+  Let $A_1, A_2, \dots, A_m, B_1, B_2, \dots, B_n$ be some attributes
+  \begin{itemize}
+    \item \definition{uniquely identifies} $\{A_1 A_2 \dots A_m \} \rightarrow \{B_1 B_2 \dots B_n\}$ whenever 2 tuples have the same values on $A_1 A_2 \dots A_m$, they always have the same values on $B_1 B_2 \dots B_n$
+      \begin{itemize}
+        \item "A \textit{uniquely identifies} B": if you know A, then you will know B (but not the other way round)
+        \item $\{A\} \rightarrow \{B\}$ : functional dependency - $A$ decides/determines $B$ 
+      \end{itemize}
+    \item \textbf{transitivity} - $(\{A\} \rightarrow \{B\}) \land (\{B\} \rightarrow \{C\}) \Rightarrow (\{A\} \rightarrow \{C\})$
+
+  \end{itemize}
+
+  \subsubsection{Armstrong's Axioms}
+  \begin{itemize}
+    \item \definition{Armstrong's Axioms} 3 fundamental axioms for FD reasoning
+      \begin{enumerate}
+        \item axiom of \textbf{reflexivity}: set $\rightarrow$ a subset of attributes ($\{A, B\} \rightarrow \{A\}$)
+        \item axiom of \textbf{augmentation}: if $\{A\} \rightarrow \{B\}$, then $\forall C, \, \{AC\} \rightarrow \{BC\}$
+        \item axiom of \textbf{transitivity}: if $\{A\} \rightarrow \{B\}$ and $\{B\} \rightarrow \{C\}$, then $\{A\} \rightarrow \{C\}$
+      \end{enumerate}
+    \item \textbf{Extended Armstrong's Axioms}
+      \begin{itemize}
+        \item rule of \textbf{decomposition}: if $\{A\} \rightarrow \{BC\}$ then $\{A\} \rightarrow \{B\} \land \{A\} \rightarrow \{C\}$
+        \item rule of \textbf{union}: if $\{A\} \rightarrow \{B\} \land \{A\} \rightarrow \{C\}$, then $\{A\} \rightarrow \{BC\}$
+      \end{itemize}
+    \item combined: $\{A\} \rightarrow \{BC\}$ $\Leftrightarrow$ $\{A\} \rightarrow \{B\} \land \{A\} \rightarrow \{C\}$
+  \end{itemize}
+
+  \subsection{Closures}
+  \begin{itemize}
+    \item $B_1B_2\dots B_n$ is the closure of $A_1A_2\dots A_m$ denoted $\{A_1A_2\dots A_m\}^+$
+      \begin{itemize}
+        \item by \textit{rule of union}, we can find the largest $B_1B_2\dots B_n$ in $\{A_1A_2\dots A_m\} \rightarrow \{B_1B_2\dots B_n\}$
+          \begin{itemize}
+            \item find the maximal RHS by unioning all the RHS
+          \end{itemize}
+        \item by \textit{rule of decomposition}, the largest $B_1B_2\dots B_n$ implies individiual $\{A_1A_2\dots A_m\} \rightarrow \{B_1\}$, $\{A_1A_2\dots A_m\} \rightarrow \{B_2\}$, \dots, $\{A_1A_2\dots A_m\} \rightarrow \{B_n\}$
+          \begin{itemize}
+            \item focus on the portion of the RHS that is relevant
+          \end{itemize}
+        \item $\therefore$ knowing $B_1B_2\dots B_n$ is sufficient to know all that is determined by $\{A_1A_2\dots A_m\}$
+      \end{itemize}
+  \end{itemize}
+
+  \subsubsection{circuit diagram} 
+  \begin{tightcenter}
+    FD: $\{B\} \rightarrow \{D\}$, $\{BD\} \rightarrow \{A\}$ and $\{AD\} \rightarrow \{C\}$
+    \includegraphics[width=0.6\linewidth]{cs2102-closure-circuit-diagram.png} 
+    \\* $\{B\}^+ = \{A,B,C,D\}$
+  \end{tightcenter}
+
+  \subsubsection{hypergraph} 
+  \begin{tightcenter}
+    FD: $\{A\} \rightarrow \{B\}$, $\{C\} \rightarrow \{D\}$ and $\{BC\} \rightarrow \{E\}$
+    \begin{minipage}[c]{0.55\linewidth}
+      \includegraphics[width=0.95\linewidth]{cs2102-closure-hypergraph.png} 
+    \end{minipage}
+    \begin{minipage}[c]{0.42\linewidth}
+      \begin{itemize}
+        \item $\{A\}^+ = \{A, B\}$
+        \item $\{A, C\}^+ = \{A,B,C,D,E\}$ 
+        \item $\{B\}^+ = \{B\}$
+      \end{itemize}
+    \end{minipage}
+  \end{tightcenter}
+
+  \subsection{Keys \& Superkeys}
+  \begin{itemize}
+    \item FD: more formal way to define key and superkey
+    \item an attribute not in any RHS of any FD \textbf{must} be in every key
+    \item \definition{prime attribute} appears in at least one key = union of all keys
+  \end{itemize}
+
+
+  \section{11. BOYCE-CODD NORMAL FORMS (BCNF)}
+
+  \begin{itemize}
+    \item stronger than 3NF - has fewer redundancies
+    \item \textbf{normal forms} in increasing order of strictness:
+      \begin{itemize}
+        \item 1st NF (atomic), 2nd NF (fewer redundancies), 3NF, BCNF (always achievable), 4/5/6NF (not always achievable)
+      \end{itemize}
+    \item two attributes are \textbf{functionally equivalent} if either one can determine the other
+  \end{itemize}
+
+  \subsection{Non-Trivial and Decomposed FD}
+  \begin{itemize}
+    \item \definition{non-trivial} $\{A\} \rightarrow \{B\}$ where $\{A\} \not\subseteq \{B\}$
+    \item \definition{decomposed} $\{A\} \rightarrow \{B\}$ where $B$ is a single attribute
+      \begin{itemize}
+        \item a non-decomposed FD can always be transformed into the equivalent set of decomposed FD by the \textit{decomposition rule}
+      \end{itemize}
+    \item deriving non-trivial and decomposed FD from a table
+      \begin{enumerate}
+        \item consider all subset of attributes in R
+        \item compute the closure of each subset
+        \item remove 'trivial' attributes
+        \item decompose the remaining FDs (non-trivial and not empty) from each closure
+      \end{enumerate}
+  \end{itemize}
+
+  \subsection{BCNF}
+  \begin{itemize}
+    \item a table $R$ is in \definition{BCNF} if every \textit{non-trivial and decomposed FD} has a \textit{superkey} as its LHS
+      \begin{itemize}
+        \item aka any attribute can depend \textbf{only} on superkeys
+        \item proof: suppose $B$ depends on non-superkey $C_1 C_2 \dots C_n$. Since $C_1 C_2 \dots C_n$ is not a superkey, it can appear multiple times in the table. Then the same  $B$ would appear multiple times in the table $\Rightarrow$ redundancy
+      \end{itemize}
+    \item a table $R$ is \textbf{NOT in BCNF} if there exists at least one non-trivial and decomposed FD such that its LHS is \textit{NOT} a superkey
+    \item a table with exactly two attributes is always in BCNF!
+    \item properties of BCNF
+      \begin{itemize}
+        \item $\checkmark$ no update/deletion/insertion anomalies
+        \item $\checkmark$ small redundancies
+          \begin{itemize}
+            \item $\checkmark$ \textbf{lossless join} - original table can always be reconstructed from decomposed tables (natural join)
+            \item $R = R1 \Join R2 = \pi_{R1}(R) \Join \pi_{R2}(R)$
+          \end{itemize}
+      \end{itemize}
+    \item \definition{lossless decomposition} $\{R_1, R_2\}$ is lossless if $R_1 \cap R_2 \rightarrow R_1 \vert R_2$ 
+      \begin{itemize}
+        \item $R_1 \cap R_2$ uniquely identifies all the attributes in $R_1$ or $R_2$
+          \item closure of $R_1 \cap R_2 = R_1$ or $R_2$ 
+      \end{itemize}
+  \end{itemize}
+
+  \subsection{Normalisation}
+  \begin{itemize}
+    \item decompose until all tables are in BCNF
+      \begin{itemize}
+        \item ensures that all BCNF violations are removed
+      \end{itemize}
+    \item if table does not contain all attributes:
+      \begin{enumerate}
+        \item compute closure of each subset of the table's attributes
+        \item remove RHS attributes not in the table
+      \end{enumerate}
+  \end{itemize}
+
+  \subsubsection{Normalisation Algorithm}
+  \begin{enumerate}
+    \item if $R$ is not in BCNF, $\exists$ an FD $\{A\} \rightarrow \{A\}^+$ that violates it
+      \begin{enumerate}
+        \item create table $R1($everything in  $\{A\}^+)$
+          \begin{itemize}
+            \item R1 contains the superkey
+          \end{itemize}
+        \item create table $R2(\{A\}$ and all attributes in $R$ not in  $\{A\}^+)$ 
+          \\* $\Rightarrow R2(\{A\} \cup (R - \{A\}^+))$ 
+          \begin{itemize}
+            \item FD becomes trivial: $\{A\} \rightarrow \{A\}^+$ no longer an FD on R2
+          \end{itemize}
+        \item recursively check $R1$ and $R2$ 
+        \item return the union of the result
+      \end{enumerate}
+    \item else, return $\{R\}$
+  \end{enumerate}
+  \textit{implicit} functional dependencies should be checked too! (because explicit FDs may not apply to R2 when R2 is missing attributes)
+
+  \begin{tightcenter}
+    \begin{minipage}[c]{0.47\linewidth}
+      \includegraphics[width=0.95\linewidth]{cs2102-bcnf-decomposition.png} 
+    \end{minipage}
+    \begin{minipage}[c]{0.47\linewidth}
+      \includegraphics[width=0.95\linewidth]{cs2102-bcnf-decomposition-example.png} 
+    \end{minipage}
+    e.g. $R(A,B,C,D)$ with $\{BC\} \rightarrow \{D\}$, $\{D\} \rightarrow \{A\}$,  $\{A\} \rightarrow \{B\}$
+  \end{tightcenter}
+
+  \section{3NF (THIRD NORMAL FORM)}
+  \begin{itemize}
+    \item BCNF decomposition (normalisation) may not preserve all FDs
+      \begin{itemize}
+        \item decomposed table may have no non-trivial \& decomposed FDs
+        \item exists FD that cannot be derived from FDs on R1 and R2
+      \end{itemize}
+    \item relaxed form of BCNF
+      \begin{itemize}
+        \item satisfies BCNF $\Rightarrow$ satisfies 3NF
+        \item violates 3NF $\Leftarrow$ violates BCNF
+        \item satisfies 3NF $\not\Rightarrow$ satisfies BCNF
+      \end{itemize}
+  \end{itemize}
+
+  \subsection{Functional Dependency Equivalence}
+  let F1 and F2 be sets of FDs.
+  \begin{itemize}
+    \item \definition{equivalence} F1 is equivalent to F2 ($F1 \equiv F2$) $\Leftrightarrow$ 
+      \begin{itemize}
+        \item $F2 \vdash F1$: every FD in F1 can be derived from F2
+        \item $F1 \dashv F2$: every FD in F2 can be derived from F1 
+      \end{itemize}
+    \item to get FDs from decomposed table: union of projection
+    \item to show that F1 can be derived from F2: closure/armstrong axioms
+  \end{itemize}
+
+  \subsection{3NF}
+  \begin{itemize}
+    \item a table is in \definition{3NF} if every \textit{non-trivial} and \textit{decomposed} FD:
+      \begin{itemize}
+        \item its LHS is a \textbf{superkey}, OR
+        \item its RHS is a \textbf{prime attribute} (any attribute in any key)
+      \end{itemize}
+    \item if all attributes are prime attributes, the table is in 3NF
+  \end{itemize}
+
+  \subsubsection{Minimal Basis}
+  \begin{itemize}
+    \item \definition{minimal basis} a \textit{simplified} version of F, $F_b$
+    \item \definition{simplified} 4 conditions
+      \begin{enumerate}
+        \item equivalence: $F \equiv F_b$ (every FD in $F_b$ can be derived from F and vice versa)
+        \item every FD in $F_b$ is non-trivial and decomposed
+        \item for each FD in $F_b$, none of the LHS attributes are redundant
+        \item no FD in $F_b$ is redundant
+      \end{enumerate}
+    \item \definition{redundant} can be removed without affecting the original FD (i.e. $F \equiv F_{b*}$ where  $F_{b*}$ is formed by removing the attribute)
+  \end{itemize}
+
+  \subsubsection{to obtain a minimal basis}
+  \begin{enumerate}
+    \item ensure equivalence
+    \item transform FDs to non-trivial and decomposed
+    \item remove redundant attributes
+      \begin{enumerate}
+        \item for an FD \{A\} $\rightarrow$ B for a \textbf{set} of attributes A, for an attribute C in A,
+        \item compute $\{A-C\}^+$ using F
+        \item if $B \in \{A-C\}^+$, then we can remove C
+      \end{enumerate}
+    \item remove redundant FDs
+      \begin{enumerate}
+        \item try removing and check for equivalence
+      \end{enumerate}
+  \end{enumerate}
+
+  \subsection{3NF Synthesis}
+  for table R and a set of FDs F,
+  \begin{enumerate}
+    \item derive \textit{minimal basis} $F_b$ of F
+    \item from the minimal basis, combine the FDs for which the LHS is the same 
+    \item create a table for each FDs remained in the minimal basis after union
+    \item if \textbf{none} of the tables contain a key for the original table R, create a table containing a key of R
+  \end{enumerate}
+
+
+
+
+
+
 
 
 
@@ -1702,7 +2205,6 @@ $$ LANGUAGE plpgsql;
 \end{multicols}
 
 \hrulefill \\
-% \dotfill
 
 \begin{multicols}{2}
   \section{SUMMARY: RELATIONAL MODEL}
