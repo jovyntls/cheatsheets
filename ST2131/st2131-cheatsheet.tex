@@ -154,6 +154,65 @@
   \end{proof}
 
 
+  \section{02. AXIOMS OF PROBABILITY}
+
+  \subsection{Sample Space and Events}
+  \begin{itemize}
+    \item \definition{sample space} The \textit{set} of all outcomes of an experiment (where outcomes are not predictable with certainty)
+    \item \definition{event} Any \textit{subset} of the sample space
+    \item \definition[of events $E$ and $F$]{union} $E \cup F$ is the event that contains all outcomes that are either in $E$ or $F$ (or both).
+    \item \definition[of events $E$ and $F$]{intersection} $E \cap F$ or $EF$ is the event that contains all outcomes that are both in $E$ and in $F$.
+    \item \definition[of $E$]{complement} $E^c$ is the event that contains all outcomes that are \textit{not} in $E$.
+    \item \definition{subset} $E \subset F$ is all of the outcomes in $E$ that are also in $F$.
+      \begin{itemize}
+        \item $E \subset F \land F \subset E \Rightarrow E = F$
+      \end{itemize}
+  \end{itemize}
+
+  \subsubsection{DeMorgan's Laws}
+  $\mathbf{ (\bigcup\limits^n_{i=1} E_i)^c = \bigcap\limits^n_{i=1}E_i^c }$ 
+  \begin{proof}
+    to show LHS $\subset$ RHS: let $x \in (\bigcup^n_{i=1}E_i)^c$ 
+    \\* $\quad\Rightarrow x \notin \bigcup^n_{i=1}E_i \Rightarrow x \notin E_1$ and $x \notin E_2 \dots$ and $x \notin E_n$
+    \\* $\quad\Rightarrow x \in E_1^c$  and $x \in E_2^c \dots$ and $x \in E_n^c$
+    \\* $\quad\Rightarrow x \in \bigcap^n_{i=1} E_i^c$
+    \\* to show RHS $\subset$ LHS: let $x \in \bigcap^n_{i=1} E_i^c$
+  \end{proof}
+
+  $\mathbf{ (\bigcap\limits^n_{i=1}E_i)^c = \bigcup\limits^n_{i=1}E_i^c }$ \\
+  \begin{proof}
+    using the first law of DeMorgan, negate LHS to get RHS
+  \end{proof}
+
+
+  \subsection{Axioms of Probability}
+
+  \subsubsection{Defining Probability of an Event}
+
+  \textbf{definition 1: relative frequency}
+  \begin{tightcenter}
+    \( {\displaystyle{ P(E) = \lim_{n \to \infty} \frac{n(E)}{n} }} \) 
+  \end{tightcenter}
+  problems with this definition:
+  \begin{enumerate}
+    \item $\frac{n(E)}{n}$ may not converge when $n \to \infty$ 
+    \item $\frac{n(E)}{n}$ may not converge to the same value if the experiment is repeated
+  \end{enumerate}
+
+  \ 
+  \\ \textbf{definition 2}
+
+  Consider an experiment with sample space $S$. 
+  For each event $E$ of the sample space $S$, we assume that a number $P(E)$ is definned and satisfies the following 3 axioms:
+  \begin{enumerate}
+    \item $0 \leq P(E) \leq 1$ 
+    \item $P(S) = 1$
+    \item For any sequence of mutually exclusive events $E_1, E_2, \dots$ 
+      (i.e., events for which $E_iE_j = \emptyset$ when  $i \neq j$),
+      $\quad\quad P(\bigcup\limits^\infty_{i=1} E_i) = \sum\limits^\infty_{i=1} P(E_i)$ 
+  \end{enumerate}
+  $P(E)$ is the probability of event $E$.
+
 
 
 
@@ -193,5 +252,14 @@
 
 
 \end{multicols*}
+
+\begin{center}
+  \begin{tabular}{ccc}
+    \textbf{commutative} & $E \cup F = F \cup E$ & $E \cap F = F \cap E$ \\
+    \textbf{associative} & $(E \cup F) \cup G = E \cup (F \cup G)$ &  $(E \cap F) \cap G = E \cap (F \cap G)$ \\
+    \textbf{distributive} & $(E \cup F) \cap G = (E \cap F) \cup (F \cap G)$ & $(E \cap F) \cup G = (E \cup F) \cap (F \cup G)$ \\
+    \textbf{DeMorgan's} & $(\bigcup\limits^n_{i=1} E_i)^c = \bigcap\limits^n_{i=1}E_i^c$ & $(\bigcap\limits^n_{i=1}E_i)^c = \bigcup\limits^n_{i=1}E_i^c$ \\
+  \end{tabular}
+\end{center}
 
 \end{document}
