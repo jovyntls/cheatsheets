@@ -1,0 +1,197 @@
+\documentclass[10pt, landscape]{article}
+\usepackage[scaled=0.92]{helvet}
+\usepackage{calc}
+\usepackage{multicol}
+\usepackage[a4paper,margin=3mm,landscape]{geometry}
+\usepackage{amsmath,amsfonts,amssymb}
+\usepackage{color,graphicx,overpic}
+\usepackage{hyperref}
+\usepackage{newtxtext} 
+\usepackage{enumitem}
+\usepackage[table]{xcolor}
+\usepackage{mathtools}
+\setlist{nosep}
+% for including images
+\graphicspath{ {./images/} }
+
+\pdfinfo{
+  /Title (ST2131.pdf)
+  /Creator (TeX)
+  /Producer (pdfTeX 1.40.0)
+  /Author (Jovyn Tan)
+  /Subject (ST2131)
+/Keywords (ST2131, nus,cheatsheet,pdf)}
+
+% Turn off header and footer
+\pagestyle{empty}
+
+% redefine section commands to use less space
+\makeatletter
+\renewcommand{\section}{\@startsection{section}{1}{0mm}%
+  {-1ex plus -.5ex minus -.2ex}%
+  {0.5ex plus .2ex}%x
+{\normalfont\large\bfseries}}
+\renewcommand{\subsection}{\@startsection{subsection}{2}{0mm}%
+  {-1explus -.5ex minus -.2ex}%
+  {0.5ex plus .2ex}%
+{\normalfont\normalsize\bfseries}}
+\renewcommand{\subsubsection}{\@startsection{subsubsection}{3}{0mm}%
+  {-1ex plus -.5ex minus -.2ex}%
+  {1ex plus .2ex}%
+{\normalfont\small\bfseries}}%
+\makeatother
+
+\renewcommand{\familydefault}{\sfdefault}
+\renewcommand\rmdefault{\sfdefault}
+%  makes nested numbering (e.g. 1.1.1, 1.1.2, etc)
+\renewcommand{\labelenumii}{\theenumii}
+\renewcommand{\theenumii}{\theenumi.\arabic{enumii}.}
+\renewcommand\labelitemii{•}
+\renewcommand\labelitemiii{•}
+
+\definecolor{mathblue}{cmyk}{1,.72,0,.38}
+\everymath\expandafter{\the\everymath \color{mathblue}}
+
+% Don't print section numbers
+\setcounter{secnumdepth}{0}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0pt plus 0.5ex}
+%% adjust spacing for all itemize/enumerate
+\setlength{\leftmargini}{0.5cm}
+\setlength{\leftmarginii}{0.5cm}
+\setlist[itemize,1]{leftmargin=2mm,labelindent=1mm,labelsep=1mm}
+\setlist[itemize,2]{leftmargin=4mm,labelindent=1mm,labelsep=1mm}
+
+% adding my commands
+\input{../commands/style-helpers.tex}
+\input{./st2131-commands.tex}
+
+% -----------------------------------------------------------------------
+
+\begin{document}
+\raggedright
+\footnotesize
+\begin{multicols*}{3}
+  % multicol parameters
+  \setlength{\columnseprule}{0.25pt}
+
+  \begin{center}
+    \fbox{%
+      \parbox{0.8\linewidth}{\centering \textcolor{black}{
+          {\Large\textbf{ST2131}}
+        \\ \normalsize{AY21/22 SEM 2}}
+        \\ {\footnotesize \textcolor{gray}{github/jovyntls}}
+      }%
+    }
+  \end{center}
+
+  \section{01. COMBINATORIAL ANALYSIS}
+
+  \textbf{tricky} - E18, E20-22, E23, E26
+
+  \subsection{The Basic Principle of Counting}
+
+  \begin{itemize}
+    \item \definition{combinatorial analysis} the mathematical theory of counting
+    \item \definition{basic principle of counting} Suppose that two experiments are performed. 
+      If exp1 can result in any one of $m$ possible outcomes and if, for each outcome of exp1, there are $n$ possible outcomes of exp2, 
+      then together there are $mn$ possible outcomes of the two experiments.
+    \item \definition{generalized basic principle of counting} If $r$ experiments are performed such that the first one may result in any of $n_1$ possible outcomes and if for each of these $n_1$ possible outcomes, and if ..., then there is a total of $n_1 \cdot n_2 \cdot \dots \cdot n_r$ possible outcomes of $r$ experiments.
+  \end{itemize}
+
+  \subsection{Permutations}
+
+  \textbf{factorials} - $1! = 0! = 1$
+
+  \textbf{N1} - if we know how to count the number of different ways that an event can occur, we will know the probability of the event.
+
+  \textbf{N2} - there are $n!$ different arrangements for $n$ objects.
+
+  \textbf{N3} - there are $\frac{n!}{n_1!\, n_2!\, \dots n_r!}$ different arrangements of $n$ objects, 
+  of which $n_1$ are alike, $n_2$ are alike, ..., $n_r$ are alike.
+
+  \subsection{Combinations}
+
+  \textbf{N4} - $\binom{n}{r} = \frac{n!}{(n-r)!\,r!}$ represents the number of different groups of size $r$ that could be selected from a set of $n$ objects when the order of selection is not considered relevant.
+
+  \textbf{N4b} - $\binom{n}{r} = \binom{n-1}{r-1} + \binom{n-1}{r}, \quad 1 \leq r \leq n$
+  \begin{proof}
+    If object 1 is chosen $\Rightarrow$ $\binom{n-1}{r-1}$ ways of choosing the remaining objects.
+    \\* If object 1 is not chosen $\Rightarrow$ $\binom{n-1}{r}$ ways of choosing the remaining objects.
+  \end{proof}
+
+  \textbf{N5} - \textbf{The Binomial Theorem} - \( {\displaystyle{(x+y)^n = \sum^n_{k=0} \binom{n}{k} x^k y^{n-k} }} \) 
+  \begin{proof}
+    by mathematical induction: $n=1$ is true; expand; sub dummy variable; combine using N4b; combine back to final term
+  \end{proof}
+
+  \subsection{Multinomial Coefficients}
+
+  \textbf{N6} - $\binom{n}{n_1, n_2, \dots, n_r} = \frac{n!}{n_1!\, n_2!\, \dots \, n_r!}$  
+  represents the number of possible divisions of $n$ distrinct objects 
+  into $r$ distinct groups of respective sizes $n_1, n_2, \dots, n_3$, 
+  where $n_1 + n_2 + \dots + n_r = n$
+  \begin{proof}
+    using basic counting principle, 
+    \\* $= \binom{n}{n_1} \binom{n-n_1}{n_2} \binom{n-n_1-n_2}{n_3} \dots \binom{n-n_1-n_2-n_{r-1}}{n_r}$
+    \\* $= \frac{n!}{(n-n_1)!\,n_1!} \times \frac{(n-n_1)!}{(n-n_1-n_2)!\, n_2!} \times \dots \times \frac{( n-n_1-n_2-\dots -n_{r-1} )}{0!\, n_r!}$
+    \\* $= \frac{n!}{n_1!\, n_2! \, \dots \, n_r!}$
+  \end{proof}
+
+  \textbf{N7} - \textbf{The Multinomial Theorem}: $(x_1 + x_2 + \dots + x_r)^n$
+  \\* $ \quad\quad\quad = \sum\limits_{(n_1, \dots, n_r):n_1 + n_2 + \dots + n_r = n} \frac{n!}{n_1! \, n_2! \, \dots n_r!} x_1^{n_1} x_2^{n_2} \dots x_r^{n_r}$
+
+  \subsection{Number of Integer Solutions of Equations}
+
+  \textbf{N8} - there are $\binom{n-1}{r-1}$ distinct \textit{positive} integer-valued vectors $(x_1, x_2, \dots, x_r)$ satisfying
+  $x_1 + x_2 + \dots + x_r = n, \quad x_i > 0, \quad i = 1,2,\dots,r$  
+  \\* \attention cannot be directly applied to \textit{N8} as 0 value is not included
+
+  \textbf{N9} - there are $\binom{n+r-1}{r-1}$ distinct  \textit{non-negative} integer-valued vectors $(x_1, x_2, \dots, x_r)$ satisfying $x_1 + x_2 + \dots + x_r = n$ 
+  \begin{proof}
+    let $y_k = x_k + 1 \Rightarrow y_1 + y_2 + \dots + y_r = n + r$
+  \end{proof}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\end{multicols*}
+
+\end{document}

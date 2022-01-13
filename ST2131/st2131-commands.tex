@@ -1,0 +1,7 @@
+% proofs
+\newenvironment{proof}
+{%
+  \sbox0{\textit{Proof}: }%
+  \list{}{\labelwidth\wd0 \leftmargin\wd0 \labelsep 0pt }
+\item[\usebox0]}
+  {\endlist}
