@@ -1,0 +1,207 @@
+\documentclass[10pt, landscape]{article}
+\usepackage[scaled=0.92]{helvet}
+\usepackage{calc}
+\usepackage{multicol}
+\usepackage[a4paper,margin=3mm,landscape]{geometry}
+\usepackage{amsmath,amsthm,amsfonts,amssymb}
+\usepackage{color,graphicx,overpic}
+\usepackage{hyperref}
+\usepackage{newtxtext} 
+\usepackage{enumitem}
+\usepackage[table]{xcolor}
+\usepackage{mathtools}
+\setlist{nosep}
+% for including images
+\graphicspath{ {./images/} }
+
+\pdfinfo{
+  /Title (CS3230.pdf)
+  /Creator (TeX)
+  /Producer (pdfTeX 1.40.0)
+  /Author (Jovyn Tan)
+  /Subject (CS3230)
+/Keywords (CS3230, nus,cheatsheet,pdf)}
+
+% Turn off header and footer
+\pagestyle{empty}
+
+% redefine section commands to use less space
+\makeatletter
+\renewcommand{\section}{\@startsection{section}{1}{0mm}%
+  {-1ex plus -.5ex minus -.2ex}%
+  {0.5ex plus .2ex}%x
+{\normalfont\large\bfseries}}
+\renewcommand{\subsection}{\@startsection{subsection}{2}{0mm}%
+  {-1explus -.5ex minus -.2ex}%
+  {0.5ex plus .2ex}%
+{\normalfont\normalsize\bfseries}}
+\renewcommand{\subsubsection}{\@startsection{subsubsection}{3}{0mm}%
+  {-1ex plus -.5ex minus -.2ex}%
+  {1ex plus .2ex}%
+{\normalfont\small\bfseries}}%
+\makeatother
+
+\renewcommand{\familydefault}{\sfdefault}
+\renewcommand\rmdefault{\sfdefault}
+%  makes nested numbering (e.g. 1.1.1, 1.1.2, etc)
+\renewcommand{\labelenumii}{\theenumii}
+\renewcommand{\theenumii}{\theenumi.\arabic{enumii}.}
+\renewcommand\labelitemii{•}
+\renewcommand\labelitemiii{•}
+
+\definecolor{mathblue}{cmyk}{1,.72,0,.38}
+\everymath\expandafter{\the\everymath \color{mathblue}}
+
+% Don't print section numbers
+\setcounter{secnumdepth}{0}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0pt plus 0.5ex}
+%% adjust spacing for all itemize/enumerate
+\setlength{\leftmargini}{0.5cm}
+\setlength{\leftmarginii}{0.5cm}
+\setlist[itemize,1]{leftmargin=2mm,labelindent=1mm,labelsep=1mm}
+\setlist[itemize,2]{leftmargin=4mm,labelindent=1mm,labelsep=1mm}
+
+% adding my commands
+\input{../commands/style-helpers.tex}
+
+% -----------------------------------------------------------------------
+
+\begin{document}
+\raggedright
+\footnotesize
+\begin{multicols*}{4}
+  % multicol parameters
+  \setlength{\columnseprule}{0.25pt}
+
+  \begin{center}
+    \fbox{%
+      \parbox{0.8\linewidth}{\centering \textcolor{black}{
+          {\Large\textbf{CS3230}}
+        \\ \normalsize{AY21/22 SEM 2}}
+        \\ {\footnotesize \textcolor{gray}{github/jovyntls}}
+      }%
+    }
+  \end{center}
+
+  \section{01. COMPUTATIONAL MODELS}
+  \begin{itemize}
+    \item \definition{algorithm} a well-defined procedure for finding the correct solution to the input
+    \item \textbf{correctness}
+      \begin{itemize}
+        \item \definition{worst-case correctness} correct on \textit{every valid input}
+        \item other types of correctness: correct on random input/with high probability/approximately correct
+      \end{itemize}
+    \item \textbf{efficiency} / \definition{running time} measures the number of steps executed by an algorithm as a function of the \textit{input size} (depends on computational model used)
+      \begin{itemize}
+        \item number input: typically the length of binary representation
+        \item \definition[running time]{worst-case} \textit{max} number of steps executed when run on an input of size $n$ 
+      \end{itemize}
+  \end{itemize}
+
+  \subsection{Comparison Model}
+  \begin{itemize}
+    \item algorithm can \textbf{compare} any two elements in one time unit ($x>y$, $x<y$, $x=y$)
+    \item running time = number of comparisons made
+    \item array can be manipulated at no cost
+  \end{itemize}
+
+  \subsubsection{Maximum Problem}
+  \begin{itemize}
+    \item \textit{problem}: find the largest element in an array $A$ of $n$ distinct elements
+    \item \textit{proof that $n-1$ comparisons are needed}: 
+      \begin{itemize}
+        \item fix an algorithm $M$ that solves the Maximum problem on all inputs using $< n-1$ comparisons. construct graph $G$ where nodes $i$ and $j$ are adjacent iff $M$ compares $i$ and $j$.
+          \\* \includegraphics[width=0.7\linewidth]{maximum-problem-graph.png} 
+        \item $M$ cannot differentiate $A$ and $A'$.
+      \end{itemize}
+    \item \definition{adversary argument} inputs are decided such that they have different solutions
+  \end{itemize}
+
+  \subsubsection{Second Largest Problem}
+  \begin{itemize}
+    \item \textit{problem}: find the second largest element in $<2n-3$ comparisons (2x Maximum $\Rightarrow$ $\scriptstyle (n-1) + ((n-1)-1) = 2n-3$ )
+    \item \textit{solution}: \textbf{knockout tournament} $\Rightarrow n + \lceil \lg n \rceil - 2$
+      \\* \includegraphics[width=0.6\linewidth]{second-largest-solution.png} 
+      \begin{enumerate}
+        \item bracket system: $n-1$ matches 
+          \begin{itemize}
+            \item every non-winner has lost exactly once
+          \end{itemize}
+        \item then compare the elements that have lost to the largest
+          \begin{itemize}
+            \item the second-largest element must have lost to the winner
+            \item compares $\lceil \lg n \rceil$ elements that have lost to the winner using $\lceil \lg n \rceil -1$ comparisons 
+          \end{itemize}
+      \end{enumerate}
+  \end{itemize}
+
+  \subsubsection{Sorting}
+  \begin{itemize}
+    \item there is a sorting algorithm that requires $\leq n \lg n - n + 1$ comparisons.
+    \item \textit{proof:} every sorting algorithm must make $\geq \lg (n!)$ comparisons.
+      \begin{enumerate}
+        \item let set $\mathcal{U}$ be the set of all permutations of the set $\{1, \dots, n\}$ that the adversary could choose as array $A$. $\vert \mathcal{U} \vert = n!$ 
+        \item for each query "is $A_i > A_j$?", 
+          \\* if $\mathcal{U}_{yes} = \{A \in \mathcal{U} : A_i > A_j\}$ is of size $\geq \vert\mathcal{U}\vert /2$, set $\mathcal{U} := \mathcal{U}_{yes}$. else: $\mathcal{U} := \mathcal{U} \backslash \mathcal{U}_{yes}$
+        \item the size of $\mathcal{U}$ decreases by at most half with each comparison
+        \item for $> \lg (n!)$ comparisons, $\mathcal{U}$ will still contain at least 2 permutations
+      \end{enumerate}
+  \end{itemize}
+
+  \begin{tightcenter}
+    $n! \geq (\frac{n}{e})^n$ 
+    \\* $\Rightarrow \lg (n!) \geq n \lg (\frac{n}{e}) = n \lg n - n \lg e$
+    \\* $\approx n \lg n - 1.44n$
+    \\* $\Rightarrow$ roughly $n \lg n$ comparisons are \textbf{required} and \textbf{sufficient} for sorting $n$ numbers
+  \end{tightcenter}
+
+  \subsection{String Model}
+  \begin{itemize}
+    \item input: string of $n$ bits
+    \item each query: find out \textbf{one bit} of the string
+    \item $n$ queries are \textbf{necessary} and \textbf{sufficient} to check if the input string is all 0s.
+  \end{itemize}
+
+  \subsection{Graph Model}
+  \begin{itemize}
+    \item input: (symmetric) adjacency matrix of an $n$-node undirected graph
+    \item each query: find out if an edge is present between two chosen nodes
+    \item \textit{proof}: $\binom{n}{2}$ queries are necessary to decide whether the graph is connected or not
+      \begin{enumerate}
+        \item suppose $M$ is an algorithm making $\leq \binom{n}{2}$ queries.
+        \item whenever $M$ makes a query, the algorithm tries not adding this edge, but adding all remaining unqueried edges. 
+          \begin{enumerate}
+            \item if the resulting graph is connected, $M$ replies $0$ (i.e. edge does not exist)
+            \item else: replies $1$ (edge exists)
+          \end{enumerate}
+        \item after $< \binom{n}{2}$ queries, at least one entry of the adjacency matrix is unqueried.
+      \end{enumerate}
+  \end{itemize}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\end{multicols*}
+
+\end{document}
