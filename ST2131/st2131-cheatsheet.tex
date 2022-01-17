@@ -55,8 +55,6 @@
 % Don't print section numbers
 \setcounter{secnumdepth}{0}
 
-\setlength{\parindent}{0pt}
-\setlength{\parskip}{0pt plus 0.5ex}
 %% adjust spacing for all itemize/enumerate
 \setlength{\leftmargini}{0.5cm}
 \setlength{\leftmarginii}{0.5cm}
@@ -72,6 +70,11 @@
 \begin{document}
 \raggedright
 \footnotesize
+
+% space above/below equation environment 
+\setlength{\abovedisplayskip}{1pt}
+\setlength{\belowdisplayskip}{1pt}
+
 \begin{multicols*}{3}
   % multicol parameters
   \setlength{\columnseprule}{0.25pt}
@@ -187,20 +190,17 @@
 
   \subsection{Axioms of Probability}
 
-  \subsubsection{Defining Probability of an Event}
-
-  \textbf{definition 1: relative frequency}
-  \begin{tightcenter}
-    \( {\displaystyle{ P(E) = \lim_{n \to \infty} \frac{n(E)}{n} }} \) 
-  \end{tightcenter}
+  \subsubsection{definition 1: relative frequency}
+  \begin{equation*}
+    P(E) = \lim_{n \to \infty} \frac{n(E)}{n} 
+  \end{equation*}
   problems with this definition:
   \begin{enumerate}
     \item $\frac{n(E)}{n}$ may not converge when $n \to \infty$ 
     \item $\frac{n(E)}{n}$ may not converge to the same value if the experiment is repeated
   \end{enumerate}
 
-  \ 
-  \\ \textbf{definition 2}
+  \subsubsection{definition 2: Axioms}
 
   Consider an experiment with sample space $S$. 
   For each event $E$ of the sample space $S$, we assume that a number $P(E)$ is definned and satisfies the following 3 axioms:
@@ -208,10 +208,97 @@
     \item $0 \leq P(E) \leq 1$ 
     \item $P(S) = 1$
     \item For any sequence of mutually exclusive events $E_1, E_2, \dots$ 
-      (i.e., events for which $E_iE_j = \emptyset$ when  $i \neq j$),
-      $\quad\quad P(\bigcup\limits^\infty_{i=1} E_i) = \sum\limits^\infty_{i=1} P(E_i)$ 
+      \\* (i.e., events for which $E_iE_j = \emptyset$ when  $i \neq j$),
+      \begin{tightcenter}
+        $P(\bigcup\limits^\infty_{i=1} E_i) = \sum\limits^\infty_{i=1} P(E_i)$ 
+      \end{tightcenter}
   \end{enumerate}
   $P(E)$ is the probability of event $E$.
+
+  \subsection{Simple Propositions}
+
+  \textbf{N1} - $P(\emptyset) = 0$
+
+  \textbf{N2} - $P(\bigcup\limits^n_{i=1} E_i) = \sum\limits^n_{i=1} P(E_i)$ 
+  $\quad$ (aka axiom 3 for a finite $n$)
+
+  \textbf{N3} - \textbf{strong law of large numbers} - if an experiment is repeated over and over again, then with probability $1$, 
+  the proportion of time during which any specific event $E$ occurs will be equal to $P(E)$.
+
+  \textbf{N6} - the definitions of probability are mathematical definitions. 
+  They tell us which set functions can be called \textbf{probability functions}. 
+  They do not tell us what value a probability function $P(\cdot)$ assigns to a given event $E$.
+
+  \begin{tightcenter}
+    probability function $\iff$ it satisfies the 3 axioms.
+  \end{tightcenter}
+
+  \textbf{N7} - $P(E_c) = 1-P(E)$
+
+  \textbf{N8} - if $E \subset F$, then $P(E) \leq P(F)$
+
+  \textbf{N9} - $P(E \cup F) = P(E) + P(F) - P(E \cap F)$
+
+  \textbf{N10} - Inclusion-Exclusion identity where $n=3$
+  \begin{align*}
+    P(E \cup F \cup G) &= P(E) + P(F) + P(G) \\*
+                       &- P(EF) - P(EG) - P(FG) \\*
+                       &+ P(EFG)
+  \end{align*}
+
+  \textbf{N11} - \textbf{Inclusion-Exclusion identity} - 
+  \begin{align*}
+    P(E_1 \cup E_2 \cup \dots \cup E_n) &= \sum\limits^n_{i=1} P(E_i) - \sum\limits_{i_1 < i_2} P(E_{i_1} E_{i_2}) + \dots \\
+                                        &+ (-1)^{r+1} \sum_{i_1 < i_2 < \dots < i_r} P(E_{i_1} E_{i_2} \dots E_{i_r}) + \dots \\
+                                        &+ (-1)^{n+1} P(E_1 E_2 \dots E_n)
+  \end{align*}
+  \begin{proof}
+    Suppose an outcome with probability $\omega$ is in exactly $m$ of the events $E_i$, where $m > 0$. Then
+    \\* \textbf{LHS}: the outcome is in $E_1\cup E_2 \cup \dots \cup E_n$ and $\omega$ will be counted once in $P(E_1\cup E_2 \cup \dots \cup E_n)$ 
+    \\* \textbf{RHS}: 
+    \begin{itemize}
+      \item the outcome is in exactly $m$ of the events $E_i$ and $\omega$ will be counted exactly $\binom{m}{1}$ times in $\sum\limits^n_{i=1}P(E_i)$
+      \item the outcome is contained in $\binom{m}{2}$ subsets of the type $E_{i_1}E_{i_2}$ 
+        and $\omega$ will be counted $\binom{m}{2}$ times in $\sum\limits_{i_1 < i_2} P(E_{i_1} E_{i_2})$ 
+      \item $\dots$ and so on 
+    \end{itemize}
+    hence RHS = $\binom{m}{1}\omega - \binom{m}{2}\omega + \binom{m}{3}\omega - \dots \pm \binom{m}{m}\omega $
+    \\ $\quad = \omega \sum\limits^m_{i=0}\binom{m}{i} (-1)^i = $ binomial theorem where $x=-1, y=1$ 
+    \\ $\quad = 0 = $ LHS
+  \end{proof}
+  \begin{proof}[e.g]
+    For an outcome with probability $\omega$ and $n=3$
+    \begin{itemize}
+      \item 
+        \begin{proof}[Case 1] $w = P(E_1E_2)$
+          \\* LHS = $\omega$
+          \\* RHS = ($\omega$ + $\omega$ + 0) - ($\omega$ + 0 + 0) + 0 = $\omega$
+        \end{proof}
+      \item 
+        \begin{proof}[Case 2] $\omega = P(E_1 \cap E_2 \cap E_3)$
+          \\* LHS = $\omega$
+          \\* RHS = ($\omega$ + $\omega$ + $\omega$) - ($\omega$ + $\omega$ + $\omega$) + $\omega$ = $\omega$
+        \end{proof}
+    \end{itemize}
+  \end{proof}
+
+  \textbf{N12} - 
+  \begin{enumerate}[label=(\roman*)]
+    \item $P(\bigcup^n_{i=1}E_i) \leq \sum\limits^n_{i=1} P(E_i)$
+    \item $P(\bigcup^n_{i=1}E_i) \geq \sum\limits^n_{i=1} P(E_i) - \sum\limits_{j < i} P(E_iE_j)$
+    \item $P(\bigcup^n_{i=1}E_i) \leq \sum\limits^n_{i=1} P(E_i) - \sum\limits_{j < i} P(E_iE_j) + \sum_{k < j < i} P(E_iE_jE_k)$
+    \item and so on.
+  \end{enumerate}
+  \begin{proof}
+    $\scriptstyle \bigcup\limits^n_{i=1} E_i = E_1 \cup E_1^cE_2 \cup E_1^cE_2^cE_3 \cup \dots \cup E_1^cE_2^c\dots E_{n-1}^cE_n$
+    \\* $\scriptstyle P(\bigcup\limits^n_{i=1} E_i) = P(E_1) + P(E_1^cE_2) + P(E_1^cE_2^cE_3) + \dots + P(E_1^cE_2^c\dots E_{n-1}^cE_n)$
+  \end{proof}
+
+
+  % \subsection{Sample Space having Equally Likely Outcomes}
+
+
+
 
 
 
