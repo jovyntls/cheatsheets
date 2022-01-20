@@ -42,3 +42,11 @@
 % important note (attention)
 \newcommand{\attention}{{\color{red}\textbf{! }}}
 
+% nice proof
+\newenvironment{niceproof}[1][Proof]
+{%
+  \sbox0{\textit{#1}. }%
+  \list{}{\labelwidth\wd0 \leftmargin\wd0 \labelsep 0pt }
+\item[\usebox0]}
+  {\endlist}
+
