@@ -181,6 +181,99 @@
   \end{itemize}
 
 
+  \section{02. ASYMPTOTIC ANALYSIS}
+
+  \begin{itemize}
+    \item \definition{algorithm} a \textit{finite} sequence of well-defined instructions to solve a given computational problem
+    \item \definition{runtime} measured in number of instructions taken in \textbf{word-RAM} model
+      \begin{itemize}
+        \item operators, comparisons, if, return, etc
+      \end{itemize}
+  \end{itemize}
+
+  \subsection{Asymptotic Notations}
+
+  \begin{tightcenter}
+    \textbf{upper bound ($\leq$)}: $f(n) = O(g(n))$ 
+    \\* if $\exists c>0, n_0>0$ such that $\forall n \geq n_0$, $\quad 0 \leq f(n) \leq cg(n)$ 
+  \end{tightcenter}
+
+  \begin{tightcenter}
+    \textbf{lower bound ($\geq$)}: $f(n) = \Omega(g(n))$ 
+    \\* if $\exists c>0, n_0>0$ such that $\forall n \geq n_0$, $\quad 0 \leq cg(n) \leq f(n)$ 
+  \end{tightcenter}
+
+  \begin{tightcenter}
+    \textbf{tight bound}: $f(n) = \Theta(g(n))$ 
+    \\* if $\exists c_1>0, c_2>0, n_0>0$ such that $\forall n \geq n_0, \quad 0 \leq c_1 g(n) \leq f(n) \leq c_2 g(n)$ 
+  \end{tightcenter}
+
+  \begin{tightcenter}
+    \textbf{$o$ notation ($<$)}: $f(n) = o(g(n))$ 
+    \\* if $\exists c>0, n_0>0$ such that $\forall n \geq n_0$, $\quad 0 \leq f(n) < cg(n)$ 
+  \end{tightcenter}
+
+  \begin{tightcenter}
+    \textbf{$\omega$-notation ($>$)}: $f(n) = \omega(g(n))$ 
+    \\* if $\exists c>0, n_0>0$ such that $\forall n \geq n_0$, $\quad 0 \leq cg(n) < f(n)$ 
+  \end{tightcenter}
+
+  \subsubsection{Set definitions}
+
+  \begin{itemize}
+    \item \textit{upper}: $O(g(n)) = $
+      \\* $ \{f(n): \exists c>0, n_0>0 \mid \forall n \geq n_0, \, 0 \leq f(n) \leq cg(n)\}$
+    \item \textit{lower}: $\Omega(g(n)) = $
+      \\* $ \{f(n): \exists c>0, n_0>0 \mid \forall n \geq n_0, \, 0 \leq cg(n) \leq f(n)\}$
+  \end{itemize}
+
+  \begin{niceproof}
+    that $2n^2 = O(n^3)$ 
+    \\* let $f(n) = 2n^2$. then $f(n) = 2n^2 \leq n^3$ when $n \geq 2$. 
+    \\* set  $c=1$ and $n_0 = 2$.
+    \\* we have $f(n) = 2n^2 \leq c \cdot n^3$ for $n \geq n_0$. \qed
+  \end{niceproof}
+
+  \subsection{Limits}
+
+  Assume $f(n), g(n) > 0$.
+  \begin{center}
+    $\lim\limits_{n \to \infty} \frac{f(n)}{g(n)} = 0 \Rightarrow f(n) = o(g(n))$
+    \\* $\lim\limits_{n \to \infty} \frac{f(n)}{g(n)} < \infty \Rightarrow f(n) = O(g(n))$
+    \\* $0 < \lim\limits_{n \to \infty} \frac{f(n)}{g(n)} < \infty \Rightarrow f(n) = \Theta(g(n))$
+    \\* $\lim\limits_{n \to \infty} \frac{f(n)}{g(n)} > 0 \Rightarrow f(n) = \Omega(g(n))$
+    \\* $\lim\limits_{n \to \infty} \frac{f(n)}{g(n)} = \infty \Rightarrow f(n) = \omega(g(n))$
+  \end{center}
+
+  \begin{niceproof}
+    using delta epsilon definition
+  \end{niceproof}
+
+  \subsection{Properties of Big O}
+
+  \begin{fixedbox}
+    $\Theta(g(n)) = O(g(n)) \cap \Omega(g(n))$
+  \end{fixedbox}
+
+  \begin{itemize}
+    \item $\textbf{transitivity}$ - applies for $O, \Theta, \Omega, o, \omega$
+      $f(n) = O(g(n)) \land g(n) = O(h(n)) \Rightarrow f(n) = O(h(n))$ 
+    \item \textbf{reflexivity} - for $O, \Omega, \Theta, \quad f(n) = O(f(n))$ 
+    \item \textbf{symmetry} - $f(n) = \Theta(g(n)) \iff g(n) = \Theta(f(n))$
+    \item \textbf{complementarity} - 
+      \begin{itemize}
+        \item $f(n) = O(g(n)) \iff g(n) = \Omega(f(n))$
+        \item $f(n) = o(g(n)) \iff g(n) = \omega(f(n))$
+      \end{itemize}
+  \end{itemize}
+
+  insertion sort: $O(n^2)$ with worst case $\Theta(n^2)$
+
+  \begin{fixedbox}[0.8]
+    $\log\log n < \log n < (\log n)^k < n^k < k^n$
+  \end{fixedbox}
+
+
 
 
 
