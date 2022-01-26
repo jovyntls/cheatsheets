@@ -316,7 +316,7 @@
 
   \section{03. CONDITIONAL PROBABILITY AND INDEPENDENCE}
 
-  tricky - E6
+  tricky - E6, urns (p.37)
 
   \subsection{Conditional Probability}
 
@@ -350,6 +350,47 @@
     $P(F \vert E) = \frac{P(EF)}{P(E)} = \frac{P(F) \cdot P(E \vert F)}{P(E)}$ \\
     $P(F^c \vert E) = \frac{P(EF^c)}{P(E)} = \frac{P(F^c) \cdot P(E \vert F^c)}{P(E)}$ 
   \end{minipage}
+
+  \subsubsection{Total Probabililty}
+
+  \textbf{theorem of total probability} - 
+  Suppose $F_1, F_2, \dots, F_n$ are mutually exclusive events such that $\bigcup\limits^n_{i=1}F_i = S$, 
+  then $P(E) = \sum\limits^n_{i=1}P(EF_i) = \sum\limits^n_{i=1}P(F_i)P(E\vert F_i)$
+
+  \subsubsection{Bayes Theorem}
+
+  \begin{align*}
+    P(F_j \vert E) &= \frac{P(EF_j)}{P(E)} \\
+                   &= \frac{P(F_j)P(E \vert F_j)}{\sum\limits^n_{i=1} P(F_i)P(E \vert F_i)}
+  \end{align*}
+
+  \textbf{application of bayes' theorem}
+
+  \begin{tightcenter}
+    $P(B_1 \mid A) = \frac{P(A \mid B_1) \cdot P(B_1)}{P(A \mid B_1) \cdot P(B_1) + P(A \mid B_2) \cdot P(B_2)}$
+  \end{tightcenter}
+
+  Let $A$ be the event that the person test positive for a disease.
+  \\* $B_1$: the person actually has the disease.
+  \\* $B_2$: the person does not have the disease.
+  \begin{tightcenter}
+    \begin{multicols}{2}
+      true positives: $P(B_1\mid A)$
+      \\ false positives: $P(A \mid B_2)$
+      \\ false negatives: $P(\bar{A} \mid B_1)$
+      \\ true negatives: $P(\bar{A} \mid B_2)$
+    \end{multicols}
+  \end{tightcenter}
+
+  \subsection{Independent Events}
+
+  \textbf{N1} - $E$ and $F$ are independent $\iff$
+  \\* $P(EF) = P(E) \cdot P(F) \quad$ or $\quad P(E \vert F) = P(E)$
+
+  \textbf{N2} - if $E$ and $F$ are independent, then $E$ and $F^c$ are independent.
+
+  \textbf{N3} - if $E, F, G$ are independent, then $E$ will be independent of any event formed from $F$ and $G$. (e.g. $F\cup G$)
+
 
 
 
