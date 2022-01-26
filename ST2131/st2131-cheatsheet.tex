@@ -10,6 +10,7 @@
 \usepackage{enumitem}
 \usepackage[table]{xcolor}
 \usepackage{mathtools}
+\usepackage{tikz}
 \setlist{nosep}
 % for including images
 \graphicspath{ {./images/} }
@@ -313,6 +314,42 @@
   $\lim\limits_{n \to \infty} E_n = \bigcap\limits^\infty_{i=1}E_i$
 
 
+  \section{03. CONDITIONAL PROBABILITY AND INDEPENDENCE}
+
+  tricky - E6
+
+  \subsection{Conditional Probability}
+
+  \textbf{N1} - if $P(F) > 0$. then $P(E|F) = \frac{P(E \cap F)}{P(F)} $
+
+  \textbf{N2} - \textbf{multiplication rule} - $P(E_1E_2\dots E_n) = P(E_1)P(E_2\vert E_1)P(E_3\vert E_1 E_2) \dots P(E_n \vert E_1 E_2 \dots E_{n-1})$
+
+  \subsection{Total Probability \& Bayes' Theorem}
+
+  \textbf{conditioning formula} - $P(E) = P(E \vert F)P(F) + P(E\vert F^c) P(F^c)$
+
+  \textbf{tree diagram} - \\
+  \begin{minipage}[c]{0.4\linewidth}
+    \begin{tikzpicture}[scale=0.8, every node/.style={transform shape}]
+      \node[minimum size=4mm, inner sep=0] (O) at (0,1.25) {};
+      \node[label=center:{$F$}, minimum size=4mm, inner sep=0] (F) at (2,1.75) {};
+      \node[label=center:{$F^c$}, minimum size=4mm, inner sep=0] (Fc) at (2,0.75) {};
+      \node[label=center:{$E$}, minimum size=4mm, inner sep=0] (FE) at (4,2) {};
+      \node[label=center:{$E^c$}, minimum size=4mm, inner sep=0] (FEc) at (4,1.5) {};
+      \node[label=center:{$E$}, minimum size=4mm, inner sep=0] (FcE) at (4,1) {};
+      \node[label=center:{$E^c$}, minimum size=4mm, inner sep=0] (FcEc) at (4,0.5) {};
+      \draw[->] (F) -- (FE) node[midway, above] {$P(E\vert F$)};
+      \draw[->] (F) -- (FEc) node[midway, above] {};
+      \draw[->] (Fc) -- (FcE) node[midway, above] {$P(E\vert F^c)$};
+      \draw[->] (Fc) -- (FcEc) node[midway, above] {};
+      \draw[->] (O) -- (F) node[midway, above] {$P(F)$};
+      \draw[->] (O) -- (Fc) node[midway, above] {$P(F^c)$};
+    \end{tikzpicture}
+  \end{minipage}
+  \begin{minipage}[c]{0.55\linewidth}
+    $P(F \vert E) = \frac{P(EF)}{P(E)} = \frac{P(F) \cdot P(E \vert F)}{P(E)}$ \\
+    $P(F^c \vert E) = \frac{P(EF^c)}{P(E)} = \frac{P(F^c) \cdot P(E \vert F^c)}{P(E)}$ 
+  \end{minipage}
 
 
 
