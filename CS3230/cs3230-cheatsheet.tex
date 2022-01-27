@@ -61,10 +61,12 @@
 \setlength{\leftmargini}{0.5cm}
 \setlength{\leftmarginii}{0.5cm}
 \setlist[itemize,1]{leftmargin=2mm,labelindent=1mm,labelsep=1mm}
-\setlist[itemize,2]{leftmargin=4mm,labelindent=1mm,labelsep=1mm}
+\setlist[itemize,2]{leftmargin=3mm,labelindent=1mm,labelsep=1mm}
+\setlist[itemize,3]{leftmargin=3mm,labelindent=1mm,labelsep=1mm}
 
 % adding my commands
 \input{../commands/style-helpers.tex}
+\newcommand{\Mod}[1]{\ (\mathrm{mod}\ #1)}
 
 % -----------------------------------------------------------------------
 
@@ -272,6 +274,98 @@
   \begin{fixedbox}[0.8]
     $\log\log n < \log n < (\log n)^k < n^k < k^n$
   \end{fixedbox}
+
+  \section{03. ITERATION, RECURSION, DIVIDE-AND-CONQUER}
+
+  \subsection{Iterative Algorithms}
+
+  \textbf{loop invariant} implies correctness if 
+  \begin{itemize}
+    \item \textit{initialisation} - true before the first iteration
+    \item \textit{maintenance} - if true before an iteration, remains true at the beginning of the next iteration
+    \item \textit{termination} - true at the end
+  \end{itemize}
+
+  \subsection{Divide-and-Conquer}
+
+  \subsubsection{powering a number}
+
+  \begin{itemize}
+    \item problem: compute $f(n, m) = a^n\Mod{m}$ for all integer $n, m$
+    \item observation: $f(x+y, m) = f(x, m) * f(y, m) \Mod{m}$
+    \item \textbf{naive solution}: recursively compute and combine $f(n-1, m) * f(1, m) \Mod m$ 
+      \begin{itemize}
+        \item $T(n) = T(n-1) + T(1) + \Theta(1) \Rightarrow T(n) = \Theta (n)$
+      \end{itemize}
+    \item \textbf{better solution}: divide and conquer
+      \begin{itemize}
+        \item divide: trivial
+        \item conquer: recursively compute $f(\lfloor n / 2 \rfloor, m)$ 
+        \item combine: 
+          \begin{itemize}
+            \item $f(n, m) = f(\lfloor n / 2 \rfloor, m)^2 \Mod m$ if n is even
+            \item $f(n, m) = f(1, m) * f(\lfloor n / 2 \rfloor, m)^2 \Mod m$ if odd
+          \end{itemize}
+        \item $T(n) = T(n/2) + \Theta(1) \Rightarrow \Theta(\log n)$
+      \end{itemize}
+  \end{itemize}
+
+  \section{Solving Recurrences}
+  for $a$ sub-problems of size $\frac{n}{b}$ where $f(n)$ is the time to divide and combine,
+  \begin{math}
+    T(n) = aT(\frac{n}{b}) + f(n)
+  \end{math}
+
+  \subsection{Recursion tree}
+  total = height $\times$ number of leaves
+  \begin{tightcenter}
+    \includegraphics[width=0.9\linewidth]{cs3230-recursion-tree-example-1.png} 
+    \includegraphics[width=0.6\linewidth]{cs3230-recursion-tree-example-2.png} 
+  \end{tightcenter}
+
+  \subsection{Master method}
+  $T(n) = aT(\frac{n}{b}) + f(n)$
+  \\ $a \geq 0, b > 1, f$ is asymptotically positive
+
+  \begin{math}
+    T(n) = \begin{cases}
+      \Theta(n^{\log_ba}) & \text{ if } f(n) < n^{\log_ba} \text{ polynomially}
+      \\ \Theta(n^{\log_ba} \log n) & \text{ if } f(n) = n^{\log_ba} 
+      \\ \Theta(f(n)) & \text{ if } f(n) > n^{\log_ba} \text{ polynomially}
+    \end{cases}
+  \end{math}
+
+  \textbf{harmonic series}: $\sum\limits^\infty_{k=1} \frac{1}{k} \approx \ln k = \Theta (\lg n)$
+
+  \subsection{Substitution method}
+  \begin{enumerate}
+    \item guess that $T(n) = O(f(n))$. 
+      \\* i.e. $\exists c$ such that $T(n) \leq c \cdot f(n)$, for $n \geq n_0$.
+    \item verify by induction:
+      \begin{enumerate}
+        \item set $c = \max\{2, q\}$ and $n_0 = 1$
+        \item base case ($n = n_0 = 1$)
+        \item recursive case ($n > 1$):
+          \begin{itemize}
+            \item by strong induction, assume $T(k) = c \cdot f(k)$ for $n > k > 1$
+            \item T(n) = <recurrence> ... $\leq c \cdot f(n)$
+          \end{itemize}
+        \item hence $T(n) \leq c \cdot f(n)$ for $n \geq 1$.
+      \end{enumerate}
+  \end{enumerate}
+  \attention may not be a tight bound!
+
+  \subsubsection{example}
+
+  $T(n) = 4T(n/2) + n^2/\lg n \Rightarrow \Theta(n^2\lg \lg n)$
+
+  \begin{niceproof}
+    $T(n) = 4T(n/2) + \frac{n^2}{\lg n}$ \\
+    $= 4( 4T(n/4) + \frac{(n/2)^2}{\lg n - lg 2} ) + \frac{n^2}{\lg n}$ \\ 
+    $= 16 T(n/4) + \frac{n^2}{\lg n - \lg 2} + \frac{n^2}{\lg n}$ \\
+    $= \sum\limits^{\lg n}_{k=1} \frac{n^2}{\lg n - k}$ \\
+    $= n^2 \lg \lg n$ by approx. of harmonic series ($\sum\frac{1}{k}$)
+  \end{niceproof}
 
 
 
