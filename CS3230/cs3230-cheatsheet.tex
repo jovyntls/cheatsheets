@@ -367,6 +367,141 @@
     $= n^2 \lg \lg n$ by approx. of harmonic series ($\sum\frac{1}{k}$)
   \end{niceproof}
 
+  \section{04. AVERAGE-CASE ANALYSIS \& RANDOMISED ALGORITHMS}
+
+  \subsection{Quicksort Analysis}
+
+  \begin{itemize}
+    \item divide \& conquer, linear-time $\Theta(n)$ partitioning subroutine
+    \item assume we select the first array element as pivot 
+    \item if the pivot produces subarrays of size $j$ and $(n-j-1)$, then $T(n) = T(j) + T(n-j-1) + \Theta(n)$
+  \end{itemize}
+
+  \textbf{time analysis}
+  \begin{itemize}
+    \item \textbf{worst-case}: $T(n) = T(0) + T(n-1) + \Theta(n) \Rightarrow \Theta(n^2)$ 
+    \item \definition{average case}[$A(n)$] expected running time when the input is chosen uniformly at random from the set of all $n!$ permutations
+    \item \textbf{average case}, $A(n) = \frac{1}{n!} \sum_\pi Q(\pi)$ where $Q(\pi)$ is the time complexity when the input is permutation $\pi$.
+  \end{itemize}
+
+  \begin{niceproof}
+    for quicksort, $A(n) = O(n \log n)$
+
+    let $P(i)$ be the set of all those permutations of elements $\{e_1, e_2, \dots, e_n\}$ that begins with $e_i$.
+
+    Let $G(n, i)$ be the average running time of quicksort over $P(i)$.
+    Then $G(n) = A(i-1) + A(n-i) + (n-1)$.
+    $A(n) = \frac{1}{n} \sum_{i=1}^n G(n, i)$
+    \\ $\quad\quad = \frac{1}{n} \sum_{i=1}^n ( A(i-1) + A(n-i) + (n-1) )$
+    \\ $\quad\quad = \frac{2}{n} \sum_{i=1}^n A(i-1)+n-1$
+    \\ $\quad\quad = O(n\log n)$ by taking it as area under integration
+  \end{niceproof}
+
+  \subsubsection{quicksort vs mergesort}
+
+  \begin{center}
+    \begin{tabular}{|c|c|c|c|}
+      \hline
+      & average & best & worst \\\hline
+      quicksort & $1.39n\lg n$ &  $n \lg n$ & $n(n-1)$ \\\hline
+      mergesort & $n\lg n$ &  $n \lg n$ & $n \lg n$ \\\hline
+    \end{tabular}
+  \end{center}
+
+  \begin{itemize}
+    \item disadvantages of mergesort:
+      \begin{itemize}
+        \item overhead of temporary storage
+        \item cache misses
+      \end{itemize}
+    \item advantages of quicksort
+      \begin{itemize}
+        \item in place
+        \item reliable (as $n \uparrow$, chances of deviation from avg case $\downarrow$)
+      \end{itemize}
+    \item issues with quicksort
+      \begin{itemize}
+        \item \definition{distribution-sensitive} time taken depends on the initial (input) permutation
+      \end{itemize}
+  \end{itemize}
+
+  \subsection{Randomised Algorithms}
+
+  \begin{itemize}
+    \item \definition{randomised algorithms} output and running time are \textbf{functions} of the \textbf{input} and \textbf{random bits chosen}
+      \begin{itemize}
+        \item vs non-randomised: output \& running time are functions of the \textit{input only}
+      \end{itemize}
+    \item \textbf{randomised quicksort}: choose pivot at random 
+      \begin{itemize}
+        \item probability that the runtime of \textit{randomised} quicksort exceeds average by $x\% = n^{-\frac{x}{100}\ln\ln n}$ 
+        \item P(time takes at least double of the average) = $10^{-15}$
+        \item distribution insensitive
+      \end{itemize}
+  \end{itemize}
+
+  \subsubsection{Randomised Quicksort Analysis}
+
+  $T(n) = n-1 + T(q-1) + T(n-q)$
+
+  Let $A(n) = \mathbb{E}[T(n)]$ where the expectation is over the randomness in expectation.
+
+  Taking expectations and applying linearity of expectation:
+  $A(n) = n-1 + \frac{1}{n} \sum^n_{q=1} (A(q-1) + A(n-q)) $ 
+  $\;\quad\quad = n-1 + \frac{2}{n} \sum\limits^{n-1}_{q=1} A(q) $ 
+
+  $A(n) = n \log n \quad \Rightarrow$ same as average case quicksort
+
+  \subsubsection{Randomised Quickselect}
+
+  \begin{itemize}
+    \item $O(n)$ to find the $k^{th}$ smallest element
+    \item randomisation: unlikely to keep getting a bad split
+  \end{itemize}
+
+  \subsubsection{Types of Randomised Algorithms}
+
+  \begin{itemize}
+    \item randomised \textbf{Las Vegas} algorithms
+      \begin{itemize}
+        \item output is always correct
+        \item runtime is a \textit{random variable} 
+        \item e.g. randomised quicksort
+      \end{itemize}
+    \item randomised \textbf{Monte Carlo} algorithms
+      \begin{itemize}
+        \item output may be incorrect with some small probability
+        \item runtime is \textit{deterministic}
+      \end{itemize}
+  \end{itemize}
+
+  \textbf{examples}
+  \begin{itemize}
+    \item \textit{smallest enclosing circle:} given $n$ points in a plane, compute the smallest radius circle that encloses all $n$ points
+      \begin{itemize}
+        \item best \textbf{deterministic} algorithm: $O(n)$, but complex
+        \item las vegas: average $O(n) $, simple solution
+      \end{itemize}
+    \item \textit{minimum cut:} given a connected graph $G$ with $n$ vertices and $m$ edges, compute the smallest set of edges whose removal would disconnect $G$.
+      \begin{itemize}
+        \item best \textbf{deterministic} algorithm: $O(mn)$
+        \item \textbf{monte carlo}: $O(m \log n) $, error probability $n^{-c}$ for any $c$
+      \end{itemize}
+    \item \textit{primality testing:} determine if an $n$ bit integer is prime
+      \begin{itemize}
+        \item best \textbf{deterministic} algorithm: $O(n^6)$
+        \item \textbf{monte carlo}: $O(kn^2)$, error probability $2^{-k}$ for any $k$
+      \end{itemize}
+  \end{itemize}
+
+  \subsubsection{Geometric Distribution}
+
+  Let $X$ be the number of trials repeated until success. 
+
+  $X$ is a random variable and follows a geometric distribution with probability $p$.
+
+  Expected number of trials, $E[X] = \frac{1}{p} $
+
 
 
 
