@@ -380,7 +380,7 @@
   \textbf{time analysis}
   \begin{itemize}
     \item \textbf{worst-case}: $T(n) = T(0) + T(n-1) + \Theta(n) \Rightarrow \Theta(n^2)$ 
-    \item \definition{average case}[$A(n)$] expected running time when the input is chosen uniformly at random from the set of all $n!$ permutations
+    \item \definition[$A(n)$]{average case} expected running time when the input is chosen uniformly at random from the set of all $n!$ permutations
     \item \textbf{average case}, $A(n) = \frac{1}{n!} \sum_\pi Q(\pi)$ where $Q(\pi)$ is the time complexity when the input is permutation $\pi$.
   \end{itemize}
 
@@ -494,13 +494,41 @@
       \end{itemize}
   \end{itemize}
 
-  \subsubsection{Geometric Distribution}
+  \subsection{Geometric Distribution}
 
   Let $X$ be the number of trials repeated until success. 
 
   $X$ is a random variable and follows a geometric distribution with probability $p$.
 
-  Expected number of trials, $E[X] = \frac{1}{p} $
+  \begin{tightcenter}
+    Expected number of trials, $E[X] = \frac{1}{p} $
+    \\* $ Pr[X=k] = q^{k-1}p $
+  \end{tightcenter}
+
+  \subsubsection{Linearity of Expectation}
+
+  For any two events $ X, Y $ and a constant $ a $, 
+  \begin{tightcenter}
+    $ E[X+Y] = E[X] + E[Y] $
+    \\ $ E[aX] = aE[X] $
+  \end{tightcenter}
+
+  \subsubsection{Coupon Collector Problem}
+
+  \textit{$ n $ types of coupon are put into a box and randomly drawn with replacement.
+  What is the expected number of draws needed to collect at least one of each type of coupon?}
+
+  \begin{itemize}
+    \item let $ T_i $ be the time to collect the $ i $-th coupon after the $ i-1 $ coupon has been collected. 
+      \begin{itemize}
+        \item Probability of collecting a new coupon, $ p_i = \frac{(n-(i-1))}{n}  $
+        \item $ T_i $ has a \textbf{geometric distribution}
+        \item $ E[T_i] = 1/p_i $
+      \end{itemize}
+    \item total number of draws, $ T = \sum\limits^n_{i=1} T_i $
+    \item $ E[T] = E[\sum\limits^n_{i=1}T_i] = \sum\limits^n_{i=1}E[T_i] $ by linearity of expectation
+      \\* $ = \sum\limits^n_{i=1} \frac{n}{n-(i-1)} = n \cdot \sum\limits^n_{i=1} \frac{1}{i} = \Theta(n \lg n) $
+  \end{itemize}
 
 
 
@@ -525,5 +553,10 @@
 
 
 \end{multicols*}
+
+\pagebreak
+
+\section{helpful approximations}
+harmonic number, $ H_n = \sum\limits_{k=1}^n \frac{1}{k} = \Theta(\lg n) $
 
 \end{document}
