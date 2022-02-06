@@ -324,6 +324,22 @@
 
   \textbf{N2} - \textbf{multiplication rule} - $P(E_1E_2\dots E_n) = P(E_1)P(E_2\vert E_1)P(E_3\vert E_1 E_2) \dots P(E_n \vert E_1 E_2 \dots E_{n-1})$
 
+  \textbf{N3} - \textbf{axioms of probability} apply to conditional probability
+  \begin{enumerate}
+    \item $ 0 \leq P(E \vert F) \leq 1 $
+    \item $ P(S \vert F) = 1 $ where $ S $ is the sample space
+    \item If $ E_i $ ($ i \in \mathbb{Z}_{\geq 1} $) are mutually exclusive events, then $ P(\bigcup\limits^\infty_1 E_i \vert F) = \sum\limits^\infty_1 P(E_i \vert F) $
+  \end{enumerate}
+
+  \textbf{N4} - If we define $ Q(E) = P(E \vert F) $, then $ Q(E) $ can be regarded as a probability function on the events of $ S $,
+  hence all results previously proved for probabilities apply.
+  \begin{itemize}
+    \item $Q(E_1\cup E_2) = Q(E_1) + Q(E_2) - Q(E_1 E_2) $ 
+    \item $P(E_1\cup E_2\vert F ) = P(E_1\vert F ) + P(E_2\vert F ) - P(E_1 E_2\vert F ) $ 
+    \item theorem of total probability: $Q(E_1) = Q(E_1 \vert E_2) Q(E_2) + Q(E_1\vert E_2^c) Q(E_2^c) $ 
+  \end{itemize}
+
+
   \subsection{Total Probability \& Bayes' Theorem}
 
   \textbf{conditioning formula} - $P(E) = P(E \vert F)P(F) + P(E\vert F^c) P(F^c)$
@@ -338,12 +354,12 @@
       \node[label=center:{$E^c$}, minimum size=4mm, inner sep=0] (FEc) at (4,1.5) {};
       \node[label=center:{$E$}, minimum size=4mm, inner sep=0] (FcE) at (4,1) {};
       \node[label=center:{$E^c$}, minimum size=4mm, inner sep=0] (FcEc) at (4,0.5) {};
-      \draw[->] (F) -- (FE) node[midway, above] {$P(E\vert F$)};
-      \draw[->] (F) -- (FEc) node[midway, above] {};
-      \draw[->] (Fc) -- (FcE) node[midway, above] {$P(E\vert F^c)$};
-      \draw[->] (Fc) -- (FcEc) node[midway, above] {};
-      \draw[->] (O) -- (F) node[midway, above] {$P(F)$};
-      \draw[->] (O) -- (Fc) node[midway, above] {$P(F^c)$};
+      \draw[->] (F) -- (FE) node[midway, above, sloped] {$P(E\vert F$)};
+      \draw[->] (F) -- (FEc) node[midway, above, sloped] {};
+      \draw[->] (Fc) -- (FcE) node[midway, above, sloped] {$P(E\vert F^c)$};
+      \draw[->] (Fc) -- (FcEc) node[midway, above, sloped] {};
+      \draw[->] (O) -- (F) node[midway, above, sloped] {$P(F)$};
+      \draw[->] (O) -- (Fc) node[midway, above, sloped] {$P(F^c)$};
     \end{tikzpicture}
   \end{minipage}
   \begin{minipage}[c]{0.55\linewidth}
@@ -358,11 +374,9 @@
   then $P(E) = \sum\limits^n_{i=1}P(EF_i) = \sum\limits^n_{i=1}P(F_i)P(E\vert F_i)$
 
   \subsubsection{Bayes Theorem}
-
-  \begin{align*}
-    P(F_j \vert E) &= \frac{P(EF_j)}{P(E)} \\
-                   &= \frac{P(F_j)P(E \vert F_j)}{\sum\limits^n_{i=1} P(F_i)P(E \vert F_i)}
-  \end{align*}
+  \begin{tightcenter}
+    $P(F_j \vert E) = \frac{P(EF_j)}{P(E)} = \frac{P(F_j)P(E \vert F_j)}{\sum\limits^n_{i=1} P(F_i)P(E \vert F_i)}$
+  \end{tightcenter}
 
   \textbf{application of bayes' theorem}
 
@@ -371,9 +385,9 @@
   \end{tightcenter}
 
   Let $A$ be the event that the person test positive for a disease.
-  \\* $B_1$: the person actually has the disease.
-  \\* $B_2$: the person does not have the disease.
+  \\* $B_1$: the person has the disease. $B_2$: the person does not have the disease.
   \begin{tightcenter}
+    \vspace*{-0.5\multicolsep}
     \begin{multicols}{2}
       true positives: $P(B_1\mid A)$
       \\ false positives: $P(A \mid B_2)$
@@ -384,12 +398,49 @@
 
   \subsection{Independent Events}
 
-  \textbf{N1} - $E$ and $F$ are independent $\iff$
-  \\* $P(EF) = P(E) \cdot P(F) \quad$ or $\quad P(E \vert F) = P(E)$
+  \textbf{N1} - $E$ and $F$ are independent $\iff P(EF) = P(E) \cdot P(F) \quad$ 
 
-  \textbf{N2} - if $E$ and $F$ are independent, then $E$ and $F^c$ are independent.
+  \textbf{N2} - $E$ and $F$ are independent $\iff P(E \vert F) = P(E)$
 
-  \textbf{N3} - if $E, F, G$ are independent, then $E$ will be independent of any event formed from $F$ and $G$. (e.g. $F\cup G$)
+  \textbf{N3} - if $E$ and $F$ are independent, then $E$ and $F^c$ are independent.
+
+  \textbf{N4} - if $E, F, G$ are independent, then $E$ will be independent of any event formed from $F$ and $G$. (e.g. $F\cup G$)
+
+  \textbf{N5} - if $E, F, G$ are independent, then $ P(EFG) = P(E)P(F)P(G) $
+
+  \textbf{N6} - if $ E $ and $ F $ are independent and $ E $ and $ G $ are independent, 
+  \\* $\quad\quad \not\Rightarrow $  $ E $ and $ FG $ are independent
+
+  \textbf{N7} - For independent trials with probability $ p $ of success, probability of $ m $ successes before $ n $ failures, 
+  for $ m, n \geq 1 $,
+
+  \begin{minipage}[c]{0.3\linewidth}
+    \textit{method 1}\\
+    \begin{tikzpicture}[scale=0.7, every node/.style={transform shape}]
+      \node[minimum size=1mm, inner sep=0] (O) at (0,1.25) {};
+      \node[label=center:{S}, minimum size=4mm, inner sep=0] (S) at (1.25,1.75) {};
+      \node[label=center:{F}, minimum size=4mm, inner sep=0] (F) at (1.25,0.75) {};
+      \node[label=center:{A win}, minimum size=7mm, inner sep=0] (a1) at (3.25,2) {};
+      \node[label=center:{B win}, minimum size=7mm, inner sep=0] (b1) at (3.25,1.5) {};
+      \node[label=center:{A win}, minimum size=7mm, inner sep=0] (a2) at (3.25,1) {};
+      \node[label=center:{B win}, minimum size=7mm, inner sep=0] (b2) at (3.25,0.5) {};
+      \draw[->] (S) -- (a1) node[midway, above, sloped] {$P_{n-1, m}$};
+      \draw[->] (S) -- (b1) node {};
+      \draw[->] (F) -- (a2) node[midway, above, sloped] {$P_{n, m-1}$};
+      \draw[->] (F) -- (b2) node {};
+      \draw[->] (O) -- (S) node[midway, above] {$p$};
+      \draw[->] (O) -- (F) node[midway, below, sloped] {$1-p$};
+    \end{tikzpicture}
+  \end{minipage}
+  \begin{minipage}[c]{0.67\linewidth}
+    \textit{method 2}
+    \begin{align*}
+      P_{n, m} &= \sum\limits^{m+n-1}_{k=n} \binom{m+n-1}{k} p^k (1-p)^{m+n-1-k} 
+            \\ &= P(\text{exactly $ k $ successes in $ m+n-1 $ trials})
+    \end{align*}
+  \end{minipage}
+
+  recursive approach to solving probabilities: see page 85 alternative approach
 
 
   \section{04. RANDOM VARIABLES}
