@@ -64,7 +64,6 @@
 
 % adding my commands
 \input{../commands/style-helpers.tex}
-\input{./st2131-commands.tex}
 
 % -----------------------------------------------------------------------
 
@@ -120,15 +119,15 @@
   \textbf{N4} - $\binom{n}{r} = \frac{n!}{(n-r)!\,r!}$ represents the number of different groups of size $r$ that could be selected from a set of $n$ objects when the order of selection is not considered relevant.
 
   \textbf{N4b} - $\binom{n}{r} = \binom{n-1}{r-1} + \binom{n-1}{r}, \quad 1 \leq r \leq n$
-  \begin{proof}
+  \begin{niceproof}
     If object 1 is chosen $\Rightarrow$ $\binom{n-1}{r-1}$ ways of choosing the remaining objects.
     \\* If object 1 is not chosen $\Rightarrow$ $\binom{n-1}{r}$ ways of choosing the remaining objects.
-  \end{proof}
+  \end{niceproof}
 
   \textbf{N5} - \textbf{The Binomial Theorem} - \( {\displaystyle{(x+y)^n = \sum^n_{k=0} \binom{n}{k} x^k y^{n-k} }} \) 
-  \begin{proof}
+  \begin{niceproof}
     by mathematical induction: $n=1$ is true; expand; sub dummy variable; combine using N4b; combine back to final term
-  \end{proof}
+  \end{niceproof}
 
   \subsection{Multinomial Coefficients}
 
@@ -136,12 +135,12 @@
   represents the number of possible divisions of $n$ distrinct objects 
   into $r$ distinct groups of respective sizes $n_1, n_2, \dots, n_3$, 
   where $n_1 + n_2 + \dots + n_r = n$
-  \begin{proof}
+  \begin{niceproof}
     using basic counting principle, 
     \\* $= \binom{n}{n_1} \binom{n-n_1}{n_2} \binom{n-n_1-n_2}{n_3} \dots \binom{n-n_1-n_2-n_{r-1}}{n_r}$
     \\* $= \frac{n!}{(n-n_1)!\,n_1!} \times \frac{(n-n_1)!}{(n-n_1-n_2)!\, n_2!} \times \dots \times \frac{( n-n_1-n_2-\dots -n_{r-1} )}{0!\, n_r!}$
     \\* $= \frac{n!}{n_1!\, n_2! \, \dots \, n_r!}$
-  \end{proof}
+  \end{niceproof}
 
   \textbf{N7} - \textbf{The Multinomial Theorem}: $(x_1 + x_2 + \dots + x_r)^n$
   \\* $ \quad\quad\quad = \sum\limits_{(n_1, \dots, n_r):n_1 + n_2 + \dots + n_r = n} \frac{n!}{n_1! \, n_2! \, \dots n_r!} x_1^{n_1} x_2^{n_2} \dots x_r^{n_r}$
@@ -153,9 +152,9 @@
   \\* \attention cannot be directly applied to \textit{N8} as 0 value is not included
 
   \textbf{N9} - there are $\binom{n+r-1}{r-1}$ distinct  \textit{non-negative} integer-valued vectors $(x_1, x_2, \dots, x_r)$ satisfying $x_1 + x_2 + \dots + x_r = n$ 
-  \begin{proof}
+  \begin{niceproof}
     let $y_k = x_k + 1 \Rightarrow y_1 + y_2 + \dots + y_r = n + r$
-  \end{proof}
+  \end{niceproof}
 
 
   \section{02. AXIOMS OF PROBABILITY}
@@ -175,18 +174,18 @@
 
   \subsubsection{DeMorgan's Laws}
   $\mathbf{ (\bigcup\limits^n_{i=1} E_i)^c = \bigcap\limits^n_{i=1}E_i^c }$ 
-  \begin{proof}
+  \begin{niceproof}
     to show LHS $\subset$ RHS: let $x \in (\bigcup^n_{i=1}E_i)^c$ 
     \\* $\quad\Rightarrow x \notin \bigcup^n_{i=1}E_i \Rightarrow x \notin E_1$ and $x \notin E_2 \dots$ and $x \notin E_n$
     \\* $\quad\Rightarrow x \in E_1^c$  and $x \in E_2^c \dots$ and $x \in E_n^c$
     \\* $\quad\Rightarrow x \in \bigcap^n_{i=1} E_i^c$
     \\* to show RHS $\subset$ LHS: let $x \in \bigcap^n_{i=1} E_i^c$
-  \end{proof}
+  \end{niceproof}
 
   $\mathbf{ (\bigcap\limits^n_{i=1}E_i)^c = \bigcup\limits^n_{i=1}E_i^c }$ \\
-  \begin{proof}
+  \begin{niceproof}
     using the first law of DeMorgan, negate LHS to get RHS
-  \end{proof}
+  \end{niceproof}
 
 
   \subsection{Axioms of Probability}
@@ -253,7 +252,7 @@
                                         &+ (-1)^{r+1} \sum_{i_1 < i_2 < \dots < i_r} P(E_{i_1} E_{i_2} \dots E_{i_r}) + \dots \\
                                         &+ (-1)^{n+1} P(E_1 E_2 \dots E_n)
   \end{align*}
-  \begin{proof}
+  \begin{niceproof}
     Suppose an outcome with probability $\omega$ is in exactly $m$ of the events $E_i$, where $m > 0$. Then
     \\* \textbf{LHS}: the outcome is in $E_1\cup E_2 \cup \dots \cup E_n$ and $\omega$ will be counted once in $P(E_1\cup E_2 \cup \dots \cup E_n)$ 
     \\* \textbf{RHS}: 
@@ -266,22 +265,22 @@
     hence RHS = $\binom{m}{1}\omega - \binom{m}{2}\omega + \binom{m}{3}\omega - \dots \pm \binom{m}{m}\omega $
     \\ $\quad = \omega \sum\limits^m_{i=0}\binom{m}{i} (-1)^i = $ binomial theorem where $x=-1, y=1$ 
     \\ $\quad = 0 = $ LHS
-  \end{proof}
-  \begin{proof}[e.g]
+  \end{niceproof}
+  \begin{niceproof}[e.g]
     For an outcome with probability $\omega$ and $n=3$
     \begin{itemize}
       \item 
-        \begin{proof}[Case 1] $w = P(E_1E_2)$
+        \begin{niceproof}[Case 1] $w = P(E_1E_2)$
           \\* LHS = $\omega$
           \\* RHS = ($\omega$ + $\omega$ + 0) - ($\omega$ + 0 + 0) + 0 = $\omega$
-        \end{proof}
+        \end{niceproof}
       \item 
-        \begin{proof}[Case 2] $\omega = P(E_1 \cap E_2 \cap E_3)$
+        \begin{niceproof}[Case 2] $\omega = P(E_1 \cap E_2 \cap E_3)$
           \\* LHS = $\omega$
           \\* RHS = ($\omega$ + $\omega$ + $\omega$) - ($\omega$ + $\omega$ + $\omega$) + $\omega$ = $\omega$
-        \end{proof}
+        \end{niceproof}
     \end{itemize}
-  \end{proof}
+  \end{niceproof}
 
   \textbf{N12} - 
   \begin{enumerate}[label=(\roman*)]
@@ -290,10 +289,10 @@
     \item $P(\bigcup^n_{i=1}E_i) \leq \sum\limits^n_{i=1} P(E_i) - \sum\limits_{j < i} P(E_iE_j) + \sum_{k < j < i} P(E_iE_jE_k)$
     \item and so on.
   \end{enumerate}
-  \begin{proof}
+  \begin{niceproof}
     $\scriptstyle \bigcup\limits^n_{i=1} E_i = E_1 \cup E_1^cE_2 \cup E_1^cE_2^cE_3 \cup \dots \cup E_1^cE_2^c\dots E_{n-1}^cE_n$
     \\* $\scriptstyle P(\bigcup\limits^n_{i=1} E_i) = P(E_1) + P(E_1^cE_2) + P(E_1^cE_2^cE_3) + \dots + P(E_1^cE_2^c\dots E_{n-1}^cE_n)$
-  \end{proof}
+  \end{niceproof}
 
 
   \subsection{Sample Space having Equally Likely Outcomes}
