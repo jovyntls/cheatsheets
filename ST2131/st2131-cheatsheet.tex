@@ -335,7 +335,11 @@
   \begin{itemize}
     \item $Q(E_1\cup E_2) = Q(E_1) + Q(E_2) - Q(E_1 E_2) $ 
     \item $P(E_1\cup E_2\vert F ) = P(E_1\vert F ) + P(E_2\vert F ) - P(E_1 E_2\vert F ) $ 
-    \item theorem of total probability: $Q(E_1) = Q(E_1 \vert E_2) Q(E_2) + Q(E_1\vert E_2^c) Q(E_2^c) $ 
+    \item \textbf{theorem of total probability}: 
+      \begin{itemize}
+        \item $Q(E_1) = Q(E_1 \vert E_2) Q(E_2) + Q(E_1\vert E_2^c) Q(E_2^c) $ 
+        \item $ P(H \vert F_n) = \sum\limits^k_{i=0} P(H \vert F_nc_i) P(c_i \vert F_n) $
+      \end{itemize}
   \end{itemize}
 
 
@@ -444,17 +448,49 @@
 
   \section{04. RANDOM VARIABLES}
 
-  \subsection{Random Variables}
-
   \begin{itemize}
     \item \definition{random variable} a real-valued function defined on the sample space
+  \end{itemize}
+
+  \subsection{Types of Random Variables}
+
+  \begin{itemize}
     \item $X$ is a \definition[with parameter $p$ if]{Bernoulli r.v.} 
       \\* $p(x) = \begin{cases}
         p, &x=1, \text{ ('success')} \\
         1-p, &x=0\quad  \text{ ('failure')}
       \end{cases}$
+    \item $ Y $ is a \definition[with parameters $ n $ and $ p $]{Binomial r.v.} $ \quad Y = X_1 + X_2 + \dots + X_n $
+      where  $ X_1, X_2, \dots, X_n $ are independent Bernoulli r.v.'s with parameter $ p $.
+      \begin{itemize}
+        \item $ P(X=k) = \binom{n}{k} p^k (1-p)^{n-k} $
+        \item $ P(k $ successes from $ n $ independent trials each with probability $ p $ of success$ ) $
+        \item e.g. number of red balls out of $ n $ balls drawn with replacement
+      \end{itemize}
+    \item \definition{Negative Binomial} $ X = $ number of trials until $ k $ successes are obtained
+      \begin{itemize}
+        \item e.g. number of balls drawn (with replacement) until $ k $ red balls are obtained
+      \end{itemize}
+    \item \definition{Geometric} $ X = $ number of trials until a success is obtained
+      \begin{itemize}
+        \item $ P(X=k) = (1-p)^{k-1} \cdot p $ where $ k $ is the number of trials needed
+        \item e.g. number of balls drawn (with replacement) until 1 red ball is obtained
+      \end{itemize}
+    \item \definition{Hypergeometric} $ X = $ number of trials until success, \textit{without replacement}
+      \begin{itemize}
+        \item e.g. number of red balls out of $ n $ balls drawn without replacement
+      \end{itemize}
   \end{itemize}
 
+  \subsubsection{Summary}
+
+  \begin{tabular}{|c|l|}
+    \hline  binomial & $ X= $ number of successes in $ n $ trials with replacement
+    \\\hline negative binomial & $ X= $ number of trials until $ k $ successes
+    \\\hline geometric & $ X= $ number of trials until a success
+    \\\hline hypergeometric & $ X= $ number of successes in $ n $ trials without replacement
+    \\\hline
+  \end{tabular}
 
 
 
