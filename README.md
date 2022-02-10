@@ -6,16 +6,20 @@ If you find any typos please let me know! Thank you :)
 
 ## Contents
 
-Listed in alphabetical order: 
-
-- [x] **CS1231S** [AY20/21 S1]
-- [x] **CS2030S** [AY20/21 S2]
-- [x] **CS2040S** [AY20/21 S2]
-- [x] **CS2100** [AY21/22 S1]
-- [x] **CS2102** [AY21/22 S1]
-- [x] **MA1101R** [AY20/21 S2] -> renamed **MA2001** as of AY21/22
-- [x] **MA1102R** [AY20/21 S2] -> renamed **MA2002** as of AY21/22
-- [x] **MA1521** [AY20/21 S1]
+- [x] **AY20/21 S1**
+  - CS1231S
+  - MA1521
+- [x] **AY20/21 S2**
+  - CS2030S
+  - CS2040S
+  - MA1101R -> renamed **MA2001** as of AY21/22
+  - MA1102R -> renamed **MA2002** as of AY21/22
+- [x] **AY21/22 S1**
+  - CS2100
+  - CS2102
+- [ ] **AY21/22 S2** :pencil2:
+  - CS3230
+  - ST2131
 
 ## Useful resources
 
@@ -25,4 +29,3 @@ Listed in alphabetical order:
 - [Geogebra](https://www.geogebra.org/calculator)
 - [Desmos](https://www.desmos.com/calculator)
 - [Matlab Online](https://matlab.mathworks.com/)
-
