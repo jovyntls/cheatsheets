@@ -492,6 +492,106 @@
     \\\hline
   \end{tabular}
 
+  \subsubsection{Coupon Collector Problem}
+
+  \begin{niceproof}[Q]
+    Suppose there are $ N $ distinct types of coupons.
+    If $ T $ denotes the number of coupons needed to be collected for a complete set, what is $ P(T=n) $?
+  \end{niceproof}
+
+  \begin{niceproof}[A]
+    $ P(T > n-1) = P(T \geq n) = P(T=n) + P(T > n) $
+    $ \quad\Rightarrow P(T=n) = P(T > n-1) - P(T > n) $
+    Let $ A_j = \{ \text{no type $j$ coupon is contained among the first $n$} \} $
+    $ P(T>n) = P(\bigcup^N_{j=1}A_j) $
+
+    Using the inclusion-exclusion identity, 
+    \\* $ \quad P(T>n) = \sum\limits_j P(A_j)\quad$ - coupon $ j $ is not among the first $ n $ collected 
+    \\* $\quad\quad\quad\quad\quad\quad - \sum\limits_{j_1}\sum\limits_{j_2} P(A_{j_1} A_{j_2}) \quad$ - coupon $ j_1 $ and $ j_2 $ are not the first $ n $
+    \\* $\quad\quad\quad\quad\quad\quad + \dots  + (-1)^{k+1} \sum\limits_{j_1}\sum\limits_{j_2}\dots\sum\limits_{j_k} P(A_{j_1}A_{j_2} \cdots A_{j_n}) + \dots $
+    \\* $\quad\quad\quad\quad\quad\quad + (-1)^{N+1} P(A_1A_2 \cdots A_N) $
+
+    $ P(A_{j_1}A_{j_2} \cdots A_{j_n}) = ( \frac{N-k}{N} )^n $
+
+    Hence $ P(T>n) = \sum\limits^{N-1}_{i=1} \binom{N}{i} \binom{N-1}{N}^n (-1)^{i+1} $
+  \end{niceproof}
+
+  \subsection{Probability Mass Function}
+
+  \begin{itemize}
+    \item for a \textit{discrete} r.v., we define the \textbf{probability mass function} (pmf) of $ X $ by $ p(a) = P(X=a) $
+      \begin{itemize}
+        \item cdf, $F(a) = \sum p(x)$ for all $x \leq a$
+        \item if $X$ assumes one of the values $x_1, x_2, \dots$, then $\sum\limits^\infty_{i=1} p(x_i) = 1$
+        \item the pmf $ p(a) $ is positive for at most a countable number of values of $a$
+      \end{itemize}
+    \item e.g. 
+      $\begin{array}{c|ccc}
+        a & 1 & 2 & 4 \\\hline
+        p(a) & \frac{1}{2} & \frac{1}{4} & \frac{1}{4} 
+      \end{array}$
+    \item \definition[variable]{discrete} a random variable that can take on at most a countable number of possible values
+  \end{itemize}
+
+  \subsection{Cumulative Distribution Function}
+  \begin{itemize}
+    \item for a r.v. $X$, the function $F$ defined by $F(x) = P(X \leq x), \quad -\infty < x < \infty$, is called the \textbf{cumulative distribution function (cdf)} of $X$.
+      \begin{itemize}
+        \item aka \textit{distribution function}
+        \item $F(x)$ is defined on the entire real line
+      \end{itemize}
+    \item e.g. $F(a) = \begin{cases}
+        0, &a < 1 \\
+        \frac{1}{2} , &1 \leq a < 2 \\
+        \frac{3}{4} , &2 \leq a < 4 \\
+        1, &a \leq 4
+      \end{cases}$
+  \end{itemize}
+
+  \subsection{Expected Value}
+  \begin{itemize}
+    \item aka population mean/sample mean, $\mu$
+    \item if $X$ is a discrete random variable having pmf $p(x)$, the \ildefinition{expectation} or the \ildefinition{expected value} of $X$ is defined as $E(X) = \sum\limits_x x \cdot p(x)$
+  \end{itemize}
+  
+  \textbf{N1} - if $a$ and $b$ are constants, then $E(aX + b) = aE(X) + b$
+
+  \textbf{N2} - the $n^{th}$ moment of of $X$ is given as $E(X^n) = \sum_x x^n\cdot p(x)$
+
+  \begin{itemize}
+    \item $I$ is an indicator variable for event $A$ if 
+      $I = \begin{cases}\scriptstyle 1, \text{ if $A$ occurs} \\ \scriptstyle 0, \text{ if $A^c$ occurs}\end{cases}$. then $E(I) = P(A)$.
+  \end{itemize}
+
+  \begin{niceproof}[Proof of N1]
+    $E(aX+b) = \sum_x (aX+b) p(x)$
+    \\* $ \quad = a \cdot \sum_x xp(x) + b \cdot \sum_x p(x) = a \cdot E(X) + b$
+  \end{niceproof}
+
+  \subsubsection{finding expectation of f(x)}
+
+  \begin{itemize}
+    \item method 1, using pmf of $Y$: let $Y = f(X)$. Find corresponding $X$ for each $Y$.
+    \item method 2, using pmf of $X$: $E[g(x)] = \sum_i g(x_i)p(x_i)$
+      \begin{itemize}
+        \item where $X$ is a discrete r.v. that takes on one of the values of $x_i$ with the respective probabilities of $p(x_i)$, and $g$ is any real-valued function $g$
+      \end{itemize}
+  \end{itemize}
+
+  \subsection{Variance}
+
+  If $X$ is a r.v. with mean $\mu = E[X]$, then the variance of $X$ is defined by 
+  \begin{align*}
+    Var(X) &= E[(X-\mu)^2] \\ 
+           &= \sum{x_i} (x_i - \mu)^2 \cdot p(x_i) \quad\quad \text{(deviation $\cdot$ weight)} \\
+           &= E(x^2) - [E(x)]^2
+  \end{align*}
+
+  \begin{itemize}
+    \item $Var(aX+b) = a^2 Var(x)$
+  \end{itemize}
+
+
 
 
 
