@@ -66,6 +66,7 @@
 
 % adding my commands
 \input{../commands/style-helpers.tex}
+\input{../commands/code.tex}
 \newcommand{\Mod}[1]{\ (\mathrm{mod}\ #1)}
 
 % -----------------------------------------------------------------------
@@ -529,6 +530,213 @@
     \item $ E[T] = E[\sum\limits^n_{i=1}T_i] = \sum\limits^n_{i=1}E[T_i] $ by linearity of expectation
       \\* $ = \sum\limits^n_{i=1} \frac{n}{n-(i-1)} = n \cdot \sum\limits^n_{i=1} \frac{1}{i} = \Theta(n \lg n) $
   \end{itemize}
+
+  \section{05. HASHING}
+
+  \subsection{Dictionary ADT}
+
+  \begin{itemize}
+    \item different types:
+      \begin{itemize}
+        \item \textbf{static} - fixed set of inserted items; only care about queries
+        \item \textbf{insertion-only} - only insertions and queries
+        \item \textbf{dynamic} - insertions, deletions, queries
+      \end{itemize}
+    \item implementations
+      \begin{itemize}
+        \item sorted list (static) - $O(\log N)$ query
+        \item balanced search tree (dynamic) - $O(\log N)$ all operations
+        \item direct access table
+          \begin{itemize}
+            \item $\times$ needs items to be represented as non-negative integers (\textbf{prehashing})
+            \item $\times$ huge space requirement
+          \end{itemize}
+      \end{itemize}
+    \item using $\mathcal{H}$ for dictionaries: need to store both the hash table and the matrix $A$.
+      \begin{itemize}
+        \item additional storage overhead $= \Theta(\log N \cdot \log \vert U \vert)$, if $M = \Theta(N)$
+        \item other universal hashing constructions may have more efficient hash function evaluation
+      \end{itemize}
+  \end{itemize}
+
+  \subsection{Hashing}
+
+  \begin{itemize}
+    \item \ildefinition{hash function}, $h:U \to \{1, \dots, M\}$ gives the location of where to store in the hash table
+      \begin{itemize}
+        \item notation: $[M] = \{ 1, \dots, M \}[M] = \{ 1, \dots, M \}$
+      \end{itemize}
+    \item \definition{collision} for two different keys $x$ and $y$, $h(x) = h(y)$ 
+      \begin{itemize}
+        \item resolve by \textbf{chaining}, \textbf{open addressing}, etc
+      \end{itemize}
+    \item desired properties 
+      \begin{itemize}
+        \item $\checkmark$ minimise collisions - \code{query(x)} and \code{delete(x)} take time $\Theta(\vert h(x) \vert)$
+        \item $\checkmark$ minimise storage space - aim to have $M = O(N)$
+        \item $\checkmark$ function $h$ is easy to compute (assume constant time)
+      \end{itemize}
+    \item if $\vert U \vert \geq (N-1) M + 1$, for any $h:U \to [M]$, there is a set of $N$ elements having the same hash value.
+      \begin{itemize}
+        \item \textit{Proof}: pigeonhole principle
+      \end{itemize}
+    \item use \textbf{randomisation} to overcome the adversary
+      \begin{itemize}
+        \item e.g. randomly choose between two \textit{deterministic} hash functions $h_1$ and $h_2$ 
+          \\* $\Rightarrow$ for any pair of keys, with probability $\geq \frac{1}{2} $, there will be no collision
+      \end{itemize}
+  \end{itemize}
+
+  \subsubsection{Universal Hashing}
+
+  Suppose $\mathcal{H}$ is a set of hash functions mapping $U$ to $[M]$. 
+
+  \begin{tightcenter}
+    $\mathcal{H}$ is \ildefinition{universal} if $\forall \, x \neq y$,
+    $\frac{\vert h \in \mathcal{H}: h(x) = h(y) \vert}{\vert H \vert} \leq \frac{1}{M} $
+    \\* or $\mathop{Pr}\limits_{h \sim \mathcal{H}} [h(x) = h(y)] \leq \frac{1}{M}$
+  \end{tightcenter}
+  \begin{itemize}
+    \item aka: for any $x \neq y$, if $h$ is chosen uniformly at random from a universal $\mathcal{H}$, then there is at most $ \frac{1}{M} $ probability that $h(x) = h(y)$
+    \item probability where $h$ is sampled uniformly from $\mathcal{H}$
+  \end{itemize}
+
+  \subsubsection{Collision Analysis}
+
+  Suppose $\mathcal{H}$ is a \textit{universal} family of HFs mapping $U$ to $[M]$. 
+
+  \begin{tightcenter}
+    For any $N$ elements $x_1, x_2, \dots, x_N$, the \textbf{expected number of collisions} between $x_N$ and the other elements is $< \frac{N}{M} $.
+  \end{tightcenter}
+
+  \begin{niceproof}
+    let $A_i$ be an indicator r.v. for $h(x_i) = h(x_N)$.
+
+    $\scriptstyle E[A_i] = 1 \cdot P(A_i = 1) + 0 \cdot P(A_i = 0) = P(A_i=1) \leq \frac{1}{M}$.
+
+    \# of collisions with $x_N$ is $\sum_{i < N}A_i$
+  \end{niceproof}
+
+  \subsubsection{Expected Cost}
+
+  Suppose $\mathcal{H}$ is a \textit{universal} family of HFs mapping $U$ to $[M]$. 
+
+  \begin{tightcenter}
+    For any sequence of $N$ insertions, deletions and queries, 
+    \\* if $M \geq N$, then the \textbf{expected total cost} for a random $h \in \mathcal{H}$ is $O(N)$.
+  \end{tightcenter}
+
+  \begin{niceproof}
+    Each operation costs $O(1)$ time by this claim. 
+    \\* Linearity of expectation $\Rightarrow$ total $O(N)$
+  \end{niceproof}
+
+  \subsubsection{Construction of Universal Family}
+
+  \textit{Obtain a universal family of hash functions with $M = O(N)$.}
+
+  \begin{itemize}
+    \item Suppose $U$ is indexed by $u$-bit strings and $M = 2^m$. 
+    \item For any $m \times u$ binary matrix $A$, \ildefinition{$h_A(x) = Ax \Mod 2$ }
+      \begin{itemize}
+        \item each element \code{x => x \% 2}
+        \item $x$ is a $u \times 1$ matrix $\Rightarrow Ax$ is $m \times 1$
+      \end{itemize}
+    \item \textit{Claim}: $\{h_A:A \in \{0, 1\}^{m \times u}\}$ is universal
+    \item e.g. $U = \{00, 01, 10, 11\}, M = 2$ 
+      \begin{itemize}
+        \item $h_{ab}$ means $A = [a\; b]$
+          \\* {\rowcolors{2}{gray!15}{gray!5}\begin{tabular}
+              {ccccc}
+              \rowcolor{cyan!10} 
+              \hline
+              \, & 00 & 01 & 10 & 11 \\\hline
+              $h_{00}$ & 0 & 0 & 0 & 0 \\
+              $h_{01}$ & 0 & 1 & 0 & 1 \\
+              $h_{10}$ & 0 & 0 & 1 & 1 \\
+              $h_{11}$ & 0 & 1 & 1 & 0 \\\hline
+            \end{tabular}
+          }
+      \end{itemize}
+  \end{itemize}
+
+  \begin{niceproof}
+    Let $x \neq y$. Let $z = x - y$. We know $z \neq 0$. 
+
+    Collision: $\scriptstyle P(Ax = Ay) = P[A(x-y) = 0] = P(Az = 0)$.
+
+    To show $P(Az = 0) \leq \frac{1}{M} $.
+
+    \textit{Special case} - Suppose $z$ is $1$ at the $i$-th coordinate but 0 everywhere else. Then $Az$ is the $i$-th column of $A$.
+    Since the $i$-th column is uniformly random, $P(Az = 0) = \frac{1}{2^m} = \frac{1}{M} $.
+
+    \textit{General case} - Suppose $z$ is $1$ at the $i$-th coordinate. Let $z = [z_1 \; z_2 \; \dots \; z_u]^T$. 
+    $A = [A_1 \; A_2 \; \dots \; A_u] \quad$ hence $A_k$ is the $k$-th column of $A$.
+    \\* Then $Az = z_1 A_1 + z_2 A_2 + \dots + z_u A_u$.
+    \\* $Az = 0 \Rightarrow z_1 A_1 = -(z_2 A_2 + \dots + z_u A_u) \quad(*)$
+    \\* We fix $z_1A_1$ to be an arbitrary $m \times 1$ matrix of 1s and 0s. The probability that $(*)$ holds is $ \frac{1}{2^m} $.
+  \end{niceproof}
+
+  \subsection{Perfect Hashing}
+
+  \textbf{static case} - $N$ fixed items in the dictionary $x_1, x_2, \dots, x_N$
+
+  \subsubsection{Quadratic Space}
+
+  if $\mathcal{H}$ is universal and $M = N^2$, and $h$ is sampled uniformly from $\mathcal{H}$, then the expected number of collisions is $<1$.
+
+  \begin{niceproof}
+    for $i \neq j$, let indicator r.v. $A_{ij}$ be equal to $1$ if $h(x_i) = h(x_j)$, or $0$ otherwise.
+
+    By universality, $E[A_{ij}] = P(A_{ij} = 1) \leq 1/N^2$
+
+    $E[ \text{\# collisions}] = \sum\limits_{i < j} E[A_{ij}] \leq \binom{N}{2} \frac{1}{N^2} <1$
+  \end{niceproof}
+
+  \subsubsection{2-Level Scheme}
+
+  No collision and less space needed
+
+  \textbf{Construction}
+
+  Choose $h:U \to [N]$ from a universal hash family.
+
+  \begin{itemize}
+    \item Let $L_k$ be the number of $x_i$'s for which $h(x_i) = k$. 
+    \item Choose  $h_1, \dots, h_N$ \textbf{second-level} hash functions $h_k: [N] \to [(L_k)^2]$ s.t. there are no collisions among the $L_k$ elements mapped to $k$ by $h$.
+      \begin{itemize}
+        \item quadratic second-level table $\rightarrow$ ensures no collisions using quadratic space
+      \end{itemize}
+  \end{itemize}
+
+  \textbf{Analysis}
+
+  \begin{tightcenter}
+    if $\mathcal{H}$ is universal and $h$ is sampled uniformly from $\mathcal{H}$, then
+    \\* $E\left[ \sum\limits_k L^2_k \right] < 2N$
+  \end{tightcenter}
+
+  \begin{niceproof}
+    For $i, j \in [1, N]$, define indicator r.v. $A_{ij} = 1$ if $h(x_i) = h(x_j)$, or $0$ otherwise.
+
+    $A_{ij} = $ \# possible collisions = \# pairs * 2 $= L^2_k$
+    \\* Hence $\sum\limits_k L_k^2 = \sum\limits_{i,j} A_{ij}$ 
+
+    $E[\sum\limits_{i,j}A_{ij}] = \sum\limits_iE[A_{ii}] + \sum\limits_{i \neq j} E[A_{ij}]$
+    \\*  $\quad\quad\quad\quad\quad\; \leq N \cdot 1 + N(N-1) \cdot \frac{1}{N} $
+    \\*  $\quad\quad\quad\quad\quad\; < 2N$
+  \end{niceproof}
+
+
+
+
+
+
+
+
+
+
+
 
 
 
