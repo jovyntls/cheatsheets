@@ -492,6 +492,14 @@
     \\\hline
   \end{tabular}
 
+  \subsubsection{Properties}
+
+  \textbf{N1} - if $X \sim \text{Binomial}(n,p)$, and $Y \sim \text{Binomial}(n-1, p)$, 
+  \\* then $\quad\quad E(X^k) = np \cdot E[(Y+1)^{k-1}]$
+
+  \textbf{N2} - if $X \sim \text{Binomial}(n,p)$, then for $k \in \mathbb{Z}^+$, 
+  \\* $\quad\quad P(X=k) = \frac{(n-k+1)p}{k(1-p)} \cdot P(X=k-1)$
+
   \subsubsection{Coupon Collector Problem}
 
   \begin{niceproof}[Q]
@@ -590,6 +598,28 @@
   \begin{itemize}
     \item $Var(aX+b) = a^2 Var(x)$
   \end{itemize}
+
+  \subsection{Poisson Random Variable}
+
+  a r.v. $X$ is said to be a \ildefinition{Poisson r.v.} with parameter $\lambda$ if for some $\lambda > 0$, 
+  \begin{tightcenter}
+    $ P(X=i) = e^{-\lambda} \cdot \frac{\lambda^i}{i!} $
+  \end{tightcenter}
+
+  \begin{itemize}
+    \item notation: $X \sim \text{Poisson}(\lambda)$
+    \item $\sum^\infty_{i=0} P(X=i) = 1$
+    \item \textbf{Poisson Approximation of Binomial} - if $X \sim \text{Binomial}(n,p)$, $n$ is large and $p$ is small, then $X \dot\sim \text{Poisson}(\lambda)$ where $\lambda=np$.
+      \begin{itemize}
+        \item For $n$ independent trials with probability $p$ of success, the number of successes is approximately a \textit{Poisson r.v.} with parameter $\lambda=np$ if $n$ is large \& $p$ is small.
+      \end{itemize}
+  \end{itemize}
+
+  \subsubsection{Mean and Variance}
+  \begin{tightcenter}
+    if $X \sim \text{Poisson}(\lambda)$, then $\quad E(X) = \lambda, \quad Var(X) = \lambda$
+  \end{tightcenter}
+
 
 
 
