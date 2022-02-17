@@ -727,7 +727,100 @@
     \\*  $\quad\quad\quad\quad\quad\; < 2N$
   \end{niceproof}
 
+  \subsection{Hash Table Resizing}
 
+  \begin{itemize}
+    \item when number of inserted items, $N$ is not known 
+      \begin{itemize}
+        \item \textbf{reshashing} - choose a new hash function of a larger size and re-hash all elements
+        \item costly but infrequent $\Rightarrow$ amortize
+      \end{itemize}
+  \end{itemize}
+
+
+  \section{06. FINGERPRINTING \& STREAMING}
+
+  \subsection{String Pattern Matching}
+
+  \textit{problem}: does the pattern string $P$ occur as a substring of the text string $T$?
+  $m =$ length of $P$,  $n = $ length of $T$
+
+  \begin{itemize}
+    \item naive solution: $\Theta(n^2)$
+    \item faster string equality: 
+      \begin{itemize}
+        \item for substring $X$, check $h(X) == h(P)$ for a hash function $h$ $\Rightarrow$ $\Theta(1)$ + cost of hashing instead of $\Theta(\vert X \vert)$
+      \end{itemize}
+    \item \textbf{Rolling Hash}: $O(m+n)$
+      \begin{itemize}
+        \item update the hash from what we already have from the previous hash
+        \item \textit{Monte Carlo} algorithm
+      \end{itemize}
+    \item \textbf{Division Hash}: 
+      \begin{itemize}
+        \item higher $K$ = lower probability of false positive
+      \end{itemize}
+  \end{itemize}
+
+  \subsubsection{Division Hash}
+
+  \begin{tightcenter}
+    Choose a random number $p$ in the range $\{1, \dots, K\}$.
+    \\* For integer $x$, $h_p(x) = x \Mod p$
+  \end{tightcenter}
+
+  \begin{itemize}
+    \item if $p$ is small and $x$ is $b$-bits long in binary, hashing $\Rightarrow O(b)$
+    \item hash family $\{h_p\}$ is approximately universal
+    \item if $0 \leq x < y < 2^b$, then $\quad \mathop{Pr}\limits_h [h_p(x) = h_p(y)] < \frac{b \ln K}{K} $
+      \begin{niceproof}
+        $h_p(x) = h_p(y)$ when $y-x=0 \Mod p$. 
+
+        Let $z=y-x$.
+
+        Since $z < 2^b$, then $z$ can have at most $b$ distinct prime factors.
+
+        $p$ divides $z$ if $p$ is one of these $\leq b$ prime factors. 
+
+        number of primes in range $\{1, \dots, K\}$ is $> \frac{K}{\ln K} $, hence the probability is $b / \frac{K}{\ln K} = \frac{b\ln K}{K} $
+      \end{niceproof}
+  \end{itemize}
+
+  \subsection{Streaming}
+
+  \textit{problem}: sequence of insertions or deletions of items from a large universe $\mathcal{U}$. 
+  At the end of the stream, the \textbf{frequency $f_i$} of item $i$ is its net count.
+
+  Let $M$ be the sum of all frequencies at the end of stream.
+
+  \begin{itemize}
+    \item naive solution: direct access table - $\Omega(U)$ space
+    \item naive solution: sorted list - $\Omega(M)$ space, no $O(1)$ update
+  \end{itemize}
+
+  \subsubsection{Frequency Estimation}
+  \begin{tightcenter}
+    an approximation $\hat{f}_i$ is \ildefinition{$\epsilon$-approximate} if $f_i - \epsilon M \leq \hat{f}_i \leq f_i + \epsilon M$
+  \end{tightcenter}
+
+  \subsubsection{Using Hash Table}
+  \begin{itemize}
+    \item increment/decrement $A[h(j)]$ on an empty table  $A$ of size $k$
+    \item collision $\Rightarrow$ false positives $\Rightarrow$ may give overestimate of $f_i$ 
+      \begin{itemize}
+        \item $A[h(i)] = \sum_{j: h(j) = h(i)} f_j \geq f_i$
+      \end{itemize}
+    \item if $h$ is drawn from a universal family, 
+      \\* overestimate, $\mathbb{E} [ A[h(i)] - f_i ] \leq M/k$
+    \item space: $O( \frac{1}{\epsilon} \cdot \lg M + \lg U \cdot \lg M)$
+      \\* let $k = \frac{1}{\epsilon} $ for some $\epsilon > 0$. 
+      \begin{itemize}
+        \item number of rows $= O( \frac{1}{\epsilon} ) $
+        \item size of each row $= O(\lg M)$
+        \item size of hash function (using universal hash family from ch.05) $= O(\lg U \cdot \lg M)$
+      \end{itemize}
+    \item \definition{Count-Min Sketch} gives a bound on the probability that $\hat{f}_i$ deviates from $f_i$ instead of a bound on the expectation of the gap
+  \end{itemize}
 
 
 
@@ -766,5 +859,7 @@
 
 \section{helpful approximations}
 harmonic number, $ H_n = \sum\limits_{k=1}^n \frac{1}{k} = \Theta(\lg n) $
+
+number of primes in range $\{1, \dots, K\}$ is $> \frac{K}{\ln K} $
 
 \end{document}
