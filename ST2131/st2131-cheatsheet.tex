@@ -64,7 +64,6 @@
 
 % adding my commands
 \input{../commands/style-helpers.tex}
-\input{./st2131-commands.tex}
 
 % -----------------------------------------------------------------------
 
@@ -120,15 +119,15 @@
   \textbf{N4} - $\binom{n}{r} = \frac{n!}{(n-r)!\,r!}$ represents the number of different groups of size $r$ that could be selected from a set of $n$ objects when the order of selection is not considered relevant.
 
   \textbf{N4b} - $\binom{n}{r} = \binom{n-1}{r-1} + \binom{n-1}{r}, \quad 1 \leq r \leq n$
-  \begin{proof}
+  \begin{niceproof}
     If object 1 is chosen $\Rightarrow$ $\binom{n-1}{r-1}$ ways of choosing the remaining objects.
     \\* If object 1 is not chosen $\Rightarrow$ $\binom{n-1}{r}$ ways of choosing the remaining objects.
-  \end{proof}
+  \end{niceproof}
 
   \textbf{N5} - \textbf{The Binomial Theorem} - \( {\displaystyle{(x+y)^n = \sum^n_{k=0} \binom{n}{k} x^k y^{n-k} }} \) 
-  \begin{proof}
+  \begin{niceproof}
     by mathematical induction: $n=1$ is true; expand; sub dummy variable; combine using N4b; combine back to final term
-  \end{proof}
+  \end{niceproof}
 
   \subsection{Multinomial Coefficients}
 
@@ -136,12 +135,12 @@
   represents the number of possible divisions of $n$ distrinct objects 
   into $r$ distinct groups of respective sizes $n_1, n_2, \dots, n_3$, 
   where $n_1 + n_2 + \dots + n_r = n$
-  \begin{proof}
+  \begin{niceproof}
     using basic counting principle, 
     \\* $= \binom{n}{n_1} \binom{n-n_1}{n_2} \binom{n-n_1-n_2}{n_3} \dots \binom{n-n_1-n_2-n_{r-1}}{n_r}$
     \\* $= \frac{n!}{(n-n_1)!\,n_1!} \times \frac{(n-n_1)!}{(n-n_1-n_2)!\, n_2!} \times \dots \times \frac{( n-n_1-n_2-\dots -n_{r-1} )}{0!\, n_r!}$
     \\* $= \frac{n!}{n_1!\, n_2! \, \dots \, n_r!}$
-  \end{proof}
+  \end{niceproof}
 
   \textbf{N7} - \textbf{The Multinomial Theorem}: $(x_1 + x_2 + \dots + x_r)^n$
   \\* $ \quad\quad\quad = \sum\limits_{(n_1, \dots, n_r):n_1 + n_2 + \dots + n_r = n} \frac{n!}{n_1! \, n_2! \, \dots n_r!} x_1^{n_1} x_2^{n_2} \dots x_r^{n_r}$
@@ -153,9 +152,9 @@
   \\* \attention cannot be directly applied to \textit{N8} as 0 value is not included
 
   \textbf{N9} - there are $\binom{n+r-1}{r-1}$ distinct  \textit{non-negative} integer-valued vectors $(x_1, x_2, \dots, x_r)$ satisfying $x_1 + x_2 + \dots + x_r = n$ 
-  \begin{proof}
+  \begin{niceproof}
     let $y_k = x_k + 1 \Rightarrow y_1 + y_2 + \dots + y_r = n + r$
-  \end{proof}
+  \end{niceproof}
 
 
   \section{02. AXIOMS OF PROBABILITY}
@@ -175,18 +174,18 @@
 
   \subsubsection{DeMorgan's Laws}
   $\mathbf{ (\bigcup\limits^n_{i=1} E_i)^c = \bigcap\limits^n_{i=1}E_i^c }$ 
-  \begin{proof}
+  \begin{niceproof}
     to show LHS $\subset$ RHS: let $x \in (\bigcup^n_{i=1}E_i)^c$ 
     \\* $\quad\Rightarrow x \notin \bigcup^n_{i=1}E_i \Rightarrow x \notin E_1$ and $x \notin E_2 \dots$ and $x \notin E_n$
     \\* $\quad\Rightarrow x \in E_1^c$  and $x \in E_2^c \dots$ and $x \in E_n^c$
     \\* $\quad\Rightarrow x \in \bigcap^n_{i=1} E_i^c$
     \\* to show RHS $\subset$ LHS: let $x \in \bigcap^n_{i=1} E_i^c$
-  \end{proof}
+  \end{niceproof}
 
   $\mathbf{ (\bigcap\limits^n_{i=1}E_i)^c = \bigcup\limits^n_{i=1}E_i^c }$ \\
-  \begin{proof}
+  \begin{niceproof}
     using the first law of DeMorgan, negate LHS to get RHS
-  \end{proof}
+  \end{niceproof}
 
 
   \subsection{Axioms of Probability}
@@ -253,7 +252,7 @@
                                         &+ (-1)^{r+1} \sum_{i_1 < i_2 < \dots < i_r} P(E_{i_1} E_{i_2} \dots E_{i_r}) + \dots \\
                                         &+ (-1)^{n+1} P(E_1 E_2 \dots E_n)
   \end{align*}
-  \begin{proof}
+  \begin{niceproof}
     Suppose an outcome with probability $\omega$ is in exactly $m$ of the events $E_i$, where $m > 0$. Then
     \\* \textbf{LHS}: the outcome is in $E_1\cup E_2 \cup \dots \cup E_n$ and $\omega$ will be counted once in $P(E_1\cup E_2 \cup \dots \cup E_n)$ 
     \\* \textbf{RHS}: 
@@ -266,22 +265,22 @@
     hence RHS = $\binom{m}{1}\omega - \binom{m}{2}\omega + \binom{m}{3}\omega - \dots \pm \binom{m}{m}\omega $
     \\ $\quad = \omega \sum\limits^m_{i=0}\binom{m}{i} (-1)^i = $ binomial theorem where $x=-1, y=1$ 
     \\ $\quad = 0 = $ LHS
-  \end{proof}
-  \begin{proof}[e.g]
+  \end{niceproof}
+  \begin{niceproof}[e.g]
     For an outcome with probability $\omega$ and $n=3$
     \begin{itemize}
       \item 
-        \begin{proof}[Case 1] $w = P(E_1E_2)$
+        \begin{niceproof}[Case 1] $w = P(E_1E_2)$
           \\* LHS = $\omega$
           \\* RHS = ($\omega$ + $\omega$ + 0) - ($\omega$ + 0 + 0) + 0 = $\omega$
-        \end{proof}
+        \end{niceproof}
       \item 
-        \begin{proof}[Case 2] $\omega = P(E_1 \cap E_2 \cap E_3)$
+        \begin{niceproof}[Case 2] $\omega = P(E_1 \cap E_2 \cap E_3)$
           \\* LHS = $\omega$
           \\* RHS = ($\omega$ + $\omega$ + $\omega$) - ($\omega$ + $\omega$ + $\omega$) + $\omega$ = $\omega$
-        \end{proof}
+        \end{niceproof}
     \end{itemize}
-  \end{proof}
+  \end{niceproof}
 
   \textbf{N12} - 
   \begin{enumerate}[label=(\roman*)]
@@ -290,10 +289,10 @@
     \item $P(\bigcup^n_{i=1}E_i) \leq \sum\limits^n_{i=1} P(E_i) - \sum\limits_{j < i} P(E_iE_j) + \sum_{k < j < i} P(E_iE_jE_k)$
     \item and so on.
   \end{enumerate}
-  \begin{proof}
+  \begin{niceproof}
     $\scriptstyle \bigcup\limits^n_{i=1} E_i = E_1 \cup E_1^cE_2 \cup E_1^cE_2^cE_3 \cup \dots \cup E_1^cE_2^c\dots E_{n-1}^cE_n$
     \\* $\scriptstyle P(\bigcup\limits^n_{i=1} E_i) = P(E_1) + P(E_1^cE_2) + P(E_1^cE_2^cE_3) + \dots + P(E_1^cE_2^c\dots E_{n-1}^cE_n)$
-  \end{proof}
+  \end{niceproof}
 
 
   \subsection{Sample Space having Equally Likely Outcomes}
@@ -324,6 +323,26 @@
 
   \textbf{N2} - \textbf{multiplication rule} - $P(E_1E_2\dots E_n) = P(E_1)P(E_2\vert E_1)P(E_3\vert E_1 E_2) \dots P(E_n \vert E_1 E_2 \dots E_{n-1})$
 
+  \textbf{N3} - \textbf{axioms of probability} apply to conditional probability
+  \begin{enumerate}
+    \item $ 0 \leq P(E \vert F) \leq 1 $
+    \item $ P(S \vert F) = 1 $ where $ S $ is the sample space
+    \item If $ E_i $ ($ i \in \mathbb{Z}_{\geq 1} $) are mutually exclusive events, then $ P(\bigcup\limits^\infty_1 E_i \vert F) = \sum\limits^\infty_1 P(E_i \vert F) $
+  \end{enumerate}
+
+  \textbf{N4} - If we define $ Q(E) = P(E \vert F) $, then $ Q(E) $ can be regarded as a probability function on the events of $ S $,
+  hence all results previously proved for probabilities apply.
+  \begin{itemize}
+    \item $Q(E_1\cup E_2) = Q(E_1) + Q(E_2) - Q(E_1 E_2) $ 
+    \item $P(E_1\cup E_2\vert F ) = P(E_1\vert F ) + P(E_2\vert F ) - P(E_1 E_2\vert F ) $ 
+    \item \textbf{theorem of total probability}: 
+      \begin{itemize}
+        \item $Q(E_1) = Q(E_1 \vert E_2) Q(E_2) + Q(E_1\vert E_2^c) Q(E_2^c) $ 
+        \item $ P(H \vert F_n) = \sum\limits^k_{i=0} P(H \vert F_nc_i) P(c_i \vert F_n) $
+      \end{itemize}
+  \end{itemize}
+
+
   \subsection{Total Probability \& Bayes' Theorem}
 
   \textbf{conditioning formula} - $P(E) = P(E \vert F)P(F) + P(E\vert F^c) P(F^c)$
@@ -338,12 +357,12 @@
       \node[label=center:{$E^c$}, minimum size=4mm, inner sep=0] (FEc) at (4,1.5) {};
       \node[label=center:{$E$}, minimum size=4mm, inner sep=0] (FcE) at (4,1) {};
       \node[label=center:{$E^c$}, minimum size=4mm, inner sep=0] (FcEc) at (4,0.5) {};
-      \draw[->] (F) -- (FE) node[midway, above] {$P(E\vert F$)};
-      \draw[->] (F) -- (FEc) node[midway, above] {};
-      \draw[->] (Fc) -- (FcE) node[midway, above] {$P(E\vert F^c)$};
-      \draw[->] (Fc) -- (FcEc) node[midway, above] {};
-      \draw[->] (O) -- (F) node[midway, above] {$P(F)$};
-      \draw[->] (O) -- (Fc) node[midway, above] {$P(F^c)$};
+      \draw[->] (F) -- (FE) node[midway, above, sloped] {$P(E\vert F$)};
+      \draw[->] (F) -- (FEc) node[midway, above, sloped] {};
+      \draw[->] (Fc) -- (FcE) node[midway, above, sloped] {$P(E\vert F^c)$};
+      \draw[->] (Fc) -- (FcEc) node[midway, above, sloped] {};
+      \draw[->] (O) -- (F) node[midway, above, sloped] {$P(F)$};
+      \draw[->] (O) -- (Fc) node[midway, above, sloped] {$P(F^c)$};
     \end{tikzpicture}
   \end{minipage}
   \begin{minipage}[c]{0.55\linewidth}
@@ -358,11 +377,9 @@
   then $P(E) = \sum\limits^n_{i=1}P(EF_i) = \sum\limits^n_{i=1}P(F_i)P(E\vert F_i)$
 
   \subsubsection{Bayes Theorem}
-
-  \begin{align*}
-    P(F_j \vert E) &= \frac{P(EF_j)}{P(E)} \\
-                   &= \frac{P(F_j)P(E \vert F_j)}{\sum\limits^n_{i=1} P(F_i)P(E \vert F_i)}
-  \end{align*}
+  \begin{tightcenter}
+    $P(F_j \vert E) = \frac{P(EF_j)}{P(E)} = \frac{P(F_j)P(E \vert F_j)}{\sum\limits^n_{i=1} P(F_i)P(E \vert F_i)}$
+  \end{tightcenter}
 
   \textbf{application of bayes' theorem}
 
@@ -371,9 +388,9 @@
   \end{tightcenter}
 
   Let $A$ be the event that the person test positive for a disease.
-  \\* $B_1$: the person actually has the disease.
-  \\* $B_2$: the person does not have the disease.
+  \\* $B_1$: the person has the disease. $B_2$: the person does not have the disease.
   \begin{tightcenter}
+    \vspace*{-0.5\multicolsep}
     \begin{multicols}{2}
       true positives: $P(B_1\mid A)$
       \\ false positives: $P(A \mid B_2)$
@@ -384,28 +401,319 @@
 
   \subsection{Independent Events}
 
-  \textbf{N1} - $E$ and $F$ are independent $\iff$
-  \\* $P(EF) = P(E) \cdot P(F) \quad$ or $\quad P(E \vert F) = P(E)$
+  \textbf{N1} - $E$ and $F$ are independent $\iff P(EF) = P(E) \cdot P(F) \quad$ 
 
-  \textbf{N2} - if $E$ and $F$ are independent, then $E$ and $F^c$ are independent.
+  \textbf{N2} - $E$ and $F$ are independent $\iff P(E \vert F) = P(E)$
 
-  \textbf{N3} - if $E, F, G$ are independent, then $E$ will be independent of any event formed from $F$ and $G$. (e.g. $F\cup G$)
+  \textbf{N3} - if $E$ and $F$ are independent, then $E$ and $F^c$ are independent.
+
+  \textbf{N4} - if $E, F, G$ are independent, then $E$ will be independent of any event formed from $F$ and $G$. (e.g. $F\cup G$)
+
+  \textbf{N5} - if $E, F, G$ are independent, then $ P(EFG) = P(E)P(F)P(G) $
+
+  \textbf{N6} - if $ E $ and $ F $ are independent and $ E $ and $ G $ are independent, 
+  \\* $\quad\quad \not\Rightarrow $  $ E $ and $ FG $ are independent
+
+  \textbf{N7} - For independent trials with probability $ p $ of success, probability of $ m $ successes before $ n $ failures, 
+  for $ m, n \geq 1 $,
+
+  \begin{minipage}[c]{0.3\linewidth}
+    \textit{method 1}\\
+    \begin{tikzpicture}[scale=0.7, every node/.style={transform shape}]
+      \node[minimum size=1mm, inner sep=0] (O) at (0,1.25) {};
+      \node[label=center:{S}, minimum size=4mm, inner sep=0] (S) at (1.25,1.75) {};
+      \node[label=center:{F}, minimum size=4mm, inner sep=0] (F) at (1.25,0.75) {};
+      \node[label=center:{A win}, minimum size=7mm, inner sep=0] (a1) at (3.25,2) {};
+      \node[label=center:{B win}, minimum size=7mm, inner sep=0] (b1) at (3.25,1.5) {};
+      \node[label=center:{A win}, minimum size=7mm, inner sep=0] (a2) at (3.25,1) {};
+      \node[label=center:{B win}, minimum size=7mm, inner sep=0] (b2) at (3.25,0.5) {};
+      \draw[->] (S) -- (a1) node[midway, above, sloped] {$P_{n-1, m}$};
+      \draw[->] (S) -- (b1) node {};
+      \draw[->] (F) -- (a2) node[midway, above, sloped] {$P_{n, m-1}$};
+      \draw[->] (F) -- (b2) node {};
+      \draw[->] (O) -- (S) node[midway, above] {$p$};
+      \draw[->] (O) -- (F) node[midway, below, sloped] {$1-p$};
+    \end{tikzpicture}
+  \end{minipage}
+  \begin{minipage}[c]{0.67\linewidth}
+    \textit{method 2}
+    \begin{align*}
+      P_{n, m} &= \sum\limits^{m+n-1}_{k=n} \binom{m+n-1}{k} p^k (1-p)^{m+n-1-k} 
+            \\ &= P(\text{exactly $ k $ successes in $ m+n-1 $ trials})
+    \end{align*}
+  \end{minipage}
+
+  recursive approach to solving probabilities: see page 85 alternative approach
 
 
   \section{04. RANDOM VARIABLES}
 
-  \subsection{Random Variables}
-
   \begin{itemize}
     \item \definition{random variable} a real-valued function defined on the sample space
+  \end{itemize}
+
+  \subsection{Types of Random Variables}
+
+  \begin{itemize}
     \item $X$ is a \definition[with parameter $p$ if]{Bernoulli r.v.} 
       \\* $p(x) = \begin{cases}
         p, &x=1, \text{ ('success')} \\
         1-p, &x=0\quad  \text{ ('failure')}
       \end{cases}$
+    \item $ Y $ is a \definition[with parameters $ n $ and $ p $]{Binomial r.v.} $ \quad Y = X_1 + X_2 + \dots + X_n $
+      where  $ X_1, X_2, \dots, X_n $ are independent Bernoulli r.v.'s with parameter $ p $.
+      \begin{itemize}
+        \item $ P(X=k) = \binom{n}{k} p^k (1-p)^{n-k} $
+        \item $ P(k $ successes from $ n $ independent trials each with probability $ p $ of success$ ) $
+        \item e.g. number of red balls out of $ n $ balls drawn with replacement
+      \end{itemize}
+    \item \definition{Negative Binomial} $ X = $ number of trials until $ k $ successes are obtained
+      \begin{itemize}
+        \item e.g. number of balls drawn (with replacement) until $ k $ red balls are obtained
+      \end{itemize}
+    \item \definition{Geometric} $ X = $ number of trials until a success is obtained
+      \begin{itemize}
+        \item $ P(X=k) = (1-p)^{k-1} \cdot p $ where $ k $ is the number of trials needed
+        \item e.g. number of balls drawn (with replacement) until 1 red ball is obtained
+      \end{itemize}
+    \item \definition{Hypergeometric} $ X = $ number of trials until success, \textit{without replacement}
+      \begin{itemize}
+        \item e.g. number of red balls out of $ n $ balls drawn without replacement
+      \end{itemize}
   \end{itemize}
 
+  \subsubsection{Summary}
 
+  \begin{tabular}{|c|l|}
+    \hline  binomial & $ X= $ number of successes in $ n $ trials with replacement
+    \\\hline negative binomial & $ X= $ number of trials until $ k $ successes
+    \\\hline geometric & $ X= $ number of trials until a success
+    \\\hline hypergeometric & $ X= $ number of successes in $ n $ trials without replacement
+    \\\hline
+  \end{tabular}
+
+  \subsubsection{Properties}
+
+  \textbf{N1} - if $X \sim \text{Binomial}(n,p)$, and $Y \sim \text{Binomial}(n-1, p)$, 
+  \\* then $\quad\quad E(X^k) = np \cdot E[(Y+1)^{k-1}]$
+
+  \textbf{N2} - if $X \sim \text{Binomial}(n,p)$, then for $k \in \mathbb{Z}^+$, 
+  \\* $\quad\quad P(X=k) = \frac{(n-k+1)p}{k(1-p)} \cdot P(X=k-1)$
+
+  \subsubsection{Coupon Collector Problem}
+
+  \begin{niceproof}[Q]
+    Suppose there are $ N $ distinct types of coupons.
+    If $ T $ denotes the number of coupons needed to be collected for a complete set, what is $ P(T=n) $?
+  \end{niceproof}
+
+  \begin{niceproof}[A]
+    $ P(T > n-1) = P(T \geq n) = P(T=n) + P(T > n) $
+    $ \quad\Rightarrow P(T=n) = P(T > n-1) - P(T > n) $
+    Let $ A_j = \{ \text{no type $j$ coupon is contained among the first $n$} \} $
+    $ P(T>n) = P(\bigcup^N_{j=1}A_j) $
+
+    Using the inclusion-exclusion identity, 
+    \\* $ \quad P(T>n) = \sum\limits_j P(A_j)\quad$ - coupon $ j $ is not among the first $ n $ collected 
+    \\* $\quad\quad\quad\quad\quad\quad - \sum\limits_{j_1}\sum\limits_{j_2} P(A_{j_1} A_{j_2}) \quad$ - coupon $ j_1 $ and $ j_2 $ are not the first $ n $
+    \\* $\quad\quad\quad\quad\quad\quad + \dots  + (-1)^{k+1} \sum\limits_{j_1}\sum\limits_{j_2}\dots\sum\limits_{j_k} P(A_{j_1}A_{j_2} \cdots A_{j_n}) + \dots $
+    \\* $\quad\quad\quad\quad\quad\quad + (-1)^{N+1} P(A_1A_2 \cdots A_N) $
+
+    $ P(A_{j_1}A_{j_2} \cdots A_{j_n}) = ( \frac{N-k}{N} )^n $
+
+    Hence $ P(T>n) = \sum\limits^{N-1}_{i=1} \binom{N}{i} \binom{N-1}{N}^n (-1)^{i+1} $
+  \end{niceproof}
+
+  \subsection{Probability Mass Function}
+
+  \begin{itemize}
+    \item for a \textit{discrete} r.v., we define the \textbf{probability mass function} (pmf) of $ X $ by $ p(a) = P(X=a) $
+      \begin{itemize}
+        \item cdf, $F(a) = \sum p(x)$ for all $x \leq a$
+        \item if $X$ assumes one of the values $x_1, x_2, \dots$, then $\sum\limits^\infty_{i=1} p(x_i) = 1$
+        \item the pmf $ p(a) $ is positive for at most a countable number of values of $a$
+      \end{itemize}
+    \item e.g. 
+      $\begin{array}{c|ccc}
+        a & 1 & 2 & 4 \\\hline
+        p(a) & \frac{1}{2} & \frac{1}{4} & \frac{1}{4} 
+      \end{array}$
+    \item \definition[variable]{discrete} a random variable that can take on at most a countable number of possible values
+  \end{itemize}
+
+  \subsection{Cumulative Distribution Function}
+  \begin{itemize}
+    \item for a r.v. $X$, the function $F$ defined by $F(x) = P(X \leq x), \quad -\infty < x < \infty$, is called the \textbf{cumulative distribution function (cdf)} of $X$.
+      \begin{itemize}
+        \item aka \textit{distribution function}
+        \item $F(x)$ is defined on the entire real line
+      \end{itemize}
+    \item e.g. $F(a) = \begin{cases}
+        0, &a < 1 \\
+        \frac{1}{2} , &1 \leq a < 2 \\
+        \frac{3}{4} , &2 \leq a < 4 \\
+        1, &a \leq 4
+      \end{cases}$
+  \end{itemize}
+
+  \subsection{Expected Value}
+  \begin{itemize}
+    \item aka population mean/sample mean, $\mu$
+    \item if $X$ is a discrete random variable having pmf $p(x)$, the \ildefinition{expectation} or the \ildefinition{expected value} of $X$ is defined as $E(X) = \sum\limits_x x \cdot p(x)$
+  \end{itemize}
+  
+  \textbf{N1} - if $a$ and $b$ are constants, then $E(aX + b) = aE(X) + b$
+
+  \textbf{N2} - the $n^{th}$ moment of of $X$ is given as $E(X^n) = \sum_x x^n\cdot p(x)$
+
+  \begin{itemize}
+    \item $I$ is an indicator variable for event $A$ if 
+      $I = \begin{cases}\scriptstyle 1, \text{ if $A$ occurs} \\ \scriptstyle 0, \text{ if $A^c$ occurs}\end{cases}$. then $E(I) = P(A)$.
+  \end{itemize}
+
+  \begin{niceproof}[Proof of N1]
+    $E(aX+b) = \sum_x (aX+b) p(x)$
+    \\* $ \quad = a \cdot \sum_x xp(x) + b \cdot \sum_x p(x) = a \cdot E(X) + b$
+  \end{niceproof}
+
+  \subsubsection{finding expectation of f(x)}
+
+  \begin{itemize}
+    \item method 1, using pmf of $Y$: let $Y = f(X)$. Find corresponding $X$ for each $Y$.
+    \item method 2, using pmf of $X$: $E[g(x)] = \sum_i g(x_i)p(x_i)$
+      \begin{itemize}
+        \item where $X$ is a discrete r.v. that takes on one of the values of $x_i$ with the respective probabilities of $p(x_i)$, and $g$ is any real-valued function $g$
+      \end{itemize}
+  \end{itemize}
+
+  \subsection{Variance}
+
+  If $X$ is a r.v. with mean $\mu = E[X]$, then the variance of $X$ is defined by 
+  \begin{align*}
+    Var(X) &= E[(X-\mu)^2] \\ 
+           &= \sum{x_i} (x_i - \mu)^2 \cdot p(x_i) \quad\quad \text{(deviation $\cdot$ weight)} \\
+           &= E(x^2) - [E(x)]^2
+  \end{align*}
+
+  \begin{itemize}
+    \item $Var(aX+b) = a^2 Var(x)$
+  \end{itemize}
+
+  \subsection{Poisson Random Variable}
+
+  a r.v. $X$ is said to be a \ildefinition{Poisson r.v.} with parameter $\lambda$ if for some $\lambda > 0$, 
+  \begin{tightcenter}
+    $ P(X=i) = e^{-\lambda} \cdot \frac{\lambda^i}{i!} $
+  \end{tightcenter}
+
+  \begin{itemize}
+    \item notation: $X \sim \text{Poisson}(\lambda)$
+    \item $\sum^\infty_{i=0} P(X=i) = 1$
+    \item \textbf{Poisson Approximation of Binomial} - if $X \sim \text{Binomial}(n,p)$, $n$ is large and $p$ is small, then $X \dot\sim \text{Poisson}(\lambda)$ where $\lambda=np$.
+      \begin{itemize}
+        \item For $n$ independent trials with probability $p$ of success, the number of successes is approximately a \textit{Poisson r.v.} with parameter $\lambda=np$ if $n$ is large \& $p$ is small.
+        \item Poisson approximation remains even when the trials are not independent, provided that their \textit{dependence is weak}.
+      \end{itemize}
+    \item \textbf{2 ways} to look at the Poisson distribution 
+      \begin{enumerate}
+        \item an approximation to the binomial distribution with large $n$ and small $p$
+        \item counting the number of events that occur at \textit{random} at certain points in time
+      \end{enumerate}
+  \end{itemize}
+
+  \subsubsection{Mean and Variance}
+  \begin{tightcenter}
+    if $X \sim \text{Poisson}(\lambda)$, then $\quad E(X) = \lambda, \quad Var(X) = \lambda$
+  \end{tightcenter}
+
+  \subsection{Poisson distribution as random events}
+
+  Let $N(t)$ be the number of events that occur in time interval $[0, t]$. 
+
+  \textbf{N1} - If the 3 assumptions are true, then  $N(t) \sim \text{Poisson}(\lambda t)$.
+
+  \textbf{N2} - If $\lambda$ is the rate of occurrences of events per unit time, then the number of occurrences in an interval of length $t$ has a Poisson distribution with mean $\lambda t$.
+
+  \begin{tightcenter}
+    $P(N(t) = k) = \frac{e^{-\lambda t} (\lambda t)^k}{k!} $, for $k \in \mathbb{Z}_{\geq 0}$
+  \end{tightcenter}
+
+  \subsubsection{o(h) notation}
+
+  \begin{tightcenter}
+    $o(h)$ stands for any function $f(h)$ such that \( {\displaystyle{ \lim_{h \to 0} \frac{f(h)}{h} = 0 }} \) 
+  \end{tightcenter}
+
+  \begin{itemize}
+    \item $o(h) + o(h) = o(h)$
+    \item $ \frac{\lambda t}{n} + o ( \frac{t}{n} ) \dot= \frac{\lambda t}{n} $ for large $n$
+  \end{itemize}
+
+  \subsection{Expected Value of sum of r.v.}
+
+  For a r.v. $X$, let $X(s)$ denote the value of $X$ when $s \in \mathcal{S}$
+
+  \textbf{N1} - $E(x) = \sum\limits_i x_i P(X=x_i) = \sum\limits_{s \in \mathcal{S}} X(s) p(s)$
+  where $\mathcal{S}_i = \{s : X(s)=x_i\}$
+
+  \textbf{N2} - $E (\sum\limits_{i-1}^n) = \sum\limits^n_{i=1}E(X_i) \quad$ for r.v. $X_1, X_2, \dots, X_n$
+
+  \subsection{examples}
+
+  \textbf{Selecting hats problem}
+
+  Let $n$ be the number of men who select their own hats.
+  Let $I_E$ be an indicator r.v. for $E$. 
+  $E_i$ is the event that the $i$-th man selects his own hat.
+  Let $X$ be the number of men that select their own hats.
+
+  \begin{itemize}
+    \item $X = I_{E_1} + I_{E_2} + \dots + I_{E_n}$
+    \item $P(E_i) = \frac{1}{n}$
+    \item $P(E_i \vert E_j) = \frac{1}{n-1} \neq P(E_j) $ for $j < i$ (hence $E_i$ and $E_j$ are not independent)
+      \begin{itemize}
+        \item but dependence is weak for large $n$
+      \end{itemize}
+    \item $X$ satisfies the other conditions for binomial r.v., besides independence ($n$ trials with equal probability of success)
+    \item Poisson approximation of $X$ : $X \sim \text{Poisson}(\lambda)$
+      \begin{itemize}
+        \item $\lambda = n \cdot P(E_i) = n\cdot \frac{1}{n} = 1$
+        \item $P(X=i) = \frac{e^{-1}1^i}{i!} = \frac{e^{-1}}{i!} $ 
+        \item $P(X=0) = e^{-1} \approx 0.37$
+      \end{itemize}
+  \end{itemize}
+
+  \textbf{No 2 people have the same birthday}
+
+  For $\binom{n}{2}$ pairs of individuals $i$ and $j$, $i \neq j$, let $E_{ij}$ be the event where they have the same birthday. 
+  Let $X$ be the number of pairs with the same birthday.
+
+  \begin{itemize}
+    \item $X = I_{E_1} + I_{E_2} + \dots + I_{E_n}$
+    \item Each $E_{ij}$ is only \textit{pairwise independent}. $P(E_{ij}) = \frac{1}{365}$
+      \begin{itemize}
+        \item i.e. $E_{ij}$ and $E_{mn}$ are independent
+        \item but $E_{12}$ and $(E_{13} \cap E_{23})$ are not independent $\quad \Rightarrow P(E_{12} \vert E_{13} \cap E_{23}) = 1$
+      \end{itemize}
+    \item $X \dot\sim \text{Poisson}(\lambda)$, $\lambda = \frac{\binom{n}{2}}{365} = \frac{n(n-1)}{730} \quad\quad \Rightarrow P(X=0) = e^{- \frac{n(n-1)}{730} } $ 
+      \begin{itemize}
+        \item for $P(X=0) \leq \frac{1}{2}$, $n \geq 23$
+      \end{itemize}
+  \end{itemize}
+
+  \textbf{distribution of time to next event}
+
+  Q. suppose an accident happens at a rate of 5 per day. Find the distribution of time, starting from now, until the next accident.
+
+  \begin{niceproof}[A]
+    Let $X =$ time (in days) until the next accident.
+    \\* Let $V =$ be the number of accidents during time period $[0, t]$. 
+    \\* $V \sim \text{Poisson}(5t) \quad \quad \Rightarrow P(V=k) = \frac{e^{-5t} \cdot (5t)^k}{k!} $
+
+    $P(X > t) = P($no accidents happen during $[0, t]) = P(V=0) = e^{-5t}$
+
+    $P(X \leq t) - 1-e^{-5t}$
+  \end{niceproof}
 
 
 
