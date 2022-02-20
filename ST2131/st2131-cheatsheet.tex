@@ -612,7 +612,13 @@
     \item \textbf{Poisson Approximation of Binomial} - if $X \sim \text{Binomial}(n,p)$, $n$ is large and $p$ is small, then $X \dot\sim \text{Poisson}(\lambda)$ where $\lambda=np$.
       \begin{itemize}
         \item For $n$ independent trials with probability $p$ of success, the number of successes is approximately a \textit{Poisson r.v.} with parameter $\lambda=np$ if $n$ is large \& $p$ is small.
+        \item Poisson approximation remains even when the trials are not independent, provided that their \textit{dependence is weak}.
       \end{itemize}
+    \item \textbf{2 ways} to look at the Poisson distribution 
+      \begin{enumerate}
+        \item an approximation to the binomial distribution with large $n$ and small $p$
+        \item counting the number of events that occur at \textit{random} at certain points in time
+      \end{enumerate}
   \end{itemize}
 
   \subsubsection{Mean and Variance}
@@ -620,8 +626,94 @@
     if $X \sim \text{Poisson}(\lambda)$, then $\quad E(X) = \lambda, \quad Var(X) = \lambda$
   \end{tightcenter}
 
+  \subsection{Poisson distribution as random events}
 
+  Let $N(t)$ be the number of events that occur in time interval $[0, t]$. 
 
+  \textbf{N1} - If the 3 assumptions are true, then  $N(t) \sim \text{Poisson}(\lambda t)$.
+
+  \textbf{N2} - If $\lambda$ is the rate of occurrences of events per unit time, then the number of occurrences in an interval of length $t$ has a Poisson distribution with mean $\lambda t$.
+
+  \begin{tightcenter}
+    $P(N(t) = k) = \frac{e^{-\lambda t} (\lambda t)^k}{k!} $, for $k \in \mathbb{Z}_{\geq 0}$
+  \end{tightcenter}
+
+  \subsubsection{o(h) notation}
+
+  \begin{tightcenter}
+    $o(h)$ stands for any function $f(h)$ such that \( {\displaystyle{ \lim_{h \to 0} \frac{f(h)}{h} = 0 }} \) 
+  \end{tightcenter}
+
+  \begin{itemize}
+    \item $o(h) + o(h) = o(h)$
+    \item $ \frac{\lambda t}{n} + o ( \frac{t}{n} ) \dot= \frac{\lambda t}{n} $ for large $n$
+  \end{itemize}
+
+  \subsection{Expected Value of sum of r.v.}
+
+  For a r.v. $X$, let $X(s)$ denote the value of $X$ when $s \in \mathcal{S}$
+
+  \textbf{N1} - $E(x) = \sum\limits_i x_i P(X=x_i) = \sum\limits_{s \in \mathcal{S}} X(s) p(s)$
+  where $\mathcal{S}_i = \{s : X(s)=x_i\}$
+
+  \textbf{N2} - $E (\sum\limits_{i-1}^n) = \sum\limits^n_{i=1}E(X_i) \quad$ for r.v. $X_1, X_2, \dots, X_n$
+
+  \subsection{examples}
+
+  \textbf{Selecting hats problem}
+
+  Let $n$ be the number of men who select their own hats.
+  Let $I_E$ be an indicator r.v. for $E$. 
+  $E_i$ is the event that the $i$-th man selects his own hat.
+  Let $X$ be the number of men that select their own hats.
+
+  \begin{itemize}
+    \item $X = I_{E_1} + I_{E_2} + \dots + I_{E_n}$
+    \item $P(E_i) = \frac{1}{n}$
+    \item $P(E_i \vert E_j) = \frac{1}{n-1} \neq P(E_j) $ for $j < i$ (hence $E_i$ and $E_j$ are not independent)
+      \begin{itemize}
+        \item but dependence is weak for large $n$
+      \end{itemize}
+    \item $X$ satisfies the other conditions for binomial r.v., besides independence ($n$ trials with equal probability of success)
+    \item Poisson approximation of $X$ : $X \sim \text{Poisson}(\lambda)$
+      \begin{itemize}
+        \item $\lambda = n \cdot P(E_i) = n\cdot \frac{1}{n} = 1$
+        \item $P(X=i) = \frac{e^{-1}1^i}{i!} = \frac{e^{-1}}{i!} $ 
+        \item $P(X=0) = e^{-1} \approx 0.37$
+      \end{itemize}
+  \end{itemize}
+
+  \textbf{No 2 people have the same birthday}
+
+  For $\binom{n}{2}$ pairs of individuals $i$ and $j$, $i \neq j$, let $E_{ij}$ be the event where they have the same birthday. 
+  Let $X$ be the number of pairs with the same birthday.
+
+  \begin{itemize}
+    \item $X = I_{E_1} + I_{E_2} + \dots + I_{E_n}$
+    \item Each $E_{ij}$ is only \textit{pairwise independent}. $P(E_{ij}) = \frac{1}{365}$
+      \begin{itemize}
+        \item i.e. $E_{ij}$ and $E_{mn}$ are independent
+        \item but $E_{12}$ and $(E_{13} \cap E_{23})$ are not independent $\quad \Rightarrow P(E_{12} \vert E_{13} \cap E_{23}) = 1$
+      \end{itemize}
+    \item $X \dot\sim \text{Poisson}(\lambda)$, $\lambda = \frac{\binom{n}{2}}{365} = \frac{n(n-1)}{730} \quad\quad \Rightarrow P(X=0) = e^{- \frac{n(n-1)}{730} } $ 
+      \begin{itemize}
+        \item for $P(X=0) \leq \frac{1}{2}$, $n \geq 23$
+      \end{itemize}
+  \end{itemize}
+
+  \textbf{distribution of time to next event}
+
+  Q. suppose an accident happens at a rate of 5 per day. Find the distribution of time, starting from now, until the next accident.
+
+  \begin{niceproof}[A]
+    Let $X =$ time (in days) until the next accident.
+    \\* Let $V =$ be the number of accidents during time period $[0, t]$. 
+    \\* $V \sim \text{Poisson}(5t) \quad \quad \Rightarrow P(V=k) = \frac{e^{-5t} \cdot (5t)^k}{k!} $
+
+    $P(X > t) = P($no accidents happen during $[0, t]) = P(V=0) = e^{-5t}$
+
+    $P(X \leq t) - 1-e^{-5t}$
+  \end{niceproof}
 
 
 
