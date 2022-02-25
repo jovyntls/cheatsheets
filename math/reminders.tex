@@ -1,0 +1,365 @@
+\documentclass[10pt, landscape]{article}
+\usepackage[scaled=0.92]{helvet}
+\usepackage{calc}
+\usepackage{multicol}
+\usepackage[a4paper,margin=3mm,landscape]{geometry}
+\usepackage{amsmath,amsthm,amsfonts,amssymb}
+\usepackage{color,graphicx,overpic}
+\usepackage{hyperref}
+\usepackage{newtxtext} 
+\usepackage{enumitem}
+\usepackage[table]{xcolor}
+\usepackage{mathtools}
+\setlist{nosep}
+% for including images
+\graphicspath{ {./images/} }
+
+\pdfinfo{
+  /Title (MODULE_CODE.pdf)
+  /Creator (TeX)
+  /Producer (pdfTeX 1.40.0)
+  /Author (Jovyn Tan)
+  /Subject (MODULE_CODE)
+/Keywords (MODULE_CODE, nus,cheatsheet,pdf)}
+
+% Turn off header and footer
+\pagestyle{empty}
+
+% redefine section commands to use less space
+\makeatletter
+\renewcommand{\section}{\@startsection{section}{1}{0mm}%
+  {-1ex plus -.5ex minus -.2ex}%
+  {0.5ex plus .2ex}%x
+{\normalfont\large\bfseries}}
+\renewcommand{\subsection}{\@startsection{subsection}{2}{0mm}%
+  {-1explus -.5ex minus -.2ex}%
+  {0.5ex plus .2ex}%
+{\normalfont\normalsize\bfseries}}
+\renewcommand{\subsubsection}{\@startsection{subsubsection}{3}{0mm}%
+  {-1ex plus -.5ex minus -.2ex}%
+  {1ex plus .2ex}%
+{\normalfont\small\bfseries}}%
+\makeatother
+
+\renewcommand{\familydefault}{\sfdefault}
+\renewcommand\rmdefault{\sfdefault}
+%  makes nested numbering (e.g. 1.1.1, 1.1.2, etc)
+\renewcommand{\labelenumii}{\theenumii}
+\renewcommand{\theenumii}{\theenumi.\arabic{enumii}.}
+\renewcommand\labelitemii{•}
+\renewcommand\labelitemiii{•}
+
+\definecolor{mathblue}{cmyk}{1,.72,0,.38}
+\everymath\expandafter{\the\everymath \color{mathblue}}
+
+% Don't print section numbers
+\setcounter{secnumdepth}{0}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0pt plus 0.5ex}
+%% adjust spacing for all itemize/enumerate
+\setlength{\leftmargini}{0.5cm}
+\setlength{\leftmarginii}{0.5cm}
+\setlist[itemize,1]{leftmargin=2mm,labelindent=1mm,labelsep=1mm}
+\setlist[itemize,2]{leftmargin=4mm,labelindent=1mm,labelsep=1mm}
+
+% adding my commands
+\input{../commands/style-helpers.tex}
+\input{../commands/math.tex}
+\input{../commands/ifthen.tex}
+
+% -----------------------------------------------------------------------
+
+\begin{document}
+\raggedright
+\footnotesize
+\begin{multicols*}{4}
+  % multicol parameters
+  \setlength{\columnseprule}{0.25pt}
+
+  \begin{center}
+    \fbox{%
+      \parbox{0.8\linewidth}{\centering \textcolor{black}{
+          {\Large\textbf{MATH}}
+        \\ \normalsize{I really can't remember these things}}
+        \\ {\footnotesize \textcolor{gray}{github/jovyntls}}
+      }%
+    }
+  \end{center}
+
+  \section{01. DIFFERENTIATION}
+
+  \subsection{Taylor's Theorem}
+
+  \begin{center}
+    $f(x) = f(a) + f'(a)(x-a) + \frac{f''(a)}{2}(x-a)^2 + \dots$ 
+    \\* $\dots + \frac{f^{(n)}(a)}{n!}(x-a)^n + R_n,$
+    \\* where $R_n = \frac{f^{(n+1)}(c)}{(n+1)!}(x-a)^{(n+1)}$ for $c$ between $x$ and $a$
+  \end{center}
+
+  \subsubsection{Taylor Series}
+
+  \begin{center}
+    As $R_n \to 0$ as $n \to \infty$, then
+    \\* $\displaystyle{f(x) = \sum^\infty_{n=0} \frac{f^{(n)}(a)}{n!}(x-a)^n}$
+  \end{center}
+
+  \subsection{Differentiation Techniques} 
+
+  \begin{center}
+    \begin{tabular}{|>{\color{black}}c | >{\color{black}}c|}
+      \hline
+      $f(x)$ & $f'(x)$
+      \\ \hline
+      \rule{0pt}{2.3ex}  % top spacing
+      $\tan x$ & $\sec ^2 x$ \\
+      $\csc x$ & $-\csc x \cot x$ \\
+      $\sec x$ & $\sec x \tan x$ \\
+      $\cot x$ & $- \csc ^2 x$
+      \\ \hline
+      \rule{0pt}{2.3ex}  % top spacing
+      $a^{f(x)}$ & $\ln a \cdot f'(x)a^{f(x)}$ \\
+      $\log_af(x)$ & $\frac{f'(x)}{\ln a \cdot f(x)}$
+      \\[1ex] \hline
+      \rule{0pt}{3ex}  % top spacing
+      $\sin^{-1} f(x)$ & $\frac{f'(x)}{\sqrt{1-[f(x)]^2}}, \ \ _{\vert f(x) \vert < 1}$ \\[1.5ex]
+      $\cos^{-1} f(x)$ & $-\frac{f'(x)}{\sqrt{1-[f(x)]^2}}, \ \ _{\vert f(x) \vert < 1}$ \\[1.5ex]
+      $\tan^{-1} f(x)$ & $\frac{f'(x)}{1 + [f(x)]^2}$ \\[1.5ex]
+      $\cot^{-1} f(x)$ & $-\frac{f'(x)}{1 + [f(x)]^2}$ \\[1.5ex]
+      $\sec^{-1} f(x)$ & $\frac{f'(x)}{\vert f(x) \vert \sqrt{[f(x)]^2-1}}$ \\[1.5ex]
+      $\csc^{-1} f(x)$ & $-\frac{f'(x)}{\vert f(x) \vert \sqrt{[f(x)]^2-1}}$ \\[2ex]
+      \hline
+    \end{tabular}
+  \end{center}
+
+  \subsubsection{derivatives of trigonometric functions}
+
+  \begin{center}
+    \begin{math}
+      \begin{array}{| c | c |}
+        \hline 
+        \text{function} & \text{derivative}
+        \\ \hline 
+        \rule{0pt}{2.4ex}  % top spacing
+        \sin^{-1}x & \frac{1}{\sqrt{1 - x^2}}
+        \\ \cos^{-1}x & \frac{-1}{\sqrt{1 - x^2}}
+        \\ \tan^{-1}x & \frac{1}{1+x^2}
+        \\ \hline 
+      \end{array}
+      \quad
+      \begin{array}{| c | c |}
+        \hline 
+        \text{function} & \text{derivative}
+        \\ \hline 
+        \rule{0pt}{2.4ex}  % top spacing
+        \csc^{-1}x & \frac{-1}{x\sqrt{x^2-1}}
+        \\ \sec^{-1}x & \frac{1}{x\sqrt{x^2-1}}
+        \\ \cot^{-1}x & \frac{-1}{1+x^2}
+        \\ \hline 
+      \end{array}
+    \end{math}
+  \end{center}
+
+  \subsection{logarithmic differentiation I}
+
+  aka take $\ln$ on both sides and implicitly differentiate
+  \begin{center}
+    for $y = f_1(x)f_2(x)\cdots f_n(x)$ (product of nonzero functions), 
+    $\ln \abs{y} = \ln \abs{f_1(x)} + \ln \abs{f_2(x)} + \cdots + \ln \abs{f_n(x)}$
+    \\* $\frac{dy}{dx} = \left[ \frac{f'_1(x)}{f_1(x)} + \frac{f'_2(x)}{f_2(x)} + \cdots + \frac{f'_n(x)}{f_n(x)} \right]y$
+    \\* $= \left[ \frac{f'_1(x)}{f_1(x)} + \frac{f'_2(x)}{f_2(x)} + \cdots + \frac{f'_n(x)}{f_n(x)} \right]f_1(x)f_2(x)\cdots f_n(x)$
+  \end{center}
+
+  \subsection{logarithmic differentiation II}
+
+  \begin{center}
+    for $y = f(x)^{g(x)} (f(x) > 0)$,
+    \\* $\ln y = g(x) \ln f(x) \then \frac{dy}{dx} = y \frac{d}{dx}[g(x) \ln f(x)]$
+    \begin{align*}
+      \lim_{x \to a}(f(x)^{g(x)}) &= \lim_{x \to a} \exp \left( g(x) \ln f(x) \right) \\
+                                  &= \exp\left( \lim_{x \to a} g(x) \ln f(x) \right)
+    \end{align*}
+  \end{center}
+
+
+  \section{02. INTEGRATION}
+
+  \subsection{Integration Techniques}
+
+  \begin{center}
+    \def\arraystretch{1.2}
+    \begin{tabular}{|>{\color{black}}c | >{\color{black}}c|}
+      \hline
+      $f(x)$ & $\int f(x)$
+      \\ \hline
+      $\tan x$ & $\ln (\sec x),$ \tiny{${\vert x \vert < \frac{\pi}{2}}$} \\
+      $\cot x$ & $\ln (\sin x),$ \tiny{$0 < x < \pi $} \\
+      $\csc x$ & $-\ln (\csc x + \cot x),$ \tiny{$0 < x < \pi $} \\
+      $\sec x$ & $\ln (\sec x + \tan x),$ \tiny{$\vert x \vert < \frac{\pi}{2} $}
+      \\[0.5ex] \hline
+      \rule{0pt}{2.3ex}  % top spacing
+      $\frac{1}{x^2 + a^2}$ & $\frac{1}{a} \tan^{-1}(\frac{x}{a})$ \\
+      $\frac{1}{\sqrt{a^2 - x^2}}$ & $\sin^{-1}(\frac{x}{a})$, \tiny{$\vert x \vert < a$} \\
+      $\frac{1}{x^2 - a^2}$ & $\frac{1}{2a} \ln(\frac{x - a}{x + a})$, \tiny{$x > a$} \\[1ex]
+      $\frac{1}{a^2 - x^2}$ & $\frac{1}{2a} \ln(\frac{x + a}{x - a})$, \tiny{$x < a$} 
+      \\[0.5ex] \hline 
+      \rule{0pt}{2.6ex}  % top spacing
+      $a^{x}$ & $\frac{a^x}{\ln a}$ \\[0.5ex]
+      \hline
+    \end{tabular}
+  \end{center}
+
+  \subsubsection{Rational functions}
+
+  for $f = \frac{A(x)}{B(x)}$,
+
+  \begin{itemize}
+    \item manipulate such that $\deg A(x) < \deg B(x)$, \\* then decompose into partial fractions
+    \item common rational functions:
+      \begin{itemize}
+        \item ${\displaystyle{\int \frac{1}{(x+a)^k} \dx = \begin{cases}
+                \ln \abs{x + a} + K, & \text{ if } k = 1 \\
+                \frac{(x+a)^{1-k}}{1-k} + K, & \text{ if } k \geq 1
+          \end{cases} }}$
+
+        \item ${\displaystyle{\int \frac{u}{(u^2+d^2)^r} \mathop{du} = \begin{cases}
+                \frac{1}{2} \ln (u^2 + d^2), &\text{ if } r = 1 \\
+                \frac{(u^2 + d^2)^{1-r}}{2(1-r)}, &\text{ if } r \geq 2
+          \end{cases} }}$
+
+        \item ${\displaystyle{\int \frac{1}{(u^2+d^2)^r} \mathop{du} = \frac{1}{d^{2r-1}} \int \frac{1}{(t^2+1)^r} \mathop{dt} }}$
+        \item ${\displaystyle{}}$
+      \end{itemize}
+  \end{itemize}
+
+  \subsubsection{partial fractions}
+
+  \begin{itemize}
+    \item for each linear factor $(x+a)^k$: 
+      \begin{itemize}
+        \item $\frac{A_1}{x+a} + \frac{A_2}{(x+a)^2} + \dots + \frac{A_k}{(x+a)^k}$
+      \end{itemize}
+    \item for each quadratic factor $(x^2 + bx + c)^r$:
+      \begin{itemize}
+        \item $\frac{B_1x+C_1}{x^2 + bx + c} + \dots + \frac{B_rx+C_r}{(x^2+bx+c)^r}$
+      \end{itemize}
+  \end{itemize}
+
+  \subsubsection{trigonometric substitutions}
+
+  \begin{itemize}
+    \item $\sqrt{a^2 - x^2}, \quad x = a\sin t, \quad t \in [-\frac{\pi}{2}, \frac{\pi}{2}]$
+    \item $\sqrt{x^2 - a^2}, \quad x = a\sec t, \quad t \in [0, -\frac{\pi}{2}) \cup (\pi, \frac{3\pi}{2}]$
+    \item $a^2 + x^2, \quad x = a\tan t, \quad t \in (-\frac{\pi}{2}, \frac{\pi}{2})$
+  \end{itemize}
+
+  \subsubsection{universal trigonometric substitution}
+  \begin{center}
+    any rational expression in $\sin x$ and $\cos x$ can be integrated using the substitution $t = \tan \frac{x}{2}, \quad x \in (-\pi, \pi)$.
+    \\* $\sin x = \frac{2t}{1 + t^2}, \quad \cos x = \frac{1 - t^2}{1 + t^2}, \quad \frac{dx}{dt} = \frac{2}{1 + t^2}$
+  \end{center}
+
+  \subsubsection{trigonometric identities}
+
+  \begin{itemize}
+    \item $\tan^{-1}x + \cot^{-1}x - \frac{\pi}{2}$
+    \item $\sec^{-1}x + \csc^{-1}x = \begin{cases}
+        \frac{\pi}{2}, &\text{if } x \geq 1
+        \\ \frac{5\pi}{2}, &\text{if } x \leq -1
+      \end{cases}$
+  \end{itemize}
+
+  \section{03. SERIES}
+
+  \subsection{MacLaurin Series}
+  For $-\infty < x < \infty$
+  \\ \;  % spacing
+  \setlength\tabcolsep{1.5pt} % default value: 6pt
+  \begin{tabular}{rl}
+    $\sin x$ & $= \sum\limits^\infty_{n = 0} \frac{(-1)^nx^{2n + 1}}{(2n+1)!} $
+    \\ $\cos x$ & $= \sum\limits^\infty_{n = 0} \frac{(-1)^nx^{2n}}{(2n)!}$
+    \\ $e^x$ & $= \sum\limits^\infty_{n = 0} \frac{x^n}{n!}$
+  \end{tabular}
+
+  For $-1 < x < 1$
+  \\ \;  % spacing
+  \setlength\tabcolsep{1.5pt} % default value: 6pt
+  \begin{tabular}{rl}
+    $\frac{1}{1 - x}$ & $= \sum\limits^\infty_{n = 0} x^n $
+    \\ $\frac{1}{1 + x}$ & $= \sum\limits^\infty_{n = 0} (-1)^nx^n $
+    \\ $\frac{1}{1 + x^2}$ & $= \sum\limits^\infty_{n = 0} (-1)^nx^{2n} $
+    \\ $\ln(1 + x)$ & $= \sum\limits^\infty_{n = 1} \frac{(-1)^{n - 1}x^n}{n} $
+    \\ $\tan^{-1}x$ & $= \sum\limits^\infty_{n = 0} \frac{(-1)^n}{2n + 1} x^{2n+1}$
+    \\ $\frac{1}{(1+x)^2}$ & $= \sum\limits^\infty_{n = 1} (-1)^{n-1}nx^{n-1}$
+    \\ $\frac{1}{(1-x)^2}$ & $= \sum\limits^\infty_{n = 1} nx^{n-1}$
+    \\ $\frac{1}{(1-x)^3}$ & $= \frac{1}{2} \sum\limits^\infty_{n = 2} n(n - 1)x^{n-2}$
+    \\ $(1 + x)^k$ & $= \sum\limits^\infty_{n = 0} \binom{k}{n}x^n$
+              \\   & $= 1 + kx + \frac{k(k-1)}{2!}x^2 + \dots$
+  \end{tabular}
+
+
+  \section{MISC}
+
+  \subsection{Exponentials}
+
+  \subsubsection{properties}
+  \begin{minipage}{0.32\linewidth}   
+    \begin{itemize}
+      \item $a^ua^v = a^{u+v}$
+      \item $a^{-u} = \frac{1}{a^u}$
+      \item $(a^u)^v = a^{uv}$
+      \item $(a^x)' = a^x\ln a$
+      \item $\frac{d}{dx} x^r = rx^{r-1}$
+    \end{itemize}
+  \end{minipage}
+  \hfill\vline\hfill
+  \begin{minipage}{0.65\linewidth}
+    \begin{itemize}
+      \item ${\displaystyle{\lim_{x \to \infty} e^x =\infty}}$, ${\displaystyle{\lim_{x \to -\infty} e^x = 0}}$
+      \item ${\displaystyle{\lim_{x \to \infty} \frac{e^x}{x^n} = \infty}}$ for $n \in \mathbb{Z}^+$
+      \item ${\displaystyle{e^x = \sum^\infty_{n = 0} \frac{x^n}{n!} = 1 + x + \frac{x^2}{2!} + \dots}}$
+    \end{itemize}
+  \end{minipage}
+  \begin{itemize}
+    \item $\int x^r \dx = \begin{cases}
+        \frac{x^{r+1}}{r+1} + C & \text{ if }r \neq -1, \\
+        \ln x + C & \text{ if }r = -1,
+      \end{cases}$
+      \begin{itemize}
+        \item if $r$ is irrational, then $x^r$ is only defined for $x \geq 0$.
+      \end{itemize}
+  \end{itemize}
+
+  \subsubsection{triangle inequality}
+  \begin{center}
+    $\abs{a + b} \leq \abs{a} + \abs{b}$ for all $a, b \in \mathbb{R}$
+  \end{center}
+
+  \subsubsection{binomial theorem}
+  \begin{center} 
+    $\displaystyle{(a+b)^n = \sum^n_{k=0}\binom{n}{k}a^{n-k}b^k}$
+    \\* $= a^n + \binom{n}{1}a^{n-1}{b} + \dots + \binom{n}{n-1} ab^{n-1} + b^n$
+  \end{center}
+  \begin{center}
+    where the binomial coefficient is given by 
+    \\* $\binom{n}{k} = \frac{n!}{k!(n-k)!}$
+  \end{center}
+
+  \subsubsection{factorisation}
+  \begin{center}
+    $a^n-b^n = (a-b)(a^{n-1} + a^{n-2}b + \cdots + ab^{n-2} + b^{n-1})$
+    $a^3-b^3 = (a-b)(a^2+ab+b^2)$
+    $a^3+b^3 = (a+b)(a^2-ab+b^2)$
+  \end{center}
+
+  \subsubsection{misc}
+  \begin{itemize}
+    \item $\forall x \in (0, \frac{\pi}{2}), \sin x < x < \tan x$
+    \item $\sin\theta = \frac{\tan\theta}{\sqrt{\tan^2\theta + 1}}$
+  \end{itemize}
+
+
+
+\end{multicols*}
+
+\end{document}
