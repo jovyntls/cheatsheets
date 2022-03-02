@@ -117,6 +117,16 @@
     \item array can be manipulated at no cost
   \end{itemize}
 
+  \subsubsection{Decision Tree}
+
+  \begin{itemize}
+    \item each node is a comparison
+    \item each branch is an outcome of the comparison
+    \item each leaf is a class label (decision after \textit{all} comparisons)
+    \item \textbf{worst-case} runtime = height of tree
+    \item \# of leaves = \# of permutations $\Rightarrow \lg(n!) = \Theta(n \lg n)$ 
+  \end{itemize}
+
   \subsubsection{\texttt{Max} Problem}
 
   \textit{problem}: find largest element in array $A$ of $n$ distinct elements
@@ -125,7 +135,7 @@
     $n-1$ comparisons are needed
 
     fix an algorithm $M$ that solves the \texttt{Max} problem on all inputs using $< n-1$ comparisons. construct graph $G$ where nodes $i$ and $j$ are adjacent iff $M$ compares $i$ \& $j$.
-    \\* \includegraphics[width=0.7\linewidth]{cs3230-maximum-problem-graph.png} 
+    \\* \includegraphics[width=0.9\linewidth]{cs3230-maximum-problem-graph.png} 
 
     $M$ cannot differentiate $A$ and $A'$.
   \end{niceproof}
@@ -136,7 +146,7 @@
 
   \begin{itemize}
     \item \textit{solution}: \textbf{knockout tournament} $\Rightarrow n + \lceil \lg n \rceil - 2$
-      \\* \includegraphics[width=0.6\linewidth]{cs3230-second-largest-solution.png} 
+      \\* \includegraphics[width=0.8\linewidth]{cs3230-second-largest-solution.png} 
       \begin{enumerate}
         \item bracket system: $n-1$ matches 
           \begin{itemize}
@@ -211,6 +221,7 @@
           \end{enumerate}
         \item after $< \binom{n}{2}$ queries, at least one entry of the adjacency matrix is unqueried.
       \end{enumerate}
+      \qed
   \end{itemize}
 
 
@@ -418,17 +429,17 @@
 
   \begin{enumerate}
     \item guess that $T(n) = O(f(n))$. 
-      \\* i.e. $\exists c$ such that $T(n) \leq c \cdot f(n)$, for $n \geq n_0$.
     \item verify by induction:
       \begin{enumerate}
+        \item to show that for $n \geq n_0$, $T(n) \leq c \cdot f(n)$
         \item set $c = \max\{2, q\}$ and $n_0 = 1$
-        \item verify base case ($n = n_0 = 1$)
-        \item recursive case ($n > 1$):
+        \item verify base case(s): $T(n_0) = q$
+        \item recursive case ($n > n_0$):
           \begin{itemize}
-            \item by strong induction, assume $T(k) = c \cdot f(k)$ for $n > k > 1$
+            \item by strong induction, assume $T(k) \leq c \cdot f(k)$ for $n > k \geq n_0$
             \item T(n) = <recurrence> ... $\leq c \cdot f(n)$
           \end{itemize}
-        \item hence $T(n) \leq c \cdot f(n)$ for $n \geq 1$.
+        \item hence $T(n) = O(f(n))$.
       \end{enumerate}
   \end{enumerate}
   \attention may not be a tight bound!
@@ -1005,7 +1016,25 @@
 
 \pagebreak
 
+\section{helpful approximations}
+
+stirling's approximation: $T(n) = \sum\limits^n_{i=0} \log (n-i) = \log \prod^n_{i=0} (n-i) = \Theta(n \log n)$
+
+harmonic number, $ H_n = \sum\limits_{k=1}^n \frac{1}{k} = \Theta(\lg n) $
+
+basel problem: $\sum\limits^N_{n=1} \frac{1}{n^2} \leq 2 - \frac{1}{N} \xrightarrow{ N \to \infty } 2 $
+
+  $\quad\quad$ because $\sum^N_{n=1} \frac{1}{N^2} \leq 1 + \sum^{\log_3 n}_{x=2} \frac{1}{(x-1)x} = 1 + \sum^N_{n=2} (\frac{1}{n-1} - \frac{1}{n}) = 1 + 1 - \frac{1}{N} = 2 - \frac{1}{N} $
+
+number of primes in range $\{1, \dots, K\}$ is $> \frac{K}{\ln K} $
+
 \section{asymptotic bounds}
+
+$1 < \log n < \sqrt{n} < n < n \log n < n^2 < n^3 < 2^n < 2^{2n}$
+
+$\log_a n < n^a < a^n < n! < n^n$
+
+for any $a, b > 0$, $\quad \log_a n < n^b$
 
 \subsection{set notation}
 
@@ -1053,14 +1082,6 @@
   Since $\frac{1}{3}g(n) \leq f(n) \leq g(n)$ for all $n \geq 0$, then $f(n) = \Theta(g(n))$.
   (note that limit rules will not work here)
 \end{niceproof}
-
-\section{helpful approximations}
-
-stirling's approximation: $T(n) = \sum\limits^n_{i=0} \log (n-i) = \log \prod^n_{i=0} (n-i) = \Theta(n \log n)$
-
-harmonic number, $ H_n = \sum\limits_{k=1}^n \frac{1}{k} = \Theta(\lg n) $
-
-number of primes in range $\{1, \dots, K\}$ is $> \frac{K}{\ln K} $
 
 \section{mentioned algorithms}
 
