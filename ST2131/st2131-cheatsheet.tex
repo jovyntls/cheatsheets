@@ -64,6 +64,7 @@
 
 % adding my commands
 \input{../commands/style-helpers.tex}
+\input{../commands/math.tex}
 
 % -----------------------------------------------------------------------
 
@@ -561,7 +562,7 @@
     \item aka population mean/sample mean, $\mu$
     \item if $X$ is a discrete random variable having pmf $p(x)$, the \ildefinition{expectation} or the \ildefinition{expected value} of $X$ is defined as $E(X) = \sum\limits_x x \cdot p(x)$
   \end{itemize}
-  
+
   \textbf{N1} - if $a$ and $b$ are constants, then $E(aX + b) = aE(X) + b$
 
   \textbf{N2} - the $n^{th}$ moment of of $X$ is given as $E(X^n) = \sum_x x^n\cdot p(x)$
@@ -715,6 +716,166 @@
     $P(X \leq t) - 1-e^{-5t}$
   \end{niceproof}
 
+
+  \section{05. CONTINUOUS RANDOM VARIABLES}
+
+  $X$ is a \definition{continuous r.v.} if there exists a nonnegative function $f$ defined for all real $x \in (-\infty, \infty)$, 
+  such that $P(X \in B) = \int_B f(x) \dx$ 
+
+  \begin{minipage}[c]{0.6\linewidth}
+    \textbf{N1} - $P(X \in (-\infty, \infty)) = \int^\infty_{-\infty} f(x) \dx = 1 $
+
+    \textbf{N2} - $P(a \leq X \leq b) = \int^b_a f(x) \dx$
+
+    \textbf{N3} - $P(X=a) = \int^a_a f(x) \dx = 0$
+
+    \textbf{N4} - $P(X < a) = P(X \leq a) = \int^a_{-\infty} f(x) \dx$
+  \end{minipage}
+  \begin{minipage}[c]{0.35\linewidth}
+    \includegraphics[width=0.9\linewidth]{st2131-continuous-rv-fx.png} 
+  \end{minipage}
+
+  \textbf{N5} - interpretation of \textbf{probability density function} 
+
+  \begin{minipage}[c]{0.4\linewidth}
+    \includegraphics[width=0.9\linewidth]{st2131-pdf.png} 
+  \end{minipage}
+  \begin{minipage}[c]{0.55\linewidth}
+    \begin{align*}
+      P(x < X < x + \dx) &= \int^{x+\dx}_x f(y) \mathop{dy} 
+                      \\ &\approx f(x) \cdot \dx
+    \end{align*}
+
+    pdf at $x$, $f(x) \approx \frac{P(x < X < x + \dx)}{\dx}$
+  \end{minipage}
+
+  \textbf{N6} - if $X$ is a continuous r.v. with pdf $f(x)$ and cdf $F(x)$, then $f(x) = \frac{d}{\dx}F(x)$. (\textit{Fundamental Theorem of Calculus})
+
+  \textbf{N7} - median of $X$, $x$ occurs where $F(x) = \frac{1}{2}$ 
+
+  \subsection{Generating a Uniform r.v.}
+
+  if $X$ is a continuous r.v. with cdf $F(x)$, then 
+
+  \begin{itemize}
+    \item \textbf{N8} - $F(X) = U \sim uniform(0, 1)$.
+
+      \begin{niceproof}
+        let $Y = F(X)$. then cdf of $Y$, $F_Y(y)$ = $P(Y \leq y) = P(F(X) \leq y) = P(X \leq F^{-1}(y)) = F(F^{-1}(y)) = y $.
+
+        hence $Y$ is a uniform r.v.
+      \end{niceproof}
+
+    \item \textbf{N9} - $X = F^{-1}(U) \sim$ cdf $F(x)$.
+      \begin{itemize}
+        \item generating a r.v. from a uniform(0, 1) r.v. and a r.v. with cdf $F(x)$.
+      \end{itemize}
+  \end{itemize}
+
+  \subsection{Expectation \& Variance}
+
+  \subsubsection{expectation}
+
+  \textbf{N1} - \ildefinition{expectation of  $X$}, $E(X) = \int^\infty_{-\infty} x \cdot f(x) \dx$
+
+  \textbf{N2} - for a non-negative r.v. $Y$, $E(Y) = \int^\infty_0 P(Y > y) \mathop{dy}$
+
+  \textbf{N3} - if $X$ is a continuous r.v. with pdf $f(x)$, then for any real-valued function $g$, $E[g(x)] = \int^\infty_{-\infty} g(x) f(x) \dx $
+
+  \begin{itemize}
+    \item e.g. $E[aX + b] = \int^\infty_{-\infty} (aX + b) \cdot f(x) \dx = a\cdot E(X) + b$
+  \end{itemize}
+
+  \subsubsection{variance}
+
+  \textbf{N1} - variance of $X$, $Var(X) = E[(X - \mu)^2] = E(X^2) - [E(X)]^2$
+
+  \subsubsection{example}
+
+  \textit{Q} - Find the pdf of $(b-a)X + a$ where $a, b$ are constants, $b>a$.
+  The pdf of $X$ is given by $f(x) =  \begin{cases} 1, &0 \leq X \leq 1 \\ 0, &\text{otherwise} \end{cases}$. 
+
+  \begin{niceproof}[A]
+    Let $Y = (b-a)X + a$. 
+    \\* cdf, $F_Y(y) = P(Y \leq y) = P((b-a)X + a \leq y) = P(X \leq \frac{y-a}{b-a})$
+    \\* $F_Y(y) = \int^{\frac{y-a}{b-a}}_0 1 \dx = \frac{y-a}{b-a}, \quad a < y < b $
+
+    $f_Y(y) = \frac{d}{dy}F_Y(y) = \begin{cases} \frac{1}{b-a}, &a<y<b \\ 0, &\text{otherwise} \end{cases}$
+  \end{niceproof}
+
+  \subsection{Uniform Random Variable}
+
+  $X$ is a \ildefinition{uniform r.v.} on the interval $(\alpha, \beta)$, $\quad X \sim Uniform(\alpha, \beta)$ $\rightarrow$ 
+  \begin{tightcenter}
+    if its pdf is given by $f(x) = \begin{cases} \frac{1}{\beta-\alpha}, &\alpha<x<\beta \\ 0, &\text{otherwise} \end{cases}$
+    $E(X) = \frac{\alpha + \beta}{2}, \quad Var(X) = \frac{(\beta - \alpha)^2}{12}$
+  \end{tightcenter}
+
+  \begin{minipage}[c]{0.25\linewidth}
+    \includegraphics[width=0.95\linewidth]{st2131-uniform-rv.png} 
+  \end{minipage}
+  \begin{minipage}[c]{0.7\linewidth}
+    if $X \sim Uniform(\alpha, \beta)$, then $\frac{x - \alpha}{\beta - \alpha} \sim Uniform (0,1)$
+  \end{minipage}
+
+  \subsection{Normal Random Variable}
+
+  $X$ is a \ildefinition{normal r.v.} with parameters $\mu$ and $\sigma^2$, $\quad X \sim N(\mu,\sigma^2)$ $\rightarrow$
+  \begin{tightcenter}
+    if the pdf of $X$ is given by $f(x) \frac{1}{\sqrt{2\pi} \sigma}e^{-\frac{1}{2} (\frac{x}{\mu}\sigma)^2}$, $\quad -\infty < x < \infty$
+    $E(x) = \mu, \quad Var(X) = \sigma^2$
+
+  \end{tightcenter}
+
+  \begin{minipage}[c]{0.3\linewidth}
+    \includegraphics[width=0.95\linewidth]{st2131-normal-distribution.png} 
+  \end{minipage}
+  \begin{minipage}[c]{0.67\linewidth}
+    if $X \sim N(\mu, \sigma^2)$, then $\frac{X - \mu}{\sigma} \sim N(0, 1)$
+
+    if $Y \sim N(\mu, \sigma^2)$ and $a$ is a constant, $F_y(a) = \Phi (\frac{a-\mu}{\sigma}) $
+  \end{minipage}
+
+  \definition{standard normal distribution} $X \sim N(0,1)$
+
+  \begin{itemize}
+    \item $F(x) = P(X \leq x) = \frac{1}{\sqrt{r \pi}} \int^x_{-\infty} e^{-\frac{1}{2}y^2} \mathop{dy} = \Phi(x)$
+  \end{itemize}
+
+  \subsubsection{Normal Approximation to the Binomial Distribution}
+
+  \begin{tightcenter}
+    if $S_n \sim Binomial(n, p)$, then $\frac{S_n - np}{\sqrt{np(1-p)}} \sim N(0,1)$ for large $n$.
+
+    $\mu = np$, $\quad \sigma^2 = np(1-p)$
+  \end{tightcenter}
+
+  \subsection{Exponential Random Variable}
+
+  a \textit{continuous} r.v. $X$ is a \ildefinition{exponential r.v.}, $\quad X \sim Exponential(\lambda)$ or $Exp(\lambda)$ $\rightarrow$
+  \begin{tightcenter}
+    if for some $\lambda > 0$ 
+    its pdf is given by $f(x) = \begin{cases} \lambda e^{-\lambda x}, &x \geq 0 \\ 0, &\text{otherwise} \end{cases}$
+
+    $E(X) = \frac{1}{\lambda}, \quad Var(X) = \frac{1}{\lambda^2}$
+  \end{tightcenter}
+
+  \begin{minipage}[c]{0.3\linewidth}
+    \includegraphics[width=0.95\linewidth]{st2131-exponential-rv.png}
+  \end{minipage}
+  \begin{minipage}[c]{0.3\linewidth}
+    \includegraphics[width=0.95\linewidth]{st2131-exponential-rv-example.png} 
+  \end{minipage}
+  \begin{minipage}[c]{0.35\linewidth}
+    $P(X < a) = \int^a_0 \lambda e^{-\lambda x} \dx$
+  \end{minipage}
+
+  \begin{itemize}
+    \item an exponential r.v. is \textit{memoryless}.
+      \begin{itemize}
+        \item a non-negative r.v. is \definition{memoryless} if $P(X > s + t \mid X > t) = P(X > s)$ for all  $s, t > 0$.
+      \end{itemize}
+  \end{itemize}
 
 
 
