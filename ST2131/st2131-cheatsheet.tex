@@ -805,9 +805,13 @@
 
   \subsection{Uniform Random Variable}
 
-  $X$ is a \ildefinition{uniform r.v.} on the interval $(\alpha, \beta)$, $\quad X \sim Uniform(\alpha, \beta)$ $\rightarrow$ 
+  $X$ is a \ildefinition{uniform r.v.} on the interval $(\alpha, \beta)$, $X \sim Uniform(\alpha, \beta)$ 
+
+  if its pdf is given by 
+
   \begin{tightcenter}
-    if its pdf is given by $f(x) = \begin{cases} \frac{1}{\beta-\alpha}, &\alpha<x<\beta \\ 0, &\text{otherwise} \end{cases}$
+    $f(x) = \begin{cases} \frac{1}{\beta-\alpha}, &\alpha<x<\beta \\ 0, &\text{otherwise} \end{cases}$
+
     $E(X) = \frac{\alpha + \beta}{2}, \quad Var(X) = \frac{(\beta - \alpha)^2}{12}$
   \end{tightcenter}
 
@@ -820,11 +824,14 @@
 
   \subsection{Normal Random Variable}
 
-  $X$ is a \ildefinition{normal r.v.} with parameters $\mu$ and $\sigma^2$, $\quad X \sim N(\mu,\sigma^2)$ $\rightarrow$
-  \begin{tightcenter}
-    if the pdf of $X$ is given by $f(x) \frac{1}{\sqrt{2\pi} \sigma}e^{-\frac{1}{2} (\frac{x}{\mu}\sigma)^2}$, $\quad -\infty < x < \infty$
-    $E(x) = \mu, \quad Var(X) = \sigma^2$
+  $X$ is a \ildefinition{normal r.v.} with parameters $\mu$ and $\sigma^2$, $X \sim N(\mu,\sigma^2)$ 
 
+  if the pdf of $X$ is given by
+
+  \begin{tightcenter}
+    $f(x) \frac{1}{\sqrt{2\pi} \sigma}e^{-\frac{1}{2} (\frac{x}{\mu}\sigma)^2}$, $\quad -\infty < x < \infty$
+
+    $E(x) = \mu, \quad Var(X) = \sigma^2$
   \end{tightcenter}
 
   \begin{minipage}[c]{0.3\linewidth}
@@ -852,10 +859,12 @@
 
   \subsection{Exponential Random Variable}
 
-  a \textit{continuous} r.v. $X$ is a \ildefinition{exponential r.v.}, $\quad X \sim Exponential(\lambda)$ or $Exp(\lambda)$ $\rightarrow$
+  a \textit{continuous} r.v. $X$ is a \ildefinition{exponential r.v.}, $\quad X \sim Exponential(\lambda)$ or $Exp(\lambda)$ 
+
+  if for some $\lambda > 0$, its pdf is given by 
+
   \begin{tightcenter}
-    if for some $\lambda > 0$ 
-    its pdf is given by $f(x) = \begin{cases} \lambda e^{-\lambda x}, &x \geq 0 \\ 0, &\text{otherwise} \end{cases}$
+    $f(x) = \begin{cases} \lambda e^{-\lambda x}, &x \geq 0 \\ 0, &\text{otherwise} \end{cases}$
 
     $E(X) = \frac{1}{\lambda}, \quad Var(X) = \frac{1}{\lambda^2}$
   \end{tightcenter}
@@ -876,6 +885,95 @@
         \item a non-negative r.v. is \definition{memoryless} if $P(X > s + t \mid X > t) = P(X > s)$ for all  $s, t > 0$.
       \end{itemize}
   \end{itemize}
+
+  \subsection{Gamma Distribution}
+
+  a r.v. $X$ has a \ildefinition{gamma distribution}, $\quad X \sim Gamma(\alpha, \lambda)$ 
+
+  with parameters $(\alpha, \gamma)$, $\lambda > 0$ and $\alpha > 0$ if its pdf is given by 
+
+  \begin{tightcenter}
+    $f(x) \begin{cases} \frac{\lambda e^{-\lambda x}(\lambda x)^{\alpha - 1}}{\Gamma(d)} , &x \geq 0 \\ 0, &x < 0 \end{cases} $
+
+    $E(X) = \frac{\alpha}{\lambda} \quad Var(X) = \frac{\alpha}{\lambda^2}$
+  \end{tightcenter}
+
+  where the gamma function $\Gamma(\alpha)$ is defined as 
+  $\Gamma (\alpha) = \int^\infty_0 e^{-y} y^{\alpha - 1} \mathop{dy} $.
+
+  \begin{minipage}[c]{0.4\linewidth}
+    \begin{tightcenter}
+      \includegraphics[width=0.9\linewidth]{st2131-gamma-distribution.png} 
+    \end{tightcenter}
+  \end{minipage}
+  \begin{minipage}[c]{0.55\linewidth}
+    \textbf{N1} - $\Gamma(\alpha) = (\alpha - 1) \Gamma(\alpha-1) $
+    \begin{niceproof}
+      using integration by parts of LHS to RHS
+    \end{niceproof}
+
+    \textbf{N2} - if $\alpha$ is an integer $n$, then $\Gamma(n) = (n-1)!$
+
+    \textbf{N3} - if $X \sim Gamma(\alpha, \lambda)$ and $\alpha = 1$, then $X \sim Exp(\lambda)$.
+  \end{minipage}
+
+  \textbf{N4} - for events occurring randomly in time following the 3 assumptions of poisson distribution, 
+  the amount of time elapsed until a total of $n$ events has occurred is a gamma r.v. with parameters $(n, \lambda)$.
+  \begin{itemize}
+    \item time at which event $n$ occurs, $T_n \sim Gamma(n, \lambda)$ 
+    \item number of events in time period $[0, t]$, $N(t) \sim Poisson(\lambda t)$
+  \end{itemize}
+
+  \textbf{N5} - $Gamma(\alpha = \frac{n}{2}, \lambda = \frac{1}{2}) = \chi^2_n \quad$ (chi-square distribution to $n$ degrees of freedom)
+
+
+  \subsection{Beta Distribution}
+
+  a r.v. $X$ is said to have a \ildefinition{beta distribution}, $X \sim Beta(a, b)$ 
+
+  if its density is given by 
+
+  \begin{tightcenter}
+    $f(x) = \begin{cases} \frac{1}{\beta(a, b)} x^{a-1} (1-x)^{b-1}, &0 < x < 1 \\ 0, &\text{otherwise} \end{cases} $
+
+    $E(X) = \frac{a}{a+b} \quad Var(X) = \frac{ab}{(a+b)^2 (a+b+1)} $
+  \end{tightcenter}
+
+  \begin{tightcenter}
+    \includegraphics[width=0.47\linewidth]{st2131-beta-distribution-2.png} 
+    \includegraphics[width=0.47\linewidth]{st2131-beta-distribution-1.png} 
+  \end{tightcenter}
+
+  \textbf{N1} - $\beta(a, b) = \int^1_0 x^{a-1}(1-x)^{b-1} \dx$
+
+  \textbf{N2} - $\beta(a=1, b=1) = Uniform(0, 1)$
+
+  \textbf{N3} - $\beta(a, b) = \frac{\Gamma(a) \Gamma(b)}{\Gamma(a+b)}$
+
+
+  \subsection{Cauchy Distribution}
+
+  a r.v. $X$ has a cauchy distribution, $\quad X \sim Cauchy(\theta)$ 
+
+  with parameter $\theta$, $\-\infty < \theta < \infty$ if its density is given by 
+
+  \begin{tightcenter}
+    $f(x) = \frac{1}{\pi} \cdot \frac{1}{1 + (x-\theta)^2} $, $-\infty < x < \infty$
+  \end{tightcenter}
+
+  \begin{niceproof}
+    $E(X^n)$ does not exist for $n \in \mathbb{Z}^+$
+
+    $E(X) = \int^\infty_{-\infty} x \cdot f(x) \dx = \infty - \infty$ (undefined)
+  \end{niceproof}
+
+
+
+
+
+
+
+
 
 
 
