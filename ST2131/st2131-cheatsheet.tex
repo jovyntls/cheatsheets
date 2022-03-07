@@ -969,6 +969,92 @@
 
 
 
+  \section{06. JOINTLY DISTRIBUTED RANDOM VARIABLES}
+
+  \subsection{Joint Distribution Function}
+
+  \begin{tightcenter}
+    the \ildefinition{joint cumulative distribution function} of the pair of r.v. $X$ and $Y$ is $\rightarrow$
+    $F(x, y) = P(X \leq x, Y \leq y)$,  $-\infty < x < \infty$, $\; -\infty < y < \infty$
+  \end{tightcenter}
+
+  \textbf{N1} - \ildefinition{marginal cdf of $X$}, $F_X(x) = \lim\limits_{y \to \infty} F(x, y)$.
+
+  \textbf{N2} - \ildefinition{marginal cdf of $Y$}, $F_Y(y) = \lim\limits_{x \to \infty} F(x, y)$.
+
+  \begin{minipage}[c]{0.25\linewidth}
+    \includegraphics[width=0.95\linewidth]{st2131-joint-distribution-summation.png} 
+  \end{minipage}
+  \begin{minipage}[c]{0.72\linewidth}
+    \textbf{N3} - $P(X > a, Y > b) = 1 - F_X(a) - F_Y(b) + F(a, b) $
+
+    \textbf{N4} - $P(a_1 < X \leq a_2, b_1 < Y \leq b_2)$
+    \\* $\quad \quad = F(a_2, b_2) + F(a_1, b_1) - F(a_1, b_2) - F(a_2, b_1) $
+  \end{minipage}
+
+  \subsection{Joint Probability Mass Function}
+
+  \begin{tightcenter}
+    if $X$ and $Y$ are both discrete r.v., then their \ildefinition{joint pmf} is defined by
+
+    $p(i, j) = P(X=i, Y=j)$
+  \end{tightcenter}
+
+  \textbf{N1} - \ildefinition{marginal pmf of $X$}, $P(X=i) = \sum_j P(X=i, Y=j)$ 
+
+  \textbf{N2} - \ildefinition{marginal pmf of $Y$}, $P(Y=i) = \sum_i P(X=i, Y=j)$ 
+
+  \subsection{Joint Probability Density Function}
+
+  the r.v. $X$ and $Y$ are said to be \textit{jointly continuous} if there is a function $f(x,y)$ called the \ildefinition{joint pdf}, such that for any two-dimensional set $C$, 
+
+  \begin{tightcenter}
+    $P[(X, Y) \in C] = \int\int\limits_C f(x, y) \dx \mathop{dy}$
+
+    $= $ volume under the surface over the region $C$.
+  \end{tightcenter} 
+
+  \begin{minipage}[c]{0.4\linewidth}
+    \includegraphics[width=0.95\linewidth]{st2131-joint-pmf-geometric.png}
+  \end{minipage}
+  \begin{minipage}[c]{0.55\linewidth}
+    \textbf{N1} - if $C = \{(x, y): x \in A, y \in B \}$, then $P(X \in A, Y \in B) = \int\limits_B \int\limits_A f(x, y) \dx \dy$
+  \end{minipage}
+
+  \textbf{N2} - $F(a, b) = P\Big(X \in (-\infty, a], Y \in (-\infty, b]\Big) = \int\limits^b_{-\infty} \int\limits^a_{-\infty} f(x, y) \dx \dy $
+
+  \textbf{N3} - $f(a, b) = \frac{\delta^2}{\delta a \delta b} F(a, b)$
+
+  \subsubsection{interpretation of pdf}
+
+  \begin{minipage}[c]{0.3\linewidth}
+    \includegraphics[width=0.95\linewidth]{st2131-pdf-interpretation.png} 
+  \end{minipage}
+  \begin{minipage}[c]{0.65\linewidth}
+    \begin{align*}
+      P(x < X < x + \dx) &= \int^{x + \dx}_x f(y) \dy \\ &\approx f(x) \dx  
+    \end{align*}
+
+    pdf at $x$, $f(x) \approx \frac{P(x < X < x + \dx)}{\dx}$
+  \end{minipage}
+
+  \subsubsection{interpretation of joint pdf}
+
+  \begin{minipage}[c]{0.3\linewidth}
+    \includegraphics[width=0.95\linewidth]{st2131-joint-pdf-interpretation.png} 
+  \end{minipage}
+  \begin{minipage}[c]{0.65\linewidth}
+    $P(a < X < a + \mathop{da}, b < Y < b + \mathop{db})$
+    \\* $\quad = \int^{b + db}_b \int^{a + da}_a f(x, y) \dx \dy$
+    \\* $\quad \approx f(a, b) \mathop{da}\mathop{db}$
+
+    \ildefinition{marginal pdf of $X$}, $f_X(x) = \int^\infty_{-\infty} f(x, y) \dy$
+
+    \ildefinition{marginal pdf of $Y$}, $f_Y(x) = \int^\infty_{-\infty} f(x, y) \dx$
+  \end{minipage}
+
+
+
 
 
 
