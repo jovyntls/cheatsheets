@@ -337,7 +337,7 @@
     \item \textbf{Misra-Gries algorithm} (determines which bit occurs more in an $n$-bit array $A$):
       \begin{itemize}
         \item if there is an equal number of 0's and 1's, then $id=\bot$ and $count = 0$
-           \item if $z \in \{0, 1\}$ is the majority element, then $id=z$ and $count$ equals the difference between the count of the bits.
+        \item if $z \in \{0, 1\}$ is the majority element, then $id=z$ and $count$ equals the difference between the count of the bits.
       \end{itemize}
   \end{itemize}
 
@@ -982,6 +982,104 @@
   \end{itemize}
 
 
+  \section{07. AMORTIZED ANALYSIS}
+
+  \begin{itemize}
+    \item \definition{amortized analysis} guarantees the \textit{average} performance of each operation in the \textit{worst case}.
+    \item For a sequence of $n$ operations $o_1, o_2, \dots, o_n$, 
+      \begin{itemize}
+        \item let $t(i)$ be the time complexity of the $i$-th operation $o_i$
+        \item let $f(n)$ be the \textit{worst-case} time complexity for \textit{any} of the $n$ operations
+        \item let $T(n)$ be the time complexity of all $n$ operations
+      \end{itemize}
+  \end{itemize}
+
+  \begin{tightcenter}
+    $T(n) = \sum^n_{i=1} t(i) = n f(n)$
+  \end{tightcenter}
+
+  \subsection{Types of Amortized Analysis}
+
+  \subsubsection{Aggregate method}
+
+  \begin{itemize}
+    \item look at the whole sequence, sum up the cost of operations and take the average - simpler but less precise
+    \item e.g. binary counter - amortized $O(1)$ 
+    \item e.g. queues (with \code{INSERT} and \code{EMPTY}) - amortized $O(1)$
+  \end{itemize}
+
+  \subsubsection{Accounting method}
+
+  \begin{itemize}
+    \item charge the $i$-th operation a fictitious amortized cost $c(i)$ 
+      \begin{itemize}
+        \item \textbf{amortized cost} $c(i)$ is a fixed cost for each operation
+        \item \textbf{true cost} $t(i)$ depends on when the operation is called
+      \end{itemize}
+    \item amortized cost $c(i)$ must satisfy:
+      \begin{tightcenter}
+        $\sum^n_{i=1} t(i) \leq \sum^n_{i=1} c(i) $ for all $n$
+      \end{tightcenter}
+    \item take the extra amount for cheap operations early on as "credit" paid in advance for expensive operations
+      \begin{itemize}
+        \item \textbf{invariant}: bank balance never drops below 0
+      \end{itemize}
+    \item the total amortized cost provides an \textbf{upper bound} on the total true cost
+  \end{itemize}
+
+  \subsubsection{Potential method}
+
+  \begin{itemize}
+    \item $\phi$ : potential function associated with the algo/DS
+    \item $\phi(i)$: potential at the end of the $i $-th operation
+    \item $c_i$ : amortized cost of the $i$-th operation
+    \item $t_i$ : true cost of the $i$-th operation
+      \begin{tightcenter}
+        $c_i = t_i + \phi(i) - \phi(i-1)$ 
+
+        $\sum^n_{i=1} c_i = \phi(n) - \phi(0) + \sum^n_{i=1} t_i$
+      \end{tightcenter}
+    \item hence as long as $\phi(n) \geq 0$, then amortized cost is an upper bound of the true cost. 
+      \begin{tightcenter}
+        $\sum^n_{i=1} c_i \geq \sum^n_{i=1} t_i$
+      \end{tightcenter}
+    \item usually take $\phi(0) = 0$
+    \item \textbf{e.g.} for queue:
+      \begin{itemize}
+        \item let $\phi(i)$ = \# of elements in queue after the $i$-th operation
+        \item amortized cost for insert: $c_i = t_i + \phi(i) - \phi(i-1) = 1 + 1 = 2$
+        \item amortized cost for empty (for $k$ elements): $c_i = t_i + \phi(i) - \phi(i-1) = k + 0 - k = 0 $
+      \end{itemize}
+  \end{itemize}
+
+  \subsubsection{e.g. Dynamic Table (insertion only)}
+
+  \textbf{Aggregate method}
+
+  \begin{tightcenter}
+    cost of $n$ insertions = $\sum^n_{i=1} t(i) \leq n + \sum^{ \lfloor \log(n-1) \rfloor  }_{j=1} 2^j \leq 3n$
+    \includegraphics[width=0.95\linewidth]{st2131-dynamic-table-aggregate-method.png} 
+  \end{tightcenter}
+
+  \textbf{Accounting method}
+
+  \begin{itemize}
+    \item charge \$3 per insertion
+      \begin{itemize}
+        \item \$1 for insertion itself
+        \item \$1 for moving itself when the table expands
+        \item \$1 for moving one of the existing items when the table expands
+      \end{itemize}
+  \end{itemize}
+
+  \textbf{Potential method}
+
+  \begin{tightcenter}
+    let $\phi(i) = 2i - size(T)$
+    \includegraphics[width=0.95\linewidth]{st2131-dynamic-table-potential-method.png} 
+  \end{tightcenter}
+
+
 
 
 
@@ -1024,7 +1122,7 @@ harmonic number, $ H_n = \sum\limits_{k=1}^n \frac{1}{k} = \Theta(\lg n) $
 
 basel problem: $\sum\limits^N_{n=1} \frac{1}{n^2} \leq 2 - \frac{1}{N} \xrightarrow{ N \to \infty } 2 $
 
-  $\quad\quad$ because $\sum^N_{n=1} \frac{1}{N^2} \leq 1 + \sum^{\log_3 n}_{x=2} \frac{1}{(x-1)x} = 1 + \sum^N_{n=2} (\frac{1}{n-1} - \frac{1}{n}) = 1 + 1 - \frac{1}{N} = 2 - \frac{1}{N} $
+$\quad\quad$ because $\sum^N_{n=1} \frac{1}{N^2} \leq 1 + \sum^{\log_3 n}_{x=2} \frac{1}{(x-1)x} = 1 + \sum^N_{n=2} (\frac{1}{n-1} - \frac{1}{n}) = 1 + 1 - \frac{1}{N} = 2 - \frac{1}{N} $
 
 number of primes in range $\{1, \dots, K\}$ is $> \frac{K}{\ln K} $
 
@@ -1035,6 +1133,10 @@ $1 < \log n < \sqrt{n} < n < n \log n < n^2 < n^3 < 2^n < 2^{2n}$
 $\log_a n < n^a < a^n < n! < n^n$
 
 for any $a, b > 0$, $\quad \log_a n < n^b$
+
+\subsubsection{multiple parameters}
+
+for two functions $f(m, n)$ and $g(m,n)$, we say that $f(m, n) = O(g(m, n))$ if there exists constants $c, m_0, n _0$ such that $0 \leq f(m,n) \leq c \cdot g(m,n)$ for all $m \geq m_0$ or $n \geq n_0$.
 
 \subsection{set notation}
 
