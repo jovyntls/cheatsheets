@@ -1009,7 +1009,7 @@
   the r.v. $X$ and $Y$ are said to be \textit{jointly continuous} if there is a function $f(x,y)$ called the \ildefinition{joint pdf}, such that for any two-dimensional set $C$, 
 
   \begin{tightcenter}
-    $P[(X, Y) \in C] = \int\int\limits_C f(x, y) \dx \mathop{dy}$
+    $P[(X, Y) \in C] = \iint\limits_C f(x, y) \dx \mathop{dy}$
 
     $= $ volume under the surface over the region $C$.
   \end{tightcenter} 
@@ -1018,10 +1018,12 @@
     \includegraphics[width=0.95\linewidth]{st2131-joint-pmf-geometric.png}
   \end{minipage}
   \begin{minipage}[c]{0.55\linewidth}
-    \textbf{N1} - if $C = \{(x, y): x \in A, y \in B \}$, then $P(X \in A, Y \in B) = \int\limits_B \int\limits_A f(x, y) \dx \dy$
+    \textbf{N1} - if $C = \{(x, y): x \in A, y \in B \}$, then 
+    $P(X \in A, Y \in B) = \int\limits_B \int\limits_A f(x, y) \dx \dy$
   \end{minipage}
 
   \textbf{N2} - $F(a, b) = P\Big(X \in (-\infty, a], Y \in (-\infty, b]\Big) = \int\limits^b_{-\infty} \int\limits^a_{-\infty} f(x, y) \dx \dy $
+  \\* for double integral: when integrating $\dx$, take $y$ as a constant
 
   \textbf{N3} - $f(a, b) = \frac{\delta^2}{\delta a \delta b} F(a, b)$
 
@@ -1038,6 +1040,10 @@
     pdf at $x$, $f(x) \approx \frac{P(x < X < x + \dx)}{\dx}$
   \end{minipage}
 
+  \textbf{N4} - pdf of $X$, $f_X(x) = \int^\infty_0 f(x, y) \dy$
+
+  \textbf{N5} - pdf of $Y$, $f_Y(y) = \int^\infty_0 f(x, y) \dx$
+
   \subsubsection{interpretation of joint pdf}
 
   \begin{minipage}[c]{0.3\linewidth}
@@ -1046,14 +1052,61 @@
   \begin{minipage}[c]{0.65\linewidth}
     $P(a < X < a + \mathop{da}, b < Y < b + \mathop{db})$
     \\* $\quad = \int^{b + db}_b \int^{a + da}_a f(x, y) \dx \dy$
-    \\* $\quad \approx f(a, b) \mathop{da}\mathop{db}$
+    \\* $\quad \approx f(a, b) \mathop{da}\mathop{db} \quad\quad$ (density of probability)
 
     \ildefinition{marginal pdf of $X$}, $f_X(x) = \int^\infty_{-\infty} f(x, y) \dy$
 
     \ildefinition{marginal pdf of $Y$}, $f_Y(x) = \int^\infty_{-\infty} f(x, y) \dx$
   \end{minipage}
 
+  \subsubsection{how to do a double integral}
 
+  e.g. find $P(X < Y)$ where the joint pdf of $X$ and $Y$ are given by 
+  $f(x, y) = \begin{cases} 2e^{-x}e^{-y}, &0 < x < \infty, 0 < y < \infty \\ 0, &\text{otherwise} \end{cases} $ 
+
+  \includegraphics[width=0.55\linewidth]{st2131-double-integral-eg-1.png} 
+  \includegraphics[width=0.4\linewidth]{st2131-double-integral-eg-2.png} 
+
+  \begin{enumerate}
+    \item to get the bounds for $\dx$ and $\dy$, plot $X<Y$ 
+      \begin{enumerate}
+        \item draw horizontal lines to determine the bounds for $x$, from $x=a$ to $x=b$
+        \item draw vertical lines to determine the bounds for $y$, from $y=c$ to $y=d$
+      \end{enumerate}
+    \item integrate $\int^d_c \int^b_a f(x) \dx \dy$
+  \end{enumerate}
+
+  \begin{minipage}[c]{0.55\linewidth}
+    \textbf{example} - given the joint pdf of $X$ and $Y$, find the pdf of r.v. $X/Y$.
+
+    \begin{niceproof}[ans]
+      set dummy variable $W = X/Y$, 
+      then $F_W(w) = P(W \leq w) = P(\frac{X}{Y} \leq w)$
+
+      $P(\frac{X}{Y} \leq w) = \int^\infty_0 \int^{wy}_0 e^{-x-y} \dx \dy $
+    \end{niceproof}
+  \end{minipage}
+  \begin{minipage}[c]{0.4\linewidth}
+    \includegraphics[width=0.95\linewidth]{st2131-double-integral-eg-3.png} 
+  \end{minipage}
+
+
+  \subsection{Independent Random Variables}
+
+  \textbf{N1} - $X$ and $Y$ are \definition{independent} $P(X \in A, Y \in B) = P(X \in A) \cdot P(Y \in B)$
+
+  \textbf{N2} - $X$ and $Y$ are \definition{independent} $\forall a,b$, $\quad P(X \leq a, Y \leq b) = P(X \leq a) \cdot P(Y \leq b) $
+  \\* $\quad$ or $F(a, b) = F_X(a) \cdot F_Y(b)$
+
+  \textbf{N3} - when $X$ and $Y$ are \textbf{discrete r.v.}, the \textit{condition of independence} is equivalent to 
+  \begin{tightcenter}
+    $P(X=x, Y=y) = P(X=x) \cdot P(Y=y)$ for all $x, y$.
+  \end{tightcenter}
+
+  \textbf{N4} - in the \textbf{jointly continuous} case, the \textit{condition of independence} is equivalent to
+  \begin{tightcenter}
+    $f(x, y) = f_X(x) \cdot f_Y(y)$ for all $x, y$.
+  \end{tightcenter}
 
 
 
