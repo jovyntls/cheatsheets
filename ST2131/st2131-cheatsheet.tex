@@ -1096,17 +1096,102 @@
   \textbf{N1} - $X$ and $Y$ are \definition{independent} $P(X \in A, Y \in B) = P(X \in A) \cdot P(Y \in B)$
 
   \textbf{N2} - $X$ and $Y$ are \definition{independent} $\forall a,b$, $\quad P(X \leq a, Y \leq b) = P(X \leq a) \cdot P(Y \leq b) $
-  \\* $\quad$ or $F(a, b) = F_X(a) \cdot F_Y(b)$
+  \\* $\quad$ or $F(a, b) = F_X(a) \cdot F_Y(b)$ $\quad \Rightarrow $ joint cdf is the product of the marginal cdfs
 
-  \textbf{N3} - when $X$ and $Y$ are \textbf{discrete r.v.}, the \textit{condition of independence} is equivalent to 
+  \textbf{N3} - \textit{discrete case}: discrete r.v. $X$ and $Y$ are \ildefinition{independent} $\iff$
   \begin{tightcenter}
     $P(X=x, Y=y) = P(X=x) \cdot P(Y=y)$ for all $x, y$.
   \end{tightcenter}
 
-  \textbf{N4} - in the \textbf{jointly continuous} case, the \textit{condition of independence} is equivalent to
+  \textbf{N4} - \textit{continuous case}: jointly continuous r.v. $X$ and $Y$ are \ildefinition{independent} $\iff$
   \begin{tightcenter}
     $f(x, y) = f_X(x) \cdot f_Y(y)$ for all $x, y$.
   \end{tightcenter}
+
+  \textbf{N5} - independence is a \definition[relation]{symmetric} $X$ is independent of $Y$ $\iff$ $Y$ is independent of $X$
+
+  \subsection{Sum of Independent Random Variables}
+
+  \textbf{N1} - for independent, continuous r.v. $X$ and $Y$ having pdf $f_X$ and $f_Y$, 
+  \begin{tightcenter}
+    $F_{X+Y}(a) = \int^\infty_{-\infty} F_X (a-y) f_Y(y) \dy $
+
+    $f_{X+Y}(a) = \int^\infty_{-\infty} f_X (a-y) f_Y(y) \dy $
+  \end{tightcenter}
+
+  \textbf{impt example} - E52 (pdf of $X+Y$)
+
+  \subsubsection{Distribution of Sums of Independent r.v.}
+
+  for $i = 1, 2, \dots, n$, 
+
+  \begin{enumerate}
+    \item $X_i \sim Gamma(t_i, \lambda) \Rightarrow \sum\limits^n_{i=1} X_i \sim Gamma(\sum\limits^n_{i=1} t_i, \lambda)$
+    \item $X_i \sim Exp(\lambda) \Rightarrow \sum\limits^n_{i=1}X_i \sim Gamma(n, \lambda)$
+    \item  $Z_i \sim N(0, 1) \Rightarrow \sum\limits^n_{i=1} z^2_i \sim \chi^2_n = Gamma(\frac{n}{2}, \frac{1}{2}) $
+    \item $X_i \sim N(\mu_i, \sigma_i^2) \Rightarrow \sum\limits^n_{i=1}X_i \sim N( \sum\limits^n_{i=1} \mu_i, \sum\limits^n_{i=1} \sigma^2_i ) $
+    \item $X \sim Poisson(\lambda_1), Y \sim Poisson (\lambda_2) \Rightarrow X+Y \sim Poisson(\lambda_1 + \lambda_2)$
+    \item $X \sim Binom(n, p), Y \sim Binom(m, p) \Rightarrow X+Y \sim Binom(n+m, p) $
+  \end{enumerate}
+
+  \subsubsection{Conditional Distribution (discrete)}
+
+  for discrete r.v. $X$ and $Y$, the \ildefinition{conditional pmf} of  $X$ given that $Y=y$ is
+  \begin{tightcenter}
+    $P_{X \vert Y} (x \vert y) = P(X = x \vert Y = y) = \frac{P(X = x, Y = y)}{P(Y = y)} = \frac{p(x, y)}{p_Y(y)} $
+  \end{tightcenter}
+
+  for discrete r.v. $X$ and $Y$, the \ildefinition{conditional pdf} of  $X$ given that $Y=y$ is
+  \begin{tightcenter}
+    $F_{X \vert Y} (x \vert y) = P(X \leq x \vert Y = y) = \sum\limits_{a \leq x}\frac{P(X = a, Y = y)}{P(Y = y)} = \sum\limits_{a \leq x} P_{X \vert Y} (a \vert y) $
+  \end{tightcenter}
+
+  \textbf{N0} - equivalent notation: 
+  \begin{itemize}
+    \item $P_{X \vert Y}(x \vert y) = P(X = x \vert Y = y)$
+    \item $P_X(x) = P(X = x)$
+  \end{itemize}
+
+  \textbf{N1} - if $X$ is independent of $Y$, then $P_{X \vert Y}(x \vert y) = P_X(x)$
+
+  \subsubsection{Conditional Distribution (continuous)}
+
+  for $X$ and $Y$ with joint pdf $f(x, y)$, the \ildefinition{conditional pdf} of $X$ given that $Y = y$ is
+  \begin{tightcenter}
+    $f_{X \vert Y} (x \vert y) = \frac{f(x, y)}{f_Y(y)} \quad$ for all $y$ s.t. $f_Y(y) > 0$
+
+    $f_{X \vert Y} (a \vert y) = P(X \leq a \vert Y = y) = \int\limits^a_{-\infty} f_{X \vert Y} (x \vert y) \dx $ 
+  \end{tightcenter}
+
+  \textbf{N1} - for any set $A$, $P(X \in A \vert Y = y) = \int\limits_A f_{X \vert Y} (x \vert y) \dy$
+
+  \textbf{N2} - if $X$ is independent of $Y$, then $f_{X \vert Y} (x \vert y) = f_X (x)$.
+
+  \attention "find the marginal/conditional pdf of $Y$" $\Rightarrow$ must include the \textbf{range} too!! 
+  \\* (see Ex. 69(b, c))
+
+
+  \subsection{Joint Probability Distribution of Functions of r.v.}
+
+  Let $X_1$ and $X_2$ be jointly continuous r.v. with joint pdf $f_{x_1, x_2} (x_1, x_2)$. 
+  Suppose $Y_1 = g_1 (X_1, X_2)$ and $Y_2 = g_2 (X_1, X_2)$ satisfy
+
+  \begin{enumerate}
+    \item the equations $y_1 = g_1 (X_1, X_2)$ and $y_2 = g_2 (X_1, X_2)$ can be \textit{uniquely} solved for $x_1$, $x_2$ in terms of $y_1$ and $y_2$
+    \item $g_1(x_1, x_2)$ and $g_2(x_1, x_2)$ have continuous partial derivatives at all points $(x_1, x_2)$ 
+      such that $J(x_1, x_2) = \left\vert \begin{smallmatrix} \frac{\delta g_1}{\delta x_1} & \frac{\delta g_1}{\delta x_2}
+      \\ \frac{\delta g_2}{\delta x_1} & \frac{\delta g_2}{\delta x_2} \end{smallmatrix} \right\vert = \frac{\delta g_1}{\delta x_1} \cdot \frac{\delta g_2}{\delta x_2} - \frac{\delta g_2}{\delta x_1} \cdot \frac{\delta g_1}{\delta x_2} \neq 0 $
+  \end{enumerate}
+
+  then 
+  \begin{tightcenter}
+    $f_{Y_1, Y_2} (y_1, y_2) = f_{X_1, X_2} (x_1, x_2) \frac{1}{\abs{J(x_1, x_2)}} $
+
+    where $x_1 = h_1(y_1, y_2), x_2 = h_2(y_1, y_2)$
+  \end{tightcenter}
+
+
+
 
 
 
