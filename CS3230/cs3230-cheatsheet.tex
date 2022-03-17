@@ -1080,10 +1080,115 @@
   \end{tightcenter}
 
 
+  \section{08. DYNAMIC PROGRAMMING}
 
+  \begin{itemize}
+    \item \definition{cut-and-paste proof} proof by contradiction - suppose you have an optimal solution. Replacing ("cut") subproblem solutions with this subproblem solution ("paste" in) should improve the solution. If the solution doesn't improve, then it's not optimal (contradiction).
+  \end{itemize}
 
+  \subsection{Longest Common Subsequence}
 
+  \begin{itemize}
+    \item for sequence $A: a_1, a_2, \dots, a_n$ stored in array
+    \item $C$ is a \definition[of $A$]{subsequence} if we can obtain $C$ by removing zero or more elements from $A$.
+  \end{itemize}
 
+  \textbf{problem}: given two sequences $A[1..n]$ and $B[1..m]$, compute the \textit{longest} sequence $C$ such that $C$ is a subsequence of $A$ and $B$.
+
+  \subsubsection{brute force solution}
+
+  \begin{itemize}
+    \item check \textit{all} possible subsequences of $A$ to see if it is also a subsequence of $B$, then output the longest one.
+    \item analysis: $O(m2^n)$
+      \begin{itemize}
+        \item checking each subsequence takes $O(m)$ 
+        \item $2^n$ possible subsequences
+      \end{itemize}
+  \end{itemize}
+
+  \subsubsection{recursive solution}
+  let $LCS(i, j)$: longest common subsequence of $A[1..i]$ and $B[1..j]$
+
+  \begin{itemize}
+    \item base case: $LCS(i, 0) = \emptyset$ for all $i$, $LCS(0, j) = \emptyset$ for all $j$ 
+    \item general case:
+      \begin{itemize}
+        \item if last characters of $A, B$ are $a_n = b_m$, then $LCS(n, m)$ must terminate with $a_n=b_m$ 
+          \begin{itemize}
+            \item the optimal solution will match $a_n$ with $b_m$
+          \end{itemize}
+        \item if $a_n \neq b_m$, then either $a_n$ or $b_m$ is not the last symbol
+      \end{itemize}
+    \item \textbf{optimal substructure}: (general case)
+      \begin{itemize}
+        \item if $a_n = b_m$,
+          \\* $LCS(n, m) = LCS(n-1, m-1) :: a_n$
+        \item if $a_n \neq b_m$, 
+          \\* $LCS(n, m) = LCS(n-1, m) \; || \; LCS(n, m-1)$
+      \end{itemize}
+    \item \textbf{simplified problem}: 
+      \begin{itemize}
+        \item $L(n, m) = 0$ if $n=0$ or $m=0$ 
+        \item if $a_n = b_m$, then $L(n, m) = L(n-1, m-1) + 1$ 
+        \item if $a_n \neq b_m$, then $L(n, m) = \max (L(n, m-1), L(n-1, m)) $
+      \end{itemize}
+      \textbf{analysis}
+      \begin{itemize}
+        \item number of distinct subproblems $= (n+1) \times (m+1)$
+        \item to use $O(\min \{m, n\})$ space: bottom-up approach, column by column 
+        \item memoize for DP $\Rightarrow$ makes it $O(mn)$ instead of exponential time
+      \end{itemize}
+  \end{itemize}
+
+  \subsection{Knapsack Problem}
+
+  \begin{itemize}
+    \item input: $(w_1, v_1), (w_2, v_2), \dots, (w_n, v_n) $ and capacity $W$
+    \item output: subset $S \subseteq \{ 1, 2, \dots, n \}$ that maximises $\sum_{i \in S}v_i$ such that $\sum_{i \in S} w_i \leq W$
+  \end{itemize}
+
+  \begin{tightcenter}
+    \includegraphics[width=0.7\linewidth]{cs3230-knapsack-problem.png} 
+  \end{tightcenter}
+
+  \begin{itemize}
+    \item $2^n$ subsets $\Rightarrow$ naive algorithm is costly 
+    \item \textbf{recursive solution}:
+      \begin{itemize}
+        \item let $m[i, j]$ be the maximum value that can be obtained using a subset of items $\{1, 2, \dots, i\}$ 
+          with total weight no more than $j$.
+        \item $m[i, j] = \begin{cases} 0, & \text{if $i=0$ or $j=0$} \\ \max\{ {\scriptstyle m[i-1, j-w_i] + v_i, m[i-1, j] }\}, & \text{if $w_i \leq j$} \\ m[i-1, j], & \text{otherwise} \end{cases} $
+      \end{itemize}
+    \item \textbf{analysis}: $O(nW)$
+      \begin{itemize}
+        \item \attention $O(nW)$ is \textbf{not} a polynomial time algorithm
+        \item not polynomial in input bitsize 
+          \begin{itemize}
+            \item $W$ can be represented in $O(\lg W)$ bits
+            \item $n$ can be represented in $O(\lg n)$ bits
+          \end{itemize}
+        \item polynomial time is strictly in terms of the number of bits for the input
+      \end{itemize}
+  \end{itemize}
+
+  \subsection{Changing Coins}
+
+  \textbf{problem}: use the fewest number of coins to make up $n$ cents using denominations $d_1, d_2, \dots, d_n$.
+  Let $M[j]$ be the fewest number of coins needed to change $j$ cents. 
+
+  \begin{itemize}
+    \item \textbf{optimal substructure}:
+      \begin{itemize}
+        \item $M[j] = \begin{cases} 1 + \min\limits_{i \in [k]} M[j-d_i], &j > 0 \\ 0, &j=0 \\ \infty, & j < 0 \end{cases}$
+      \end{itemize}
+      \begin{niceproof}
+        Suppose $M[j] = t$, meaning $j = d_{i_1} + d_{i_2} + \dots + d_{i_t}$
+        for some $i_1, \dots, i_t \in \{1, \dots, k\}$. 
+
+        Then, if $j' = d_{i_1} + d_{i_2} + \dots + d_{i_t-1}$, $M[j'] = t-1 $,
+        because otherwise if $M[j'] < t-1$, by \textbf{cut-and-paste} argument, $M[j]<t$.
+      \end{niceproof}
+  \end{itemize}
 
 
 
