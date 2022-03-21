@@ -481,11 +481,11 @@
 
   \subsubsection{Summary}
 
-  \begin{tabular}{|c|l|}
-    \hline  binomial & $ X= $ number of successes in $ n $ trials with replacement
-    \\\hline negative binomial & $ X= $ number of trials until $ k $ successes
-    \\\hline geometric & $ X= $ number of trials until a success
-    \\\hline hypergeometric & $ X= $ number of successes in $ n $ trials without replacement
+  \begin{tabular}{|c|l|c|}
+    \hline  binomial & $ X= $ \# of successes in $ n $ trials w/ replacement & $ np$
+    \\\hline negative binomial & $ X= $ \# of trials until $ k $ successes & $k/p$
+    \\\hline geometric & $ X= $ \# of trials until a success & $1/p$
+    \\\hline hypergeometric & $ X= $ \# of successes in $ n $ trials, no replacement & $rn/N$
     \\\hline
   \end{tabular}
 
@@ -1197,6 +1197,121 @@
   \end{tightcenter}
 
 
+  \section{07. PROPERTIES OF EXPECTATION}
+
+  recap:
+
+  \begin{itemize}
+    \item for a \textbf{discrete} r.v. $X$, $E(X) = \sum_x x \cdot p(x) = \sum_x \cdot P(X = x)$
+    \item for a \textbf{continuous} r.v. $X$, $E(X) = \int^\infty_{-\infty} x \cdot f(x) \dx$
+    \item for a \textbf{non-negative integer-valued} r.v. $Y$, $E(Y) = \sum^\infty_{i=1} P(Y \geq i)$
+    \item for a \textbf{non-negative} r.v. $Y$, $E(Y) = \int^\infty_{-\infty} P(Y > y)\dy$
+  \end{itemize}
+
+  \subsection{Expectations of Sums of Random Variables}
+
+  \begin{center}
+    for $X$ and $Y$ with joint pmf $p(x, y)$ and joint pdf  $f(x, y)$, 
+
+    $E[g(x, y)] = \sum\limits_y \sum\limits_x g(x, y) p(x, y)$
+
+    $ E[g(x, y)] = \int^\infty_{-\infty} \int^\infty_{-\infty} g(x, y) f(x, y) \dx \dy $
+  \end{center}
+
+  \textbf{N2} - if $P(a \leq X \leq b) = 1$, then $a \leq E(X) \leq b$
+
+  \textbf{N3} - if $E(X)$ and $E(Y)$ are finite, $E(X+Y) = E(X) + E(Y)$
+
+  \begin{niceproof}
+    using N1, integrate $\int^\infty_{-\infty} \int^\infty_{-\infty} (x+y) f(x, y) \dx \dy$
+    $\quad = \int^\infty_{-\infty} x \cdot f_X (x) \dx + \int^\infty_{-\infty} y f_Y(y) \dy = E(X) + E(Y)$
+  \end{niceproof}
+
+  \textbf{N4} - if, for r.v.s $X$ and $Y$, if $X \geq Y$, then $E(X) \geq E(Y)$
+
+  \textbf{N5} - let $X_1, \dots, X_n$ be independent and identically distributed r.v.s having distribution $P(X_i \leq x) = F(x)$ and expected value $E(X_i) = \mu$. 
+  \begin{tightcenter}
+    if $\bar{X} = \sum\limits^n_{i=1} \frac{X_i}{n}$, then $E(\bar{X}) = \mu$
+  \end{tightcenter}
+
+  \begin{niceproof}
+    $E(\bar{X}) = E (\sum\limits^n_{i=1} \frac{X_i}{n}) = \frac{1}{n} (\sum\limits^n_{i=1} E(X_i)) = \frac{1}{n} \cdot n\mu = \mu $
+
+    $\Rightarrow$ sample mean = population mean
+  \end{niceproof}
+
+  \textbf{N6} - $\bar{X}$ is the \ildefinition{sample mean}.
+
+  \textbf{N7} - if $X \sim Binom(n, p)$, then $E(X) = np$.
+
+  \begin{niceproof}
+    express $X$ as a sum of Bernoulli r.v. $\Rightarrow$ sum of indicator r.v. = $np$.
+  \end{niceproof}
+
+  \subsubsection{examples}
+
+  \attention trick: express a r.v. as a sum of r.v. with easier to find expectation
+
+  \begin{itemize}
+    \item negative binomial = sum of geometric $= k/p$
+    \item hypergeometric with $r$ red balls out of  $N$ balls  with $n$ trials
+      \begin{itemize}
+        \item indicator r.v. $=1$ if the $i$th ball selected is red \item $P(Y_i = 1) = \frac{r}{N} \Rightarrow E(Y_i) = \frac{r}{N} \Rightarrow E(X) = \sum^n_{i=1}Y_i = n\frac{r}{N} $
+      \end{itemize}
+    \item hat throwing problem: expected number of people that select their own hat
+      \begin{itemize}
+        \item P(select your own hat back) = $\frac{1}{N}$ $\Rightarrow E(X) = N \cdot \frac{1}{N} = 1$
+      \end{itemize}
+    \item coupon collector problem: 
+      \begin{itemize}
+        \item let $X$ = number of coupons collected for a complete set
+        \item let $X_i$ = number of \textit{additional} coupons that need to be collected to obtain another distinct type after $i$ distinct types have been collected 
+          \begin{itemize}
+            \item $X_i \sim Geometric(p = \frac{N-i}{N} )$
+          \end{itemize}
+        \item $E(X) = \sum^{N-1}_{i=1} E(X_i) = 1 + \frac{1}{\frac{N-1}{N}} + \frac{1}{\frac{N-2}{N}} + \dots + \frac{1}{\frac{1}{N}}$ 
+          \\* $ \quad = N(\frac{1}{N} + \frac{1}{N-1} + \dots + 1) $
+      \end{itemize}
+  \end{itemize}
+
+  \subsection{Covariance, Variance of Sums and Correlations}
+
+  \begin{tightcenter}
+    if $X$ and $Y$ are independent, then for any functions $h$ and $g$, 
+    \\* $E[ g(X) h(Y) ] = E[g(X)] \cdot E[h(Y)] $
+  \end{tightcenter}
+
+  \definition{covariance} measure of linear relationship
+
+  \begin{tightcenter}
+    $Cov (X, Y) = E[ (X-E[X]) (Y - E[Y]) ] $
+    \\* $Cov(X, Y) = E(XY) - E(X)E(Y)$
+  \end{tightcenter}
+
+  \textbf{N1} - $X$ and $Y$ are independent $\Rightarrow Cov(X, Y) = 0$
+
+  \textbf{N2} - $Cov(X, Y) = 0 \not\Rightarrow$ $X$ and $Y$ are independent
+
+  \begin{niceproof}
+    let $E(X) = 0, E(XY) = 0 \Rightarrow Cov(X, Y) = 0$, but not independent
+
+    e.g. non-linear relationship
+  \end{niceproof}
+
+  \subsubsection{Covariance properties}
+
+  \begin{enumerate}
+    \item $Cov(X, Y) = Cov(Y, X)$ 
+    \item $Cov(X, X) = Var(X)$ 
+    \item $Cov(aX, Y) = aCov(X, Y)$
+    \item $Cov (\sum\limits^n_{i=1} X_i, \sum\limits^m_{j=1} Y_j) = \sum\limits^n_{i=1} \sum\limits^m_{j-1} Cov(X_i, Y_j) $
+  \end{enumerate}
+
+  for variance:
+
+  \textbf{N1} - $Var (\sum\limits^n_{i=1} X_i) - \sum\limits^n_{i=1} Var(X_i) + 2 \mathop{\sum\sum}\limits_{i<j} Cov(X_i, X_j) $
+
+  \textbf{N2} - if $X_1, \dots, X_n$ are \textit{pairwise independent} ($X_i, X_j$ are independent $\forall i \neq j$), then $Var(\sum\limits^n_{i=1} X_i) = \sum\limits^n_{i=1} Var(X_i)$
 
 
 
