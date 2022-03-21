@@ -336,11 +336,6 @@
   \begin{itemize}
     \item $Q(E_1\cup E_2) = Q(E_1) + Q(E_2) - Q(E_1 E_2) $ 
     \item $P(E_1\cup E_2\vert F ) = P(E_1\vert F ) + P(E_2\vert F ) - P(E_1 E_2\vert F ) $ 
-    \item \textbf{theorem of total probability}: 
-      \begin{itemize}
-        \item $Q(E_1) = Q(E_1 \vert E_2) Q(E_2) + Q(E_1\vert E_2^c) Q(E_2^c) $ 
-        \item $ P(H \vert F_n) = \sum\limits^k_{i=0} P(H \vert F_nc_i) P(c_i \vert F_n) $
-      \end{itemize}
   \end{itemize}
 
 
@@ -467,6 +462,7 @@
         \item $ P(X=k) = \binom{n}{k} p^k (1-p)^{n-k} $
         \item $ P(k $ successes from $ n $ independent trials each with probability $ p $ of success$ ) $
         \item e.g. number of red balls out of $ n $ balls drawn with replacement
+        \item $E(Y) = np, \quad Var(Y) = np(1-p)$
       \end{itemize}
     \item \definition{Negative Binomial} $ X = $ number of trials until $ k $ successes are obtained
       \begin{itemize}
@@ -553,7 +549,7 @@
         0, &a < 1 \\
         \frac{1}{2} , &1 \leq a < 2 \\
         \frac{3}{4} , &2 \leq a < 4 \\
-        1, &a \leq 4
+        1, &a \geq 4
       \end{cases}$
   \end{itemize}
 
@@ -646,6 +642,7 @@
   \end{tightcenter}
 
   \begin{itemize}
+    \item a function of $h$ that is \textit{small} compared to $h$ when $h$ is small
     \item $o(h) + o(h) = o(h)$
     \item $ \frac{\lambda t}{n} + o ( \frac{t}{n} ) \dot= \frac{\lambda t}{n} $ for large $n$
   \end{itemize}
@@ -778,13 +775,22 @@
 
   \textbf{N1} - \ildefinition{expectation of  $X$}, $E(X) = \int^\infty_{-\infty} x \cdot f(x) \dx$
 
-  \textbf{N2} - for a non-negative r.v. $Y$, $E(Y) = \int^\infty_0 P(Y > y) \mathop{dy}$
+  \textbf{N2} - if $X$ is a continuous r.v. with pdf $f(x)$, then for any real-valued function $g$, 
+  \begin{tightcenter}
+    $E[g(x)] = \int^\infty_{-\infty} g(x) f(x) \dx $
+  \end{tightcenter}
 
-  \textbf{N3} - if $X$ is a continuous r.v. with pdf $f(x)$, then for any real-valued function $g$, $E[g(x)] = \int^\infty_{-\infty} g(x) f(x) \dx $
+  \textbf{N2a} $E[aX + b] = \int^\infty_{-\infty} (aX + b) \cdot f(x) \dx = a\cdot E(X) + b$
 
-  \begin{itemize}
-    \item e.g. $E[aX + b] = \int^\infty_{-\infty} (aX + b) \cdot f(x) \dx = a\cdot E(X) + b$
-  \end{itemize}
+  \textbf{N3} - for a non-negative r.v. $Y$, $E(Y) = \int^\infty_0 P(Y > y) \mathop{dy}$
+
+  \begin{niceproof}
+    $\int^\infty_0 P(Y > y) \dy = \int^\infty_0 \int^\infty_y f_Y(x) \dx \dy$ (because $f(x) = \frac{d}{\dx} F(x) $)
+    \\* $= \int^\infty_0 \int^x_0 f_Y(x) \dy \dx$ (draw diagram to convert integration)
+    \\* $= \int^\infty_0 f_Y(x) \int^x_0 \dy \dx$ 
+    \\* = $\int^\infty_0 x f_Y(x) \dx$ (because $\int^x_0 \dy = x$)
+    \\* $= E(Y)$
+  \end{niceproof}
 
   \subsubsection{variance}
 
@@ -829,7 +835,7 @@
   if the pdf of $X$ is given by
 
   \begin{tightcenter}
-    $f(x) \frac{1}{\sqrt{2\pi} \sigma}e^{-\frac{1}{2} (\frac{x}{\mu}\sigma)^2}$, $\quad -\infty < x < \infty$
+    $f(x) = \frac{1}{\sqrt{2\pi} \sigma}e^{-\frac{1}{2} (\frac{x}{\mu}\sigma)^2}$, $\quad -\infty < x < \infty$
 
     $E(x) = \mu, \quad Var(X) = \sigma^2$
   \end{tightcenter}
@@ -890,10 +896,10 @@
 
   a r.v. $X$ has a \ildefinition{gamma distribution}, $\quad X \sim Gamma(\alpha, \lambda)$ 
 
-  with parameters $(\alpha, \gamma)$, $\lambda > 0$ and $\alpha > 0$ if its pdf is given by 
+  with parameters $(\alpha, \lambda)$, $\lambda > 0$ and $\alpha > 0$ if its pdf is given by 
 
   \begin{tightcenter}
-    $f(x) \begin{cases} \frac{\lambda e^{-\lambda x}(\lambda x)^{\alpha - 1}}{\Gamma(d)} , &x \geq 0 \\ 0, &x < 0 \end{cases} $
+    $f(x) \begin{cases} \frac{\lambda e^{-\lambda x}(\lambda x)^{\alpha - 1}}{\Gamma(\alpha)} , &x \geq 0 \\ 0, &x < 0 \end{cases} $
 
     $E(X) = \frac{\alpha}{\lambda} \quad Var(X) = \frac{\alpha}{\lambda^2}$
   \end{tightcenter}
