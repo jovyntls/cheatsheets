@@ -1191,6 +1191,113 @@
   \end{itemize}
 
 
+  \section{09. GREEDY ALGORTIHMS}
+
+  \begin{itemize}
+    \item solve only one subproblem at each step
+    \item beats DP and divide-and-conquer when it works
+      \item \definition{greedy-choice property} a locally optimal choice is globally optimal
+  \end{itemize}
+  
+  \subsection{Examples}
+
+  \subsubsection{Fractional Knapsack}
+
+  \begin{itemize}
+    \item $O(n \log n)$
+    \item \textbf{greedy-choice property}: let $j^*$ be the item with \textit{maximum} value/kg, $v_j/w_i$. Then there exists an optimal knapsack containing $\min(w_{j^*}, W)$ kg of item $j^*$.
+    \item \textbf{optimal substructure}: if we remove $w$ kg of item $j$ from the optimal knapsack, then the remaining load must be the optimal knapsack weighing at most $W-w$ kgs that one can take from $n-1$ original items and $w_j - w$ kg of item $j$.
+  \end{itemize}
+
+  \begin{niceproof}
+    cut-and-paste argument
+
+    Suppose the remaining load after removing $w$ kgs of item $j$ was \textit{not} the optimal knapsack weighing ...
+
+    Then there is a knapsack of value $> X-v_j \cdot \frac{w}{w_j}$ with weight ...
+
+    Combining this knapsack with $w$ kg of item $j$ gives a knapsack of value $>X$ $\Rightarrow$ contradiction!
+  \end{niceproof}
+
+  \subsubsection{Minimum Spanning Trees}
+
+  for a connected, undirected graph $G = (V, E)$, find a spanning tree $T$ that connects all vertices with minimum weight. Weight of spanning tree $T$, $w(T) = \sum\limits_{(u, v) \in T} w(u, v)$.
+
+  \begin{itemize}
+    \item \textbf{optimal substructure}: let $T$ be a MST. remove any edge $(u, v) \in T$. then $T$ is partitioned into $T_1, T_2$ which are MSTs of  $G_1 = (V_1, E_1)$ and $G_2 = (V_2, E_2)$.
+      \begin{niceproof}
+        cut-and-paste: $w(T) = w(u, v) + w(T_1) + w(T_2)$
+
+        if $w(T_1') < w(T_1)$ for $G_1$, then $T' = \{(u, v)\} \cup T_1' \cup T_2$ would be a lower-weight spanning tree than $T$ for $G$. 
+
+        $\Rightarrow$ contradiction, $T$ is the MST
+      \end{niceproof}
+    \item \textbf{Prim's algorithm} - at each step, add the least-weight edge from the tree to some vertex outside the tree
+    \item \textbf{Kruskal's algorithm} - at each step, add the least-weight edge that does \textit{not} cause a cycle to form
+  \end{itemize}
+
+  \subsection{Binary Coding}
+
+  Given an alphabet set $A: \{ a_1, a_2, \dots, a_n \}$ and a text file $F$ (sequence of alphabets), 
+  how many bits are needed to encode a text file with $m$ characters?
+
+  \begin{itemize}
+    \item \textbf{fixed length encoding}: $m \cdot \lceil \log_2 n \rceil $
+      \begin{itemize}
+        \item encode each alphabet to unique binary string of length $ \lceil \log_2 n \rceil  $
+        \item total bits needed for $m$ characters $= m \cdot \lceil \log_2 n \rceil $
+      \end{itemize}
+    \item \textbf{variable length encoding}
+      \begin{itemize}
+        \item different characters occur with different frequency $\Rightarrow$ use fewer bits for \textit{more frequent} alphabets
+        \item average bit length,  $ABL(\gamma) = \sum\limits_{x \in A} f(x) \cdot \vert \gamma(x) \vert$
+        \item BUT overlapping prefixes cause indistinguishable characters
+      \end{itemize}
+  \end{itemize}
+
+  \subsubsection{Prefix coding}
+
+  \begin{itemize}
+    \item a coding $\gamma(A)$ is a \ildefinition{prefix coding} if $\not\exists x, y \in A$ such that $\gamma(x)$ is a prefix of $\gamma(y)$.
+    \item \textbf{labelled binary tree}: $\gamma(A)$ = label of path from root
+      \includegraphics[width=0.6\linewidth]{cs3230-prefix-coding-binary-tree.png} 
+    \item for each prefix code $A$ of $n$ alphabets, there exists a binary tree $T$ on $n$ leaves such that there is a \textbf{bijective mapping} between the alphabets and the leaves
+    \item $ABL(\gamma) = \sum\limits_{x \in A} f(x) \cdot \vert \gamma(x) \vert = \sum\limits_{x \in A} f(x) \cdot \vert depth_T (x) \vert$
+    \item the binary tree corresponding to an \textit{optimal} prefix coding must be a \textbf{full binary tree}.
+      \begin{itemize}
+        \item every internal node has degree exactly 2
+        \item multiple possible optimal trees - most optimal depends on alphabet frequencies
+      \end{itemize}
+    \item accounting for alphabet \textbf{frequencies}:
+      \begin{itemize}
+        \item let $a_1, a_2, \dots, a_n$ be the alphabets of $A$ in non-decreasing order of thier frequencies.
+        \item $a_1$ must be a leaf node; $a_2$ \textit{can} be a sibling of $a_1$.
+        \item there exists an optimal prefix coding in which $a_1$ and $a_2$ are siblings
+      \end{itemize}
+    \item derivation of optimal prefix coding: \textbf{Huffman's algorithm}
+      \begin{itemize}
+        \item keep merging the two least frequent items
+      \end{itemize}
+  \end{itemize}
+
+  \begin{minipage}[c]{0.65\linewidth}
+    \begin{verbatim}
+
+Huffman(C):
+  Q = new PriorityQueue(C)
+  while Q:
+    allocate a new node z
+    z.left = x = extractMin(Q)
+    z.right = y = extractMin(Q)
+    z.val = x.val + y.val
+    Q.add(z)
+  return extractMin(Q) // root
+    \end{verbatim}
+  \end{minipage}
+  \begin{minipage}[c]{0.32\linewidth}
+    \includegraphics[width=0.95\linewidth]{cs3230-huffman-algo-example.png} 
+  \end{minipage}
+
 
 
 
