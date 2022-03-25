@@ -1281,7 +1281,7 @@
     \\* $E[ g(X) h(Y) ] = E[g(X)] \cdot E[h(Y)] $
   \end{tightcenter}
 
-  \definition{covariance} measure of linear relationship
+  \definition{covariance} measure of \textit{linear relationship}
 
   \begin{tightcenter}
     $Cov (X, Y) = E[ (X-E[X]) (Y - E[Y]) ] $
@@ -1313,7 +1313,79 @@
 
   \textbf{N2} - if $X_1, \dots, X_n$ are \textit{pairwise independent} ($X_i, X_j$ are independent $\forall i \neq j$), then $Var(\sum\limits^n_{i=1} X_i) = \sum\limits^n_{i=1} Var(X_i)$
 
+  \textbf{N3} - for $n$ independent and identically distributed r.v. with expected value $\mu$ and variance  $\sigma^2$, 
+  \begin{tightcenter}
+    $\bar{X} = \frac{1}{n} \sum\limits^n_{i=1} x_i \quad\quad S^2 \frac{1}{n-1} \sum\limits^n_{i=1} (x_i - \bar{x})^2$ 
 
+    $Var (\bar{X}) = \frac{\sigma^2}{n} \quad\quad E(S^2) = \sigma^2 \quad\quad\quad\quad$
+  \end{tightcenter}
+  $\Rightarrow$ $S^2$ is an \textit{unbiased estimator} for $\sigma^2$.
+
+  \subsubsection{Correlation}
+
+  \begin{tightcenter}
+    \ildefinition{correlation} of two r.v. $X$ and $Y$, 
+    $\rho(X, Y) = \frac{Cov(X, Y)}{\sqrt{Var(X) \cdot Var(Y)}}$
+  \end{tightcenter}
+
+  \textbf{N1} - $-1 \leq \rho(X, Y) \leq 1$
+  where  $-1$ and $1$ denote a perfect negative and positive linear relationship respectively.
+
+  \textbf{N2} - $\rho(X, Y) = 0 \Rightarrow$ no \textit{linear} relationship - uncorrelated
+
+  \textbf{N3} - $\rho(X, Y) = 1 \Rightarrow Y = aX + b, a = \frac{\delta y}{\delta x} > 0$
+
+  \textbf{N4} for events $A$ and $B$ with indicator r.v. $I_A$ and $I_B$, then $Cov(I_A, I_B) = 0$ when they are independent events. 
+
+  \textbf{N5} - deviation is not correlated with the sample mean. For independent \& identically distributed r.v. $X_1, X_2, \dots, X_n$ with variance $\sigma^2$, then $Cov(X_i - \bar{X}, \bar{X}) = 0$.
+
+  \begin{niceproof}
+    $Cov(X_i - \bar{X}, \bar{X}) = Cov(X_i, \bar{X}) - Cov(\bar{X}, \bar{X}) $
+    \\* $\quad = Cov(X_i, \frac{1}{n} \sum^n_{j=1} X_j) - Var(\bar{X}) $ 
+    \\* $\quad = \frac{1}{n} \sum^n_{j=1} Cov(X_i, X_j) - Var(\bar{X}) $ 
+    \\* $\quad = \frac{1}{n} Cov(X_i, X_i) - \frac{\sigma^2}{n} \quad$ since $\forall i \neq j, Cov(x_i, x_j) = 0$ 
+    \\* $\quad = \frac{1}{n} Var(x_i) - \frac{\sigma^2}{n} = 0 $
+  \end{niceproof}
+
+  \subsection{Conditional Expectation}
+
+  the \ildefinition{conditional expectation} of $X$, 
+  \\* given that $Y=y$, for all values of  $y$ such that $P_Y(y) > 0$ is defined by
+
+  \begin{tightcenter}
+    $E[X \vert Y=y] = \sum\limits_x x \cdot P(X=x \vert Y=y) = \sum\limits_x x \cdot p_{X \vert Y} (x \vert y)$
+
+    $E(X \vert Y=y) = \int\limits^\infty_{-\infty} f_{X \vert Y}(x \vert y) \dx = \int\limits^\infty_{-\infty} \frac{f(x, y)}{f_Y(y)} \dx$
+
+    \attention note the range for $f_{X \vert Y}(x \vert y)$
+  \end{tightcenter}
+
+  \textbf{N1} - If $X$ and $Y$ are independent geometric r.v. with the same parameter $p$, then $P(X=i \vert X+Y=n) = \frac{1}{n-1}$, a uniform distribution.
+
+  \textbf{N2} - $E(X \vert X+Y=n) = \sum^{n-1}_{i=1} i \cdot P(X=i \vert X+Y=n) = \frac{n}{2}$
+
+  \ 
+
+  Conditional expectations also satisfy properties of ordinary expectations. 
+  \\* $\Rightarrow$ an ordinary expectation on a \textit{reduced sample space} consisting only of outcomes for which $Y=y$
+
+  \begin{tightcenter}
+    discrete case: $E[g(x) \vert Y=y] = \sum\limits_x g(x) P_{X \vert Y} (x \vert y)$
+
+    continuous case: $E[g(x) \vert Y=y] = \int^\infty_{-\infty} g(x) f_{X \vert Y} (x \vert y)$
+
+    then $E(X) = E_{ \text{w.r.t. } y} (E_{ \text{w.r.t. } X \vert Y=y}(X \vert Y)) $
+  \end{tightcenter}
+
+  \subsubsection{Deriving Expectation}
+
+  $E(X) = E(E(X \vert Y))$
+
+  \begin{tightcenter}
+    discrete case: $E(X) = \sum\limits_y E(X \vert Y=y) P(Y=y)$
+
+    continuous case: $E(X) = \int^\infty_{\infty} E(X \vert Y=y)f_Y(y) \dy$
+  \end{tightcenter}
 
 
 
