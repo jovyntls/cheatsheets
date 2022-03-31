@@ -1299,6 +1299,183 @@ Huffman(C):
   \end{minipage}
 
 
+  \section{10. REDUCTIONS \& INTRACTABILITY}
+
+  \subsection{Reduction}
+
+  Consider two problems $A$ and $B$, $A$ can be solved as follows:
+
+  \begin{enumerate}
+    \item convert instance $\alpha$ of $A$ to an instance of $\beta$ in $B$
+    \item solve $\beta$ to obtain a solution
+    \item based on the solution of $\beta$, obtain the solution of $\alpha$.
+    \item $\Rightarrow$ then we say $A$ \textbf{reduces} $B$.
+  \end{enumerate}
+
+  \begin{tightcenter}
+    \includegraphics[width=0.8\linewidth]{cs3230-reduction-AB.png} 
+  \end{tightcenter}
+
+  \definition{instance} another word for input
+
+  \subsubsection{e.g. Matrix Multiplication \& Squaring}
+
+  \begin{itemize}
+    \item \textsc{Mat-Multi}: matrix multiplication
+      \begin{itemize}
+        \item \textit{input}: two $N \times N$ matrices  $A$ and $B$.
+        \item \textit{output}: $A \times B$
+      \end{itemize}
+    \item \textsc{Mat-Sqr}: matrix squaring
+      \begin{itemize}
+        \item \textit{input}: one $N \times N$ matrix $C$.
+        \item \textit{output}: $C \times C$
+      \end{itemize}
+    \item \textsc{Mat-Sqr} can be reduced to \textsc{Mat-Multi}
+      \begin{itemize}
+        \item \textit{Proof}. Given input matrix $C$ for \textsc{Mat-Sqr}, let $A=C$ and  $B=C$ be inputs for \textsc{Mat-Multi}. Then $AB=C^2$.
+      \end{itemize}
+    \item \textsc{Mat-Multi} can also be reduced to \textsc{Mat-Sqr}!
+  \end{itemize}
+
+  \subsubsection{T-Sum}
+
+  \begin{itemize}
+    \item \textsc{0-Sum}: given array $A$, output $i, j \in (1, n)$ such that $A[i] + A[j] = 0$
+    \item \textsc{T-Sum}: given array $B$, output $i, j \in (1, n)$ such that $B[i] + B[j] = T$
+    \item \textbf{reduce \textsc{T-Sum} to \textsc{0-Sum}}:
+      \begin{itemize}
+        \item given array $B$, define array  $A$ such that $A[i] = B[i] - T/2$.
+        \item if $i, j$ satisfy $A[i] + A[j] = 0$, then $B[i] + B[j] = T$.
+      \end{itemize}
+  \end{itemize}
+
+  \subsubsection{$p(n)$-time Reduction}
+
+  \begin{itemize}
+    \item \definition{$p(n)$-time Reduction} if for any instance $\alpha$ of problem $A$ of size $n$, 
+      \begin{itemize}
+        \item an instance $\beta$ for $B$ can be constructed in $p(n)$ time
+        \item a solution to problem $A$ for input $\alpha$ can be recovered from a solution to problem $B$ for input $\beta$ in time $p(n)$.
+      \end{itemize}
+    \item \attention $n$ is in \textbf{bits}!
+  \end{itemize}
+
+  \begin{tightcenter}
+    \includegraphics[width=0.8\linewidth]{cs3230-reduction-pn.png} 
+  \end{tightcenter}
+
+  \begin{itemize}
+    \item  \definition{$A \leq_P B$} if there is a $p(n)$-time reduction from $A$ to $B$ for some polynomial function $p(n) = O(n^c)$ for some constant $c$. ("$A$ is a special case of $B$")
+      \begin{itemize}
+        \item if $B$ has a polynomial time algorithm, then so does $A$
+        \item "polynomial time" $\approx$ reasonably efficient
+      \end{itemize}
+
+  \end{itemize}
+
+  \subsubsection{Polynomial Time}
+
+  \begin{itemize}
+    \item \definition{polynomial time} runtime is polynomial in the \textbf{length of the encoding} of the problem instance
+      \begin{itemize}
+        \item "standard" encodings - binary encoding of integers; list of parameters enclosed in braces (e.g. graphs, matrices)
+      \end{itemize}
+    \item \textsc{Knapsack} is NOT polynomial time: $O(nW \log M)$ but $W$ is not the number of bits
+    \item \textsc{Fractional Knapsack} is polynomial time: $O(n \log n \log W \log M)$
+    \item \definition[algorithm]{pseudo-polynomial} runs in time polynomial in the \textbf{numeric value} if the input but is \textbf{exponential} in the \textbf{length} of the input
+      \begin{itemize}
+        \item e.g. DP algo for \textsc{Knapsack} since $W$ is in numeric value
+      \end{itemize}
+  \end{itemize}
+
+
+  \subsection{Decision Problems}
+
+  \begin{itemize}
+    \item \definition{decision problem} a function that maps an instance space $I$ to the solution set $\{YES, NO\}$
+    \item decision vs optimisation problem:
+      \begin{itemize}
+        \item \textbf{decision problem}: given a directed graph $G$, \textit{is there} a path from vertex $u$ to $v$ of length $\leq k$?
+        \item \textbf{optimisation problem}: given ..., what is the \textit{length} of the shortest path ... ?
+        \item convert from \textbf{decision $\rightarrow$ optimisation}: given an instance of the optimisation problem and a number $k$, is there a solution with value $\leq k$?
+      \end{itemize}
+    \item the decision problem is \textit{no harder than} the optimisation problem.
+      \begin{itemize}
+        \item given the optimal solution, check that it is $\leq k$.
+        \item if we cannot solve the decision problem quickly $\Rightarrow$ then we cannot solve the optimisation problem quickly
+      \end{itemize}
+  \end{itemize}
+
+  \subsection{Reductions between Decision Problems}
+
+  given two decision problems $A$ and $B$, a polynomial-time reduction from $A$ to $B$ denoted $A \leq_P B$ is a \ildefinition{transformation} from instances $\alpha$ of $A$ and $\beta$ of $B$ such that
+  \begin{enumerate}
+    \item $\alpha$ is a \textit{YES}-instance of $A$ $\iff$ $\beta$ is a \textit{YES}-instance of $B$
+    \item the transformation takes polynomial time in the size of $\alpha$
+  \end{enumerate}
+
+  \begin{tightcenter}
+    \includegraphics[width=0.95\linewidth]{cs3230-reductions-decision-problems.png} 
+  \end{tightcenter}
+
+  \subsubsection{Examples}
+
+  \begin{itemize}
+    \item \textsc{Independent-Set}: given a graph $G = (V, E)$ and an integer $k$, is there a subset of $\leq k$ vertices such that no 2 are adjacent?
+    \item \textsc{Vertex-Cover}: given a graph $G = (V, E)$ and an integer $k$, is there a subset of $\leq k$ vertices such that each edge is incident to \textit{at least one} vertex in this subset?
+    \item \textsc{Independent-Set} $\leq_P$ \textsc{Vertex-Cover}
+      \begin{itemize}
+        \item \textit{Reduction}: to check whether $G$ has an independent set of size $k$, we check whether $G$ has vertex cover of size $n-k$.
+      \end{itemize}
+  \end{itemize}
+
+  \begin{niceproof}
+    If \textsc{Independent-Set}, then \textsc{Vertex-Cover}.
+
+    Suppose $(G, k)$ is a \textit{YES}-instance of \textsc{Indep-Set}. Then there is subset $S$ of size $\geq k$ that is an independent set.
+
+    $V-S$ is a vertex cover of size $\leq n-k$. Proof: Let $(u, v) \in E$. Then $u \not\in S$ or $v \not\in S$. 
+
+    So either $u$ or $v$ is in $V-S$, the vertex cover.
+  \end{niceproof}
+  \begin{niceproof}
+    If \textsc{Vertex-Cover}, then \textsc{Independent-Set}.
+
+    Same as above, but flip IS and VC
+  \end{niceproof}
+
+
+  \subsubsection{e.g. \textsc{Set-Cover}}
+
+  Given integers $k$ and $n$, and collection $\mathcal{S}$ of subsets of $\{1, \dots, n\}$, are there $\leq k$ of these subsets whose union equals $\{1, \dots, n\}$?
+
+  Claim: \textbf{\textsc{Vertex-Cover} $\leq_P$ \textsc{Set-Cover}}
+
+  \textit{Reduction}: given $(G, k)$ instance of \textsc{Vertex-Cover}, generate an instance $(n, k', \mathcal{S})$ of \textsc{Set-Cover}.
+
+  \begin{niceproof}
+    For each node $v$ in $G$, construct a set $S_v$ containing all its outgoing edges. (Number each edge)
+    \includegraphics[width=0.95\linewidth]{cs3230-vertex-reduce-to-set-cover.png} 
+  \end{niceproof}
+
+  \subsubsection{e.g. 3-SAT}
+
+  \begin{itemize}
+    \item \textbf{SAT}: given a CNF formula $\Phi$, does it have a satisfying truth assignment?
+      \begin{itemize}
+        \item literal: a boolean variable or its negation $x, \bar{x}$
+        \item clause: a disjunction (OR) of literals
+        \item conjunctive normal form (CNF): formula $\Phi$ that is a conjunction (AND) or clauses
+      \end{itemize}
+      \item \definition{3-SAT} SAT where each clause contains exactly $3$ literals
+    \item \textbf{3-SAT $\leq_P$ \textsc{Independent-Set}}
+      \begin{itemize}
+        \item \textit{Reduction}: Construct an instance $(G, k)$ of \textsc{Indep-Set} s.t. $G$ has an independent set of size $k \iff \Phi$ is satisfiable
+      \end{itemize}
+  \end{itemize}
+
+
 
 
 
