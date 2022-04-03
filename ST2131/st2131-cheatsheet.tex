@@ -133,7 +133,7 @@
   \subsection{Multinomial Coefficients}
 
   \textbf{N6} - $\binom{n}{n_1, n_2, \dots, n_r} = \frac{n!}{n_1!\, n_2!\, \dots \, n_r!}$  
-  represents the number of possible divisions of $n$ distrinct objects 
+  represents the number of possible divisions of $n$ distinct objects 
   into $r$ distinct groups of respective sizes $n_1, n_2, \dots, n_3$, 
   where $n_1 + n_2 + \dots + n_r = n$
   \begin{niceproof}
@@ -204,7 +204,7 @@
   \subsubsection{definition 2: Axioms}
 
   Consider an experiment with sample space $S$. 
-  For each event $E$ of the sample space $S$, we assume that a number $P(E)$ is definned and satisfies the following 3 axioms:
+  For each event $E$ of the sample space $S$, we assume that a number $P(E)$ is defined and satisfies the following 3 axioms:
   \begin{enumerate}
     \item $0 \leq P(E) \leq 1$ 
     \item $P(S) = 1$
@@ -1360,7 +1360,8 @@
     \attention note the range for $f_{X \vert Y}(x \vert y)$
   \end{tightcenter}
 
-  \textbf{N1} - If $X$ and $Y$ are independent geometric r.v. with the same parameter $p$, then $P(X=i \vert X+Y=n) = \frac{1}{n-1}$, a uniform distribution.
+  \textbf{N1} - If $X, Y \sim Geometric(p)$, 
+  \\* then $P(X=i \vert X+Y=n) = \frac{1}{n-1}$, a uniform distribution.
 
   \textbf{N2} - $E(X \vert X+Y=n) = \sum^{n-1}_{i=1} i \cdot P(X=i \vert X+Y=n) = \frac{n}{2}$
 
@@ -1379,14 +1380,52 @@
 
   \subsubsection{Deriving Expectation}
 
-  $E(X) = E(E(X \vert Y))$
+  $E(X) = E_Y(E_X(X \vert Y))$
 
   \begin{tightcenter}
     discrete case: $E(X) = \sum\limits_y E(X \vert Y=y) P(Y=y)$
 
-    continuous case: $E(X) = \int^\infty_{\infty} E(X \vert Y=y)f_Y(y) \dy$
+    continuous case: $E(X) = \int^\infty_{-\infty} E(X \vert Y=y)f_Y(y) \dy$
   \end{tightcenter}
 
+  \textbf{N3} - 3 methods for finding $E(X)$ given $f(x, y)$
+  \begin{enumerate}
+    \item using $E(g(x, y)) = \int^\infty_{-\infty} \int^\infty_{-\infty} g(x, y) f(x, y) \dx \dy$ $\quad \Rightarrow$ let $g(x, y) = x$
+    \item using $E(X) = \int^\infty_{-\infty} x f_X(x) \dx$
+    \item using $E(X) = \int^\infty_{-\infty} E(X \vert Y=y) f_Y(y) \dy$
+  \end{enumerate}
+
+  \textbf{N4} - $E(\sum\limits^N_{i=1} X_i) = E_N(E(\sum\limits^N_{i=1} X_i \vert N)) = \sum\limits^\infty_{n=0} E(\sum\limits^N_{i=1} X_i \vert N=n) \cdot P(N=n) $
+
+
+  \subsubsection{Computing Probabilities by Conditioning}
+
+  \begin{tightcenter}
+    $P(E) = \sum\limits_y P(E \vert Y=y) P(Y=y)$ if $Y$ is \textit{discrete}
+    $P(E) = \int\limits^\infty_{-\infty} P(E \vert Y=y) f_Y(y) \dy$ if $Y$ is \textit{continuous}
+  \end{tightcenter}
+
+  \begin{niceproof}
+    let $X$ be an indicator r.v. for $E$. $\quad \Rightarrow E(X) = P(E)$
+
+    $E(X | Y=y) = P(X=1 \vert Y=y) = P(E \vert Y=y)$
+  \end{niceproof}
+
+  \textbf{N5} - find $P((X, Y) \in C)$ given $f(x, y)$: see p.57
+  \\* also:  $P(X < Y) = \int P(X < Y \vert Y = y) \cdot f_Y(y)$
+
+  \subsubsection{Conditional Variance}
+
+  \begin{tightcenter}
+    $Var (X \vert Y) = E[ (X - E(X \vert Y))^2 \mid Y ] $
+
+    $Var (X \vert Y) = E(X^2 \vert Y) - [E(X \vert Y)]^2 $
+  \end{tightcenter}
+
+  \textbf{N6} - $Var(X) = E[Var(X \vert Y)] + Var[E(X \vert Y)] $
+
+  \textbf{N7} -  $E(f(Y)) = E(f(Y) \vert Y=t) = E(f(y) \vert Y=t)$
+  \\*  $\quad\quad\quad = E(f(t)) \quad$ if $N(t)$ and $Y$ are independent
 
 
 
