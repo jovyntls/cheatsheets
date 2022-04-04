@@ -1427,6 +1427,53 @@
   \textbf{N7} -  $E(f(Y)) = E(f(Y) \vert Y=t) = E(f(y) \vert Y=t)$
   \\*  $\quad\quad\quad = E(f(t)) \quad$ if $N(t)$ and $Y$ are independent
 
+  \subsection{Moment Generating Functions}
+
+  \begin{tightcenter}
+    \definition[of the r.v. $X$]{moment generating function $M(t)$}
+    \\* $M(t) = E(e^{tX}) \quad$ for all real values of $t$
+  \end{tightcenter}
+
+  \begin{itemize}
+    \item if $X$ is \textit{discrete} with pmf $p(x)$, $\quad M(t) = \sum_x e^{tx} \cdot p(x)$ 
+    \item if $X$ is \textit{continuous} with pdf $f(x)$, $\quad M(t) = \int^\infty_{-\infty} e^{tx} f(x) \dx$
+  \end{itemize}
+
+  $M(t)$ is called the  \textbf{mgf} because \textit{all moments of $X$} can be obtained by successively differentiating $M(t)$ and then evaluating the result at $t=0$. ($M'(0) = E(X), M''(0) = E(X^2)$, etc)
+
+  in general, 
+  \begin{itemize}
+    \item $M'(t) = E(X^n e^{tX}), \quad n \geq 1$ 
+    \item $M^n(0) = E(X^n), \quad n \geq 1$
+  \end{itemize}
+
+  \textbf{N8} - binomial expansion: $(a+b)^n = \sum\limits^n_{i=0} \binom{n}{i} a^i b^{n-i}$
+  \\* (see other series for useful expansions on other distributions)
+
+  \textbf{N9} - integrating over a pdf from $\infty$ to $-\infty$ always gives 1 
+
+  \ 
+  \\ if $X$ and $Y$ are independent and have mgf's $M_X(t)$ and $M_Y(t)$ respectively, 
+
+  \textbf{N10} - the mgf of $X+Y$ is $M_{X+Y}(t) = M_X(t) \cdot M_Y(t)$
+
+  \begin{niceproof}
+    $M_{X+Y}(t) = E [e^{t(X+Y)}] = E[e^{tX} \cdot e^{tY}] = E(e^{tX}) E(e^{tY})$
+    $= M_X(t) \cdot M_Y(t)$
+  \end{niceproof}
+
+  \textbf{N11} - if $M_X(t)$ exists and is finite in some region about $t=0$, then the distribution of $X$ is \textbf{uniquely} determined.
+  $M_X(t) = M_Y(t) \iff X=Y$
+
+  \subsubsection{Common mgf's}
+
+  \begin{itemize}
+    \item $X \sim Normal(0, 1), \quad M(t) = e^{e^2/2}$
+    \item $X \sim Binomial(n, p), \quad M(t) = (pe^t + (1-p))^n$
+    \item $X \sim Poisson (\lambda), \quad M(t) \exp [ \lambda (e^t - 1) ] $
+    \item $X \sim Exp(\lambda), \quad M(t) = \frac{\lambda}{\lambda - t}$
+  \end{itemize}
+
 
 
 
