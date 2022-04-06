@@ -1187,334 +1187,344 @@
     \item $g_1(x_1, x_2)$ and $g_2(x_1, x_2)$ have continuous partial derivatives at all points $(x_1, x_2)$ 
       such that $J(x_1, x_2) = \left\vert \begin{smallmatrix} \frac{\delta g_1}{\delta x_1} & \frac{\delta g_1}{\delta x_2}
       \\ \frac{\delta g_2}{\delta x_1} & \frac{\delta g_2}{\delta x_2} \end{smallmatrix} \right\vert = \frac{\delta g_1}{\delta x_1} \cdot \frac{\delta g_2}{\delta x_2} - \frac{\delta g_2}{\delta x_1} \cdot \frac{\delta g_1}{\delta x_2} \neq 0 $
-  \end{enumerate}
+    \end{enumerate}
 
-  then 
-  \begin{tightcenter}
-    $f_{Y_1, Y_2} (y_1, y_2) = f_{X_1, X_2} (x_1, x_2) \frac{1}{\abs{J(x_1, x_2)}} $
+    then 
+    \begin{tightcenter}
+      $f_{Y_1, Y_2} (y_1, y_2) = f_{X_1, X_2} (x_1, x_2) \frac{1}{\abs{J(x_1, x_2)}} $
 
-    where $x_1 = h_1(y_1, y_2), x_2 = h_2(y_1, y_2)$
-  \end{tightcenter}
+      where $x_1 = h_1(y_1, y_2), x_2 = h_2(y_1, y_2)$
+    \end{tightcenter}
 
 
-  \section{07. PROPERTIES OF EXPECTATION}
+    \section{07. PROPERTIES OF EXPECTATION}
 
-  recap:
+    recap:
 
-  \begin{itemize}
-    \item for a \textbf{discrete} r.v. $X$, $E(X) = \sum_x x \cdot p(x) = \sum_x \cdot P(X = x)$
-    \item for a \textbf{continuous} r.v. $X$, $E(X) = \int^\infty_{-\infty} x \cdot f(x) \dx$
-    \item for a \textbf{non-negative integer-valued} r.v. $Y$, $E(Y) = \sum^\infty_{i=1} P(Y \geq i)$
-    \item for a \textbf{non-negative} r.v. $Y$, $E(Y) = \int^\infty_{-\infty} P(Y > y)\dy$
-  \end{itemize}
+    \begin{itemize}
+      \item for a \textbf{discrete} r.v. $X$, $E(X) = \sum_x x \cdot p(x) = \sum_x \cdot P(X = x)$
+      \item for a \textbf{continuous} r.v. $X$, $E(X) = \int^\infty_{-\infty} x \cdot f(x) \dx$
+      \item for a \textbf{non-negative integer-valued} r.v. $Y$, $E(Y) = \sum^\infty_{i=1} P(Y \geq i)$
+      \item for a \textbf{non-negative} r.v. $Y$, $E(Y) = \int^\infty_{-\infty} P(Y > y)\dy$
+    \end{itemize}
 
-  \subsection{Expectations of Sums of Random Variables}
+    \subsection{Expectations of Sums of Random Variables}
 
-  \begin{center}
-    for $X$ and $Y$ with joint pmf $p(x, y)$ and joint pdf  $f(x, y)$, 
+    \begin{center}
+      for $X$ and $Y$ with joint pmf $p(x, y)$ and joint pdf  $f(x, y)$, 
 
-    $E[g(x, y)] = \sum\limits_y \sum\limits_x g(x, y) p(x, y)$
+      $E[g(x, y)] = \sum\limits_y \sum\limits_x g(x, y) p(x, y)$
 
-    $ E[g(x, y)] = \int^\infty_{-\infty} \int^\infty_{-\infty} g(x, y) f(x, y) \dx \dy $
-  \end{center}
+      $ E[g(x, y)] = \int^\infty_{-\infty} \int^\infty_{-\infty} g(x, y) f(x, y) \dx \dy $
+    \end{center}
 
-  \textbf{N2} - if $P(a \leq X \leq b) = 1$, then $a \leq E(X) \leq b$
+    \textbf{N2} - if $P(a \leq X \leq b) = 1$, then $a \leq E(X) \leq b$
 
-  \textbf{N3} - if $E(X)$ and $E(Y)$ are finite, $E(X+Y) = E(X) + E(Y)$
+    \textbf{N3} - if $E(X)$ and $E(Y)$ are finite, $E(X+Y) = E(X) + E(Y)$
 
-  \begin{niceproof}
-    using N1, integrate $\int^\infty_{-\infty} \int^\infty_{-\infty} (x+y) f(x, y) \dx \dy$
-    $\quad = \int^\infty_{-\infty} x \cdot f_X (x) \dx + \int^\infty_{-\infty} y f_Y(y) \dy = E(X) + E(Y)$
-  \end{niceproof}
+    \begin{niceproof}
+      using N1, integrate $\int^\infty_{-\infty} \int^\infty_{-\infty} (x+y) f(x, y) \dx \dy$
+      $\quad = \int^\infty_{-\infty} x \cdot f_X (x) \dx + \int^\infty_{-\infty} y f_Y(y) \dy = E(X) + E(Y)$
+    \end{niceproof}
 
-  \textbf{N4} - if, for r.v.s $X$ and $Y$, if $X \geq Y$, then $E(X) \geq E(Y)$
+    \textbf{N4} - if, for r.v.s $X$ and $Y$, if $X \geq Y$, then $E(X) \geq E(Y)$
 
-  \textbf{N5} - let $X_1, \dots, X_n$ be independent and identically distributed r.v.s having distribution $P(X_i \leq x) = F(x)$ and expected value $E(X_i) = \mu$. 
-  \begin{tightcenter}
-    if $\bar{X} = \sum\limits^n_{i=1} \frac{X_i}{n}$, then $E(\bar{X}) = \mu$
-  \end{tightcenter}
+    \textbf{N5} - let $X_1, \dots, X_n$ be independent and identically distributed r.v.s having distribution $P(X_i \leq x) = F(x)$ and expected value $E(X_i) = \mu$. 
+    \begin{tightcenter}
+      if $\bar{X} = \sum\limits^n_{i=1} \frac{X_i}{n}$, then $E(\bar{X}) = \mu$
+    \end{tightcenter}
 
-  \begin{niceproof}
-    $E(\bar{X}) = E (\sum\limits^n_{i=1} \frac{X_i}{n}) = \frac{1}{n} (\sum\limits^n_{i=1} E(X_i)) = \frac{1}{n} \cdot n\mu = \mu $
+    \begin{niceproof}
+      $E(\bar{X}) = E (\sum\limits^n_{i=1} \frac{X_i}{n}) = \frac{1}{n} (\sum\limits^n_{i=1} E(X_i)) = \frac{1}{n} \cdot n\mu = \mu $
 
-    $\Rightarrow$ sample mean = population mean
-  \end{niceproof}
+      $\Rightarrow$ sample mean = population mean
+    \end{niceproof}
 
-  \textbf{N6} - $\bar{X}$ is the \ildefinition{sample mean}.
+    \textbf{N6} - $\bar{X}$ is the \ildefinition{sample mean}.
 
-  \textbf{N7} - if $X \sim Binom(n, p)$, then $E(X) = np$.
+    \textbf{N7} - if $X \sim Binom(n, p)$, then $E(X) = np$.
 
-  \begin{niceproof}
-    express $X$ as a sum of Bernoulli r.v. $\Rightarrow$ sum of indicator r.v. = $np$.
-  \end{niceproof}
+    \begin{niceproof}
+      express $X$ as a sum of Bernoulli r.v. $\Rightarrow$ sum of indicator r.v. = $np$.
+    \end{niceproof}
 
-  \subsubsection{examples}
+    \subsubsection{examples}
 
-  \attention trick: express a r.v. as a sum of r.v. with easier to find expectation
+    \attention trick: express a r.v. as a sum of r.v. with easier to find expectation
 
-  \begin{itemize}
-    \item negative binomial = sum of geometric $= k/p$
-    \item hypergeometric with $r$ red balls out of  $N$ balls  with $n$ trials
-      \begin{itemize}
-        \item indicator r.v. $=1$ if the $i$th ball selected is red \item $P(Y_i = 1) = \frac{r}{N} \Rightarrow E(Y_i) = \frac{r}{N} \Rightarrow E(X) = \sum^n_{i=1}Y_i = n\frac{r}{N} $
-      \end{itemize}
-    \item hat throwing problem: expected number of people that select their own hat
-      \begin{itemize}
-        \item P(select your own hat back) = $\frac{1}{N}$ $\Rightarrow E(X) = N \cdot \frac{1}{N} = 1$
-      \end{itemize}
-    \item coupon collector problem: 
-      \begin{itemize}
-        \item let $X$ = number of coupons collected for a complete set
-        \item let $X_i$ = number of \textit{additional} coupons that need to be collected to obtain another distinct type after $i$ distinct types have been collected 
-          \begin{itemize}
-            \item $X_i \sim Geometric(p = \frac{N-i}{N} )$
-          \end{itemize}
-        \item $E(X) = \sum^{N-1}_{i=1} E(X_i) = 1 + \frac{1}{\frac{N-1}{N}} + \frac{1}{\frac{N-2}{N}} + \dots + \frac{1}{\frac{1}{N}}$ 
-          \\* $ \quad = N(\frac{1}{N} + \frac{1}{N-1} + \dots + 1) $
-      \end{itemize}
-  \end{itemize}
+    \begin{itemize}
+      \item negative binomial = sum of geometric $= k/p$
+      \item hypergeometric with $r$ red balls out of  $N$ balls  with $n$ trials
+        \begin{itemize}
+          \item indicator r.v. $=1$ if the $i$th ball selected is red \item $P(Y_i = 1) = \frac{r}{N} \Rightarrow E(Y_i) = \frac{r}{N} \Rightarrow E(X) = \sum^n_{i=1}Y_i = n\frac{r}{N} $
+        \end{itemize}
+      \item hat throwing problem: expected number of people that select their own hat
+        \begin{itemize}
+          \item P(select your own hat back) = $\frac{1}{N}$ $\Rightarrow E(X) = N \cdot \frac{1}{N} = 1$
+        \end{itemize}
+      \item coupon collector problem: 
+        \begin{itemize}
+          \item let $X$ = number of coupons collected for a complete set
+          \item let $X_i$ = number of \textit{additional} coupons that need to be collected to obtain another distinct type after $i$ distinct types have been collected 
+            \begin{itemize}
+              \item $X_i \sim Geometric(p = \frac{N-i}{N} )$
+            \end{itemize}
+          \item $E(X) = \sum^{N-1}_{i=1} E(X_i) = 1 + \frac{1}{\frac{N-1}{N}} + \frac{1}{\frac{N-2}{N}} + \dots + \frac{1}{\frac{1}{N}}$ 
+            \\* $ \quad = N(\frac{1}{N} + \frac{1}{N-1} + \dots + 1) $
+        \end{itemize}
+    \end{itemize}
 
-  \subsection{Covariance, Variance of Sums and Correlations}
+    \subsection{Covariance, Variance of Sums and Correlations}
 
-  \begin{tightcenter}
-    if $X$ and $Y$ are independent, then for any functions $h$ and $g$, 
-    \\* $E[ g(X) h(Y) ] = E[g(X)] \cdot E[h(Y)] $
-  \end{tightcenter}
+    \begin{tightcenter}
+      if $X$ and $Y$ are independent, then for any functions $h$ and $g$, 
+      \\* $E[ g(X) h(Y) ] = E[g(X)] \cdot E[h(Y)] $
+    \end{tightcenter}
 
-  \definition{covariance} measure of \textit{linear relationship}
+    \definition{covariance} measure of \textit{linear relationship}
 
-  \begin{tightcenter}
-    $Cov (X, Y) = E[ (X-E[X]) (Y - E[Y]) ] $
-    \\* $Cov(X, Y) = E(XY) - E(X)E(Y)$
-  \end{tightcenter}
+    \begin{tightcenter}
+      $Cov (X, Y) = E[ (X-E[X]) (Y - E[Y]) ] $
+      \\* $Cov(X, Y) = E(XY) - E(X)E(Y)$
+    \end{tightcenter}
 
-  \textbf{N1} - $X$ and $Y$ are independent $\Rightarrow Cov(X, Y) = 0$
+    \textbf{N1} - $X$ and $Y$ are independent $\Rightarrow Cov(X, Y) = 0$
 
-  \textbf{N2} - $Cov(X, Y) = 0 \not\Rightarrow$ $X$ and $Y$ are independent
+    \textbf{N2} - $Cov(X, Y) = 0 \not\Rightarrow$ $X$ and $Y$ are independent
 
-  \begin{niceproof}
-    let $E(X) = 0, E(XY) = 0 \Rightarrow Cov(X, Y) = 0$, but not independent
+    \begin{niceproof}
+      let $E(X) = 0, E(XY) = 0 \Rightarrow Cov(X, Y) = 0$, but not independent
 
-    e.g. non-linear relationship
-  \end{niceproof}
+      e.g. non-linear relationship
+    \end{niceproof}
 
-  \subsubsection{Covariance properties}
+    \subsubsection{Covariance properties}
 
-  \begin{enumerate}
-    \item $Cov(X, Y) = Cov(Y, X)$ 
-    \item $Cov(X, X) = Var(X)$ 
-    \item $Cov(aX, Y) = aCov(X, Y)$
-    \item $Cov (\sum\limits^n_{i=1} X_i, \sum\limits^m_{j=1} Y_j) = \sum\limits^n_{i=1} \sum\limits^m_{j-1} Cov(X_i, Y_j) $
-  \end{enumerate}
+    \begin{enumerate}
+      \item $Cov(X, Y) = Cov(Y, X)$ 
+      \item $Cov(X, X) = Var(X)$ 
+      \item $Cov(aX, Y) = aCov(X, Y)$
+      \item $Cov (\sum\limits^n_{i=1} X_i, \sum\limits^m_{j=1} Y_j) = \sum\limits^n_{i=1} \sum\limits^m_{j-1} Cov(X_i, Y_j) $
+    \end{enumerate}
 
-  for variance:
+    for variance:
 
-  \textbf{N1} - $Var (\sum\limits^n_{i=1} X_i) - \sum\limits^n_{i=1} Var(X_i) + 2 \mathop{\sum\sum}\limits_{i<j} Cov(X_i, X_j) $
+    \textbf{N1} - $Var (\sum\limits^n_{i=1} X_i) - \sum\limits^n_{i=1} Var(X_i) + 2 \mathop{\sum\sum}\limits_{i<j} Cov(X_i, X_j) $
 
-  \textbf{N2} - if $X_1, \dots, X_n$ are \textit{pairwise independent} ($X_i, X_j$ are independent $\forall i \neq j$), then $Var(\sum\limits^n_{i=1} X_i) = \sum\limits^n_{i=1} Var(X_i)$
+    \textbf{N2} - if $X_1, \dots, X_n$ are \textit{pairwise independent} ($X_i, X_j$ are independent $\forall i \neq j$), then $Var(\sum\limits^n_{i=1} X_i) = \sum\limits^n_{i=1} Var(X_i)$
 
-  \textbf{N3} - for $n$ independent and identically distributed r.v. with expected value $\mu$ and variance  $\sigma^2$, 
-  \begin{tightcenter}
-    $\bar{X} = \frac{1}{n} \sum\limits^n_{i=1} x_i \quad\quad S^2 \frac{1}{n-1} \sum\limits^n_{i=1} (x_i - \bar{x})^2$ 
+    \textbf{N3} - for $n$ independent and identically distributed r.v. with expected value $\mu$ and variance  $\sigma^2$, 
+    \begin{tightcenter}
+      $\bar{X} = \frac{1}{n} \sum\limits^n_{i=1} x_i \quad\quad S^2 \frac{1}{n-1} \sum\limits^n_{i=1} (x_i - \bar{x})^2$ 
 
-    $Var (\bar{X}) = \frac{\sigma^2}{n} \quad\quad E(S^2) = \sigma^2 \quad\quad\quad\quad$
-  \end{tightcenter}
-  $\Rightarrow$ $S^2$ is an \textit{unbiased estimator} for $\sigma^2$.
+      $Var (\bar{X}) = \frac{\sigma^2}{n} \quad\quad E(S^2) = \sigma^2 \quad\quad\quad\quad$
+    \end{tightcenter}
+    $\Rightarrow$ $S^2$ is an \textit{unbiased estimator} for $\sigma^2$.
 
-  \subsubsection{Correlation}
+    \subsubsection{Correlation}
 
-  \begin{tightcenter}
-    \ildefinition{correlation} of two r.v. $X$ and $Y$, 
-    $\rho(X, Y) = \frac{Cov(X, Y)}{\sqrt{Var(X) \cdot Var(Y)}}$
-  \end{tightcenter}
+    \begin{tightcenter}
+      \ildefinition{correlation} of two r.v. $X$ and $Y$, 
+      $\rho(X, Y) = \frac{Cov(X, Y)}{\sqrt{Var(X) \cdot Var(Y)}}$
+    \end{tightcenter}
 
-  \textbf{N1} - $-1 \leq \rho(X, Y) \leq 1$
-  where  $-1$ and $1$ denote a perfect negative and positive linear relationship respectively.
+    \textbf{N1} - $-1 \leq \rho(X, Y) \leq 1$
+    where  $-1$ and $1$ denote a perfect negative and positive linear relationship respectively.
 
-  \textbf{N2} - $\rho(X, Y) = 0 \Rightarrow$ no \textit{linear} relationship - uncorrelated
+    \textbf{N2} - $\rho(X, Y) = 0 \Rightarrow$ no \textit{linear} relationship - uncorrelated
 
-  \textbf{N3} - $\rho(X, Y) = 1 \Rightarrow Y = aX + b, a = \frac{\delta y}{\delta x} > 0$
+    \textbf{N3} - $\rho(X, Y) = 1 \Rightarrow Y = aX + b, a = \frac{\delta y}{\delta x} > 0$
 
-  \textbf{N4} for events $A$ and $B$ with indicator r.v. $I_A$ and $I_B$, then $Cov(I_A, I_B) = 0$ when they are independent events. 
+    \textbf{N4} for events $A$ and $B$ with indicator r.v. $I_A$ and $I_B$, then $Cov(I_A, I_B) = 0$ when they are independent events. 
 
-  \textbf{N5} - deviation is not correlated with the sample mean. For independent \& identically distributed r.v. $X_1, X_2, \dots, X_n$ with variance $\sigma^2$, then $Cov(X_i - \bar{X}, \bar{X}) = 0$.
+    \textbf{N5} - deviation is not correlated with the sample mean. For independent \& identically distributed r.v. $X_1, X_2, \dots, X_n$ with variance $\sigma^2$, then $Cov(X_i - \bar{X}, \bar{X}) = 0$.
 
-  \begin{niceproof}
-    $Cov(X_i - \bar{X}, \bar{X}) = Cov(X_i, \bar{X}) - Cov(\bar{X}, \bar{X}) $
-    \\* $\quad = Cov(X_i, \frac{1}{n} \sum^n_{j=1} X_j) - Var(\bar{X}) $ 
-    \\* $\quad = \frac{1}{n} \sum^n_{j=1} Cov(X_i, X_j) - Var(\bar{X}) $ 
-    \\* $\quad = \frac{1}{n} Cov(X_i, X_i) - \frac{\sigma^2}{n} \quad$ since $\forall i \neq j, Cov(x_i, x_j) = 0$ 
-    \\* $\quad = \frac{1}{n} Var(x_i) - \frac{\sigma^2}{n} = 0 $
-  \end{niceproof}
+    \begin{niceproof}
+      $Cov(X_i - \bar{X}, \bar{X}) = Cov(X_i, \bar{X}) - Cov(\bar{X}, \bar{X}) $
+      \\* $\quad = Cov(X_i, \frac{1}{n} \sum^n_{j=1} X_j) - Var(\bar{X}) $ 
+      \\* $\quad = \frac{1}{n} \sum^n_{j=1} Cov(X_i, X_j) - Var(\bar{X}) $ 
+      \\* $\quad = \frac{1}{n} Cov(X_i, X_i) - \frac{\sigma^2}{n} \quad$ since $\forall i \neq j, Cov(x_i, x_j) = 0$ 
+      \\* $\quad = \frac{1}{n} Var(x_i) - \frac{\sigma^2}{n} = 0 $
+    \end{niceproof}
 
-  \subsection{Conditional Expectation}
+    \subsection{Conditional Expectation}
 
-  the \ildefinition{conditional expectation} of $X$, 
-  \\* given that $Y=y$, for all values of  $y$ such that $P_Y(y) > 0$ is defined by
+    the \ildefinition{conditional expectation} of $X$, 
+    \\* given that $Y=y$, for all values of  $y$ such that $P_Y(y) > 0$ is defined by
 
-  \begin{tightcenter}
-    $E[X \vert Y=y] = \sum\limits_x x \cdot P(X=x \vert Y=y) = \sum\limits_x x \cdot p_{X \vert Y} (x \vert y)$
+    \begin{tightcenter}
+      $E[X \vert Y=y] = \sum\limits_x x \cdot P(X=x \vert Y=y) = \sum\limits_x x \cdot p_{X \vert Y} (x \vert y)$
 
-    $E(X \vert Y=y) = \int\limits^\infty_{-\infty} f_{X \vert Y}(x \vert y) \dx = \int\limits^\infty_{-\infty} \frac{f(x, y)}{f_Y(y)} \dx$
+      $E(X \vert Y=y) = \int\limits^\infty_{-\infty} f_{X \vert Y}(x \vert y) \dx = \int\limits^\infty_{-\infty} \frac{f(x, y)}{f_Y(y)} \dx$
 
-    \attention note the range for $f_{X \vert Y}(x \vert y)$
-  \end{tightcenter}
+      \attention note the range for $f_{X \vert Y}(x \vert y)$
+    \end{tightcenter}
 
-  \textbf{N1} - If $X, Y \sim Geometric(p)$, 
-  \\* then $P(X=i \vert X+Y=n) = \frac{1}{n-1}$, a uniform distribution.
+    \textbf{N1} - If $X, Y \sim Geometric(p)$, 
+    \\* then $P(X=i \vert X+Y=n) = \frac{1}{n-1}$, a uniform distribution.
 
-  \textbf{N2} - $E(X \vert X+Y=n) = \sum^{n-1}_{i=1} i \cdot P(X=i \vert X+Y=n) = \frac{n}{2}$
+    \textbf{N2} - $E(X \vert X+Y=n) = \sum^{n-1}_{i=1} i \cdot P(X=i \vert X+Y=n) = \frac{n}{2}$
 
-  \ 
+    \ 
 
-  Conditional expectations also satisfy properties of ordinary expectations. 
-  \\* $\Rightarrow$ an ordinary expectation on a \textit{reduced sample space} consisting only of outcomes for which $Y=y$
+    Conditional expectations also satisfy properties of ordinary expectations. 
+    \\* $\Rightarrow$ an ordinary expectation on a \textit{reduced sample space} consisting only of outcomes for which $Y=y$
 
-  \begin{tightcenter}
-    discrete case: $E[g(x) \vert Y=y] = \sum\limits_x g(x) P_{X \vert Y} (x \vert y)$
+    \begin{tightcenter}
+      discrete case: $E[g(x) \vert Y=y] = \sum\limits_x g(x) P_{X \vert Y} (x \vert y)$
 
-    continuous case: $E[g(x) \vert Y=y] = \int^\infty_{-\infty} g(x) f_{X \vert Y} (x \vert y)$
+      continuous case: $E[g(x) \vert Y=y] = \int^\infty_{-\infty} g(x) f_{X \vert Y} (x \vert y)$
 
-    then $E(X) = E_{ \text{w.r.t. } y} (E_{ \text{w.r.t. } X \vert Y=y}(X \vert Y)) $
-  \end{tightcenter}
+      then $E(X) = E_{ \text{w.r.t. } y} (E_{ \text{w.r.t. } X \vert Y=y}(X \vert Y)) $
+    \end{tightcenter}
 
-  \subsubsection{Deriving Expectation}
+    \subsubsection{Deriving Expectation}
 
-  $E(X) = E_Y(E_X(X \vert Y))$
+    $E(X) = E_Y(E_X(X \vert Y))$
 
-  \begin{tightcenter}
-    discrete case: $E(X) = \sum\limits_y E(X \vert Y=y) P(Y=y)$
+    \begin{tightcenter}
+      discrete case: $E(X) = \sum\limits_y E(X \vert Y=y) P(Y=y)$
 
-    continuous case: $E(X) = \int^\infty_{-\infty} E(X \vert Y=y)f_Y(y) \dy$
-  \end{tightcenter}
+      continuous case: $E(X) = \int^\infty_{-\infty} E(X \vert Y=y)f_Y(y) \dy$
+    \end{tightcenter}
 
-  \textbf{N3} - 3 methods for finding $E(X)$ given $f(x, y)$
-  \begin{enumerate}
-    \item using $E(g(x, y)) = \int^\infty_{-\infty} \int^\infty_{-\infty} g(x, y) f(x, y) \dx \dy$ $\quad \Rightarrow$ let $g(x, y) = x$
-    \item using $E(X) = \int^\infty_{-\infty} x f_X(x) \dx$
-    \item using $E(X) = \int^\infty_{-\infty} E(X \vert Y=y) f_Y(y) \dy$
-  \end{enumerate}
+    \textbf{N3} - 3 methods for finding $E(X)$ given $f(x, y)$
+    \begin{enumerate}
+      \item using $E(g(x, y)) = \int^\infty_{-\infty} \int^\infty_{-\infty} g(x, y) f(x, y) \dx \dy$ $\quad \Rightarrow$ let $g(x, y) = x$
+      \item using $E(X) = \int^\infty_{-\infty} x f_X(x) \dx$
+      \item using $E(X) = \int^\infty_{-\infty} E(X \vert Y=y) f_Y(y) \dy$
+    \end{enumerate}
 
-  \textbf{N4} - $E(\sum\limits^N_{i=1} X_i) = E_N(E(\sum\limits^N_{i=1} X_i \vert N)) = \sum\limits^\infty_{n=0} E(\sum\limits^N_{i=1} X_i \vert N=n) \cdot P(N=n) $
+    \textbf{N4} - $E(\sum\limits^N_{i=1} X_i) = E_N(E(\sum\limits^N_{i=1} X_i \vert N)) = \sum\limits^\infty_{n=0} E(\sum\limits^N_{i=1} X_i \vert N=n) \cdot P(N=n) $
 
 
-  \subsubsection{Computing Probabilities by Conditioning}
+    \subsubsection{Computing Probabilities by Conditioning}
 
-  \begin{tightcenter}
-    $P(E) = \sum\limits_y P(E \vert Y=y) P(Y=y)$ if $Y$ is \textit{discrete}
-    $P(E) = \int\limits^\infty_{-\infty} P(E \vert Y=y) f_Y(y) \dy$ if $Y$ is \textit{continuous}
-  \end{tightcenter}
+    \begin{tightcenter}
+      $P(E) = \sum\limits_y P(E \vert Y=y) P(Y=y)$ if $Y$ is \textit{discrete}
+      $P(E) = \int\limits^\infty_{-\infty} P(E \vert Y=y) f_Y(y) \dy$ if $Y$ is \textit{continuous}
+    \end{tightcenter}
 
-  \begin{niceproof}
-    let $X$ be an indicator r.v. for $E$. $\quad \Rightarrow E(X) = P(E)$
+    \begin{niceproof}
+      let $X$ be an indicator r.v. for $E$. $\quad \Rightarrow E(X) = P(E)$
 
-    $E(X | Y=y) = P(X=1 \vert Y=y) = P(E \vert Y=y)$
-  \end{niceproof}
+      $E(X | Y=y) = P(X=1 \vert Y=y) = P(E \vert Y=y)$
+    \end{niceproof}
 
-  \textbf{N5} - find $P((X, Y) \in C)$ given $f(x, y)$: see p.57
-  \\* also:  $P(X < Y) = \int P(X < Y \vert Y = y) \cdot f_Y(y)$
+    \textbf{N5} - find $P((X, Y) \in C)$ given $f(x, y)$: see p.57
+    \\* also:  $P(X < Y) = \int P(X < Y \vert Y = y) \cdot f_Y(y)$
 
-  \subsubsection{Conditional Variance}
+    \subsubsection{Conditional Variance}
 
-  \begin{tightcenter}
-    $Var (X \vert Y) = E[ (X - E(X \vert Y))^2 \mid Y ] $
+    \begin{tightcenter}
+      $Var (X \vert Y) = E[ (X - E(X \vert Y))^2 \mid Y ] $
 
-    $Var (X \vert Y) = E(X^2 \vert Y) - [E(X \vert Y)]^2 $
-  \end{tightcenter}
+      $Var (X \vert Y) = E(X^2 \vert Y) - [E(X \vert Y)]^2 $
+    \end{tightcenter}
 
-  \textbf{N6} - $Var(X) = E[Var(X \vert Y)] + Var[E(X \vert Y)] $
+    \textbf{N6} - $Var(X) = E[Var(X \vert Y)] + Var[E(X \vert Y)] $
 
-  \textbf{N7} -  $E(f(Y)) = E(f(Y) \vert Y=t) = E(f(y) \vert Y=t)$
-  \\*  $\quad\quad\quad = E(f(t)) \quad$ if $N(t)$ and $Y$ are independent
+    \textbf{N7} -  $E(f(Y)) = E(f(Y) \vert Y=t) = E(f(y) \vert Y=t)$
+    \\*  $\quad\quad\quad = E(f(t)) \quad$ if $N(t)$ and $Y$ are independent
 
-  \subsection{Moment Generating Functions}
+    \subsection{Moment Generating Functions}
 
-  \begin{tightcenter}
-    \definition[of the r.v. $X$]{moment generating function $M(t)$}
-    \\* $M(t) = E(e^{tX}) \quad$ for all real values of $t$
-  \end{tightcenter}
+    \begin{tightcenter}
+      \definition[of the r.v. $X$]{moment generating function $M(t)$}
+      \\* $M(t) = E(e^{tX}) \quad$ for all real values of $t$
+    \end{tightcenter}
 
-  \begin{itemize}
-    \item if $X$ is \textit{discrete} with pmf $p(x)$, $\quad M(t) = \sum_x e^{tx} \cdot p(x)$ 
-    \item if $X$ is \textit{continuous} with pdf $f(x)$, $\quad M(t) = \int^\infty_{-\infty} e^{tx} f(x) \dx$
-  \end{itemize}
+    \begin{itemize}
+      \item if $X$ is \textit{discrete} with pmf $p(x)$, $\quad M(t) = \sum_x e^{tx} \cdot p(x)$ 
+      \item if $X$ is \textit{continuous} with pdf $f(x)$, $\quad M(t) = \int^\infty_{-\infty} e^{tx} f(x) \dx$
+    \end{itemize}
 
-  $M(t)$ is called the  \textbf{mgf} because \textit{all moments of $X$} can be obtained by successively differentiating $M(t)$ and then evaluating the result at $t=0$. ($M'(0) = E(X), M''(0) = E(X^2)$, etc)
+    $M(t)$ is called the  \textbf{mgf} because \textit{all moments of $X$} can be obtained by successively differentiating $M(t)$ and then evaluating the result at $t=0$. ($M'(0) = E(X), M''(0) = E(X^2)$, etc)
 
-  in general, 
-  \begin{itemize}
-    \item $M'(t) = E(X^n e^{tX}), \quad n \geq 1$ 
-    \item $M^n(0) = E(X^n), \quad n \geq 1$
-  \end{itemize}
+    in general, 
+    \begin{itemize}
+      \item $M'(t) = E(X^n e^{tX}), \quad n \geq 1$ 
+      \item $M^n(0) = E(X^n), \quad n \geq 1$
+    \end{itemize}
 
-  \textbf{N8} - binomial expansion: $(a+b)^n = \sum\limits^n_{i=0} \binom{n}{i} a^i b^{n-i}$
-  \\* (see other series for useful expansions on other distributions)
+    \textbf{N8} - binomial expansion: $(a+b)^n = \sum\limits^n_{i=0} \binom{n}{i} a^i b^{n-i}$
+    \\* (see other series for useful expansions on other distributions)
 
-  \textbf{N9} - integrating over a pdf from $\infty$ to $-\infty$ always gives 1 
+    \textbf{N9} - integrating over a pdf from $\infty$ to $-\infty$ always gives 1 
 
-  \ 
-  \\ if $X$ and $Y$ are independent and have mgf's $M_X(t)$ and $M_Y(t)$ respectively, 
+    \ 
+    \\ if $X$ and $Y$ are independent and have mgf's $M_X(t)$ and $M_Y(t)$ respectively, 
 
-  \textbf{N10} - the mgf of $X+Y$ is $M_{X+Y}(t) = M_X(t) \cdot M_Y(t)$
+    \textbf{N10} - the mgf of $X+Y$ is $M_{X+Y}(t) = M_X(t) \cdot M_Y(t)$
 
-  \begin{niceproof}
-    $M_{X+Y}(t) = E [e^{t(X+Y)}] = E[e^{tX} \cdot e^{tY}] = E(e^{tX}) E(e^{tY})$
-    $= M_X(t) \cdot M_Y(t)$
-  \end{niceproof}
+    \begin{niceproof}
+      $M_{X+Y}(t) = E [e^{t(X+Y)}] = E[e^{tX} \cdot e^{tY}] = E(e^{tX}) E(e^{tY})$
+      $= M_X(t) \cdot M_Y(t)$
+    \end{niceproof}
 
-  \textbf{N11} - if $M_X(t)$ exists and is finite in some region about $t=0$, then the distribution of $X$ is \textbf{uniquely} determined.
-  $M_X(t) = M_Y(t) \iff X=Y$
+    \textbf{N11} - if $M_X(t)$ exists and is finite in some region about $t=0$, then the distribution of $X$ is \textbf{uniquely} determined.
+    $M_X(t) = M_Y(t) \iff X=Y$
 
-  \subsubsection{Common mgf's}
+    \subsubsection{Common mgf's}
 
-  \begin{itemize}
-    \item $X \sim Normal(0, 1), \quad M(t) = e^{e^2/2}$
-    \item $X \sim Binomial(n, p), \quad M(t) = (pe^t + (1-p))^n$
-    \item $X \sim Poisson (\lambda), \quad M(t) \exp [ \lambda (e^t - 1) ] $
-    \item $X \sim Exp(\lambda), \quad M(t) = \frac{\lambda}{\lambda - t}$
-  \end{itemize}
+    \begin{itemize}
+      \item $X \sim Normal(0, 1), \quad M(t) = e^{e^2/2}$
+      \item $X \sim Binomial(n, p), \quad M(t) = (pe^t + (1-p))^n$
+      \item $X \sim Poisson (\lambda), \quad M(t) \exp [ \lambda (e^t - 1) ] $
+      \item $X \sim Exp(\lambda), \quad M(t) = \frac{\lambda}{\lambda - t}$
+    \end{itemize}
 
 
+    \section{08. LIMIT THEOREMS}
 
+    \definition{Markov's Inequality} if $X$ is a non-negative r.v., for any $a > 0$, $P(X \geq a) \leq \frac{E(x)}{a}$.
 
+    \begin{niceproof}
+      let $I$ be an indicator r.v. $=1$ when $X \geq a$. 
 
+      Then $I \leq \frac{X}{a}$, and $E(I) \leq \frac{E(X)}{a}$, and $P(X \geq a) \leq \frac{E(X)}{a}$.
+    \end{niceproof}
 
+    \definition{Chebyshev's inequality} if $X$ is an r.v. with finite mean $\mu$ and variance $\sigma^2$, then for any value of  $k>0$, 
+    $P(\vert X - \mu \vert \geq k) \leq \frac{\sigma^2}{k^2}$.
 
+    \begin{niceproof}
+      $P [ (X - \mu)^2 \geq k^2 ] \leq \frac{E[(X - \mu)^2]}{k^2} $ by Markov's inequality
 
+      Since $(X - \mu)^2 \geq k^2 \iff \vert X-\mu \vert \geq k$, then $P(\vert X - \mu\vert \geq k) \leq \frac{\sigma^2}{k^2}$
+    \end{niceproof}
 
+    \textbf{N1} - if $Var(X) = 0$, then $P(X = E[X]) = 1$
 
+    \begin{niceproof}
+      let $\mu = E[X]$. by Chebyshev's inequality, for any $n \geq 1$, $P (\vert X - \mu \vert > \frac{1}{n}) \leq \frac{Var(X)}{(\frac{1}{n})^2} = 0 $
 
+      then $P(X \neq \mu) = 0 \Rightarrow P(X = \mu) = 1$
+    \end{niceproof}
 
+    \definition{weak law of large numbers}
+    let $X_1, X_2, \dots$ be a sequence of independent and identically distributed r.v.s, each with finite mean  $E[X_i] = \mu$. 
+    Then, for any $\epsilon > 0$, 
+    $P \{ \vert \frac{X_1 + \dots + X_n}{n} - \mu \vert \geq \epsilon \} \to 0 $ as $n \to \infty$
 
+    \definition{central limit theorem}
+    let $X_1, X_2, \dots$ be a sequence of independent and identically distributed r.v.s each having mean $\mu$ and variance $\sigma^2$. 
+    Then the distribution of $\frac{X_1 + \dots + X_n - n\mu}{\sigma \sqrt{n}}$ tends to the standard normal as $n \to \infty$.
 
+    \begin{itemize}
+      \item aka: $\frac{\bar{x} - \mu}{\sigma/\sqrt{n}} \to z \sim N(0, 1)$
+      \item for $-\infty < a < \infty$, 
+        \\* $P (\frac{X_1 + \dots + X_n - n\mu}{\sigma \sqrt{n}} \leq a) \to \frac{1}{\sqrt{2\pi}} \int^a_{-\infty} e^{-x^2/2} \dx = F(a) $ (cdf of standard normal) as $n \to \infty$
+    \end{itemize}
 
+    \textbf{N2} - Let $Z_1, Z_2, \dots$ be a sequence of r.v.s with distribution functions $F_{Z_n}$ and moment generating functions $M_{Z_n}, n \geq 1$.
+    Let $Z$ be a r.v. with distribution function $F_Z$ and mgf $M_Z$. 
+    \\* If $M_{Z_n} (t) \to M_Z(t)$ for all $t$, then $F_{Z_n}(t) \to F_Z(t)$ for all $t$ at which $F_Z(t)$ is continuous.
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    \definition{strong law of large numbers}
+    let $X_1, X_2, \dots$ be a sequence of independent and identically distribution r.v.s, each having finite mean $\mu = E[X_i]$. 
+    \\* Then, with probability  $1$, 
+    $\frac{X_1 + \dots + X_n}{n} \to \mu$ as $n \to \infty$
 
 \end{multicols*}
 
