@@ -601,17 +601,17 @@
     \item \textit{smallest enclosing circle:} given $n$ points in a plane, compute the smallest radius circle that encloses all $n$ points
       \begin{itemize}
         \item best \textbf{deterministic} algorithm: $O(n)$, but complex
-        \item las vegas: average $O(n) $, simple solution
+        \item Las Vegas: average $O(n) $, simple solution
       \end{itemize}
     \item \textit{minimum cut:} given a connected graph $G$ with $n$ vertices and $m$ edges, compute the smallest set of edges whose removal would disconnect $G$.
       \begin{itemize}
         \item best \textbf{deterministic} algorithm: $O(mn)$
-        \item \textbf{monte carlo}: $O(m \log n) $, error probability $n^{-c}$ for any $c$
+        \item \textbf{Monte Carlo}: $O(m \log n) $, error probability $n^{-c}$ for any $c$
       \end{itemize}
     \item \textit{primality testing:} determine if an $n$ bit integer is prime
       \begin{itemize}
         \item best \textbf{deterministic} algorithm: $O(n^6)$
-        \item \textbf{monte carlo}: $O(kn^2)$, error probability $2^{-k}$ for any $k$
+        \item \textbf{Monte Carlo}: $O(kn^2)$, error probability $2^{-k}$ for any $k$
       \end{itemize}
   \end{itemize}
 
@@ -865,7 +865,7 @@
   \begin{itemize}
     \item when number of inserted items, $N$ is not known 
       \begin{itemize}
-        \item \textbf{reshashing} - choose a new hash function of a larger size and re-hash all elements
+        \item \textbf{rehashing} - choose a new hash function of a larger size and re-hash all elements
         \item costly but infrequent $\Rightarrow$ amortize
       \end{itemize}
   \end{itemize}
@@ -1191,14 +1191,14 @@
   \end{itemize}
 
 
-  \section{09. GREEDY ALGORTIHMS}
+  \section{09. GREEDY ALGORITHMS}
 
   \begin{itemize}
     \item solve only one subproblem at each step
     \item beats DP and divide-and-conquer when it works
-      \item \definition{greedy-choice property} a locally optimal choice is globally optimal
+    \item \definition{greedy-choice property} a locally optimal choice is globally optimal
   \end{itemize}
-  
+
   \subsection{Examples}
 
   \subsubsection{Fractional Knapsack}
@@ -1270,7 +1270,7 @@
       \end{itemize}
     \item accounting for alphabet \textbf{frequencies}:
       \begin{itemize}
-        \item let $a_1, a_2, \dots, a_n$ be the alphabets of $A$ in non-decreasing order of thier frequencies.
+        \item let $a_1, a_2, \dots, a_n$ be the alphabets of $A$ in non-decreasing order of their frequencies.
         \item $a_1$ must be a leaf node; $a_2$ \textit{can} be a sibling of $a_1$.
         \item there exists an optimal prefix coding in which $a_1$ and $a_2$ are siblings
       \end{itemize}
@@ -1468,35 +1468,71 @@ Huffman(C):
         \item clause: a disjunction (OR) of literals
         \item conjunctive normal form (CNF): formula $\Phi$ that is a conjunction (AND) or clauses
       \end{itemize}
-      \item \definition{3-SAT} SAT where each clause contains exactly $3$ literals
+    \item \definition{3-SAT} SAT where each clause contains exactly $3$ literals
     \item \textbf{3-SAT $\leq_P$ \textsc{Independent-Set}}
       \begin{itemize}
         \item \textit{Reduction}: Construct an instance $(G, k)$ of \textsc{Indep-Set} s.t. $G$ has an independent set of size $k \iff \Phi$ is satisfiable
+          \begin{itemize}
+            \item node: each literal term
+            \item edge: connect 3 literals in a clause in a triangle
+            \item edge: connect literal to all its negations
+            \item reduction runs in polynomial time
+          \end{itemize}
+        \item $\Rightarrow$ for $k$ clauses, connecting $k$ vertices form an independent set in $G$. 
+      \end{itemize}
+      \includegraphics[width=0.95\linewidth]{cs3230-3sat-indepset-reduction.png} 
+  \end{itemize}
+
+  \section{11. NP-COMPLETENESS}
+
+  \begin{itemize}
+    \item \definition{P} the class of problems solvable in (deterministic) polynomial time
+    \item \definition{NP} the class of problems for which polynomial-time verifiable \textbf{certificates} of YES-instances exist.
+      \begin{itemize}
+        \item aka \textit{non-deterministic polynomial}
+        \item i.e. no poly-time algo, but verification can be poly-time
+        \item \definition{certificate} result that can be checked in poly-time to verify correctness
+      \end{itemize}
+    \item $P \subseteq NP$: any problem in \textbf{P} is in \textbf{NP}.
+      \begin{itemize}
+        \item if $P=NP$, then all these algos can be solved in poly time
       \end{itemize}
   \end{itemize}
 
+  \includegraphics[width=0.95\linewidth]{cs3230-p-np.png} 
 
+  \subsection{NP-Hard and NP-Complete}
 
+  \begin{itemize}
+    \item a problem $A$ is said to be \ildefinition{NP-Hard} if for \textit{every} problem $B \in NP$, $B \leq_P A$.
+      \begin{itemize}
+        \item aka $A$ is at least as hard as every problem in \textbf{NP}.
+      \end{itemize}
+    \item a problem $A$ is said to be \ildefinition{NP-Complete} if it is in \textbf{NP} and is also \textbf{NP-Hard}
+      \begin{itemize}
+        \item aka the hardest problems in NP.
+      \end{itemize}
+    \item \definition{Cook-Levin Theorem} every problem in NP-Hard can be poly-time \textit{reduced} to 3-SAT. Hence, \textbf{3-SAT is NP-Hard and NP-Complete}.
+    \item NP-Complete problems can still be approximated in poly-time! (e.g. greedy algorithm gives a 2-approximation for \textsc{Vertex-Cover})
+  \end{itemize}
 
+  \subsection{showing NP-Completeness}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+  \begin{enumerate}
+    \item show that $X$ is in NP. $\Rightarrow$ a YES-instance has a certificate that can be verified in polynomial time
+    \item show that $X$ is NP-hard
+      \begin{itemize}
+        \item by giving a poly-time reduction from another NP-hard problem $A$ to $X$.
+          $\quad \Rightarrow$ $X$ is at least as hard as $A$
+        \item reduction should \textit{not} depend on whether the instance of $A$ is a YES- or NO-instance
+      \end{itemize}
+    \item show that the reduction is valid
+      \begin{enumerate}
+        \item reduction runs in poly time
+        \item if the instance of $A$ is a YES-instance, then the instance of $X$ is also a YES-instance
+        \item if the instance of $A$ is a NO-instance, then the instance of $X$ is also a NO-instance
+      \end{enumerate}
+  \end{enumerate}
 
 
 \end{multicols*}
