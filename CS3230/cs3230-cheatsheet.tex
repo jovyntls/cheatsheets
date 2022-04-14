@@ -125,6 +125,7 @@
     \item each leaf is a class label (decision after \textit{all} comparisons)
     \item \textbf{worst-case} runtime = height of tree
     \item \# of leaves = \# of permutations $\Rightarrow \lg(n!) = \Theta(n \lg n)$ 
+    \item any decision tree that can sort $n$ elements must have height $\Omega (n \lg n)$.
   \end{itemize}
 
   \subsubsection{\texttt{Max} Problem}
@@ -417,7 +418,7 @@
       \begin{itemize}
         \item and $f(n)$ satisfies the \textbf{regularity condition} 
           \begin{itemize}
-            \item $af(n/b) \leq cf(n)$ for some constant $c<1$ and \\* all sufficiently large $n$, 
+            \item $af(n/b) \leq cf(n)$ for some constant $c<1$ and \\* all sufficiently large $n$
             \item this guarantees that the sum of subproblems is smaller than $f(n)$.
           \end{itemize} 
         \item $f(n)$ grows polynomially faster than $n^{\log_ba}$ by $n^\epsilon$ factor
@@ -986,6 +987,7 @@
 
   \begin{itemize}
     \item \definition{amortized analysis} guarantees the \textit{average} performance of each operation in the \textit{worst case}.
+    \item total amortized cost provides an \textit{upper bound} on the total true cost
     \item For a sequence of $n$ operations $o_1, o_2, \dots, o_n$, 
       \begin{itemize}
         \item let $t(i)$ be the time complexity of the $i$-th operation $o_i$
@@ -1050,6 +1052,11 @@
         \item amortized cost for insert: $c_i = t_i + \phi(i) - \phi(i-1) = 1 + 1 = 2$
         \item amortized cost for empty (for $k$ elements): $c_i = t_i + \phi(i) - \phi(i-1) = k + 0 - k = 0 $
       \end{itemize}
+    \item try to keep $c(i)$ small: using $c(i) = t(i) + \Delta \phi_i$
+      \begin{itemize}
+        \item if $t(i)$ is small, we want $\Delta \phi_i$ to be positive and small
+        \item if $t(i)$ is large, we want $\Delta \phi_i$ to be negative and large 
+      \end{itemize}
   \end{itemize}
 
   \subsubsection{e.g. Dynamic Table (insertion only)}
@@ -1079,11 +1086,17 @@
     \includegraphics[width=0.95\linewidth]{st2131-dynamic-table-potential-method.png} 
   \end{tightcenter}
 
+  \begin{itemize}
+    \item show that SUM of amortized cost $\geq$ SUM of actual cost
+    \item conclude that sum of amortized cost is $O(f(n)) \Rightarrow$ sum of actual cost is $O(f(n))$
+  \end{itemize}
+
 
   \section{08. DYNAMIC PROGRAMMING}
 
   \begin{itemize}
     \item \definition{cut-and-paste proof} proof by contradiction - suppose you have an optimal solution. Replacing ("cut") subproblem solutions with this subproblem solution ("paste" in) should improve the solution. If the solution doesn't improve, then it's not optimal (contradiction).
+    \item \textbf{overlapping subproblems} - recursive solution contains a small number of distinct subproblems repeated many times
   \end{itemize}
 
   \subsection{Longest Common Subsequence}
@@ -1148,7 +1161,7 @@
   \end{itemize}
 
   \begin{tightcenter}
-    \includegraphics[width=0.7\linewidth]{cs3230-knapsack-problem.png} 
+    \includegraphics[width=0.5\linewidth]{cs3230-knapsack-problem.png} 
   \end{tightcenter}
 
   \begin{itemize}
@@ -1188,6 +1201,7 @@
         Then, if $j' = d_{i_1} + d_{i_2} + \dots + d_{i_t-1}$, $M[j'] = t-1 $,
         because otherwise if $M[j'] < t-1$, by \textbf{cut-and-paste} argument, $M[j]<t$.
       \end{niceproof}
+    \item runtime: $O(nk)$ for $n$ cents, $k$ denominations
   \end{itemize}
 
 
@@ -1313,7 +1327,7 @@ Huffman(C):
   \end{enumerate}
 
   \begin{tightcenter}
-    \includegraphics[width=0.8\linewidth]{cs3230-reduction-AB.png} 
+    \includegraphics[width=0.7\linewidth]{cs3230-reduction-AB.png} 
   \end{tightcenter}
 
   \definition{instance} another word for input
@@ -1328,14 +1342,17 @@ Huffman(C):
       \end{itemize}
     \item \textsc{Mat-Sqr}: matrix squaring
       \begin{itemize}
-        \item \textit{input}: one $N \times N$ matrix $C$.
-        \item \textit{output}: $C \times C$
+        \item \textit{input}: one $N \times N$ matrix $C$. \textit{output}: $C \times C$
       \end{itemize}
     \item \textsc{Mat-Sqr} can be reduced to \textsc{Mat-Multi}
       \begin{itemize}
         \item \textit{Proof}. Given input matrix $C$ for \textsc{Mat-Sqr}, let $A=C$ and  $B=C$ be inputs for \textsc{Mat-Multi}. Then $AB=C^2$.
       \end{itemize}
     \item \textsc{Mat-Multi} can also be reduced to \textsc{Mat-Sqr}!
+      \begin{itemize}
+        \item \textit{Proof}. let $C = \left[ \begin{smallmatrix} 0 & A \\ B & 0 \end{smallmatrix} \right]$
+          $\Rightarrow C^2 = \left[\begin{smallmatrix} 0 & A \\ B & 0 \end{smallmatrix}\right] \left[\begin{smallmatrix} 0 & A \\ B & 0 \end{smallmatrix}\right] = \left[ \begin{smallmatrix} AB & 0 \\ 0 & BA \end{smallmatrix} \right] $
+      \end{itemize}
   \end{itemize}
 
   \subsubsection{T-Sum}
@@ -1345,7 +1362,7 @@ Huffman(C):
     \item \textsc{T-Sum}: given array $B$, output $i, j \in (1, n)$ such that $B[i] + B[j] = T$
     \item \textbf{reduce \textsc{T-Sum} to \textsc{0-Sum}}:
       \begin{itemize}
-        \item given array $B$, define array  $A$ such that $A[i] = B[i] - T/2$.
+        \item given array $B$, define array  $A$ s.t. $A[i] = B[i] - T/2$.
         \item if $i, j$ satisfy $A[i] + A[j] = 0$, then $B[i] + B[j] = T$.
       \end{itemize}
   \end{itemize}
@@ -1359,6 +1376,7 @@ Huffman(C):
         \item a solution to problem $A$ for input $\alpha$ can be recovered from a solution to problem $B$ for input $\beta$ in time $p(n)$.
       \end{itemize}
     \item \attention $n$ is in \textbf{bits}!
+    \item if there is a $p(n)$-time reduction from problem $A$ to $B$ and a $T(n)$-time algorithm to solve problem $B$, then there is a $T(O(p(n))) + O(p(n))$ time algorithm to solve $A$.
   \end{itemize}
 
   \begin{tightcenter}
@@ -1371,22 +1389,24 @@ Huffman(C):
         \item if $B$ has a polynomial time algorithm, then so does $A$
         \item "polynomial time" $\approx$ reasonably efficient
       \end{itemize}
-
+    \item $A \leq_P B, B \leq_P C \Rightarrow A \leq_P C$
   \end{itemize}
 
   \subsubsection{Polynomial Time}
 
   \begin{itemize}
     \item \definition{polynomial time} runtime is polynomial in the \textbf{length of the encoding} of the problem instance
+    \item \ildefinition{"standard" encodings} 
       \begin{itemize}
-        \item "standard" encodings - binary encoding of integers; list of parameters enclosed in braces (e.g. graphs, matrices)
+        \item binary encoding of integers
+        \item list of parameters enclosed in braces (graphs/matrices)
       \end{itemize}
-    \item \textsc{Knapsack} is NOT polynomial time: $O(nW \log M)$ but $W$ is not the number of bits
-    \item \textsc{Fractional Knapsack} is polynomial time: $O(n \log n \log W \log M)$
     \item \definition[algorithm]{pseudo-polynomial} runs in time polynomial in the \textbf{numeric value} if the input but is \textbf{exponential} in the \textbf{length} of the input
       \begin{itemize}
         \item e.g. DP algo for \textsc{Knapsack} since $W$ is in numeric value
       \end{itemize}
+    \item \textsc{Knapsack} is NOT polynomial time: $O(nW \log M)$ but $W$ is not the number of bits
+    \item \textsc{Fractional Knapsack} is polynomial time: $O(n \log n \log W \log M)$
   \end{itemize}
 
 
@@ -1405,6 +1425,7 @@ Huffman(C):
         \item given the optimal solution, check that it is $\leq k$.
         \item if we cannot solve the decision problem quickly $\Rightarrow$ then we cannot solve the optimisation problem quickly
       \end{itemize}
+    \item decision $\leq_P$ optimisation
   \end{itemize}
 
   \subsection{Reductions between Decision Problems}
@@ -1466,7 +1487,7 @@ Huffman(C):
       \begin{itemize}
         \item literal: a boolean variable or its negation $x, \bar{x}$
         \item clause: a disjunction (OR) of literals
-        \item conjunctive normal form (CNF): formula $\Phi$ that is a conjunction (AND) or clauses
+        \item conjunctive normal form (CNF): formula $\Phi$ that is a conjunction (AND) of clauses
       \end{itemize}
     \item \definition{3-SAT} SAT where each clause contains exactly $3$ literals
     \item \textbf{3-SAT $\leq_P$ \textsc{Independent-Set}}
@@ -1486,8 +1507,8 @@ Huffman(C):
   \section{11. NP-COMPLETENESS}
 
   \begin{itemize}
-    \item \definition{P} the class of problems solvable in (deterministic) polynomial time
-    \item \definition{NP} the class of problems for which polynomial-time verifiable \textbf{certificates} of YES-instances exist.
+    \item \definition{P} the class of \textit{decision} problems solvable in (deterministic) polynomial time
+    \item \definition{NP} the class of \textit{decision} problems for which polynomial-time verifiable \textbf{certificates} of YES-instances exist.
       \begin{itemize}
         \item aka \textit{non-deterministic polynomial}
         \item i.e. no poly-time algo, but verification can be poly-time
@@ -1534,6 +1555,17 @@ Huffman(C):
       \end{enumerate}
   \end{enumerate}
 
+  \begin{tightcenter}
+    \includegraphics[width=0.98\linewidth]{cs3230-show-np-complete.png} 
+  \end{tightcenter}
+
+  \subsection{showing NP-HARD}
+
+  \begin{enumerate}
+    \item take any \textbf{NP-Complete} problem $A$ 
+    \item show that $A \leq_P X$
+  \end{enumerate}
+
 
 \end{multicols*}
 
@@ -1564,6 +1596,9 @@ for any $a, b > 0$, $\quad \log_a n < n^b$
 for two functions $f(m, n)$ and $g(m,n)$, we say that $f(m, n) = O(g(m, n))$ if there exists constants $c, m_0, n _0$ such that $0 \leq f(m,n) \leq c \cdot g(m,n)$ for all $m \geq m_0$ or $n \geq n_0$.
 
 \subsection{set notation}
+
+$O(g(n))$ is actually a \textit{set of functions}. 
+$f(n) = O(g(n))$ means $f(n) \in O(g(n))$
 
 \begin{itemize}
   \item $O(g(n)) = \{f(n): \exists c, n_0>0 \mid \forall n \geq n_0, \, 0 \leq f(n) \leq cg(n)\}$
