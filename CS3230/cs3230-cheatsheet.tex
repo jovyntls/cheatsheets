@@ -89,6 +89,7 @@
   \end{center}
 
   \section{01. COMPUTATIONAL MODELS}
+
   \begin{itemize}
     \item \definition{algorithm} a well-defined procedure for finding the correct solution to the input
     \item \textbf{correctness}
@@ -103,30 +104,50 @@
       \end{itemize}
   \end{itemize}
 
+  \begin{fixedbox}[0.9]
+    \definition{adversary argument} 
+    \\ inputs are decided such that they have different solutions
+  \end{fixedbox}
+
   \subsection{Comparison Model}
+
   \begin{itemize}
     \item algorithm can \textbf{compare} any two elements in one time unit ($x>y$, $x<y$, $x=y$)
-    \item running time = number of comparisons made
+    \item running time = number of pairwise comparisons made
     \item array can be manipulated at no cost
   \end{itemize}
 
-  \subsubsection{Maximum Problem}
+  \subsubsection{Decision Tree}
+
   \begin{itemize}
-    \item \textit{problem}: find the largest element in an array $A$ of $n$ distinct elements
-    \item \textit{proof that $n-1$ comparisons are needed}: 
-      \begin{itemize}
-        \item fix an algorithm $M$ that solves the Maximum problem on all inputs using $< n-1$ comparisons. construct graph $G$ where nodes $i$ and $j$ are adjacent iff $M$ compares $i$ and $j$.
-          \\* \includegraphics[width=0.7\linewidth]{maximum-problem-graph.png} 
-        \item $M$ cannot differentiate $A$ and $A'$.
-      \end{itemize}
-    \item \definition{adversary argument} inputs are decided such that they have different solutions
+    \item each node is a comparison
+    \item each branch is an outcome of the comparison
+    \item each leaf is a class label (decision after \textit{all} comparisons)
+    \item \textbf{worst-case} runtime = height of tree
+    \item \# of leaves = \# of permutations $\Rightarrow \lg(n!) = \Theta(n \lg n)$ 
+    \item any decision tree that can sort $n$ elements must have height $\Omega (n \lg n)$.
   \end{itemize}
 
+  \subsubsection{\texttt{Max} Problem}
+
+  \textit{problem}: find largest element in array $A$ of $n$ distinct elements
+
+  \begin{niceproof}
+    $n-1$ comparisons are needed
+
+    fix an algorithm $M$ that solves the \texttt{Max} problem on all inputs using $< n-1$ comparisons. construct graph $G$ where nodes $i$ and $j$ are adjacent iff $M$ compares $i$ \& $j$.
+    \\* \includegraphics[width=0.9\linewidth]{cs3230-maximum-problem-graph.png} 
+
+    $M$ cannot differentiate $A$ and $A'$.
+  \end{niceproof}
+
   \subsubsection{Second Largest Problem}
+
+  \textit{problem}: find the second largest element in $<2n-3$ comparisons (2x Maximum $\Rightarrow$ $\scriptstyle (n-1) + ((n-1)-1) = 2n-3$ )
+
   \begin{itemize}
-    \item \textit{problem}: find the second largest element in $<2n-3$ comparisons (2x Maximum $\Rightarrow$ $\scriptstyle (n-1) + ((n-1)-1) = 2n-3$ )
     \item \textit{solution}: \textbf{knockout tournament} $\Rightarrow n + \lceil \lg n \rceil - 2$
-      \\* \includegraphics[width=0.6\linewidth]{second-largest-solution.png} 
+      \\* \includegraphics[width=0.8\linewidth]{cs3230-second-largest-solution.png} 
       \begin{enumerate}
         \item bracket system: $n-1$ matches 
           \begin{itemize}
@@ -134,24 +155,27 @@
           \end{itemize}
         \item then compare the elements that have lost to the largest
           \begin{itemize}
-            \item the second-largest element must have lost to the winner
+            \item the 2nd largest element must have lost to the winner
             \item compares $\lceil \lg n \rceil$ elements that have lost to the winner using $\lceil \lg n \rceil -1$ comparisons 
           \end{itemize}
       \end{enumerate}
   \end{itemize}
 
   \subsubsection{Sorting}
-  \begin{itemize}
-    \item there is a sorting algorithm that requires $\leq n \lg n - n + 1$ comparisons.
-    \item \textit{proof:} every sorting algorithm must make $\geq \lg (n!)$ comparisons.
-      \begin{enumerate}
-        \item let set $\mathcal{U}$ be the set of all permutations of the set $\{1, \dots, n\}$ that the adversary could choose as array $A$. $\vert \mathcal{U} \vert = n!$ 
-        \item for each query "is $A_i > A_j$?", 
-          \\* if $\mathcal{U}_{yes} = \{A \in \mathcal{U} : A_i > A_j\}$ is of size $\geq \vert\mathcal{U}\vert /2$, set $\mathcal{U} := \mathcal{U}_{yes}$. else: $\mathcal{U} := \mathcal{U} \backslash \mathcal{U}_{yes}$
-        \item the size of $\mathcal{U}$ decreases by at most half with each comparison
-        \item for $> \lg (n!)$ comparisons, $\mathcal{U}$ will still contain at least 2 permutations
-      \end{enumerate}
-  \end{itemize}
+
+  \textit{Claim.} there is a sorting algorithm that requires $\leq n \lg n - n + 1$ comparisons.
+
+  \begin{niceproof}
+    every sorting algorithm must make $\geq \lg (n!)$ comparisons.
+  \end{niceproof}
+
+  \begin{enumerate}
+    \item let set $\mathcal{U}$ be the set of all permutations of the set $\{1, \dots, n\}$ that the adversary could choose as array $A$. $\vert \mathcal{U} \vert = n!$ 
+    \item for each query "is $A_i > A_j$?", 
+      \\* if $\mathcal{U}_{yes} = \{A \in \mathcal{U} : A_i > A_j\}$ is of size $\geq \vert\mathcal{U}\vert /2$, set $\mathcal{U} := \mathcal{U}_{yes}$. else: $\mathcal{U} := \mathcal{U} \backslash \mathcal{U}_{yes}$
+    \item the size of $\mathcal{U}$ decreases by at most half with each comparison
+    \item with $< \lg (n!)$ comparisons, $\mathcal{U}$ will still contain at least 2 permutations
+  \end{enumerate}
 
   \begin{tightcenter}
     $n! \geq (\frac{n}{e})^n$ 
@@ -161,17 +185,34 @@
   \end{tightcenter}
 
   \subsection{String Model}
+
+  \begin{tightcenter}
+    \begin{tabular}{|c|l|}
+      \hline
+      input & string of $n$ bits \\\hline
+      each query & find out \textbf{one bit} of the string \\ \hline
+    \end{tabular}
+  \end{tightcenter}
+
   \begin{itemize}
-    \item input: string of $n$ bits
-    \item each query: find out \textbf{one bit} of the string
     \item $n$ queries are \textbf{necessary} and \textbf{sufficient} to check if the input string is all 0s.
+    \item \definition{query complexity} number of bits of the input string queried by the algorithm
+    \item \definition{evasive} a problem requiring $n$ query complexity
   \end{itemize}
 
   \subsection{Graph Model}
+
+  \begin{tightcenter}
+    \begin{tabular}{|c|p{0.7\linewidth}|}
+      \hline
+      input & (symmetric) adjacency matrix of an $n$-node undirected graph \\\hline
+      each query & find out if an edge is present between two chosen nodes (one entry of $G$) \\\hline
+    \end{tabular}
+  \end{tightcenter}
+
   \begin{itemize}
-    \item input: (symmetric) adjacency matrix of an $n$-node undirected graph
-    \item each query: find out if an edge is present between two chosen nodes
-    \item \textit{proof}: $\binom{n}{2}$ queries are necessary to decide whether the graph is connected or not
+    \item \definition{evasive} requires $\binom{n}{2}$ queries
+    \item \textit{Proof}. determining whether the graph is connected is evasive (requires $\binom{n}{2}$ queries) 
       \begin{enumerate}
         \item suppose $M$ is an algorithm making $\leq \binom{n}{2}$ queries.
         \item whenever $M$ makes a query, the algorithm tries not adding this edge, but adding all remaining unqueried edges. 
@@ -181,6 +222,7 @@
           \end{enumerate}
         \item after $< \binom{n}{2}$ queries, at least one entry of the adjacency matrix is unqueried.
       \end{enumerate}
+      \qed
   \end{itemize}
 
 
@@ -188,65 +230,58 @@
 
   \begin{itemize}
     \item \definition{algorithm} a \textit{finite} sequence of well-defined instructions to solve a given computational problem
-    \item \definition{runtime} measured in number of instructions taken in \textbf{word-RAM} model
+    \item \definition{word-RAM model} runtime is the total number of instructions executed
       \begin{itemize}
         \item operators, comparisons, if, return, etc
+        \item each instruction operates on a \textit{word} of data (limited size) $\Rightarrow$ fixed constant amount of time
       \end{itemize}
+
   \end{itemize}
 
   \subsection{Asymptotic Notations}
 
   \begin{tightcenter}
-    \textbf{upper bound ($\leq$)}: $f(n) = O(g(n))$ 
-    \\* if $\exists c>0, n_0>0$ such that $\forall n \geq n_0$, $\quad 0 \leq f(n) \leq cg(n)$ 
+    \textbf{upper bound ($\leq$)}: $f(n) = O(g(n))$
+    \\* if $\exists c>0, n_0>0$ such that $\forall n \geq n_0$, 
+    \begin{tightbox}
+      $0 \leq f(n) \leq cg(n)$
+    \end{tightbox}
+
+    \ \\ \textbf{lower bound ($\geq$)}: $f(n) = \Omega(g(n))$
+    \\* if $\exists c>0, n_0>0$ such that $\forall n \geq n_0$, 
+    \begin{tightbox}
+      $0 \leq cg(n) \leq f(n)$
+    \end{tightbox}
+
+    \ \\ \textbf{tight bound}: $f(n) = \Theta(g(n))$
+    \\* if $\exists c_1, c_2, n_0>0$ such that $\forall n \geq n_0,$
+    \begin{tightbox}
+      $0 \leq c_1 g(n) \leq f(n) \leq c_2 g(n)$ 
+    \end{tightbox}
+
+    \ \\ \textbf{$o$-notation ($<$)}: $f(n) = o(g(n))$
+    \\* if $\forall c>0, \exists n_0>0$ such that $\forall n \geq n_0$, 
+    \begin{tightbox}
+      $0 \leq f(n) < cg(n)$
+    \end{tightbox}
+
+    \ \\ \textbf{$\omega$-notation ($>$)}: $f(n) = \omega(g(n))$
+    \\* if $\forall c>0, \exists n_0>0$ such that $\forall n \geq n_0$, 
+    \begin{tightbox}
+      $0 \leq cg(n) < f(n)$
+    \end{tightbox}
   \end{tightcenter}
-
-  \begin{tightcenter}
-    \textbf{lower bound ($\geq$)}: $f(n) = \Omega(g(n))$ 
-    \\* if $\exists c>0, n_0>0$ such that $\forall n \geq n_0$, $\quad 0 \leq cg(n) \leq f(n)$ 
-  \end{tightcenter}
-
-  \begin{tightcenter}
-    \textbf{tight bound}: $f(n) = \Theta(g(n))$ 
-    \\* if $\exists c_1>0, c_2>0, n_0>0$ such that $\forall n \geq n_0, \quad 0 \leq c_1 g(n) \leq f(n) \leq c_2 g(n)$ 
-  \end{tightcenter}
-
-  \begin{tightcenter}
-    \textbf{$o$ notation ($<$)}: $f(n) = o(g(n))$ 
-    \\* if $\forall c>0, \exists n_0>0$ such that $\forall n \geq n_0$, $\quad 0 \leq f(n) < cg(n)$ 
-  \end{tightcenter}
-
-  \begin{tightcenter}
-    \textbf{$\omega$-notation ($>$)}: $f(n) = \omega(g(n))$ 
-    \\* if $\forall c>0, \exists n_0>0$ such that $\forall n \geq n_0$, $\quad 0 \leq cg(n) < f(n)$ 
-  \end{tightcenter}
-
-  \subsubsection{Set definitions}
-
-  \begin{itemize}
-    \item \textit{upper}: $O(g(n)) = $
-      \\* $ \{f(n): \exists c>0, n_0>0 \mid \forall n \geq n_0, \, 0 \leq f(n) \leq cg(n)\}$
-    \item \textit{lower}: $\Omega(g(n)) = $
-      \\* $ \{f(n): \exists c>0, n_0>0 \mid \forall n \geq n_0, \, 0 \leq cg(n) \leq f(n)\}$
-  \end{itemize}
-
-  \begin{niceproof}
-    that $2n^2 = O(n^3)$ 
-    \\* let $f(n) = 2n^2$. then $f(n) = 2n^2 \leq n^3$ when $n \geq 2$. 
-    \\* set  $c=1$ and $n_0 = 2$.
-    \\* we have $f(n) = 2n^2 \leq c \cdot n^3$ for $n \geq n_0$. \qed
-  \end{niceproof}
 
   \subsection{Limits}
 
   Assume $f(n), g(n) > 0$.
-  \begin{center}
-    $\lim\limits_{n \to \infty} \frac{f(n)}{g(n)} = 0 \Rightarrow f(n) = o(g(n))$
-    \\* $\lim\limits_{n \to \infty} \frac{f(n)}{g(n)} < \infty \Rightarrow f(n) = O(g(n))$
-    \\* $0 < \lim\limits_{n \to \infty} \frac{f(n)}{g(n)} < \infty \Rightarrow f(n) = \Theta(g(n))$
-    \\* $\lim\limits_{n \to \infty} \frac{f(n)}{g(n)} > 0 \Rightarrow f(n) = \Omega(g(n))$
-    \\* $\lim\limits_{n \to \infty} \frac{f(n)}{g(n)} = \infty \Rightarrow f(n) = \omega(g(n))$
-  \end{center}
+  \begin{align*}
+    &\lim\limits_{n \to \infty} \frac{f(n)}{g(n)} = 0 &\Rightarrow f(n) = o(g(n)) \\
+    &\lim\limits_{n \to \infty} \frac{f(n)}{g(n)} < \infty &\Rightarrow f(n) = O(g(n)) \\
+    0 < &\lim\limits_{n \to \infty} \frac{f(n)}{g(n)} < \infty &\Rightarrow f(n) = \Theta(g(n)) \\
+        &\lim\limits_{n \to \infty} \frac{f(n)}{g(n)} > 0 &\Rightarrow f(n) = \Omega(g(n)) \\
+        &\lim\limits_{n \to \infty} \frac{f(n)}{g(n)} = \infty &\Rightarrow f(n) = \omega(g(n))
+  \end{align*}
 
   \begin{niceproof}
     using delta epsilon definition
@@ -259,7 +294,7 @@
   \end{fixedbox}
 
   \begin{itemize}
-    \item $\textbf{transitivity}$ - applies for $O, \Theta, \Omega, o, \omega$
+    \item \textbf{transitivity} - applies for $O, \Theta, \Omega, o, \omega$
       $f(n) = O(g(n)) \land g(n) = O(h(n)) \Rightarrow f(n) = O(h(n))$ 
     \item \textbf{reflexivity} - for $O, \Omega, \Theta, \quad f(n) = O(f(n))$ 
     \item \textbf{symmetry} - $f(n) = \Theta(g(n)) \iff g(n) = \Theta(f(n))$
@@ -268,31 +303,53 @@
         \item $f(n) = O(g(n)) \iff g(n) = \Omega(f(n))$
         \item $f(n) = o(g(n)) \iff g(n) = \omega(f(n))$
       \end{itemize}
+    \item \textbf{misc}
+      \begin{itemize}
+        \item if $f(n) = \omega(g(n))$, then $f(n) = \Omega(g(n))$
+        \item if $f(n) = o(g(n))$, then $f(n) = O(g(n))$
+      \end{itemize}
   \end{itemize}
-
-  insertion sort: $O(n^2)$ with worst case $\Theta(n^2)$
 
   \begin{fixedbox}[0.8]
     $\log\log n < \log n < (\log n)^k < n^k < k^n$
   \end{fixedbox}
 
+  insertion sort: $O(n^2)$ with worst case $\Theta(n^2)$
+
   \section{03. ITERATION, RECURSION, DIVIDE-AND-CONQUER}
 
   \subsection{Iterative Algorithms}
 
-  \textbf{loop invariant} implies correctness if 
   \begin{itemize}
-    \item \textit{initialisation} - true before the first iteration
-    \item \textit{maintenance} - if true before an iteration, remains true at the beginning of the next iteration
-    \item \textit{termination} - true at the end
+    \item \definition{iterative} loop(s), sequentially processing input elements
+    \item \textbf{loop invariant} implies correctness if 
+      \begin{itemize}
+        \item \textit{initialisation} - true before the first iteration of the loop
+        \item \textit{maintenance} - if true before an iteration, it remains true at the beginning of the next iteration
+        \item \textit{termination} - true when the algorithm terminates
+      \end{itemize}
   \end{itemize}
+
+  \subsubsection{examples}
+
+  \begin{itemize}
+    \item \textbf{insertionSort}: with loop variable as $j$, $A[1..J-1]$ is sorted.
+    \item \textbf{selectionSort}: with loop variable as $j$, the array $A[1..j-1]$ is sorted and contains the $j-1$ smallest elements of $A$.
+    \item \textbf{Misra-Gries algorithm} (determines which bit occurs more in an $n$-bit array $A$):
+      \begin{itemize}
+        \item if there is an equal number of 0's and 1's, then $id=\bot$ and $count = 0$
+        \item if $z \in \{0, 1\}$ is the majority element, then $id=z$ and $count$ equals the difference between the count of the bits.
+      \end{itemize}
+  \end{itemize}
+
 
   \subsection{Divide-and-Conquer}
 
   \subsubsection{powering a number}
 
+  \textit{problem:} compute $f(n, m) = a^n\Mod{m}$ for all $n, m \in \mathbb{Z}$
+
   \begin{itemize}
-    \item problem: compute $f(n, m) = a^n\Mod{m}$ for all integer $n, m$
     \item observation: $f(x+y, m) = f(x, m) * f(y, m) \Mod{m}$
     \item \textbf{naive solution}: recursively compute and combine $f(n-1, m) * f(1, m) \Mod m$ 
       \begin{itemize}
@@ -312,55 +369,87 @@
   \end{itemize}
 
   \section{Solving Recurrences}
-  for $a$ sub-problems of size $\frac{n}{b}$ where $f(n)$ is the time to divide and combine,
-  \begin{math}
-    T(n) = aT(\frac{n}{b}) + f(n)
-  \end{math}
+
+  for $a$ sub-problems of size $\frac{n}{b}$ where $f(n)$ is the time to divide and combine, 
+  \begin{tightcenter}
+    $T(n) = aT(\frac{n}{b}) + f(n)$
+  \end{tightcenter}
 
   \subsection{Recursion tree}
+
   total = height $\times$ number of leaves
+
+  \begin{itemize}
+    \item each node represents the cost of a single subproblem
+    \item height of the tree = longest path from root to leaf
+  \end{itemize}
+
   \begin{tightcenter}
     \includegraphics[width=0.9\linewidth]{cs3230-recursion-tree-example-1.png} 
     \includegraphics[width=0.6\linewidth]{cs3230-recursion-tree-example-2.png} 
   \end{tightcenter}
 
   \subsection{Master method}
-  $T(n) = aT(\frac{n}{b}) + f(n)$
-  \\ $a \geq 0, b > 1, f$ is asymptotically positive
+
+  $a \geq 1, b > 1,$ and $f$ is asymptotically positive
 
   \begin{math}
-    T(n) = \begin{cases}
+    T(n) = aT(\frac{n}{b}) + f(n) = \begin{cases}
       \Theta(n^{\log_ba}) & \text{ if } f(n) < n^{\log_ba} \text{ polynomially}
       \\ \Theta(n^{\log_ba} \log n) & \text{ if } f(n) = n^{\log_ba} 
       \\ \Theta(f(n)) & \text{ if } f(n) > n^{\log_ba} \text{ polynomially}
     \end{cases}
   \end{math}
 
-  \textbf{harmonic series}: $\sum\limits^\infty_{k=1} \frac{1}{k} \approx \ln k = \Theta (\lg n)$
+  \subsubsection{three common cases}
+
+  \begin{enumerate}
+    \item If $f(n) = O(n^{\log_b a-\epsilon})$ for some constant  $\epsilon > 0$, 
+      \begin{itemize}
+        \item $f(n)$ grows polynomially slower than $n^{\log_ba}$ by $n^\epsilon$ factor.
+        \item then $T(n) = \Theta(n^{\log_ba})$.
+      \end{itemize}
+    \item If $f(n) = \Theta(n^{\log_ba} \log^kn) $ for some $k \geq 0$,
+      \begin{itemize}
+        \item $f(n)$ and $n^{\log_ba}$ grow at similar rates.
+        \item then $T(n) = \Theta(n^{\log_ba}\log n)$
+      \end{itemize}
+    \item If $f(n) = \Omega(n^{\log_ba + \epsilon})$ for some constant $\epsilon > 0$, 
+      \begin{itemize}
+        \item and $f(n)$ satisfies the \textbf{regularity condition} 
+          \begin{itemize}
+            \item $af(n/b) \leq cf(n)$ for some constant $c<1$ and \\* all sufficiently large $n$
+            \item this guarantees that the sum of subproblems is smaller than $f(n)$.
+          \end{itemize} 
+        \item $f(n)$ grows polynomially faster than $n^{\log_ba}$ by $n^\epsilon$ factor
+        \item then $T(n) = \Theta(f(n))$.
+      \end{itemize}
+  \end{enumerate}
 
   \subsection{Substitution method}
+
   \begin{enumerate}
     \item guess that $T(n) = O(f(n))$. 
-      \\* i.e. $\exists c$ such that $T(n) \leq c \cdot f(n)$, for $n \geq n_0$.
     \item verify by induction:
       \begin{enumerate}
+        \item to show that for $n \geq n_0$, $T(n) \leq c \cdot f(n)$
         \item set $c = \max\{2, q\}$ and $n_0 = 1$
-        \item base case ($n = n_0 = 1$)
-        \item recursive case ($n > 1$):
+        \item verify base case(s): $T(n_0) = q$
+        \item recursive case ($n > n_0$):
           \begin{itemize}
-            \item by strong induction, assume $T(k) = c \cdot f(k)$ for $n > k > 1$
+            \item by strong induction, assume $T(k) \leq c \cdot f(k)$ for $n > k \geq n_0$
             \item T(n) = <recurrence> ... $\leq c \cdot f(n)$
           \end{itemize}
-        \item hence $T(n) \leq c \cdot f(n)$ for $n \geq 1$.
+        \item hence $T(n) = O(f(n))$.
       \end{enumerate}
   \end{enumerate}
   \attention may not be a tight bound!
 
   \subsubsection{example}
 
-  $T(n) = 4T(n/2) + n^2/\lg n \Rightarrow \Theta(n^2\lg \lg n)$
-
   \begin{niceproof}
+    $T(n) = 4T(n/2) + n^2/\lg n \Rightarrow \Theta(n^2\lg \lg n)$
+
     $T(n) = 4T(n/2) + \frac{n^2}{\lg n}$ \\
     $= 4( 4T(n/4) + \frac{(n/2)^2}{\lg n - lg 2} ) + \frac{n^2}{\lg n}$ \\ 
     $= 16 T(n/4) + \frac{n^2}{\lg n - \lg 2} + \frac{n^2}{\lg n}$ \\
@@ -368,21 +457,51 @@
     $= n^2 \lg \lg n$ by approx. of harmonic series ($\sum\frac{1}{k}$)
   \end{niceproof}
 
+  \begin{niceproof}
+    $T(n) = 4T(n/2) + n \Rightarrow O(n^2)$
+
+    To show that for all $n \geq n_0$, $T(n) \leq c_1n^2 - c_2n$
+
+    1. Set $c_1 = q+1, c_2 = 1, n_0 = 1$. 
+
+    2. Base case ($n=1$): subbing into $c_1n^2 - c_2n$,
+    $T(1) = q \leq (q+1)(1)^2 - (1)(1)$ 
+
+    3. Recursive case ($n>1$):
+    \begin{itemize}
+      \item by strong induction, assume $T(k) \leq c_1 \cdot k^2 - c_2 \cdot k$ for all $n>k \geq 1$ 
+      \item $T(n) = 4T(n/2) + n$ 
+        \\* $\quad\quad = 4(c_1 (n/2)^2 - c_2 (n/2)) + n$
+        \\* $\quad\quad = c_1n^2 - 2c_2n + n $
+        \\* $\quad\quad = c_1n^2 - c_2n + (1-c_2) n$
+        \\* $\quad\quad = c_1n^2 - c_2n \quad $ since $c_2=1 \Rightarrow 1-c_2 = 0$
+        \\* \qed
+    \end{itemize}
+  \end{niceproof}
+
   \section{04. AVERAGE-CASE ANALYSIS \& RANDOMISED ALGORITHMS}
+
+  \begin{itemize}
+    \item \definition[$A(n)$]{average case} expected running time when the input is chosen uniformly at random from the set of all $n!$ permutations
+      \begin{itemize}
+        \item $A(n) = \frac{1}{n!} \sum_\pi Q(\pi)$ where $Q(\pi)$ is the time complexity when the input is permutation $\pi$.
+        \item $A(n) = \mathop{\mathbb{E}}\limits_{x \sim \mathcal{D}_n} [ \text{Runtime of Alg on }x ] $
+          \begin{itemize}
+            \item $ \mathbb{E}_{x \sim \mathcal{D}_n} $ is a probability distribution on $U$ restricted to inputs of size $n$.
+          \end{itemize}
+      \end{itemize}
+  \end{itemize}
 
   \subsection{Quicksort Analysis}
 
   \begin{itemize}
     \item divide \& conquer, linear-time $\Theta(n)$ partitioning subroutine
     \item assume we select the first array element as pivot 
-    \item if the pivot produces subarrays of size $j$ and $(n-j-1)$, then $T(n) = T(j) + T(n-j-1) + \Theta(n)$
-  \end{itemize}
-
-  \textbf{time analysis}
-  \begin{itemize}
+    \item $T(n) = T(j) + T(n-j-1) + \Theta(n)$
+      \begin{itemize}
+        \item if the pivot produces subarrays of size $j$ and $(n-j-1)$
+      \end{itemize}
     \item \textbf{worst-case}: $T(n) = T(0) + T(n-1) + \Theta(n) \Rightarrow \Theta(n^2)$ 
-    \item \definition[$A(n)$]{average case} expected running time when the input is chosen uniformly at random from the set of all $n!$ permutations
-    \item \textbf{average case}, $A(n) = \frac{1}{n!} \sum_\pi Q(\pi)$ where $Q(\pi)$ is the time complexity when the input is permutation $\pi$.
   \end{itemize}
 
   \begin{niceproof}
@@ -433,6 +552,8 @@
       \begin{itemize}
         \item vs non-randomised: output \& running time are functions of the \textit{input only}
       \end{itemize}
+    \item expected running time = worst-case running time = 
+      \\* $E(n) = \max\limits_{ \text{input $x$ of size $n$} } \mathbb{E} [ \text{Runtime of RandAlg on }x ] $
     \item \textbf{randomised quicksort}: choose pivot at random 
       \begin{itemize}
         \item probability that the runtime of \textit{randomised} quicksort exceeds average by $x\% = n^{-\frac{x}{100}\ln\ln n}$ 
@@ -467,7 +588,7 @@
       \begin{itemize}
         \item output is always correct
         \item runtime is a \textit{random variable} 
-        \item e.g. randomised quicksort
+        \item e.g. randomised quicksort, randomised quickselect
       \end{itemize}
     \item randomised \textbf{Monte Carlo} algorithms
       \begin{itemize}
@@ -481,17 +602,17 @@
     \item \textit{smallest enclosing circle:} given $n$ points in a plane, compute the smallest radius circle that encloses all $n$ points
       \begin{itemize}
         \item best \textbf{deterministic} algorithm: $O(n)$, but complex
-        \item las vegas: average $O(n) $, simple solution
+        \item Las Vegas: average $O(n) $, simple solution
       \end{itemize}
     \item \textit{minimum cut:} given a connected graph $G$ with $n$ vertices and $m$ edges, compute the smallest set of edges whose removal would disconnect $G$.
       \begin{itemize}
         \item best \textbf{deterministic} algorithm: $O(mn)$
-        \item \textbf{monte carlo}: $O(m \log n) $, error probability $n^{-c}$ for any $c$
+        \item \textbf{Monte Carlo}: $O(m \log n) $, error probability $n^{-c}$ for any $c$
       \end{itemize}
     \item \textit{primality testing:} determine if an $n$ bit integer is prime
       \begin{itemize}
         \item best \textbf{deterministic} algorithm: $O(n^6)$
-        \item \textbf{monte carlo}: $O(kn^2)$, error probability $2^{-k}$ for any $k$
+        \item \textbf{Monte Carlo}: $O(kn^2)$, error probability $2^{-k}$ for any $k$
       \end{itemize}
   \end{itemize}
 
@@ -557,6 +678,7 @@
         \item additional storage overhead $= \Theta(\log N \cdot \log \vert U \vert)$, if $M = \Theta(N)$
         \item other universal hashing constructions may have more efficient hash function evaluation
       \end{itemize}
+    \item \textit{associative array} - has both key and value (dictionary in this context has only key)
   \end{itemize}
 
   \subsection{Hashing}
@@ -565,6 +687,7 @@
     \item \ildefinition{hash function}, $h:U \to \{1, \dots, M\}$ gives the location of where to store in the hash table
       \begin{itemize}
         \item notation: $[M] = \{ 1, \dots, M \}[M] = \{ 1, \dots, M \}$
+        \item storing $N$ items in hash table of size $M$
       \end{itemize}
     \item \definition{collision} for two different keys $x$ and $y$, $h(x) = h(y)$ 
       \begin{itemize}
@@ -587,7 +710,7 @@
       \end{itemize}
   \end{itemize}
 
-  \subsubsection{Universal Hashing}
+  \subsection{Universal Hashing}
 
   Suppose $\mathcal{H}$ is a set of hash functions mapping $U$ to $[M]$. 
 
@@ -599,37 +722,42 @@
   \begin{itemize}
     \item aka: for any $x \neq y$, if $h$ is chosen uniformly at random from a universal $\mathcal{H}$, then there is at most $ \frac{1}{M} $ probability that $h(x) = h(y)$
     \item probability where $h$ is sampled uniformly from $\mathcal{H}$
+    \item aka: for any $x\neq y$, the fraction of hash functions with collisions is at most $\frac{1}{M}$.
   \end{itemize}
 
-  \subsubsection{Collision Analysis}
+  \subsubsection{Properties of universal hashing}
 
-  Suppose $\mathcal{H}$ is a \textit{universal} family of HFs mapping $U$ to $[M]$. 
+  \textbf{Collision Analysis}
 
-  \begin{tightcenter}
-    For any $N$ elements $x_1, x_2, \dots, x_N$, the \textbf{expected number of collisions} between $x_N$ and the other elements is $< \frac{N}{M} $.
-  \end{tightcenter}
+  \begin{itemize}
+    \item for any $N$ elements $x_1, \dots, x_N \in \mathcal{U}$, the \textbf{expected number of collisions} between  $x_N$ and other elements is $<N/M$.
+      \begin{itemize}
+        \item it follows that for $K$ operations, the expected cost of the last operation is $< K/M = O(1)$ if $M>K$.
+      \end{itemize}
+      \begin{niceproof}
+        by definition of Universal Hashing, each element  $x_1, \dots, x_{N-1} \in \mathcal{U}$ has at most $\frac{1}{M}$ probability of collision with $x_N$ (over random choice of $h$).
 
-  \begin{niceproof}
-    let $A_i$ be an indicator r.v. for $h(x_i) = h(x_N)$.
+        by indicator r.v., $\scriptstyle E[A_i] = P(A_i = 1) \leq \frac{1}{M}$.
+        expected number of collisions = $(N-1) \cdot \frac{1}{M} < \frac{N}{M}$.
+      \end{niceproof}
 
-    $\scriptstyle E[A_i] = 1 \cdot P(A_i = 1) + 0 \cdot P(A_i = 0) = P(A_i=1) \leq \frac{1}{M}$.
+    \item if $x_1, \dots, x_N$ are added to the hash table, and $M>N$, the expected \textbf{number of pairs} $(i, j)$ with collisions is $<2N$.
 
-    \# of collisions with $x_N$ is $\sum_{i < N}A_i$
-  \end{niceproof}
+      \begin{niceproof}
+        let $A_{ij}$ be an indicator r.v. for collision. 
+        \\* $ \mathbb{E} [\sum\limits_{1 \leq i, j \leq N} A_{ij}] = \sum\limits^N_{i=1} \mathbb{E}[A_{ii}] + \sum\limits_{i \neq j} \mathbb{E} [A_{ij}] $
+        \\* $\quad\quad \leq N \cdot 1 + N(N-1) \cdot \frac{1}{M} < 2N $
+      \end{niceproof}
+  \end{itemize}
 
-  \subsubsection{Expected Cost}
+  \textbf{Expected Cost}
 
-  Suppose $\mathcal{H}$ is a \textit{universal} family of HFs mapping $U$ to $[M]$. 
-
-  \begin{tightcenter}
-    For any sequence of $N$ insertions, deletions and queries, 
-    \\* if $M \geq N$, then the \textbf{expected total cost} for a random $h \in \mathcal{H}$ is $O(N)$.
-  \end{tightcenter}
-
-  \begin{niceproof}
-    Each operation costs $O(1)$ time by this claim. 
-    \\* Linearity of expectation $\Rightarrow$ total $O(N)$
-  \end{niceproof}
+  \begin{itemize}
+    \item for any sequence of $N$ operations, if $M > N$, then the \textbf{expected total cost} for executing the sequence is $O(N)$.
+      \begin{niceproof}
+        linearity of expectation; sum up expected costs
+      \end{niceproof}
+  \end{itemize}
 
   \subsubsection{Construction of Universal Family}
 
@@ -681,7 +809,9 @@
 
   \textbf{static case} - $N$ fixed items in the dictionary $x_1, x_2, \dots, x_N$
 
-  \subsubsection{Quadratic Space}
+  \textit{To perform \texttt{Query} in $O(1)$ worst-case time.}
+
+  \subsubsection{Quadratic Space: $M=N^2$}
 
   if $\mathcal{H}$ is universal and $M = N^2$, and $h$ is sampled uniformly from $\mathcal{H}$, then the expected number of collisions is $<1$.
 
@@ -693,9 +823,13 @@
     $E[ \text{\# collisions}] = \sum\limits_{i < j} E[A_{ij}] \leq \binom{N}{2} \frac{1}{N^2} <1$
   \end{niceproof}
 
-  \subsubsection{2-Level Scheme}
+  It follows that there exists $h \in \mathcal{H}$ causing no collisions (because if not, $\mathbb{E}$[\#collisions] would be $\geq 1$).
 
-  No collision and less space needed
+  \subsubsection{2-Level Scheme: $M=N$}
+
+  \begin{itemize}
+    \item No collision and less space needed
+  \end{itemize}
 
   \textbf{Construction}
 
@@ -732,7 +866,7 @@
   \begin{itemize}
     \item when number of inserted items, $N$ is not known 
       \begin{itemize}
-        \item \textbf{reshashing} - choose a new hash function of a larger size and re-hash all elements
+        \item \textbf{rehashing} - choose a new hash function of a larger size and re-hash all elements
         \item costly but infrequent $\Rightarrow$ amortize
       \end{itemize}
   \end{itemize}
@@ -743,29 +877,33 @@
   \subsection{String Pattern Matching}
 
   \textit{problem}: does the pattern string $P$ occur as a substring of the text string $T$?
-  $m =$ length of $P$,  $n = $ length of $T$
+
+  $m =$ length of $P$,  $n = $ length of $T$, $\ell = $ size of alphabet
 
   \begin{itemize}
+    \item assumption: operations on strings of length $O(\log n)$ can be executed in $O(1)$ time. (word-RAM model)
     \item naive solution: $\Theta(n^2)$
-    \item faster string equality: 
+  \end{itemize}
+
+  \subsubsection{Fingerprinting approach (Karp-Rabin)}
+
+  \begin{itemize}
+    \item faster string equality check: 
       \begin{itemize}
         \item for substring $X$, check $h(X) == h(P)$ for a hash function $h$ $\Rightarrow$ $\Theta(1)$ + cost of hashing instead of $\Theta(\vert X \vert)$
       \end{itemize}
     \item \textbf{Rolling Hash}: $O(m+n)$
       \begin{itemize}
-        \item update the hash from what we already have from the previous hash
+        \item update the hash from what we already have from the previous hash - $O(1)$
+        \item compute $n-m+1$ hashes in $O(n)$ time
         \item \textit{Monte Carlo} algorithm
-      \end{itemize}
-    \item \textbf{Division Hash}: 
-      \begin{itemize}
-        \item higher $K$ = lower probability of false positive
       \end{itemize}
   \end{itemize}
 
   \subsubsection{Division Hash}
 
   \begin{tightcenter}
-    Choose a random number $p$ in the range $\{1, \dots, K\}$.
+    Choose a random \textbf{prime} number $p$ in the range $\{1, \dots, K\}$.
     \\* For integer $x$, $h_p(x) = x \Mod p$
   \end{tightcenter}
 
@@ -786,24 +924,46 @@
       \end{niceproof}
   \end{itemize}
 
+  \textbf{values of K}
+
+  \begin{itemize}
+    \item higher $K$ = lower probability of false positive
+      \begin{itemize}
+        \item for $\delta = \frac{1}{100n}$, P(false positive) < 1\%.
+      \end{itemize}
+  \end{itemize}
+
+  \begin{tightcenter}
+    $ \forall \delta > 0$, if $X \neq Y$ and $K = \frac{2m}{\delta} \cdot \lg \ell \cdot \lg (\frac{2m}{\delta} \lg \ell) $, then
+    $Pr[h(X) = h(Y)] < \delta$
+  \end{tightcenter}
+
   \subsection{Streaming}
 
-  \textit{problem}: sequence of insertions or deletions of items from a large universe $\mathcal{U}$. 
-  At the end of the stream, the \textbf{frequency $f_i$} of item $i$ is its net count.
+  \textit{problem}: Consider a sequence of insertions or deletions of items from a large universe $\mathcal{U}$. 
+  At the end of the stream, the \textit{frequency $f_i$} of item $i$ is its net count.
 
   Let $M$ be the sum of all frequencies at the end of stream.
 
+  \textbf{naive solutions}
   \begin{itemize}
-    \item naive solution: direct access table - $\Omega(U)$ space
-    \item naive solution: sorted list - $\Omega(M)$ space, no $O(1)$ update
+    \item direct access table - $\Omega(U)$ space
+    \item sorted list - $\Omega(M)$ space, no $O(1)$ update
+    \item binary search tree - $O(M)$ space
   \end{itemize}
 
   \subsubsection{Frequency Estimation}
+
   \begin{tightcenter}
     an approximation $\hat{f}_i$ is \ildefinition{$\epsilon$-approximate} if $f_i - \epsilon M \leq \hat{f}_i \leq f_i + \epsilon M$
   \end{tightcenter}
 
   \subsubsection{Using Hash Table}
+
+  \begin{tightcenter}
+    $f_i \leq \mathbb{E}[\hat{f}_i] \leq f_i + M/k$
+  \end{tightcenter}
+
   \begin{itemize}
     \item increment/decrement $A[h(j)]$ on an empty table  $A$ of size $k$
     \item collision $\Rightarrow$ false positives $\Rightarrow$ may give overestimate of $f_i$ 
@@ -823,34 +983,588 @@
   \end{itemize}
 
 
+  \section{07. AMORTIZED ANALYSIS}
+
+  \begin{itemize}
+    \item \definition{amortized analysis} guarantees the \textit{average} performance of each operation in the \textit{worst case}.
+    \item total amortized cost provides an \textit{upper bound} on the total true cost
+    \item For a sequence of $n$ operations $o_1, o_2, \dots, o_n$, 
+      \begin{itemize}
+        \item let $t(i)$ be the time complexity of the $i$-th operation $o_i$
+        \item let $f(n)$ be the \textit{worst-case} time complexity for \textit{any} of the $n$ operations
+        \item let $T(n)$ be the time complexity of all $n$ operations
+      \end{itemize}
+  \end{itemize}
+
+  \begin{tightcenter}
+    $T(n) = \sum^n_{i=1} t(i) = n f(n)$
+  \end{tightcenter}
+
+  \subsection{Types of Amortized Analysis}
+
+  \subsubsection{Aggregate method}
+
+  \begin{itemize}
+    \item look at the whole sequence, sum up the cost of operations and take the average - simpler but less precise
+    \item e.g. binary counter - amortized $O(1)$ 
+    \item e.g. queues (with \code{INSERT} and \code{EMPTY}) - amortized $O(1)$
+  \end{itemize}
+
+  \subsubsection{Accounting method}
+
+  \begin{itemize}
+    \item charge the $i$-th operation a fictitious amortized cost $c(i)$ 
+      \begin{itemize}
+        \item \textbf{amortized cost} $c(i)$ is a fixed cost for each operation
+        \item \textbf{true cost} $t(i)$ depends on when the operation is called
+      \end{itemize}
+    \item amortized cost $c(i)$ must satisfy:
+      \begin{tightcenter}
+        $\sum^n_{i=1} t(i) \leq \sum^n_{i=1} c(i) $ for all $n$
+      \end{tightcenter}
+    \item take the extra amount for cheap operations early on as "credit" paid in advance for expensive operations
+      \begin{itemize}
+        \item \textbf{invariant}: bank balance never drops below 0
+      \end{itemize}
+    \item the total amortized cost provides an \textbf{upper bound} on the total true cost
+  \end{itemize}
+
+  \subsubsection{Potential method}
+
+  \begin{itemize}
+    \item $\phi$ : potential function associated with the algo/DS
+    \item $\phi(i)$: potential at the end of the $i $-th operation
+    \item $c_i$ : amortized cost of the $i$-th operation
+    \item $t_i$ : true cost of the $i$-th operation
+      \begin{tightcenter}
+        $c_i = t_i + \phi(i) - \phi(i-1)$ 
+
+        $\sum^n_{i=1} c_i = \phi(n) - \phi(0) + \sum^n_{i=1} t_i$
+      \end{tightcenter}
+    \item hence as long as $\phi(n) \geq 0$, then amortized cost is an upper bound of the true cost. 
+      \begin{tightcenter}
+        $\sum^n_{i=1} c_i \geq \sum^n_{i=1} t_i$
+      \end{tightcenter}
+    \item usually take $\phi(0) = 0$
+    \item \textbf{e.g.} for queue:
+      \begin{itemize}
+        \item let $\phi(i)$ = \# of elements in queue after the $i$-th operation
+        \item amortized cost for insert: $c_i = t_i + \phi(i) - \phi(i-1) = 1 + 1 = 2$
+        \item amortized cost for empty (for $k$ elements): $c_i = t_i + \phi(i) - \phi(i-1) = k + 0 - k = 0 $
+      \end{itemize}
+    \item try to keep $c(i)$ small: using $c(i) = t(i) + \Delta \phi_i$
+      \begin{itemize}
+        \item if $t(i)$ is small, we want $\Delta \phi_i$ to be positive and small
+        \item if $t(i)$ is large, we want $\Delta \phi_i$ to be negative and large 
+      \end{itemize}
+  \end{itemize}
+
+  \subsubsection{e.g. Dynamic Table (insertion only)}
+
+  \textbf{Aggregate method}
+
+  \begin{tightcenter}
+    cost of $n$ insertions = $\sum^n_{i=1} t(i) \leq n + \sum^{ \lfloor \log(n-1) \rfloor  }_{j=1} 2^j \leq 3n$
+    \includegraphics[width=0.95\linewidth]{st2131-dynamic-table-aggregate-method.png} 
+  \end{tightcenter}
+
+  \textbf{Accounting method}
+
+  \begin{itemize}
+    \item charge \$3 per insertion
+      \begin{itemize}
+        \item \$1 for insertion itself
+        \item \$1 for moving itself when the table expands
+        \item \$1 for moving one of the existing items when the table expands
+      \end{itemize}
+  \end{itemize}
+
+  \textbf{Potential method}
+
+  \begin{tightcenter}
+    let $\phi(i) = 2i - size(T)$
+    \includegraphics[width=0.95\linewidth]{st2131-dynamic-table-potential-method.png} 
+  \end{tightcenter}
+
+  \begin{itemize}
+    \item show that SUM of amortized cost $\geq$ SUM of actual cost
+    \item conclude that sum of amortized cost is $O(f(n)) \Rightarrow$ sum of actual cost is $O(f(n))$
+  \end{itemize}
 
 
+  \section{08. DYNAMIC PROGRAMMING}
+
+  \begin{itemize}
+    \item \definition{cut-and-paste proof} proof by contradiction - suppose you have an optimal solution. Replacing ("cut") subproblem solutions with this subproblem solution ("paste" in) should improve the solution. If the solution doesn't improve, then it's not optimal (contradiction).
+    \item \textbf{overlapping subproblems} - recursive solution contains a small number of distinct subproblems repeated many times
+  \end{itemize}
+
+  \subsection{Longest Common Subsequence}
+
+  \begin{itemize}
+    \item for sequence $A: a_1, a_2, \dots, a_n$ stored in array
+    \item $C$ is a \definition[of $A$]{subsequence} if we can obtain $C$ by removing zero or more elements from $A$.
+  \end{itemize}
+
+  \textbf{problem}: given two sequences $A[1..n]$ and $B[1..m]$, compute the \textit{longest} sequence $C$ such that $C$ is a subsequence of $A$ and $B$.
+
+  \subsubsection{brute force solution}
+
+  \begin{itemize}
+    \item check \textit{all} possible subsequences of $A$ to see if it is also a subsequence of $B$, then output the longest one.
+    \item analysis: $O(m2^n)$
+      \begin{itemize}
+        \item checking each subsequence takes $O(m)$ 
+        \item $2^n$ possible subsequences
+      \end{itemize}
+  \end{itemize}
+
+  \subsubsection{recursive solution}
+  let $LCS(i, j)$: longest common subsequence of $A[1..i]$ and $B[1..j]$
+
+  \begin{itemize}
+    \item base case: $LCS(i, 0) = \emptyset$ for all $i$, $LCS(0, j) = \emptyset$ for all $j$ 
+    \item general case:
+      \begin{itemize}
+        \item if last characters of $A, B$ are $a_n = b_m$, then $LCS(n, m)$ must terminate with $a_n=b_m$ 
+          \begin{itemize}
+            \item the optimal solution will match $a_n$ with $b_m$
+          \end{itemize}
+        \item if $a_n \neq b_m$, then either $a_n$ or $b_m$ is not the last symbol
+      \end{itemize}
+    \item \textbf{optimal substructure}: (general case)
+      \begin{itemize}
+        \item if $a_n = b_m$,
+          \\* $LCS(n, m) = LCS(n-1, m-1) :: a_n$
+        \item if $a_n \neq b_m$, 
+          \\* $LCS(n, m) = LCS(n-1, m) \; || \; LCS(n, m-1)$
+      \end{itemize}
+    \item \textbf{simplified problem}: 
+      \begin{itemize}
+        \item $L(n, m) = 0$ if $n=0$ or $m=0$ 
+        \item if $a_n = b_m$, then $L(n, m) = L(n-1, m-1) + 1$ 
+        \item if $a_n \neq b_m$, then $L(n, m) = \max (L(n, m-1), L(n-1, m)) $
+      \end{itemize}
+      \textbf{analysis}
+      \begin{itemize}
+        \item number of distinct subproblems $= (n+1) \times (m+1)$
+        \item to use $O(\min \{m, n\})$ space: bottom-up approach, column by column 
+        \item memoize for DP $\Rightarrow$ makes it $O(mn)$ instead of exponential time
+      \end{itemize}
+  \end{itemize}
+
+  \subsection{Knapsack Problem}
+
+  \begin{itemize}
+    \item input: $(w_1, v_1), (w_2, v_2), \dots, (w_n, v_n) $ and capacity $W$
+    \item output: subset $S \subseteq \{ 1, 2, \dots, n \}$ that maximises $\sum_{i \in S}v_i$ such that $\sum_{i \in S} w_i \leq W$
+  \end{itemize}
+
+  \begin{tightcenter}
+    \includegraphics[width=0.5\linewidth]{cs3230-knapsack-problem.png} 
+  \end{tightcenter}
+
+  \begin{itemize}
+    \item $2^n$ subsets $\Rightarrow$ naive algorithm is costly 
+    \item \textbf{recursive solution}:
+      \begin{itemize}
+        \item let $m[i, j]$ be the maximum value that can be obtained using a subset of items $\{1, 2, \dots, i\}$ 
+          with total weight no more than $j$.
+        \item $m[i, j] = \begin{cases} 0, & \text{if $i=0$ or $j=0$} \\ \max\{ {\scriptstyle m[i-1, j-w_i] + v_i, m[i-1, j] }\}, & \text{if $w_i \leq j$} \\ m[i-1, j], & \text{otherwise} \end{cases} $
+      \end{itemize}
+    \item \textbf{analysis}: $O(nW)$
+      \begin{itemize}
+        \item \attention $O(nW)$ is \textbf{not} a polynomial time algorithm
+        \item not polynomial in input bitsize 
+          \begin{itemize}
+            \item $W$ can be represented in $O(\lg W)$ bits
+            \item $n$ can be represented in $O(\lg n)$ bits
+          \end{itemize}
+        \item polynomial time is strictly in terms of the number of bits for the input
+      \end{itemize}
+  \end{itemize}
+
+  \subsection{Changing Coins}
+
+  \textbf{problem}: use the fewest number of coins to make up $n$ cents using denominations $d_1, d_2, \dots, d_n$.
+  Let $M[j]$ be the fewest number of coins needed to change $j$ cents. 
+
+  \begin{itemize}
+    \item \textbf{optimal substructure}:
+      \begin{itemize}
+        \item $M[j] = \begin{cases} 1 + \min\limits_{i \in [k]} M[j-d_i], &j > 0 \\ 0, &j=0 \\ \infty, & j < 0 \end{cases}$
+      \end{itemize}
+      \begin{niceproof}
+        Suppose $M[j] = t$, meaning $j = d_{i_1} + d_{i_2} + \dots + d_{i_t}$
+        for some $i_1, \dots, i_t \in \{1, \dots, k\}$. 
+
+        Then, if $j' = d_{i_1} + d_{i_2} + \dots + d_{i_t-1}$, $M[j'] = t-1 $,
+        because otherwise if $M[j'] < t-1$, by \textbf{cut-and-paste} argument, $M[j]<t$.
+      \end{niceproof}
+    \item runtime: $O(nk)$ for $n$ cents, $k$ denominations
+  \end{itemize}
 
 
+  \section{09. GREEDY ALGORITHMS}
+
+  \begin{itemize}
+    \item solve only one subproblem at each step
+    \item beats DP and divide-and-conquer when it works
+    \item \definition{greedy-choice property} a locally optimal choice is globally optimal
+  \end{itemize}
+
+  \subsection{Examples}
+
+  \subsubsection{Fractional Knapsack}
+
+  \begin{itemize}
+    \item $O(n \log n)$
+    \item \textbf{greedy-choice property}: let $j^*$ be the item with \textit{maximum} value/kg, $v_j/w_i$. Then there exists an optimal knapsack containing $\min(w_{j^*}, W)$ kg of item $j^*$.
+    \item \textbf{optimal substructure}: if we remove $w$ kg of item $j$ from the optimal knapsack, then the remaining load must be the optimal knapsack weighing at most $W-w$ kgs that one can take from $n-1$ original items and $w_j - w$ kg of item $j$.
+  \end{itemize}
+
+  \begin{niceproof}
+    cut-and-paste argument
+
+    Suppose the remaining load after removing $w$ kgs of item $j$ was \textit{not} the optimal knapsack weighing ...
+
+    Then there is a knapsack of value $> X-v_j \cdot \frac{w}{w_j}$ with weight ...
+
+    Combining this knapsack with $w$ kg of item $j$ gives a knapsack of value $>X$ $\Rightarrow$ contradiction!
+  \end{niceproof}
+
+  \subsubsection{Minimum Spanning Trees}
+
+  for a connected, undirected graph $G = (V, E)$, find a spanning tree $T$ that connects all vertices with minimum weight. Weight of spanning tree $T$, $w(T) = \sum\limits_{(u, v) \in T} w(u, v)$.
+
+  \begin{itemize}
+    \item \textbf{optimal substructure}: let $T$ be a MST. remove any edge $(u, v) \in T$. then $T$ is partitioned into $T_1, T_2$ which are MSTs of  $G_1 = (V_1, E_1)$ and $G_2 = (V_2, E_2)$.
+      \begin{niceproof}
+        cut-and-paste: $w(T) = w(u, v) + w(T_1) + w(T_2)$
+
+        if $w(T_1') < w(T_1)$ for $G_1$, then $T' = \{(u, v)\} \cup T_1' \cup T_2$ would be a lower-weight spanning tree than $T$ for $G$. 
+
+        $\Rightarrow$ contradiction, $T$ is the MST
+      \end{niceproof}
+    \item \textbf{Prim's algorithm} - at each step, add the least-weight edge from the tree to some vertex outside the tree
+    \item \textbf{Kruskal's algorithm} - at each step, add the least-weight edge that does \textit{not} cause a cycle to form
+  \end{itemize}
+
+  \subsection{Binary Coding}
+
+  Given an alphabet set $A: \{ a_1, a_2, \dots, a_n \}$ and a text file $F$ (sequence of alphabets), 
+  how many bits are needed to encode a text file with $m$ characters?
+
+  \begin{itemize}
+    \item \textbf{fixed length encoding}: $m \cdot \lceil \log_2 n \rceil $
+      \begin{itemize}
+        \item encode each alphabet to unique binary string of length $ \lceil \log_2 n \rceil  $
+        \item total bits needed for $m$ characters $= m \cdot \lceil \log_2 n \rceil $
+      \end{itemize}
+    \item \textbf{variable length encoding}
+      \begin{itemize}
+        \item different characters occur with different frequency $\Rightarrow$ use fewer bits for \textit{more frequent} alphabets
+        \item average bit length,  $ABL(\gamma) = \sum\limits_{x \in A} f(x) \cdot \vert \gamma(x) \vert$
+        \item BUT overlapping prefixes cause indistinguishable characters
+      \end{itemize}
+  \end{itemize}
+
+  \subsubsection{Prefix coding}
+
+  \begin{itemize}
+    \item a coding $\gamma(A)$ is a \ildefinition{prefix coding} if $\not\exists x, y \in A$ such that $\gamma(x)$ is a prefix of $\gamma(y)$.
+    \item \textbf{labelled binary tree}: $\gamma(A)$ = label of path from root
+      \includegraphics[width=0.6\linewidth]{cs3230-prefix-coding-binary-tree.png} 
+    \item for each prefix code $A$ of $n$ alphabets, there exists a binary tree $T$ on $n$ leaves such that there is a \textbf{bijective mapping} between the alphabets and the leaves
+    \item $ABL(\gamma) = \sum\limits_{x \in A} f(x) \cdot \vert \gamma(x) \vert = \sum\limits_{x \in A} f(x) \cdot \vert depth_T (x) \vert$
+    \item the binary tree corresponding to an \textit{optimal} prefix coding must be a \textbf{full binary tree}.
+      \begin{itemize}
+        \item every internal node has degree exactly 2
+        \item multiple possible optimal trees - most optimal depends on alphabet frequencies
+      \end{itemize}
+    \item accounting for alphabet \textbf{frequencies}:
+      \begin{itemize}
+        \item let $a_1, a_2, \dots, a_n$ be the alphabets of $A$ in non-decreasing order of their frequencies.
+        \item $a_1$ must be a leaf node; $a_2$ \textit{can} be a sibling of $a_1$.
+        \item there exists an optimal prefix coding in which $a_1$ and $a_2$ are siblings
+      \end{itemize}
+    \item derivation of optimal prefix coding: \textbf{Huffman's algorithm}
+      \begin{itemize}
+        \item keep merging the two least frequent items
+      \end{itemize}
+  \end{itemize}
+
+  \begin{minipage}[c]{0.65\linewidth}
+    \begin{verbatim}
+
+Huffman(C):
+  Q = new PriorityQueue(C)
+  while Q:
+    allocate a new node z
+    z.left = x = extractMin(Q)
+    z.right = y = extractMin(Q)
+    z.val = x.val + y.val
+    Q.add(z)
+  return extractMin(Q) // root
+    \end{verbatim}
+  \end{minipage}
+  \begin{minipage}[c]{0.32\linewidth}
+    \includegraphics[width=0.95\linewidth]{cs3230-huffman-algo-example.png} 
+  \end{minipage}
 
 
+  \section{10. REDUCTIONS \& INTRACTABILITY}
+
+  \subsection{Reduction}
+
+  Consider two problems $A$ and $B$, $A$ can be solved as follows:
+
+  \begin{enumerate}
+    \item convert instance $\alpha$ of $A$ to an instance of $\beta$ in $B$
+    \item solve $\beta$ to obtain a solution
+    \item based on the solution of $\beta$, obtain the solution of $\alpha$.
+    \item $\Rightarrow$ then we say $A$ \textbf{reduces} $B$.
+  \end{enumerate}
+
+  \begin{tightcenter}
+    \includegraphics[width=0.7\linewidth]{cs3230-reduction-AB.png} 
+  \end{tightcenter}
+
+  \definition{instance} another word for input
+
+  \subsubsection{e.g. Matrix Multiplication \& Squaring}
+
+  \begin{itemize}
+    \item \textsc{Mat-Multi}: matrix multiplication
+      \begin{itemize}
+        \item \textit{input}: two $N \times N$ matrices  $A$ and $B$.
+        \item \textit{output}: $A \times B$
+      \end{itemize}
+    \item \textsc{Mat-Sqr}: matrix squaring
+      \begin{itemize}
+        \item \textit{input}: one $N \times N$ matrix $C$. \textit{output}: $C \times C$
+      \end{itemize}
+    \item \textsc{Mat-Sqr} can be reduced to \textsc{Mat-Multi}
+      \begin{itemize}
+        \item \textit{Proof}. Given input matrix $C$ for \textsc{Mat-Sqr}, let $A=C$ and  $B=C$ be inputs for \textsc{Mat-Multi}. Then $AB=C^2$.
+      \end{itemize}
+    \item \textsc{Mat-Multi} can also be reduced to \textsc{Mat-Sqr}!
+      \begin{itemize}
+        \item \textit{Proof}. let $C = \left[ \begin{smallmatrix} 0 & A \\ B & 0 \end{smallmatrix} \right]$
+          $\Rightarrow C^2 = \left[\begin{smallmatrix} 0 & A \\ B & 0 \end{smallmatrix}\right] \left[\begin{smallmatrix} 0 & A \\ B & 0 \end{smallmatrix}\right] = \left[ \begin{smallmatrix} AB & 0 \\ 0 & BA \end{smallmatrix} \right] $
+      \end{itemize}
+  \end{itemize}
+
+  \subsubsection{T-Sum}
+
+  \begin{itemize}
+    \item \textsc{0-Sum}: given array $A$, output $i, j \in (1, n)$ such that $A[i] + A[j] = 0$
+    \item \textsc{T-Sum}: given array $B$, output $i, j \in (1, n)$ such that $B[i] + B[j] = T$
+    \item \textbf{reduce \textsc{T-Sum} to \textsc{0-Sum}}:
+      \begin{itemize}
+        \item given array $B$, define array  $A$ s.t. $A[i] = B[i] - T/2$.
+        \item if $i, j$ satisfy $A[i] + A[j] = 0$, then $B[i] + B[j] = T$.
+      \end{itemize}
+  \end{itemize}
+
+  \subsubsection{$p(n)$-time Reduction}
+
+  \begin{itemize}
+    \item \definition{$p(n)$-time Reduction} if for any instance $\alpha$ of problem $A$ of size $n$, 
+      \begin{itemize}
+        \item an instance $\beta$ for $B$ can be constructed in $p(n)$ time
+        \item a solution to problem $A$ for input $\alpha$ can be recovered from a solution to problem $B$ for input $\beta$ in time $p(n)$.
+      \end{itemize}
+    \item \attention $n$ is in \textbf{bits}!
+    \item if there is a $p(n)$-time reduction from problem $A$ to $B$ and a $T(n)$-time algorithm to solve problem $B$, then there is a $T(O(p(n))) + O(p(n))$ time algorithm to solve $A$.
+  \end{itemize}
+
+  \begin{tightcenter}
+    \includegraphics[width=0.8\linewidth]{cs3230-reduction-pn.png} 
+  \end{tightcenter}
+
+  \begin{itemize}
+    \item  \definition{$A \leq_P B$} if there is a $p(n)$-time reduction from $A$ to $B$ for some polynomial function $p(n) = O(n^c)$ for some constant $c$. ("$A$ is a special case of $B$")
+      \begin{itemize}
+        \item if $B$ has a polynomial time algorithm, then so does $A$
+        \item "polynomial time" $\approx$ reasonably efficient
+      \end{itemize}
+    \item $A \leq_P B, B \leq_P C \Rightarrow A \leq_P C$
+  \end{itemize}
+
+  \subsubsection{Polynomial Time}
+
+  \begin{itemize}
+    \item \definition{polynomial time} runtime is polynomial in the \textbf{length of the encoding} of the problem instance
+    \item \ildefinition{"standard" encodings} 
+      \begin{itemize}
+        \item binary encoding of integers
+        \item list of parameters enclosed in braces (graphs/matrices)
+      \end{itemize}
+    \item \definition[algorithm]{pseudo-polynomial} runs in time polynomial in the \textbf{numeric value} if the input but is \textbf{exponential} in the \textbf{length} of the input
+      \begin{itemize}
+        \item e.g. DP algo for \textsc{Knapsack} since $W$ is in numeric value
+      \end{itemize}
+    \item \textsc{Knapsack} is NOT polynomial time: $O(nW \log M)$ but $W$ is not the number of bits
+    \item \textsc{Fractional Knapsack} is polynomial time: $O(n \log n \log W \log M)$
+  \end{itemize}
 
 
+  \subsection{Decision Problems}
+
+  \begin{itemize}
+    \item \definition{decision problem} a function that maps an instance space $I$ to the solution set $\{YES, NO\}$
+    \item decision vs optimisation problem:
+      \begin{itemize}
+        \item \textbf{decision problem}: given a directed graph $G$, \textit{is there} a path from vertex $u$ to $v$ of length $\leq k$?
+        \item \textbf{optimisation problem}: given ..., what is the \textit{length} of the shortest path ... ?
+        \item convert from \textbf{decision $\rightarrow$ optimisation}: given an instance of the optimisation problem and a number $k$, is there a solution with value $\leq k$?
+      \end{itemize}
+    \item the decision problem is \textit{no harder than} the optimisation problem.
+      \begin{itemize}
+        \item given the optimal solution, check that it is $\leq k$.
+        \item if we cannot solve the decision problem quickly $\Rightarrow$ then we cannot solve the optimisation problem quickly
+      \end{itemize}
+    \item decision $\leq_P$ optimisation
+  \end{itemize}
+
+  \subsection{Reductions between Decision Problems}
+
+  given two decision problems $A$ and $B$, a polynomial-time reduction from $A$ to $B$ denoted $A \leq_P B$ is a \ildefinition{transformation} from instances $\alpha$ of $A$ and $\beta$ of $B$ such that
+  \begin{enumerate}
+    \item $\alpha$ is a \textit{YES}-instance of $A$ $\iff$ $\beta$ is a \textit{YES}-instance of $B$
+    \item the transformation takes polynomial time in the size of $\alpha$
+  \end{enumerate}
+
+  \begin{tightcenter}
+    \includegraphics[width=0.95\linewidth]{cs3230-reductions-decision-problems.png} 
+  \end{tightcenter}
+
+  \subsubsection{Examples}
+
+  \begin{itemize}
+    \item \textsc{Independent-Set}: given a graph $G = (V, E)$ and an integer $k$, is there a subset of $\leq k$ vertices such that no 2 are adjacent?
+    \item \textsc{Vertex-Cover}: given a graph $G = (V, E)$ and an integer $k$, is there a subset of $\leq k$ vertices such that each edge is incident to \textit{at least one} vertex in this subset?
+    \item \textsc{Independent-Set} $\leq_P$ \textsc{Vertex-Cover}
+      \begin{itemize}
+        \item \textit{Reduction}: to check whether $G$ has an independent set of size $k$, we check whether $G$ has vertex cover of size $n-k$.
+      \end{itemize}
+  \end{itemize}
+
+  \begin{niceproof}
+    If \textsc{Independent-Set}, then \textsc{Vertex-Cover}.
+
+    Suppose $(G, k)$ is a \textit{YES}-instance of \textsc{Indep-Set}. Then there is subset $S$ of size $\geq k$ that is an independent set.
+
+    $V-S$ is a vertex cover of size $\leq n-k$. Proof: Let $(u, v) \in E$. Then $u \not\in S$ or $v \not\in S$. 
+
+    So either $u$ or $v$ is in $V-S$, the vertex cover.
+  \end{niceproof}
+  \begin{niceproof}
+    If \textsc{Vertex-Cover}, then \textsc{Independent-Set}.
+
+    Same as above, but flip IS and VC
+  \end{niceproof}
 
 
+  \subsubsection{e.g. \textsc{Set-Cover}}
 
+  Given integers $k$ and $n$, and collection $\mathcal{S}$ of subsets of $\{1, \dots, n\}$, are there $\leq k$ of these subsets whose union equals $\{1, \dots, n\}$?
 
+  Claim: \textbf{\textsc{Vertex-Cover} $\leq_P$ \textsc{Set-Cover}}
 
+  \textit{Reduction}: given $(G, k)$ instance of \textsc{Vertex-Cover}, generate an instance $(n, k', \mathcal{S})$ of \textsc{Set-Cover}.
 
+  \begin{niceproof}
+    For each node $v$ in $G$, construct a set $S_v$ containing all its outgoing edges. (Number each edge)
+    \includegraphics[width=0.95\linewidth]{cs3230-vertex-reduce-to-set-cover.png} 
+  \end{niceproof}
 
+  \subsubsection{e.g. 3-SAT}
 
+  \begin{itemize}
+    \item \textbf{SAT}: given a CNF formula $\Phi$, does it have a satisfying truth assignment?
+      \begin{itemize}
+        \item literal: a boolean variable or its negation $x, \bar{x}$
+        \item clause: a disjunction (OR) of literals
+        \item conjunctive normal form (CNF): formula $\Phi$ that is a conjunction (AND) of clauses
+      \end{itemize}
+    \item \definition{3-SAT} SAT where each clause contains exactly $3$ literals
+    \item \textbf{3-SAT $\leq_P$ \textsc{Independent-Set}}
+      \begin{itemize}
+        \item \textit{Reduction}: Construct an instance $(G, k)$ of \textsc{Indep-Set} s.t. $G$ has an independent set of size $k \iff \Phi$ is satisfiable
+          \begin{itemize}
+            \item node: each literal term
+            \item edge: connect 3 literals in a clause in a triangle
+            \item edge: connect literal to all its negations
+            \item reduction runs in polynomial time
+          \end{itemize}
+        \item $\Rightarrow$ for $k$ clauses, connecting $k$ vertices form an independent set in $G$. 
+      \end{itemize}
+      \includegraphics[width=0.95\linewidth]{cs3230-3sat-indepset-reduction.png} 
+  \end{itemize}
 
+  \section{11. NP-COMPLETENESS}
 
+  \begin{itemize}
+    \item \definition{P} the class of \textit{decision} problems solvable in (deterministic) polynomial time
+    \item \definition{NP} the class of \textit{decision} problems for which polynomial-time verifiable \textbf{certificates} of YES-instances exist.
+      \begin{itemize}
+        \item aka \textit{non-deterministic polynomial}
+        \item i.e. no poly-time algo, but verification can be poly-time
+        \item \definition{certificate} result that can be checked in poly-time to verify correctness
+      \end{itemize}
+    \item $P \subseteq NP$: any problem in \textbf{P} is in \textbf{NP}.
+      \begin{itemize}
+        \item if $P=NP$, then all these algos can be solved in poly time
+      \end{itemize}
+  \end{itemize}
 
+  \includegraphics[width=0.95\linewidth]{cs3230-p-np.png} 
 
+  \subsection{NP-Hard and NP-Complete}
 
+  \begin{itemize}
+    \item a problem $A$ is said to be \ildefinition{NP-Hard} if for \textit{every} problem $B \in NP$, $B \leq_P A$.
+      \begin{itemize}
+        \item aka $A$ is at least as hard as every problem in \textbf{NP}.
+      \end{itemize}
+    \item a problem $A$ is said to be \ildefinition{NP-Complete} if it is in \textbf{NP} and is also \textbf{NP-Hard}
+      \begin{itemize}
+        \item aka the hardest problems in NP.
+      \end{itemize}
+    \item \definition{Cook-Levin Theorem} every problem in NP-Hard can be poly-time \textit{reduced} to 3-SAT. Hence, \textbf{3-SAT is NP-Hard and NP-Complete}.
+    \item NP-Complete problems can still be approximated in poly-time! (e.g. greedy algorithm gives a 2-approximation for \textsc{Vertex-Cover})
+  \end{itemize}
 
+  \subsection{showing NP-Completeness}
 
+  \begin{enumerate}
+    \item show that $X$ is in NP. $\Rightarrow$ a YES-instance has a certificate that can be verified in polynomial time
+    \item show that $X$ is NP-hard
+      \begin{itemize}
+        \item by giving a poly-time reduction from another NP-hard problem $A$ to $X$.
+          $\quad \Rightarrow$ $X$ is at least as hard as $A$
+        \item reduction should \textit{not} depend on whether the instance of $A$ is a YES- or NO-instance
+      \end{itemize}
+    \item show that the reduction is valid
+      \begin{enumerate}
+        \item reduction runs in poly time
+        \item if the instance of $A$ is a YES-instance, then the instance of $X$ is also a YES-instance
+        \item if the instance of $A$ is a NO-instance, then the instance of $X$ is also a NO-instance
+      \end{enumerate}
+  \end{enumerate}
 
+  \begin{tightcenter}
+    \includegraphics[width=0.98\linewidth]{cs3230-show-np-complete.png} 
+  \end{tightcenter}
 
+  \subsection{showing NP-HARD}
 
-
-
+  \begin{enumerate}
+    \item take any \textbf{NP-Complete} problem $A$ 
+    \item show that $A \leq_P X$
+  \end{enumerate}
 
 
 \end{multicols*}
@@ -858,8 +1572,101 @@
 \pagebreak
 
 \section{helpful approximations}
+
+stirling's approximation: $T(n) = \sum\limits^n_{i=0} \log (n-i) = \log \prod^n_{i=0} (n-i) = \Theta(n \log n)$
+
 harmonic number, $ H_n = \sum\limits_{k=1}^n \frac{1}{k} = \Theta(\lg n) $
 
+basel problem: $\sum\limits^N_{n=1} \frac{1}{n^2} \leq 2 - \frac{1}{N} \xrightarrow{ N \to \infty } 2 $
+
+$\quad\quad$ because $\sum^N_{n=1} \frac{1}{N^2} \leq 1 + \sum^{\log_3 n}_{x=2} \frac{1}{(x-1)x} = 1 + \sum^N_{n=2} (\frac{1}{n-1} - \frac{1}{n}) = 1 + 1 - \frac{1}{N} = 2 - \frac{1}{N} $
+
 number of primes in range $\{1, \dots, K\}$ is $> \frac{K}{\ln K} $
+
+\section{asymptotic bounds}
+
+$1 < \log n < \sqrt{n} < n < n \log n < n^2 < n^3 < 2^n < 2^{2n}$
+
+$\log_a n < n^a < a^n < n! < n^n$
+
+for any $a, b > 0$, $\quad \log_a n < n^b$
+
+\subsubsection{multiple parameters}
+
+for two functions $f(m, n)$ and $g(m,n)$, we say that $f(m, n) = O(g(m, n))$ if there exists constants $c, m_0, n _0$ such that $0 \leq f(m,n) \leq c \cdot g(m,n)$ for all $m \geq m_0$ or $n \geq n_0$.
+
+\subsection{set notation}
+
+$O(g(n))$ is actually a \textit{set of functions}. 
+$f(n) = O(g(n))$ means $f(n) \in O(g(n))$
+
+\begin{itemize}
+  \item $O(g(n)) = \{f(n): \exists c, n_0>0 \mid \forall n \geq n_0, \, 0 \leq f(n) \leq cg(n)\}$
+  \item $\Omega(g(n)) = \{f(n): \exists c, n_0>0 \mid \forall n \geq n_0, \, 0 \leq cg(n) \leq f(n)\}$
+  \item $\Theta(g(n)) = \{ f(n): \exists c_1, c_2, n_0 > 0 \mid \forall n \geq n_0, \quad 0 \leq c_1 \cdot g(n) \leq f(n) \leq c_2 \cdot g(n) \}$ 
+    $= O(g(n)) \cap \Omega(g(n))$
+  \item $o(g(n)) = \{ f(n): \forall c > 0, \exists n_0 > 0 \mid \forall n \geq n_0, \quad 0 \leq f(n) < cg(n) \}$
+  \item $\omega(g(n)) = \{ f(n) : \forall c > 0, \exists n_0 > 0 \mid \forall n \geq n_0, \quad 0 \leq cg(n) < f(n) \} $
+\end{itemize}
+
+\subsection{example proofs}
+
+\begin{niceproof}
+  that $2n^2 = O(n^3)$ 
+  \\* let $f(n) = 2n^2$. then $f(n) = 2n^2 \leq n^3$ when $n \geq 2$. 
+  \\* set  $c=1$ and $n_0 = 2$.
+  \\* we have $f(n) = 2n^2 \leq c \cdot n^3$ for $n \geq n_0$. \qed
+\end{niceproof}
+
+\begin{niceproof}
+  $n=o(n^2)$ 
+
+  For any $c>0$, use $n_0 = 2/c$.
+\end{niceproof}
+
+\begin{niceproof}
+  $n^2 - n =\omega(n)$ 
+
+  For any $c>0$, use $n_0 = 2(c+1)$.
+\end{niceproof}
+
+\begin{niceproof}[Example]
+  let $f(n) = n$ and $g(n) = n^{1 + \sin (n)}$. 
+
+  Because of the oscillating behaviour of the sine function, there is no $n_0$ for which $f$ dominates $g$ or vice versa.
+
+  Hence, we cannot compare $f$ and $g$ using asymptotic notation.
+\end{niceproof}
+
+\begin{niceproof}[Example]
+  let $f(n) = n$ and $g(n) = n(2+\sin(n))$.
+
+  Since $\frac{1}{3}g(n) \leq f(n) \leq g(n)$ for all $n \geq 0$, then $f(n) = \Theta(g(n))$.
+  (note that limit rules will not work here)
+\end{niceproof}
+
+\section{mentioned algorithms}
+
+\begin{itemize}
+  \item ch.3 - \textbf{Misra Gries} - space-efficient computation of the majority bit in array $A$
+  \item ch.3 - \textbf{Euclidean} - efficient computation of GCD of two integers
+  \item ch.3 - \textbf{Tower of Hanoi} - $T(n) = 2^n-1$
+    \begin{enumerate}
+      \item move the top $n-1$ discs from the first to the second peg using the third as temporary storage. 
+      \item move the biggest disc directly to the empty third peg.
+      \item move the $n-1$ discs from the second peg to the third using the first peg for temporary storage.
+    \end{enumerate}
+  \item ch.3 - \textbf{MergeSort} - $T(n) = T(\lfloor n/2 \rfloor) + T(\lceil n/2 \rceil) + \Theta(n)$
+  \item ch.3 - \textbf{Karatsuba Multiplication} - multiply two $n$-digit numbers $x$ and $y$ in $O(n^{\log_23})$
+    \begin{itemize}
+      \item worst-case runtime: $T(n) = 3T( \lceil n/2 \rceil ) + \Theta(n) $
+    \end{itemize}
+\end{itemize}
+
+\section{uncommon notations}
+
+\begin{itemize}
+  \item $\bot$ - false
+\end{itemize}
 
 \end{document}
