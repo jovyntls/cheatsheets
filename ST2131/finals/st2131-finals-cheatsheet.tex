@@ -13,7 +13,7 @@
 \usepackage{tikz}
 \setlist{nosep}
 % for including images
-\graphicspath{ {./images/} }
+\graphicspath{ {../images/} }
 
 \pdfinfo{
   /Title (ST2131.pdf)
@@ -63,8 +63,8 @@
 \setlist[itemize,2]{leftmargin=4mm,labelindent=1mm,labelsep=1mm}
 
 % adding my commands
-\input{../commands/style-helpers.tex}
-\input{../commands/math.tex}
+\input{../../commands/style-helpers.tex}
+\input{../../commands/math.tex}
 
 % -----------------------------------------------------------------------
 
@@ -92,12 +92,9 @@
 
   \section{01. COMBINATORIAL ANALYSIS}
 
-  \textbf{tricky} - E18, E20-22, E23, E26
-
   \subsection{The Basic Principle of Counting}
 
   \begin{itemize}
-    \item \definition{combinatorial analysis} the mathematical theory of counting
     \item \definition{basic principle of counting} Suppose that two experiments are performed. 
       If exp1 can result in any one of $m$ possible outcomes and if, for each outcome of exp1, there are $n$ possible outcomes of exp2, 
       then together there are $mn$ possible outcomes of the two experiments.
@@ -117,31 +114,24 @@
 
   \subsection{Combinations}
 
-  \textbf{N4} - $\binom{n}{r} = \frac{n!}{(n-r)!\,r!}$ represents the number of different groups of size $r$ that could be selected from a set of $n$ objects when the order of selection is not considered relevant.
+  \begin{tightcenter}
+    $\binom{n}{r} = \frac{n!}{(n-r)!\,r!} = \binom{n-1}{r-1} + \binom{n-1}{r}, \quad 1 \leq r \leq n$
+  \end{tightcenter}
 
-  \textbf{N4b} - $\binom{n}{r} = \binom{n-1}{r-1} + \binom{n-1}{r}, \quad 1 \leq r \leq n$
-  \begin{niceproof}
-    If object 1 is chosen $\Rightarrow$ $\binom{n-1}{r-1}$ ways of choosing the remaining objects.
-    \\* If object 1 is not chosen $\Rightarrow$ $\binom{n-1}{r}$ ways of choosing the remaining objects.
-  \end{niceproof}
-
-  \textbf{N5} - \textbf{The Binomial Theorem} - \( {\displaystyle{(x+y)^n = \sum^n_{k=0} \binom{n}{k} x^k y^{n-k} }} \) 
-  \begin{niceproof}
-    by mathematical induction: $n=1$ is true; expand; sub dummy variable; combine using N4b; combine back to final term
-  \end{niceproof}
+  \textbf{N5} - \textbf{The Binomial Theorem}
+  \begin{tightcenter}
+    \( {\displaystyle{(x+y)^n = \sum^n_{k=0} \binom{n}{k} x^k y^{n-k} }} \) 
+  \end{tightcenter}
 
   \subsection{Multinomial Coefficients}
 
-  \textbf{N6} - $\binom{n}{n_1, n_2, \dots, n_r} = \frac{n!}{n_1!\, n_2!\, \dots \, n_r!}$  
-  represents the number of possible divisions of $n$ distinct objects 
+  \begin{tightcenter}
+    $\binom{n}{n_1, n_2, \dots, n_r} = \frac{n!}{n_1!\, n_2!\, \dots \, n_r!}$  
+  \end{tightcenter}
+
+  \textbf{N6} - represents the number of possible divisions of $n$ distinct objects 
   into $r$ distinct groups of respective sizes $n_1, n_2, \dots, n_3$, 
   where $n_1 + n_2 + \dots + n_r = n$
-  \begin{niceproof}
-    using basic counting principle, 
-    \\* $= \binom{n}{n_1} \binom{n-n_1}{n_2} \binom{n-n_1-n_2}{n_3} \dots \binom{n-n_1-n_2-n_{r-1}}{n_r}$
-    \\* $= \frac{n!}{(n-n_1)!\,n_1!} \times \frac{(n-n_1)!}{(n-n_1-n_2)!\, n_2!} \times \dots \times \frac{( n-n_1-n_2-\dots -n_{r-1} )}{0!\, n_r!}$
-    \\* $= \frac{n!}{n_1!\, n_2! \, \dots \, n_r!}$
-  \end{niceproof}
 
   \textbf{N7} - \textbf{The Multinomial Theorem}: $(x_1 + x_2 + \dots + x_r)^n$
   \\* $ \quad\quad\quad = \sum\limits_{(n_1, \dots, n_r):n_1 + n_2 + \dots + n_r = n} \frac{n!}{n_1! \, n_2! \, \dots n_r!} x_1^{n_1} x_2^{n_2} \dots x_r^{n_r}$
@@ -150,7 +140,6 @@
 
   \textbf{N8} - there are $\binom{n-1}{r-1}$ distinct \textit{positive} integer-valued vectors $(x_1, x_2, \dots, x_r)$ satisfying
   $x_1 + x_2 + \dots + x_r = n, \quad x_i > 0, \quad i = 1,2,\dots,r$  
-  \\* \attention cannot be directly applied to \textit{N8} as 0 value is not included
 
   \textbf{N9} - there are $\binom{n+r-1}{r-1}$ distinct  \textit{non-negative} integer-valued vectors $(x_1, x_2, \dots, x_r)$ satisfying $x_1 + x_2 + \dots + x_r = n$ 
   \begin{niceproof}
@@ -162,10 +151,8 @@
 
   \subsection{Sample Space and Events}
   \begin{itemize}
-    \item \definition{sample space} The \textit{set} of all outcomes of an experiment (where outcomes are not predictable with certainty)
+    \item \definition{sample space} The \textit{set} of all outcomes of an experiment 
     \item \definition{event} Any \textit{subset} of the sample space
-    \item \definition[of events $E$ and $F$]{union} $E \cup F$ is the event that contains all outcomes that are either in $E$ or $F$ (or both).
-    \item \definition[of events $E$ and $F$]{intersection} $E \cap F$ or $EF$ is the event that contains all outcomes that are both in $E$ and in $F$.
     \item \definition[of $E$]{complement} $E^c$ is the event that contains all outcomes that are \textit{not} in $E$.
     \item \definition{subset} $E \subset F$ is all of the outcomes in $E$ that are also in $F$.
       \begin{itemize}
@@ -173,168 +160,93 @@
       \end{itemize}
   \end{itemize}
 
-  \subsubsection{DeMorgan's Laws}
-  $\mathbf{ (\bigcup\limits^n_{i=1} E_i)^c = \bigcap\limits^n_{i=1}E_i^c }$ 
-  \begin{niceproof}
-    to show LHS $\subset$ RHS: let $x \in (\bigcup^n_{i=1}E_i)^c$ 
-    \\* $\quad\Rightarrow x \notin \bigcup^n_{i=1}E_i \Rightarrow x \notin E_1$ and $x \notin E_2 \dots$ and $x \notin E_n$
-    \\* $\quad\Rightarrow x \in E_1^c$  and $x \in E_2^c \dots$ and $x \in E_n^c$
-    \\* $\quad\Rightarrow x \in \bigcap^n_{i=1} E_i^c$
-    \\* to show RHS $\subset$ LHS: let $x \in \bigcap^n_{i=1} E_i^c$
-  \end{niceproof}
-
-  $\mathbf{ (\bigcap\limits^n_{i=1}E_i)^c = \bigcup\limits^n_{i=1}E_i^c }$ \\
-  \begin{niceproof}
-    using the first law of DeMorgan, negate LHS to get RHS
-  \end{niceproof}
-
+  \textbf{DeMorgan's Laws}:
+  $\quad\quad \mathbf{ (\bigcup\limits^n_{i=1} E_i)^c = \bigcap\limits^n_{i=1}E_i^c } \quad$ and $\quad \mathbf{ (\bigcap\limits^n_{i=1}E_i)^c = \bigcup\limits^n_{i=1}E_i^c }$ \\
 
   \subsection{Axioms of Probability}
 
-  \subsubsection{definition 1: relative frequency}
-  \begin{equation*}
-    P(E) = \lim_{n \to \infty} \frac{n(E)}{n} 
-  \end{equation*}
-  problems with this definition:
-  \begin{enumerate}
-    \item $\frac{n(E)}{n}$ may not converge when $n \to \infty$ 
-    \item $\frac{n(E)}{n}$ may not converge to the same value if the experiment is repeated
-  \end{enumerate}
+  \textbf{definition 1: relative frequency}
 
-  \subsubsection{definition 2: Axioms}
+  $P(E) = \lim_{n \to \infty} \frac{n(E)}{n}$. $\quad$ problems: (1) $\frac{n(E)}{n}$ may not converge when $n \to \infty$. (2) $\frac{n(E)}{n}$ may not converge to the same value if the experiment is repeated.
+
+  \subsubsection{Axioms (definition 2)}
 
   Consider an experiment with sample space $S$. 
   For each event $E$ of the sample space $S$, we assume that a number $P(E)$ is defined and satisfies the following 3 axioms:
-  \begin{enumerate}
-    \item $0 \leq P(E) \leq 1$ 
-    \item $P(S) = 1$
-    \item For any sequence of mutually exclusive events $E_1, E_2, \dots$ 
-      \\* (i.e., events for which $E_iE_j = \emptyset$ when  $i \neq j$),
-      \begin{tightcenter}
-        $P(\bigcup\limits^\infty_{i=1} E_i) = \sum\limits^\infty_{i=1} P(E_i)$ 
-      \end{tightcenter}
-  \end{enumerate}
-  $P(E)$ is the probability of event $E$.
+
+  1. $0 \leq P(E) \leq 1$ 
+  $\quad\quad\quad\quad$
+  2. $P(S) = 1$
+
+  3. For mutually exclusive events, $P(\bigcup\limits^\infty_{i=1} E_i) = \sum\limits^\infty_{i=1} P(E_i)$. $\quad$ same for finite case
+
+  \definition{mutually exclusive} events for which $E_iE_j = \emptyset$ when  $i \neq j$
 
   \subsection{Simple Propositions}
 
   \textbf{N1} - $P(\emptyset) = 0$
 
-  \textbf{N2} - $P(\bigcup\limits^n_{i=1} E_i) = \sum\limits^n_{i=1} P(E_i)$ 
-  $\quad$ (aka axiom 3 for a finite $n$)
-
-  \textbf{N3} - \textbf{strong law of large numbers} - if an experiment is repeated over and over again, then with probability $1$, 
-  the proportion of time during which any specific event $E$ occurs will be equal to $P(E)$.
-
-  \textbf{N6} - the definitions of probability are mathematical definitions. 
-  They tell us which set functions can be called \textbf{probability functions}. 
-  They do not tell us what value a probability function $P(\cdot)$ assigns to a given event $E$.
-
-  \begin{tightcenter}
-    probability function $\iff$ it satisfies the 3 axioms.
-  \end{tightcenter}
-
-  \textbf{N7} - $P(E_c) = 1-P(E)$
+  \textbf{N6} - \textbf{probability function} $\iff$ it satisfies the 3 axioms.
 
   \textbf{N8} - if $E \subset F$, then $P(E) \leq P(F)$
 
-  \textbf{N9} - $P(E \cup F) = P(E) + P(F) - P(E \cap F)$
-
   \textbf{N10} - Inclusion-Exclusion identity where $n=3$
-  \begin{align*}
-    P(E \cup F \cup G) &= P(E) + P(F) + P(G) \\*
-                       &- P(EF) - P(EG) - P(FG) \\*
-                       &+ P(EFG)
-  \end{align*}
+  $P(E \cup F \cup G) = P(E) + P(F) + P(G) - P(EF) - P(EG) - P(FG) + P(EFG)$
 
   \textbf{N11} - \textbf{Inclusion-Exclusion identity} - 
-  \begin{align*}
-    P(E_1 \cup E_2 \cup \dots \cup E_n) &= \sum\limits^n_{i=1} P(E_i) - \sum\limits_{i_1 < i_2} P(E_{i_1} E_{i_2}) + \dots \\
-                                        &+ (-1)^{r+1} \sum_{i_1 < i_2 < \dots < i_r} P(E_{i_1} E_{i_2} \dots E_{i_r}) + \dots \\
-                                        &+ (-1)^{n+1} P(E_1 E_2 \dots E_n)
-  \end{align*}
-  \begin{niceproof}
-    Suppose an outcome with probability $\omega$ is in exactly $m$ of the events $E_i$, where $m > 0$. Then
-    \\* \textbf{LHS}: the outcome is in $E_1\cup E_2 \cup \dots \cup E_n$ and $\omega$ will be counted once in $P(E_1\cup E_2 \cup \dots \cup E_n)$ 
-    \\* \textbf{RHS}: 
-    \begin{itemize}
-      \item the outcome is in exactly $m$ of the events $E_i$ and $\omega$ will be counted exactly $\binom{m}{1}$ times in $\sum\limits^n_{i=1}P(E_i)$
-      \item the outcome is contained in $\binom{m}{2}$ subsets of the type $E_{i_1}E_{i_2}$ 
-        and $\omega$ will be counted $\binom{m}{2}$ times in $\sum\limits_{i_1 < i_2} P(E_{i_1} E_{i_2})$ 
-      \item $\dots$ and so on 
-    \end{itemize}
-    hence RHS = $\binom{m}{1}\omega - \binom{m}{2}\omega + \binom{m}{3}\omega - \dots \pm \binom{m}{m}\omega $
-    \\ $\quad = \omega \sum\limits^m_{i=0}\binom{m}{i} (-1)^i = $ binomial theorem where $x=-1, y=1$ 
-    \\ $\quad = 0 = $ LHS
-  \end{niceproof}
-  \begin{niceproof}[e.g]
-    For an outcome with probability $\omega$ and $n=3$
-    \begin{itemize}
-      \item 
-        \begin{niceproof}[Case 1] $w = P(E_1E_2)$
-          \\* LHS = $\omega$
-          \\* RHS = ($\omega$ + $\omega$ + 0) - ($\omega$ + 0 + 0) + 0 = $\omega$
-        \end{niceproof}
-      \item 
-        \begin{niceproof}[Case 2] $\omega = P(E_1 \cap E_2 \cap E_3)$
-          \\* LHS = $\omega$
-          \\* RHS = ($\omega$ + $\omega$ + $\omega$) - ($\omega$ + $\omega$ + $\omega$) + $\omega$ = $\omega$
-        \end{niceproof}
-    \end{itemize}
-  \end{niceproof}
 
-  \textbf{N12} - 
+  ${\scriptstyle P(E_1 \cup E_2 \cup \dots \cup E_n) = \sum\limits^n_{i=1} P(E_i) - \sum\limits_{i_1 < i_2} P(E_{i_1} E_{i_2}) + \dots }$ 
+  ${\scriptstyle + (-1)^{r+1} \sum\limits_{i_1 < i_2 < \dots < i_r} P(E_{i_1} E_{i_2} \dots E_{i_r}) + \; \dots \; + (-1)^{n+1} P(E_1 E_2 \dots E_n) }$
+
   \begin{enumerate}[label=(\roman*)]
-    \item $P(\bigcup^n_{i=1}E_i) \leq \sum\limits^n_{i=1} P(E_i)$
+    \item $P(\bigcup^n_{i=1}E_i) \leq \sum\limits^n_{i=1} P(E_i)$ (based on Inclusion-Exclusion identity)
     \item $P(\bigcup^n_{i=1}E_i) \geq \sum\limits^n_{i=1} P(E_i) - \sum\limits_{j < i} P(E_iE_j)$
     \item $P(\bigcup^n_{i=1}E_i) \leq \sum\limits^n_{i=1} P(E_i) - \sum\limits_{j < i} P(E_iE_j) + \sum_{k < j < i} P(E_iE_jE_k)$
     \item and so on.
   \end{enumerate}
-  \begin{niceproof}
-    $\scriptstyle \bigcup\limits^n_{i=1} E_i = E_1 \cup E_1^cE_2 \cup E_1^cE_2^cE_3 \cup \dots \cup E_1^cE_2^c\dots E_{n-1}^cE_n$
-    \\* $\scriptstyle P(\bigcup\limits^n_{i=1} E_i) = P(E_1) + P(E_1^cE_2) + P(E_1^cE_2^cE_3) + \dots + P(E_1^cE_2^c\dots E_{n-1}^cE_n)$
-  \end{niceproof}
 
 
   \subsection{Sample Space having Equally Likely Outcomes}
-
-  \textbf{tricky} - 14, 15, 16, 18, 19, 20
 
   Consider an experiment with sample space $S = \{e_1, e_2, \dots, e_n\}$. 
   Then  $P(\{e_1\}) = P(\{e_2\}) = \dots = P(\{e_n\}) = \frac{1}{n} \quad$ or $\quad P(\{e_i\}) = \frac{1}{n}$.
 
   \textbf{N1} - for any event $E$, $P(E) = \frac{\# \text{ of outcomes in } E}{\# \text{ of outcomes in } S}  = \frac{\# \text{ of outcomes in } E}{n} $
 
-  \definition[of events $\{E_n, n \geq 1\}$]{increasing sequence} $E_1 \subset E_2 \subset \dots \subset E_n \subset E_{n+1} \subset \dots$
+  \ildefinition{increasing sequence} of events $\{E_n, n \geq 1\}$ $\rightarrow$ $E_1 \subset E_2 \subset \dots \subset E_n \subset \dots$
 
-  $\lim\limits_{n \to \infty} E_n = \bigcup\limits^\infty_{i=1}E_i$
 
-  \definition[of events $\{E_n, n \geq 1\}$]{decreasing sequence} $E_1 \supset E_2 \supset \dots \supset E_n \supset E_{n+1} \supset \dots$
+  \ildefinition{decreasing sequence} of events $\{E_n, n \geq 1\}$ $\rightarrow$ $E_1 \supset E_2 \supset \dots \supset E_n \supset \dots$
 
-  $\lim\limits_{n \to \infty} E_n = \bigcap\limits^\infty_{i=1}E_i$
+  increasing: $\lim\limits_{n \to \infty} E_n = \bigcup\limits^\infty_{i=1}E_i$ $\quad\quad$
+  decreasing: $\lim\limits_{n \to \infty} E_n = \bigcap\limits^\infty_{i=1}E_i$
+
+  \textbf{N2} - for both \textit{increasing} and \textit{decreasing} sequence, 
+  $\lim\limits_{n \to \infty} P(E_n) = P(\lim\limits_{n \to \infty} E_n)$
 
 
   \section{03. CONDITIONAL PROBABILITY AND INDEPENDENCE}
 
-  tricky - E6, urns (p.37)
-
   \subsection{Conditional Probability}
 
-  \textbf{N1} - if $P(F) > 0$. then $P(E|F) = \frac{P(E \cap F)}{P(F)} $
+  \begin{tightcenter}
+    if $P(F) > 0$, then $P(E|F) = \frac{P(E \cap F)}{P(F)} $
 
-  \textbf{N2} - \textbf{multiplication rule} - $P(E_1E_2\dots E_n) = P(E_1)P(E_2\vert E_1)P(E_3\vert E_1 E_2) \dots P(E_n \vert E_1 E_2 \dots E_{n-1})$
+    \textbf{multiplication rule}:
+
+    $P(E_1\dots E_n) = P(E_1)P(E_2\vert E_1)P(E_3\vert E_1 E_2) \dots P(E_n \vert E_1 E_2 \dots E_{n-1})$
+  \end{tightcenter}
 
   \textbf{N3} - \textbf{axioms of probability} apply to conditional probability
-  \begin{enumerate}
-    \item $ 0 \leq P(E \vert F) \leq 1 $
-    \item $ P(S \vert F) = 1 $ where $ S $ is the sample space
-    \item If $ E_i $ ($ i \in \mathbb{Z}_{\geq 1} $) are mutually exclusive events, then $ P(\bigcup\limits^\infty_1 E_i \vert F) = \sum\limits^\infty_1 P(E_i \vert F) $
-  \end{enumerate}
 
-  \textbf{N4} - If we define $ Q(E) = P(E \vert F) $, then $ Q(E) $ can be regarded as a probability function on the events of $ S $,
-  hence all results previously proved for probabilities apply.
+  1.  $ 0 \leq P(E \vert F) \leq 1 $ $\quad\quad\quad\quad$
+  2. $ P(S \vert F) = 1 $ where $ S $ is the sample space
+
+  3. If $ E_i $ ($ i \in \mathbb{Z}_{\geq 1} $) are mutually exclusive, then $ P(\bigcup\limits^\infty_1 E_i \vert F) = \sum\limits^\infty_1 P(E_i \vert F) $
+
+  \textbf{N4} - If we define $ Q(E) = P(E \vert F) $, 
+  then all previously proven results apply.
   \begin{itemize}
-    \item $Q(E_1\cup E_2) = Q(E_1) + Q(E_2) - Q(E_1 E_2) $ 
     \item $P(E_1\cup E_2\vert F ) = P(E_1\vert F ) + P(E_2\vert F ) - P(E_1 E_2\vert F ) $ 
   \end{itemize}
 
@@ -343,7 +255,6 @@
 
   \textbf{conditioning formula} - $P(E) = P(E \vert F)P(F) + P(E\vert F^c) P(F^c)$
 
-  \textbf{tree diagram} - \\
   \begin{minipage}[c]{0.4\linewidth}
     \begin{tikzpicture}[scale=0.8, every node/.style={transform shape}]
       \node[minimum size=4mm, inner sep=0] (O) at (0,1.25) {};
@@ -366,7 +277,7 @@
     $P(F^c \vert E) = \frac{P(EF^c)}{P(E)} = \frac{P(F^c) \cdot P(E \vert F^c)}{P(E)}$ 
   \end{minipage}
 
-  \subsubsection{Total Probabililty}
+  \subsubsection{Total Probability}
 
   \textbf{theorem of total probability} - 
   Suppose $F_1, F_2, \dots, F_n$ are mutually exclusive events such that $\bigcup\limits^n_{i=1}F_i = S$, 
@@ -386,13 +297,14 @@
   Let $A$ be the event that the person test positive for a disease.
   \\* $B_1$: the person has the disease. $B_2$: the person does not have the disease.
   \begin{tightcenter}
-    \vspace*{-0.5\multicolsep}
+    \vspace*{-1\multicolsep}
     \begin{multicols}{2}
       true positives: $P(B_1\mid A)$
       \\ false positives: $P(A \mid B_2)$
       \\ false negatives: $P(\bar{A} \mid B_1)$
       \\ true negatives: $P(\bar{A} \mid B_2)$
     \end{multicols}
+    \vspace*{-1\multicolsep}
   \end{tightcenter}
 
   \subsection{Independent Events}
@@ -401,14 +313,12 @@
 
   \textbf{N2} - $E$ and $F$ are independent $\iff P(E \vert F) = P(E)$
 
-  \textbf{N3} - if $E$ and $F$ are independent, then $E$ and $F^c$ are independent.
+  \textbf{N3} - $E$ and $F$ are independent $\iff$ $E$ and $F^c$ are independent.
 
   \textbf{N4} - if $E, F, G$ are independent, then $E$ will be independent of any event formed from $F$ and $G$. (e.g. $F\cup G$)
 
-  \textbf{N5} - if $E, F, G$ are independent, then $ P(EFG) = P(E)P(F)P(G) $
-
-  \textbf{N6} - if $ E $ and $ F $ are independent and $ E $ and $ G $ are independent, 
-  \\* $\quad\quad \not\Rightarrow $  $ E $ and $ FG $ are independent
+  \textbf{N6} - ($ E $ and $ F $ are indep) $\land$ ($ E $ and $ G $ are indep) 
+  $\not\Rightarrow $  $ E $ and $ FG $ are independent
 
   \textbf{N7} - For independent trials with probability $ p $ of success, probability of $ m $ successes before $ n $ failures, 
   for $ m, n \geq 1 $,
@@ -435,11 +345,9 @@
     \textit{method 2}
     \begin{align*}
       P_{n, m} &= \sum\limits^{m+n-1}_{k=n} \binom{m+n-1}{k} p^k (1-p)^{m+n-1-k} 
-            \\ &= P(\text{exactly $ k $ successes in $ m+n-1 $ trials})
+            \\ &= P(\text{$\geq n$ successes in $ m+n-1 $ trials})
     \end{align*}
   \end{minipage}
-
-  recursive approach to solving probabilities: see page 85 alternative approach
 
 
   \section{04. RANDOM VARIABLES}
@@ -450,9 +358,18 @@
 
   \subsection{Types of Random Variables}
 
+  \begin{tabular}{|c|l|c|}
+    \hline  \textbf{r.v.} & - & $E(X)$
+    \\\hline  binomial & $ X= $ \# of successes in $ n $ trials w/ replacement & $ np$
+    \\\hline negative binomial & $ X= $ \# of trials until $ k $ successes & $k/p$
+    \\\hline geometric & $ X= $ \# of trials until a success & $1/p$
+    \\\hline hypergeometric & $ X= $ \# of successes in $ n $ trials, no replacement & $rn/N$
+    \\\hline
+  \end{tabular}
+
   \begin{itemize}
     \item $X$ is a \definition[with parameter $p$ if]{Bernoulli r.v.} 
-      \\* $p(x) = \begin{cases}
+      \\* $\quad p(x) = \begin{cases}
         p, &x=1, \text{ ('success')} \\
         1-p, &x=0\quad  \text{ ('failure')}
       \end{cases}$
@@ -461,9 +378,8 @@
       \begin{itemize}
         \item $ P(X=k) = \binom{n}{k} p^k (1-p)^{n-k} $
         \item $ P(k $ successes from $ n $ independent trials each with probability $ p $ of success$ ) $
-        \item e.g. number of red balls out of $ n $ balls drawn with replacement
-        \item $E(Y) = np, \quad Var(Y) = np(1-p)$
       \end{itemize}
+      \centerline{$E(Y) = np, \quad Var(Y) = np(1-p)$}
     \item \definition{Negative Binomial} $ X = $ number of trials until $ k $ successes are obtained
       \begin{itemize}
         \item e.g. number of balls drawn (with replacement) until $ k $ red balls are obtained
@@ -475,27 +391,18 @@
       \end{itemize}
     \item \definition{Hypergeometric} $ X = $ number of trials until success, \textit{without replacement}
       \begin{itemize}
+        \item $P(X=k) = \frac{\binom{m}{k}\binom{N-m}{n-k}}{\binom{N}{n}}$, $k = 0,1,\dots, n \quad$ (for $m$ red balls of $N$ balls)
         \item e.g. number of red balls out of $ n $ balls drawn without replacement
       \end{itemize}
   \end{itemize}
 
-  \subsubsection{Summary}
-
-  \begin{tabular}{|c|l|c|}
-    \hline  binomial & $ X= $ \# of successes in $ n $ trials w/ replacement & $ np$
-    \\\hline negative binomial & $ X= $ \# of trials until $ k $ successes & $k/p$
-    \\\hline geometric & $ X= $ \# of trials until a success & $1/p$
-    \\\hline hypergeometric & $ X= $ \# of successes in $ n $ trials, no replacement & $rn/N$
-    \\\hline
-  \end{tabular}
-
   \subsubsection{Properties}
 
-  \textbf{N1} - if $X \sim \text{Binomial}(n,p)$, and $Y \sim \text{Binomial}(n-1, p)$, 
-  \\* then $\quad\quad E(X^k) = np \cdot E[(Y+1)^{k-1}]$
+  \textbf{N1} - if $X \sim \text{Binomial}(n,p)$, and $Y \sim \text{Binomial}(n-1, p)$, then
+  \\* \centerline{$E(X^k) = np \cdot E[(Y+1)^{k-1}]$}
 
   \textbf{N2} - if $X \sim \text{Binomial}(n,p)$, then for $k \in \mathbb{Z}^+$, 
-  \\* $\quad\quad P(X=k) = \frac{(n-k+1)p}{k(1-p)} \cdot P(X=k-1)$
+  \\* \centerline{$P(X=k) = \frac{(n-k+1)p}{k(1-p)} \cdot P(X=k-1)$}
 
   \subsubsection{Coupon Collector Problem}
 
@@ -507,93 +414,103 @@
   \begin{niceproof}[A]
     $ P(T > n-1) = P(T \geq n) = P(T=n) + P(T > n) $
     $ \quad\Rightarrow P(T=n) = P(T > n-1) - P(T > n) $
+
     Let $ A_j = \{ \text{no type $j$ coupon is contained among the first $n$} \} $
     $ P(T>n) = P(\bigcup^N_{j=1}A_j) $
 
-    Using the inclusion-exclusion identity, 
-    \\* $ \quad P(T>n) = \sum\limits_j P(A_j)\quad$ - coupon $ j $ is not among the first $ n $ collected 
-    \\* $\quad\quad\quad\quad\quad\quad - \sum\limits_{j_1}\sum\limits_{j_2} P(A_{j_1} A_{j_2}) \quad$ - coupon $ j_1 $ and $ j_2 $ are not the first $ n $
-    \\* $\quad\quad\quad\quad\quad\quad + \dots  + (-1)^{k+1} \sum\limits_{j_1}\sum\limits_{j_2}\dots\sum\limits_{j_k} P(A_{j_1}A_{j_2} \cdots A_{j_n}) + \dots $
-    \\* $\quad\quad\quad\quad\quad\quad + (-1)^{N+1} P(A_1A_2 \cdots A_N) $
+    $  P(T>n) = \sum_j P(A_j)\quad$ - coupon $ j $ is not among the first $ n $ collected 
+    \\* $\quad\quad\quad\quad\quad - \sum\sum_{j_1<j_2} P(A_{j_1} A_{j_2}) \quad$ - coupon $ j_1 $ and $ j_2 $ are not the first $ n $
+    \\* $\quad\quad\quad\quad\quad + \dots +  (-1)^{N+1} P(A_1A_2 \cdots A_N) $ by \textit{inclusion-exclusion identity}
 
-    $ P(A_{j_1}A_{j_2} \cdots A_{j_n}) = ( \frac{N-k}{N} )^n $
+    $ P(A_{j_1}A_{j_2} \cdots A_{j_k}) = ( \frac{N-k}{N} )^n $
 
-    Hence $ P(T>n) = \sum\limits^{N-1}_{i=1} \binom{N}{i} \binom{N-1}{N}^n (-1)^{i+1} $
+    Hence $ P(T>n) = \sum\limits^{N-1}_{i=1} \binom{N}{i} (\frac{N-i}{N})^n (-1)^{i+1} $
   \end{niceproof}
 
   \subsection{Probability Mass Function}
 
+  \definition[, pmf of $X$ (\textit{discrete})]{probability mass function} $\quad p(a) = P(X=a) $
   \begin{itemize}
-    \item for a \textit{discrete} r.v., we define the \textbf{probability mass function} (pmf) of $ X $ by $ p(a) = P(X=a) $
-      \begin{itemize}
-        \item cdf, $F(a) = \sum p(x)$ for all $x \leq a$
-        \item if $X$ assumes one of the values $x_1, x_2, \dots$, then $\sum\limits^\infty_{i=1} p(x_i) = 1$
-        \item the pmf $ p(a) $ is positive for at most a countable number of values of $a$
-      \end{itemize}
-    \item e.g. 
-      $\begin{array}{c|ccc}
-        a & 1 & 2 & 4 \\\hline
-        p(a) & \frac{1}{2} & \frac{1}{4} & \frac{1}{4} 
-      \end{array}$
-    \item \definition[variable]{discrete} a random variable that can take on at most a countable number of possible values
+    \item if $X$ assumes one of the values $x_1, x_2, \dots$, then $\sum^\infty_{i=1} p(x_i) = 1$
   \end{itemize}
 
   \subsection{Cumulative Distribution Function}
   \begin{itemize}
-    \item for a r.v. $X$, the function $F$ defined by $F(x) = P(X \leq x), \quad -\infty < x < \infty$, is called the \textbf{cumulative distribution function (cdf)} of $X$.
+    \item \definition[of a r.v. $X$]{cumulative distribution function (cdf)} the function $F$ defined by $\quad\quad F(x) = P(X \leq x), \quad -\infty < x < \infty$
       \begin{itemize}
-        \item aka \textit{distribution function}
-        \item $F(x)$ is defined on the entire real line
+        \item $F(x)$ is defined on the entire real line. (aka \textit{distribution function})
       \end{itemize}
-    \item e.g. $F(a) = \begin{cases}
+  \end{itemize}
+
+  \begin{minipage}[c]{0.45\linewidth}
+    \begin{tightcenter}
+      \textbf{pmf},
+      $\begin{array}{c|ccc}
+        a & 1 & 2 & 4 \\\hline
+        p(a) & \frac{1}{2} & \frac{1}{4} & \frac{1}{4} 
+      \end{array}$
+
+      \ \\
+      $F(a) = \sum p(x)$ for all $x \leq a$
+    \end{tightcenter}
+  \end{minipage}
+  \begin{minipage}[c]{0.45\linewidth}
+    \begin{tightcenter}
+      \textbf{cdf},
+      $F(a) = \begin{cases}
         0, &a < 1 \\
-        \frac{1}{2} , &1 \leq a < 2 \\
-        \frac{3}{4} , &2 \leq a < 4 \\
+        1/2, &1 \leq a < 2 \\
+        3/4, &2 \leq a < 4 \\
         1, &a \geq 4
       \end{cases}$
-  \end{itemize}
+    \end{tightcenter}
+  \end{minipage}
 
   \subsection{Expected Value}
   \begin{itemize}
     \item aka population mean/sample mean, $\mu$
-    \item if $X$ is a discrete random variable having pmf $p(x)$, the \ildefinition{expectation} or the \ildefinition{expected value} of $X$ is defined as $E(X) = \sum\limits_x x \cdot p(x)$
   \end{itemize}
+
+  \begin{tightcenter}
+    \textit{discrete}: $E(X) = \sum_x x \cdot p(x)$
+
+    \textit{continuous}: $E(X) = \int^\infty_{-\infty} x \cdot f(x) \dx$
+
+    $E[g(x)] = \int\limits^\infty_{-\infty} g(x) f(x) \dx $
+  \end{tightcenter}
 
   \textbf{N1} - if $a$ and $b$ are constants, then $E(aX + b) = aE(X) + b$
 
-  \textbf{N2} - the $n^{th}$ moment of of $X$ is given as $E(X^n) = \sum_x x^n\cdot p(x)$
+  \textbf{N3} - for a non-negative r.v. $Y$, $E(Y) = \int^\infty_0 P(Y > y) \mathop{dy}$
+
+  \begin{niceproof}
+    $\int^\infty_0 P(Y > y) \dy = \int^\infty_0 \int^\infty_y f_Y(x) \dx \dy$ (because $f(x) = \frac{d}{\dx} F(x) $)
+    \\* = $\int^\infty_0 x f_Y(x) \dx \quad = E(Y)$
+  \end{niceproof}
 
   \begin{itemize}
     \item $I$ is an indicator variable for event $A$ if 
       $I = \begin{cases}\scriptstyle 1, \text{ if $A$ occurs} \\ \scriptstyle 0, \text{ if $A^c$ occurs}\end{cases}$. then $E(I) = P(A)$.
   \end{itemize}
 
-  \begin{niceproof}[Proof of N1]
-    $E(aX+b) = \sum_x (aX+b) p(x)$
-    \\* $ \quad = a \cdot \sum_x xp(x) + b \cdot \sum_x p(x) = a \cdot E(X) + b$
-  \end{niceproof}
-
   \subsubsection{finding expectation of f(x)}
 
   \begin{itemize}
     \item method 1, using pmf of $Y$: let $Y = f(X)$. Find corresponding $X$ for each $Y$.
-    \item method 2, using pmf of $X$: $E[g(x)] = \sum_i g(x_i)p(x_i)$
-      \begin{itemize}
-        \item where $X$ is a discrete r.v. that takes on one of the values of $x_i$ with the respective probabilities of $p(x_i)$, and $g$ is any real-valued function $g$
-      \end{itemize}
+    \item method 2, using pmf of $X$: $E[f(x)] = \sum_x f(x)p(x)$
   \end{itemize}
 
   \subsection{Variance}
 
-  If $X$ is a r.v. with mean $\mu = E[X]$, then the variance of $X$ is defined by 
+  If $X$ is a r.v. with mean $\mu = E[X]$, then the \ildefinition{variance} of $X$ is defined by 
   \begin{align*}
-    Var(X) &= E[(X-\mu)^2] \\ 
-           &= \sum{x_i} (x_i - \mu)^2 \cdot p(x_i) \quad\quad \text{(deviation $\cdot$ weight)} \\
+    Var(X) &= E[(X-\mu)^2] \\[-0.5em] 
            &= E(x^2) - [E(x)]^2
   \end{align*}
 
   \begin{itemize}
     \item $Var(aX+b) = a^2 Var(x)$
+      \item $Var(X) = \sum_{x_i} (x_i - \mu)^2 \cdot p(x_i) \quad\quad \text{(deviation $\cdot$ weight)}$
   \end{itemize}
 
   \subsection{Poisson Random Variable}
@@ -601,15 +518,15 @@
   a r.v. $X$ is said to be a \ildefinition{Poisson r.v.} with parameter $\lambda$ if for some $\lambda > 0$, 
   \begin{tightcenter}
     $ P(X=i) = e^{-\lambda} \cdot \frac{\lambda^i}{i!} $
+
+    $E(X) = \lambda, \quad Var(X) = \lambda$
   \end{tightcenter}
 
   \begin{itemize}
-    \item notation: $X \sim \text{Poisson}(\lambda)$
     \item $\sum^\infty_{i=0} P(X=i) = 1$
-    \item \textbf{Poisson Approximation of Binomial} - if $X \sim \text{Binomial}(n,p)$, $n$ is large and $p$ is small, then $X \dot\sim \text{Poisson}(\lambda)$ where $\lambda=np$.
+    \item \textbf{Poisson Approximation of Binomial} - if $X \sim \text{Binomial}(n,p)$, where $n$ is large and $p$ is small, then $X \dot\sim \text{Poisson}(\lambda)$ where $\lambda=np$.
       \begin{itemize}
-        \item For $n$ independent trials with probability $p$ of success, the number of successes is approximately a \textit{Poisson r.v.} with parameter $\lambda=np$ if $n$ is large \& $p$ is small.
-        \item Poisson approximation remains even when the trials are not independent, provided that their \textit{dependence is weak}.
+        \item $\checkmark$  \textit{weak} dependence is ok 
       \end{itemize}
     \item \textbf{2 ways} to look at the Poisson distribution 
       \begin{enumerate}
@@ -618,18 +535,13 @@
       \end{enumerate}
   \end{itemize}
 
-  \subsubsection{Mean and Variance}
-  \begin{tightcenter}
-    if $X \sim \text{Poisson}(\lambda)$, then $\quad E(X) = \lambda, \quad Var(X) = \lambda$
-  \end{tightcenter}
-
   \subsection{Poisson distribution as random events}
 
   Let $N(t)$ be the number of events that occur in time interval $[0, t]$. 
 
   \textbf{N1} - If the 3 assumptions are true, then  $N(t) \sim \text{Poisson}(\lambda t)$.
 
-  \textbf{N2} - If $\lambda$ is the rate of occurrences of events per unit time, then the number of occurrences in an interval of length $t$ has a Poisson distribution with mean $\lambda t$.
+  \textbf{N2} - If $\lambda$ is the \textit{rate of occurrences} of events per unit time, then the number of occurrences in an interval of length $t$ has a Poisson distribution with mean $\lambda t$.
 
   \begin{tightcenter}
     $P(N(t) = k) = \frac{e^{-\lambda t} (\lambda t)^k}{k!} $, for $k \in \mathbb{Z}_{\geq 0}$
@@ -642,7 +554,6 @@
   \end{tightcenter}
 
   \begin{itemize}
-    \item a function of $h$ that is \textit{small} compared to $h$ when $h$ is small
     \item $o(h) + o(h) = o(h)$
     \item $ \frac{\lambda t}{n} + o ( \frac{t}{n} ) \dot= \frac{\lambda t}{n} $ for large $n$
   \end{itemize}
@@ -656,50 +567,7 @@
 
   \textbf{N2} - $E (\sum\limits_{i-1}^n) = \sum\limits^n_{i=1}E(X_i) \quad$ for r.v. $X_1, X_2, \dots, X_n$
 
-  \subsection{examples}
-
-  \textbf{Selecting hats problem}
-
-  Let $n$ be the number of men who select their own hats.
-  Let $I_E$ be an indicator r.v. for $E$. 
-  $E_i$ is the event that the $i$-th man selects his own hat.
-  Let $X$ be the number of men that select their own hats.
-
-  \begin{itemize}
-    \item $X = I_{E_1} + I_{E_2} + \dots + I_{E_n}$
-    \item $P(E_i) = \frac{1}{n}$
-    \item $P(E_i \vert E_j) = \frac{1}{n-1} \neq P(E_j) $ for $j < i$ (hence $E_i$ and $E_j$ are not independent)
-      \begin{itemize}
-        \item but dependence is weak for large $n$
-      \end{itemize}
-    \item $X$ satisfies the other conditions for binomial r.v., besides independence ($n$ trials with equal probability of success)
-    \item Poisson approximation of $X$ : $X \sim \text{Poisson}(\lambda)$
-      \begin{itemize}
-        \item $\lambda = n \cdot P(E_i) = n\cdot \frac{1}{n} = 1$
-        \item $P(X=i) = \frac{e^{-1}1^i}{i!} = \frac{e^{-1}}{i!} $ 
-        \item $P(X=0) = e^{-1} \approx 0.37$
-      \end{itemize}
-  \end{itemize}
-
-  \textbf{No 2 people have the same birthday}
-
-  For $\binom{n}{2}$ pairs of individuals $i$ and $j$, $i \neq j$, let $E_{ij}$ be the event where they have the same birthday. 
-  Let $X$ be the number of pairs with the same birthday.
-
-  \begin{itemize}
-    \item $X = I_{E_1} + I_{E_2} + \dots + I_{E_n}$
-    \item Each $E_{ij}$ is only \textit{pairwise independent}. $P(E_{ij}) = \frac{1}{365}$
-      \begin{itemize}
-        \item i.e. $E_{ij}$ and $E_{mn}$ are independent
-        \item but $E_{12}$ and $(E_{13} \cap E_{23})$ are not independent $\quad \Rightarrow P(E_{12} \vert E_{13} \cap E_{23}) = 1$
-      \end{itemize}
-    \item $X \dot\sim \text{Poisson}(\lambda)$, $\lambda = \frac{\binom{n}{2}}{365} = \frac{n(n-1)}{730} \quad\quad \Rightarrow P(X=0) = e^{- \frac{n(n-1)}{730} } $ 
-      \begin{itemize}
-        \item for $P(X=0) \leq \frac{1}{2}$, $n \geq 23$
-      \end{itemize}
-  \end{itemize}
-
-  \textbf{distribution of time to next event}
+  \subsubsection{e.g. distribution of time to next event}
 
   Q. suppose an accident happens at a rate of 5 per day. Find the distribution of time, starting from now, until the next accident.
 
@@ -711,6 +579,19 @@
     $P(X > t) = P($no accidents happen during $[0, t]) = P(V=0) = e^{-5t}$
 
     $P(X \leq t) - 1-e^{-5t}$
+  \end{niceproof}
+
+  \subsubsection{example: finding pdf}
+
+  \textit{Q} - Find the pdf of $(b-a)X + a$ where $a, b$ are constants, $b>a$.
+  The pdf of $X$ is given by $f(x) =  \begin{cases} 1, &0 \leq X \leq 1 \\ 0, &\text{otherwise} \end{cases}$. 
+
+  \begin{niceproof}[A]
+    Let $Y = (b-a)X + a$. 
+    \\* cdf, $F_Y(y) = P(Y \leq y) = P((b-a)X + a \leq y) = P(X \leq \frac{y-a}{b-a})$
+    \\* $F_Y(y) = \int^{\frac{y-a}{b-a}}_0 1 \dx = \frac{y-a}{b-a}, \quad a < y < b $
+
+    $f_Y(y) = \frac{d}{dy}F_Y(y) = \begin{cases} \frac{1}{b-a}, &a<y<b \\ 0, &\text{otherwise} \end{cases}$
   \end{niceproof}
 
 
@@ -759,8 +640,6 @@
 
       \begin{niceproof}
         let $Y = F(X)$. then cdf of $Y$, $F_Y(y)$ = $P(Y \leq y) = P(F(X) \leq y) = P(X \leq F^{-1}(y)) = F(F^{-1}(y)) = y $.
-
-        hence $Y$ is a uniform r.v.
       \end{niceproof}
 
     \item \textbf{N9} - $X = F^{-1}(U) \sim$ cdf $F(x)$.
@@ -769,65 +648,24 @@
       \end{itemize}
   \end{itemize}
 
-  \subsection{Expectation \& Variance}
-
-  \subsubsection{expectation}
-
-  \textbf{N1} - \ildefinition{expectation of  $X$}, $E(X) = \int^\infty_{-\infty} x \cdot f(x) \dx$
-
-  \textbf{N2} - if $X$ is a continuous r.v. with pdf $f(x)$, then for any real-valued function $g$, 
-  \begin{tightcenter}
-    $E[g(x)] = \int^\infty_{-\infty} g(x) f(x) \dx $
-  \end{tightcenter}
-
-  \textbf{N2a} $E[aX + b] = \int^\infty_{-\infty} (aX + b) \cdot f(x) \dx = a\cdot E(X) + b$
-
-  \textbf{N3} - for a non-negative r.v. $Y$, $E(Y) = \int^\infty_0 P(Y > y) \mathop{dy}$
-
-  \begin{niceproof}
-    $\int^\infty_0 P(Y > y) \dy = \int^\infty_0 \int^\infty_y f_Y(x) \dx \dy$ (because $f(x) = \frac{d}{\dx} F(x) $)
-    \\* $= \int^\infty_0 \int^x_0 f_Y(x) \dy \dx$ (draw diagram to convert integration)
-    \\* $= \int^\infty_0 f_Y(x) \int^x_0 \dy \dx$ 
-    \\* = $\int^\infty_0 x f_Y(x) \dx$ (because $\int^x_0 \dy = x$)
-    \\* $= E(Y)$
-  \end{niceproof}
-
-  \subsubsection{variance}
-
-  \textbf{N1} - variance of $X$, $Var(X) = E[(X - \mu)^2] = E(X^2) - [E(X)]^2$
-
-  \subsubsection{example}
-
-  \textit{Q} - Find the pdf of $(b-a)X + a$ where $a, b$ are constants, $b>a$.
-  The pdf of $X$ is given by $f(x) =  \begin{cases} 1, &0 \leq X \leq 1 \\ 0, &\text{otherwise} \end{cases}$. 
-
-  \begin{niceproof}[A]
-    Let $Y = (b-a)X + a$. 
-    \\* cdf, $F_Y(y) = P(Y \leq y) = P((b-a)X + a \leq y) = P(X \leq \frac{y-a}{b-a})$
-    \\* $F_Y(y) = \int^{\frac{y-a}{b-a}}_0 1 \dx = \frac{y-a}{b-a}, \quad a < y < b $
-
-    $f_Y(y) = \frac{d}{dy}F_Y(y) = \begin{cases} \frac{1}{b-a}, &a<y<b \\ 0, &\text{otherwise} \end{cases}$
-  \end{niceproof}
-
   \subsection{Uniform Random Variable}
 
   $X$ is a \ildefinition{uniform r.v.} on the interval $(\alpha, \beta)$, $X \sim Uniform(\alpha, \beta)$ 
 
   if its pdf is given by 
 
-  \begin{tightcenter}
-    $f(x) = \begin{cases} \frac{1}{\beta-\alpha}, &\alpha<x<\beta \\ 0, &\text{otherwise} \end{cases}$
-
-    $E(X) = \frac{\alpha + \beta}{2}, \quad Var(X) = \frac{(\beta - \alpha)^2}{12}$
-  \end{tightcenter}
-
   \begin{minipage}[c]{0.25\linewidth}
     \includegraphics[width=0.95\linewidth]{st2131-uniform-rv.png} 
   \end{minipage}
   \begin{minipage}[c]{0.7\linewidth}
-    if $X \sim Uniform(\alpha, \beta)$, then $\frac{x - \alpha}{\beta - \alpha} \sim Uniform (0,1)$
+    \begin{tightcenter}
+      $f(x) = \begin{cases} \frac{1}{\beta-\alpha}, &\alpha<x<\beta \\ 0, &\text{otherwise} \end{cases}$
+
+      $E(X) = \frac{\alpha + \beta}{2}, \quad Var(X) = \frac{(\beta - \alpha)^2}{12}$
+    \end{tightcenter}
   \end{minipage}
 
+  if $X \sim Uniform(\alpha, \beta)$, then $\frac{x - \alpha}{\beta - \alpha} \sim Uniform (0,1)$
   \subsection{Normal Random Variable}
 
   $X$ is a \ildefinition{normal r.v.} with parameters $\mu$ and $\sigma^2$, $X \sim N(\mu,\sigma^2)$ 
@@ -841,7 +679,7 @@
   \end{tightcenter}
 
   \begin{minipage}[c]{0.3\linewidth}
-    \includegraphics[width=0.95\linewidth]{st2131-normal-distribution.png} 
+    \includegraphics[width=0.9\linewidth]{st2131-normal-distribution.png} 
   \end{minipage}
   \begin{minipage}[c]{0.67\linewidth}
     if $X \sim N(\mu, \sigma^2)$, then $\frac{X - \mu}{\sigma} \sim N(0, 1)$
@@ -869,20 +707,18 @@
 
   if for some $\lambda > 0$, its pdf is given by 
 
-  \begin{tightcenter}
-    $f(x) = \begin{cases} \lambda e^{-\lambda x}, &x \geq 0 \\ 0, &\text{otherwise} \end{cases}$
-
-    $E(X) = \frac{1}{\lambda}, \quad Var(X) = \frac{1}{\lambda^2}$
-  \end{tightcenter}
-
-  \begin{minipage}[c]{0.3\linewidth}
-    \includegraphics[width=0.95\linewidth]{st2131-exponential-rv.png}
-  \end{minipage}
   \begin{minipage}[c]{0.3\linewidth}
     \includegraphics[width=0.95\linewidth]{st2131-exponential-rv-example.png} 
   \end{minipage}
-  \begin{minipage}[c]{0.35\linewidth}
-    $P(X < a) = \int^a_0 \lambda e^{-\lambda x} \dx$
+  \begin{minipage}[c]{0.65\linewidth}
+    \begin{tightcenter}
+      $f(x) = \begin{cases} \lambda e^{-\lambda x}, &x \geq 0 \\ 0, &\text{otherwise} \end{cases}$
+
+      $E(X) = \frac{1}{\lambda}, \quad Var(X) = \frac{1}{\lambda^2}$
+      \ \\ \ 
+
+      $P(X < a) = \int^a_0 \lambda e^{-\lambda x} \dx$
+    \end{tightcenter}
   \end{minipage}
 
   \begin{itemize}
@@ -924,9 +760,9 @@
   \end{minipage}
 
   \textbf{N4} - for events occurring randomly in time following the 3 assumptions of poisson distribution, 
-  the amount of time elapsed until a total of $n$ events has occurred is a gamma r.v. with parameters $(n, \lambda)$.
+  the \textbf{amount of time elapsed} until a total of $n$ events has occurred is a gamma r.v. with parameters $(n, \lambda)$.
   \begin{itemize}
-    \item time at which event $n$ occurs, $T_n \sim Gamma(n, \lambda)$ 
+    \item time at which the $n$-th event occurs, $T_n \sim Gamma(n, \lambda)$ 
     \item number of events in time period $[0, t]$, $N(t) \sim Poisson(\lambda t)$
   \end{itemize}
 
@@ -937,8 +773,6 @@
 
   a r.v. $X$ is said to have a \ildefinition{beta distribution}, $X \sim Beta(a, b)$ 
 
-  if its density is given by 
-
   \begin{tightcenter}
     $f(x) = \begin{cases} \frac{1}{\beta(a, b)} x^{a-1} (1-x)^{b-1}, &0 < x < 1 \\ 0, &\text{otherwise} \end{cases} $
 
@@ -946,8 +780,8 @@
   \end{tightcenter}
 
   \begin{tightcenter}
-    \includegraphics[width=0.47\linewidth]{st2131-beta-distribution-2.png} 
-    \includegraphics[width=0.47\linewidth]{st2131-beta-distribution-1.png} 
+    \includegraphics[width=0.35\linewidth]{st2131-beta-distribution-2.png} 
+    \includegraphics[width=0.35\linewidth]{st2131-beta-distribution-1.png} 
   \end{tightcenter}
 
   \textbf{N1} - $\beta(a, b) = \int^1_0 x^{a-1}(1-x)^{b-1} \dx$
@@ -966,13 +800,6 @@
   \begin{tightcenter}
     $f(x) = \frac{1}{\pi} \cdot \frac{1}{1 + (x-\theta)^2} $, $-\infty < x < \infty$
   \end{tightcenter}
-
-  \begin{niceproof}
-    $E(X^n)$ does not exist for $n \in \mathbb{Z}^+$
-
-    $E(X) = \int^\infty_{-\infty} x \cdot f(x) \dx = \infty - \infty$ (undefined)
-  \end{niceproof}
-
 
 
   \section{06. JOINTLY DISTRIBUTED RANDOM VARIABLES}
@@ -1021,17 +848,19 @@
   \end{tightcenter} 
 
   \begin{minipage}[c]{0.4\linewidth}
-    \includegraphics[width=0.95\linewidth]{st2131-joint-pmf-geometric.png}
+    \includegraphics[width=0.9\linewidth]{st2131-joint-pmf-geometric.png}
   \end{minipage}
   \begin{minipage}[c]{0.55\linewidth}
     \textbf{N1} - if $C = \{(x, y): x \in A, y \in B \}$, then 
     $P(X \in A, Y \in B) = \int\limits_B \int\limits_A f(x, y) \dx \dy$
+
+    \textbf{N2} - $F(a, b)$
+    \\* $\quad = P\Big(X \in (-\infty, a], Y \in (-\infty, b]\Big)$
+    \\* $\quad = \int^b_{-\infty} \int^a_{-\infty} f(x, y) \dx \dy $
+
+    \ \\
+    \textbf{N3} - $f(a, b) = \frac{\delta^2}{\delta a \delta b} F(a, b)$
   \end{minipage}
-
-  \textbf{N2} - $F(a, b) = P\Big(X \in (-\infty, a], Y \in (-\infty, b]\Big) = \int\limits^b_{-\infty} \int\limits^a_{-\infty} f(x, y) \dx \dy $
-  \\* for double integral: when integrating $\dx$, take $y$ as a constant
-
-  \textbf{N3} - $f(a, b) = \frac{\delta^2}{\delta a \delta b} F(a, b)$
 
   \subsubsection{interpretation of pdf}
 
@@ -1043,12 +872,11 @@
       P(x < X < x + \dx) &= \int^{x + \dx}_x f(y) \dy \\ &\approx f(x) \dx  
     \end{align*}
 
-    pdf at $x$, $f(x) \approx \frac{P(x < X < x + \dx)}{\dx}$
+    \ 
+    \begin{tightcenter}
+      pdf at $x$, $f(x) \approx \frac{P(x < X < x + \dx)}{\dx}$
+    \end{tightcenter}
   \end{minipage}
-
-  \textbf{N4} - pdf of $X$, $f_X(x) = \int^\infty_0 f(x, y) \dy$
-
-  \textbf{N5} - pdf of $Y$, $f_Y(y) = \int^\infty_0 f(x, y) \dx$
 
   \subsubsection{interpretation of joint pdf}
 
@@ -1067,21 +895,6 @@
 
   \subsubsection{how to do a double integral}
 
-  e.g. find $P(X < Y)$ where the joint pdf of $X$ and $Y$ are given by 
-  $f(x, y) = \begin{cases} 2e^{-x}e^{-y}, &0 < x < \infty, 0 < y < \infty \\ 0, &\text{otherwise} \end{cases} $ 
-
-  \includegraphics[width=0.55\linewidth]{st2131-double-integral-eg-1.png} 
-  \includegraphics[width=0.4\linewidth]{st2131-double-integral-eg-2.png} 
-
-  \begin{enumerate}
-    \item to get the bounds for $\dx$ and $\dy$, plot $X<Y$ 
-      \begin{enumerate}
-        \item draw horizontal lines to determine the bounds for $x$, from $x=a$ to $x=b$
-        \item draw vertical lines to determine the bounds for $y$, from $y=c$ to $y=d$
-      \end{enumerate}
-    \item integrate $\int^d_c \int^b_a f(x) \dx \dy$
-  \end{enumerate}
-
   \begin{minipage}[c]{0.55\linewidth}
     \textbf{example} - given the joint pdf of $X$ and $Y$, find the pdf of r.v. $X/Y$.
 
@@ -1099,9 +912,9 @@
 
   \subsection{Independent Random Variables}
 
-  \textbf{N1} - $X$ and $Y$ are \definition{independent} $P(X \in A, Y \in B) = P(X \in A) \cdot P(Y \in B)$
+  \textbf{N1} - $X$, $Y$ are \definition{independent} $P(X \in A, Y \in B) = P(X \in A) \cdot P(Y \in B)$
 
-  \textbf{N2} - $X$ and $Y$ are \definition{independent} $\forall a,b$, $\quad P(X \leq a, Y \leq b) = P(X \leq a) \cdot P(Y \leq b) $
+  \textbf{N2} - $X$ and $Y$ are \definition{independent} $P(X \leq a, Y \leq b) = P(X \leq a) \cdot P(Y \leq b) $
   \\* $\quad$ or $F(a, b) = F_X(a) \cdot F_Y(b)$ $\quad \Rightarrow $ joint cdf is the product of the marginal cdfs
 
   \textbf{N3} - \textit{discrete case}: discrete r.v. $X$ and $Y$ are \ildefinition{independent} $\iff$
@@ -1112,9 +925,16 @@
   \textbf{N4} - \textit{continuous case}: jointly continuous r.v. $X$ and $Y$ are \ildefinition{independent} $\iff$
   \begin{tightcenter}
     $f(x, y) = f_X(x) \cdot f_Y(y)$ for all $x, y$.
+
+    $-\infty < x < \infty,\quad -\infty < y < \infty$
   \end{tightcenter}
 
-  \textbf{N5} - independence is a \definition[relation]{symmetric} $X$ is independent of $Y$ $\iff$ $Y$ is independent of $X$
+  \textbf{N5} - independence is a \definition[relation]{symmetric} $X$ indep of $Y$ $\iff$ $Y$ indep of $X$
+
+  \begin{tightcenter}
+    if $X$ and $Y$ are independent, then for any functions $h$ and $g$, 
+    \\* $E[ g(X) h(Y) ] = E[g(X)] \cdot E[h(Y)] $
+  \end{tightcenter}
 
   \subsection{Sum of Independent Random Variables}
 
@@ -1125,17 +945,15 @@
     $f_{X+Y}(a) = \int^\infty_{-\infty} f_X (a-y) f_Y(y) \dy $
   \end{tightcenter}
 
-  \textbf{impt example} - E52 (pdf of $X+Y$)
-
   \subsubsection{Distribution of Sums of Independent r.v.}
 
   for $i = 1, 2, \dots, n$, 
 
   \begin{enumerate}
-    \item $X_i \sim Gamma(t_i, \lambda) \Rightarrow \sum\limits^n_{i=1} X_i \sim Gamma(\sum\limits^n_{i=1} t_i, \lambda)$
-    \item $X_i \sim Exp(\lambda) \Rightarrow \sum\limits^n_{i=1}X_i \sim Gamma(n, \lambda)$
-    \item  $Z_i \sim N(0, 1) \Rightarrow \sum\limits^n_{i=1} z^2_i \sim \chi^2_n = Gamma(\frac{n}{2}, \frac{1}{2}) $
-    \item $X_i \sim N(\mu_i, \sigma_i^2) \Rightarrow \sum\limits^n_{i=1}X_i \sim N( \sum\limits^n_{i=1} \mu_i, \sum\limits^n_{i=1} \sigma^2_i ) $
+    \item $X_i \sim Gamma(t_i, \lambda) \quad\Rightarrow\quad \sum\limits^n_{i=1} X_i \sim Gamma(\sum\limits^n_{i=1} t_i, \lambda)$
+    \item $X_i \sim Exp(\lambda) \quad\Rightarrow\quad \sum\limits^n_{i=1}X_i \sim Gamma(n, \lambda)$
+    \item  $Z_i \sim N(0, 1) \quad\Rightarrow\quad \sum\limits^n_{i=1} z^2_i \sim \chi^2_n = Gamma(\frac{n}{2}, \frac{1}{2}) $
+    \item $X_i \sim N(\mu_i, \sigma_i^2) \quad\Rightarrow\quad \sum\limits^n_{i=1}X_i \sim N( \sum\limits^n_{i=1} \mu_i, \sum\limits^n_{i=1} \sigma^2_i ) $
     \item $X \sim Poisson(\lambda_1), Y \sim Poisson (\lambda_2) \Rightarrow X+Y \sim Poisson(\lambda_1 + \lambda_2)$
     \item $X \sim Binom(n, p), Y \sim Binom(m, p) \Rightarrow X+Y \sim Binom(n+m, p) $
   \end{enumerate}
@@ -1149,7 +967,7 @@
 
   for discrete r.v. $X$ and $Y$, the \ildefinition{conditional pdf} of  $X$ given that $Y=y$ is
   \begin{tightcenter}
-    $F_{X \vert Y} (x \vert y) = P(X \leq x \vert Y = y) = \sum\limits_{a \leq x}\frac{P(X = a, Y = y)}{P(Y = y)} = \sum\limits_{a \leq x} P_{X \vert Y} (a \vert y) $
+    $F_{X \vert Y} (x \vert y) = P(X \leq x \vert Y = y) = \sum\limits_{a \leq x}P(X = a, Y = y) = \sum\limits_{a \leq x} P_{X \vert Y} (a \vert y) $
   \end{tightcenter}
 
   \textbf{N0} - equivalent notation: 
@@ -1166,7 +984,7 @@
   \begin{tightcenter}
     $f_{X \vert Y} (x \vert y) = \frac{f(x, y)}{f_Y(y)} \quad$ for all $y$ s.t. $f_Y(y) > 0$
 
-    $f_{X \vert Y} (a \vert y) = P(X \leq a \vert Y = y) = \int\limits^a_{-\infty} f_{X \vert Y} (x \vert y) \dx $ 
+    $F_{X \vert Y} (a \vert y) = P(X \leq a \vert Y = y) = \int\limits^a_{-\infty} f_{X \vert Y} (x \vert y) \dx $ 
   \end{tightcenter}
 
   \textbf{N1} - for any set $A$, $P(X \in A \vert Y = y) = \int\limits_A f_{X \vert Y} (x \vert y) \dy$
@@ -1174,7 +992,6 @@
   \textbf{N2} - if $X$ is independent of $Y$, then $f_{X \vert Y} (x \vert y) = f_X (x)$.
 
   \attention "find the marginal/conditional pdf of $Y$" $\Rightarrow$ must include the \textbf{range} too!! 
-  \\* (see Ex. 69(b, c))
 
 
   \subsection{Joint Probability Distribution of Functions of r.v.}
@@ -1199,8 +1016,6 @@
 
     \section{07. PROPERTIES OF EXPECTATION}
 
-    recap:
-
     \begin{itemize}
       \item for a \textbf{discrete} r.v. $X$, $E(X) = \sum_x x \cdot p(x) = \sum_x \cdot P(X = x)$
       \item for a \textbf{continuous} r.v. $X$, $E(X) = \int^\infty_{-\infty} x \cdot f(x) \dx$
@@ -1210,76 +1025,45 @@
 
     \subsection{Expectations of Sums of Random Variables}
 
-    \begin{center}
+    \begin{tightcenter}
       for $X$ and $Y$ with joint pmf $p(x, y)$ and joint pdf  $f(x, y)$, 
 
       $E[g(x, y)] = \sum\limits_y \sum\limits_x g(x, y) p(x, y)$
 
       $ E[g(x, y)] = \int^\infty_{-\infty} \int^\infty_{-\infty} g(x, y) f(x, y) \dx \dy $
-    \end{center}
+    \end{tightcenter}
 
     \textbf{N2} - if $P(a \leq X \leq b) = 1$, then $a \leq E(X) \leq b$
 
-    \textbf{N3} - if $E(X)$ and $E(Y)$ are finite, $E(X+Y) = E(X) + E(Y)$
-
-    \begin{niceproof}
-      using N1, integrate $\int^\infty_{-\infty} \int^\infty_{-\infty} (x+y) f(x, y) \dx \dy$
-      $\quad = \int^\infty_{-\infty} x \cdot f_X (x) \dx + \int^\infty_{-\infty} y f_Y(y) \dy = E(X) + E(Y)$
-    \end{niceproof}
-
-    \textbf{N4} - if, for r.v.s $X$ and $Y$, if $X \geq Y$, then $E(X) \geq E(Y)$
+    \textbf{N4} - for r.v.s $X$ and $Y$, if $X \geq Y$, then $E(X) \geq E(Y)$
 
     \textbf{N5} - let $X_1, \dots, X_n$ be independent and identically distributed r.v.s having distribution $P(X_i \leq x) = F(x)$ and expected value $E(X_i) = \mu$. 
     \begin{tightcenter}
       if $\bar{X} = \sum\limits^n_{i=1} \frac{X_i}{n}$, then $E(\bar{X}) = \mu$
     \end{tightcenter}
 
-    \begin{niceproof}
-      $E(\bar{X}) = E (\sum\limits^n_{i=1} \frac{X_i}{n}) = \frac{1}{n} (\sum\limits^n_{i=1} E(X_i)) = \frac{1}{n} \cdot n\mu = \mu $
-
-      $\Rightarrow$ sample mean = population mean
-    \end{niceproof}
-
     \textbf{N6} - $\bar{X}$ is the \ildefinition{sample mean}.
-
-    \textbf{N7} - if $X \sim Binom(n, p)$, then $E(X) = np$.
-
-    \begin{niceproof}
-      express $X$ as a sum of Bernoulli r.v. $\Rightarrow$ sum of indicator r.v. = $np$.
-    \end{niceproof}
-
-    \subsubsection{examples}
+    $\quad\quad\Rightarrow$ sample mean = population mean
 
     \attention trick: express a r.v. as a sum of r.v. with easier to find expectation
 
+    \subsubsection{examples}
+
     \begin{itemize}
-      \item negative binomial = sum of geometric $= k/p$
       \item hypergeometric with $r$ red balls out of  $N$ balls  with $n$ trials
         \begin{itemize}
           \item indicator r.v. $=1$ if the $i$th ball selected is red \item $P(Y_i = 1) = \frac{r}{N} \Rightarrow E(Y_i) = \frac{r}{N} \Rightarrow E(X) = \sum^n_{i=1}Y_i = n\frac{r}{N} $
         \end{itemize}
-      \item hat throwing problem: expected number of people that select their own hat
-        \begin{itemize}
-          \item P(select your own hat back) = $\frac{1}{N}$ $\Rightarrow E(X) = N \cdot \frac{1}{N} = 1$
-        \end{itemize}
       \item coupon collector problem: 
         \begin{itemize}
           \item let $X$ = number of coupons collected for a complete set
-          \item let $X_i$ = number of \textit{additional} coupons that need to be collected to obtain another distinct type after $i$ distinct types have been collected 
-            \begin{itemize}
-              \item $X_i \sim Geometric(p = \frac{N-i}{N} )$
-            \end{itemize}
+          \item let $X_i$ = additional number to be collected to obtain distinct type after $i$ distinct types have been collected.  $X_i \sim Geometric(p = \frac{N-i}{N} )$
           \item $E(X) = \sum^{N-1}_{i=1} E(X_i) = 1 + \frac{1}{\frac{N-1}{N}} + \frac{1}{\frac{N-2}{N}} + \dots + \frac{1}{\frac{1}{N}}$ 
             \\* $ \quad = N(\frac{1}{N} + \frac{1}{N-1} + \dots + 1) $
         \end{itemize}
     \end{itemize}
 
     \subsection{Covariance, Variance of Sums and Correlations}
-
-    \begin{tightcenter}
-      if $X$ and $Y$ are independent, then for any functions $h$ and $g$, 
-      \\* $E[ g(X) h(Y) ] = E[g(X)] \cdot E[h(Y)] $
-    \end{tightcenter}
 
     \definition{covariance} measure of \textit{linear relationship}
 
@@ -1290,13 +1074,10 @@
 
     \textbf{N1} - $X$ and $Y$ are independent $\Rightarrow Cov(X, Y) = 0$
 
-    \textbf{N2} - $Cov(X, Y) = 0 \not\Rightarrow$ $X$ and $Y$ are independent
-
-    \begin{niceproof}
-      let $E(X) = 0, E(XY) = 0 \Rightarrow Cov(X, Y) = 0$, but not independent
-
-      e.g. non-linear relationship
-    \end{niceproof}
+    \textbf{N2} - $Cov(X, Y) = 0 \not\Rightarrow$ $X$ and $Y$ are independent. 
+    \textit{Proof.}
+    let $E(X) = 0$, $E(XY) = 0 \Rightarrow Cov(X, Y) = 0$, but not independent
+    e.g. non-linear relationship
 
     \subsubsection{Covariance properties}
 
@@ -1305,17 +1086,18 @@
       \item $Cov(X, X) = Var(X)$ 
       \item $Cov(aX, Y) = aCov(X, Y)$
       \item $Cov (\sum\limits^n_{i=1} X_i, \sum\limits^m_{j=1} Y_j) = \sum\limits^n_{i=1} \sum\limits^m_{j-1} Cov(X_i, Y_j) $
+      \item $Cov (I_A, I_B) = P(B) [ P(A \vert B) - P(A) ] $
     \end{enumerate}
 
     for variance:
 
-    \textbf{N1} - $Var (\sum\limits^n_{i=1} X_i) - \sum\limits^n_{i=1} Var(X_i) + 2 \mathop{\sum\sum}\limits_{i<j} Cov(X_i, X_j) $
+    \textbf{N1} - $Var (\sum\limits^n_{i=1} X_i) = \sum\limits^n_{i=1} Var(X_i) + 2 \mathop{\sum\sum}\limits_{i<j} Cov(X_i, X_j) $
 
-    \textbf{N2} - if $X_1, \dots, X_n$ are \textit{pairwise independent} ($X_i, X_j$ are independent $\forall i \neq j$), then $Var(\sum\limits^n_{i=1} X_i) = \sum\limits^n_{i=1} Var(X_i)$
+    \textbf{N2} - if $X_1, \dots, X_n$ are \textit{pairwise independent}, $Var(\sum\limits^n_{i=1} X_i) = \sum\limits^n_{i=1} Var(X_i)$
 
-    \textbf{N3} - for $n$ independent and identically distributed r.v. with expected value $\mu$ and variance  $\sigma^2$, 
+    \textbf{N3} - for $n$ independent and identically distributed r.v. with variance  $\sigma^2$, 
     \begin{tightcenter}
-      $\bar{X} = \frac{1}{n} \sum\limits^n_{i=1} x_i \quad\quad S^2 \frac{1}{n-1} \sum\limits^n_{i=1} (x_i - \bar{x})^2$ 
+      $\bar{X} = \frac{1}{n} \sum\limits^n_{i=1} x_i \quad\quad S^2 = \frac{1}{n-1} \sum\limits^n_{i=1} (x_i - \bar{x})^2$ 
 
       $Var (\bar{X}) = \frac{\sigma^2}{n} \quad\quad E(S^2) = \sigma^2 \quad\quad\quad\quad$
     \end{tightcenter}
@@ -1335,27 +1117,18 @@
 
     \textbf{N3} - $\rho(X, Y) = 1 \Rightarrow Y = aX + b, a = \frac{\delta y}{\delta x} > 0$
 
-    \textbf{N4} for events $A$ and $B$ with indicator r.v. $I_A$ and $I_B$, then $Cov(I_A, I_B) = 0$ when they are independent events. 
+    \textbf{N4} - for independent events $A$, $B$ with indicator r.v. $I_A$, $I_B$: $Cov(I_A, I_B) = 0$. 
 
     \textbf{N5} - deviation is not correlated with the sample mean. For independent \& identically distributed r.v. $X_1, X_2, \dots, X_n$ with variance $\sigma^2$, then $Cov(X_i - \bar{X}, \bar{X}) = 0$.
 
-    \begin{niceproof}
-      $Cov(X_i - \bar{X}, \bar{X}) = Cov(X_i, \bar{X}) - Cov(\bar{X}, \bar{X}) $
-      \\* $\quad = Cov(X_i, \frac{1}{n} \sum^n_{j=1} X_j) - Var(\bar{X}) $ 
-      \\* $\quad = \frac{1}{n} \sum^n_{j=1} Cov(X_i, X_j) - Var(\bar{X}) $ 
-      \\* $\quad = \frac{1}{n} Cov(X_i, X_i) - \frac{\sigma^2}{n} \quad$ since $\forall i \neq j, Cov(x_i, x_j) = 0$ 
-      \\* $\quad = \frac{1}{n} Var(x_i) - \frac{\sigma^2}{n} = 0 $
-    \end{niceproof}
-
     \subsection{Conditional Expectation}
 
-    the \ildefinition{conditional expectation} of $X$, 
-    \\* given that $Y=y$, for all values of  $y$ such that $P_Y(y) > 0$ is defined by
+    the \ildefinition{conditional expectation} of $X$ given that $Y=y$, $\quad \forall y$ s.t. $P_Y(y) > 0$, is:
 
     \begin{tightcenter}
       $E[X \vert Y=y] = \sum\limits_x x \cdot P(X=x \vert Y=y) = \sum\limits_x x \cdot p_{X \vert Y} (x \vert y)$
 
-      $E(X \vert Y=y) = \int\limits^\infty_{-\infty} f_{X \vert Y}(x \vert y) \dx = \int\limits^\infty_{-\infty} \frac{f(x, y)}{f_Y(y)} \dx$
+      $E(X \vert Y=y) = \int\limits^\infty_{-\infty} x \cdot f_{X \vert Y}(x \vert y) \dx = \int\limits^\infty_{-\infty} x \cdot \frac{f(x, y)}{f_Y(y)} \dx$
 
       \attention note the range for $f_{X \vert Y}(x \vert y)$
     \end{tightcenter}
@@ -1365,15 +1138,10 @@
 
     \textbf{N2} - $E(X \vert X+Y=n) = \sum^{n-1}_{i=1} i \cdot P(X=i \vert X+Y=n) = \frac{n}{2}$
 
-    \ 
-
-    Conditional expectations also satisfy properties of ordinary expectations. 
-    \\* $\Rightarrow$ an ordinary expectation on a \textit{reduced sample space} consisting only of outcomes for which $Y=y$
-
     \begin{tightcenter}
       discrete case: $E[g(x) \vert Y=y] = \sum\limits_x g(x) P_{X \vert Y} (x \vert y)$
 
-      continuous case: $E[g(x) \vert Y=y] = \int^\infty_{-\infty} g(x) f_{X \vert Y} (x \vert y)$
+      continuous case: $E[g(x) \vert Y=y] = \int^\infty_{-\infty} g(x) f_{X \vert Y} (x \vert y) \dx$
 
       then $E(X) = E_{ \text{w.r.t. } y} (E_{ \text{w.r.t. } X \vert Y=y}(X \vert Y)) $
     \end{tightcenter}
@@ -1401,30 +1169,28 @@
     \subsubsection{Computing Probabilities by Conditioning}
 
     \begin{tightcenter}
-      $P(E) = \sum\limits_y P(E \vert Y=y) P(Y=y)$ if $Y$ is \textit{discrete}
-      $P(E) = \int\limits^\infty_{-\infty} P(E \vert Y=y) f_Y(y) \dy$ if $Y$ is \textit{continuous}
+      \textit{discrete}: $\quad P(E) = \sum\limits_y P(E \vert Y=y) P(Y=y)$ 
+
+      \textit{continuous}: $\quad P(E) = \int\limits^\infty_{-\infty} P(E \vert Y=y) f_Y(y) \dy$ 
     \end{tightcenter}
 
     \begin{niceproof}
-      let $X$ be an indicator r.v. for $E$. $\quad \Rightarrow E(X) = P(E)$
-
+      $X$ is an indicator r.v.;
       $E(X | Y=y) = P(X=1 \vert Y=y) = P(E \vert Y=y)$
     \end{niceproof}
 
-    \textbf{N5} - find $P((X, Y) \in C)$ given $f(x, y)$: see p.57
-    \\* also:  $P(X < Y) = \int P(X < Y \vert Y = y) \cdot f_Y(y)$
+    \textbf{N5} - $P(X < Y) = \int P(X < Y \vert Y = y) \cdot f_Y(y)$
 
     \subsubsection{Conditional Variance}
 
     \begin{tightcenter}
       $Var (X \vert Y) = E[ (X - E(X \vert Y))^2 \mid Y ] $
-
-      $Var (X \vert Y) = E(X^2 \vert Y) - [E(X \vert Y)]^2 $
+      \\* $\quad\quad\quad = E(X^2 \vert Y) - [E(X \vert Y)]^2 $
     \end{tightcenter}
 
     \textbf{N6} - $Var(X) = E[Var(X \vert Y)] + Var[E(X \vert Y)] $
 
-    \textbf{N7} -  $E(f(Y)) = E(f(Y) \vert Y=t) = E(f(y) \vert Y=t)$
+    \textbf{N7} -  $E(f(Y)) = E(f(Y) \vert Y=t) = E(f(t) \vert Y=t)$
     \\*  $\quad\quad\quad = E(f(t)) \quad$ if $N(t)$ and $Y$ are independent
 
     \subsection{Moment Generating Functions}
@@ -1439,68 +1205,45 @@
       \item if $X$ is \textit{continuous} with pdf $f(x)$, $\quad M(t) = \int^\infty_{-\infty} e^{tx} f(x) \dx$
     \end{itemize}
 
-    $M(t)$ is called the  \textbf{mgf} because \textit{all moments of $X$} can be obtained by successively differentiating $M(t)$ and then evaluating the result at $t=0$. ($M'(0) = E(X), M''(0) = E(X^2)$, etc)
+    $M(t)$ is called the  \textbf{mgf} because \textit{all moments of $X$} can be obtained by successively differentiating $M(t)$ and then evaluating the result at $t=0$.
 
-    in general, 
     \begin{itemize}
-      \item $M'(t) = E(X^n e^{tX}), \quad n \geq 1$ 
-      \item $M^n(0) = E(X^n), \quad n \geq 1$
+      \item the $n^{th}$ moment of of $X$ is given as $E(X^n) = \sum_x x^n\cdot p(x)$
+        \begin{itemize}
+          \item $M'(0) = E(X), \;\; M''(0) = E(X^2)$, $\;\; M^n(0) = E(X^n), \quad n \geq 1$
+          \item $M'(t) = E(X^n e^{tX}), \quad n \geq 1$ 
+        \end{itemize}
     \end{itemize}
-
-    \textbf{N8} - binomial expansion: $(a+b)^n = \sum\limits^n_{i=0} \binom{n}{i} a^i b^{n-i}$
-    \\* (see other series for useful expansions on other distributions)
-
-    \textbf{N9} - integrating over a pdf from $\infty$ to $-\infty$ always gives 1 
-
     \ 
     \\ if $X$ and $Y$ are independent and have mgf's $M_X(t)$ and $M_Y(t)$ respectively, 
 
     \textbf{N10} - the mgf of $X+Y$ is $M_{X+Y}(t) = M_X(t) \cdot M_Y(t)$
 
-    \begin{niceproof}
-      $M_{X+Y}(t) = E [e^{t(X+Y)}] = E[e^{tX} \cdot e^{tY}] = E(e^{tX}) E(e^{tY})$
-      $= M_X(t) \cdot M_Y(t)$
-    \end{niceproof}
-
     \textbf{N11} - if $M_X(t)$ exists and is finite in some region about $t=0$, then the distribution of $X$ is \textbf{uniquely} determined.
     $M_X(t) = M_Y(t) \iff X=Y$
+
+    \begin{tightcenter}
+      joint mgf:  $ E[e^{tX+sY}] = \int\int e^{tx+sy} f(x, y) \dy \dx $
+    \end{tightcenter}
 
     \subsubsection{Common mgf's}
 
     \begin{itemize}
       \item $X \sim Normal(0, 1), \quad M(t) = e^{e^2/2}$
       \item $X \sim Binomial(n, p), \quad M(t) = (pe^t + (1-p))^n$
-      \item $X \sim Poisson (\lambda), \quad M(t) \exp [ \lambda (e^t - 1) ] $
+      \item $X \sim Poisson (\lambda), \quad M(t) = \exp [ \lambda (e^t - 1) ] $
       \item $X \sim Exp(\lambda), \quad M(t) = \frac{\lambda}{\lambda - t}$
     \end{itemize}
 
 
     \section{08. LIMIT THEOREMS}
 
-    \definition{Markov's Inequality} if $X$ is a non-negative r.v., for any $a > 0$, $P(X \geq a) \leq \frac{E(x)}{a}$.
-
-    \begin{niceproof}
-      let $I$ be an indicator r.v. $=1$ when $X \geq a$. 
-
-      Then $I \leq \frac{X}{a}$, and $E(I) \leq \frac{E(X)}{a}$, and $P(X \geq a) \leq \frac{E(X)}{a}$.
-    \end{niceproof}
+    \definition{Markov's Inequality} if $X$ is a non-negative r.v., $\forall a > 0$, $\;\; P(X \geq a) \leq \frac{E(x)}{a}$.
 
     \definition{Chebyshev's inequality} if $X$ is an r.v. with finite mean $\mu$ and variance $\sigma^2$, then for any value of  $k>0$, 
-    $P(\vert X - \mu \vert \geq k) \leq \frac{\sigma^2}{k^2}$.
-
-    \begin{niceproof}
-      $P [ (X - \mu)^2 \geq k^2 ] \leq \frac{E[(X - \mu)^2]}{k^2} $ by Markov's inequality
-
-      Since $(X - \mu)^2 \geq k^2 \iff \vert X-\mu \vert \geq k$, then $P(\vert X - \mu\vert \geq k) \leq \frac{\sigma^2}{k^2}$
-    \end{niceproof}
+    $\quad \quad P(\vert X - \mu \vert \geq k) \leq \frac{\sigma^2}{k^2}$.
 
     \textbf{N1} - if $Var(X) = 0$, then $P(X = E[X]) = 1$
-
-    \begin{niceproof}
-      let $\mu = E[X]$. by Chebyshev's inequality, for any $n \geq 1$, $P (\vert X - \mu \vert > \frac{1}{n}) \leq \frac{Var(X)}{(\frac{1}{n})^2} = 0 $
-
-      then $P(X \neq \mu) = 0 \Rightarrow P(X = \mu) = 1$
-    \end{niceproof}
 
     \definition{weak law of large numbers}
     let $X_1, X_2, \dots$ be a sequence of independent and identically distributed r.v.s, each with finite mean  $E[X_i] = \mu$. 
@@ -1513,8 +1256,8 @@
 
     \begin{itemize}
       \item aka: $\frac{\bar{x} - \mu}{\sigma/\sqrt{n}} \to z \sim N(0, 1)$
-      \item for $-\infty < a < \infty$, 
-        \\* $P (\frac{X_1 + \dots + X_n - n\mu}{\sigma \sqrt{n}} \leq a) \to \frac{1}{\sqrt{2\pi}} \int^a_{-\infty} e^{-x^2/2} \dx = F(a) $ (cdf of standard normal) as $n \to \infty$
+      \item for $-\infty < a < \infty$, $\quad$ as $n \to \infty$,
+        \\* $P (\frac{X_1 + \dots + X_n - n\mu}{\sigma \sqrt{n}} \leq a) \to \frac{1}{\sqrt{2\pi}} \int^a_{-\infty} e^{-x^2/2} \dx = F(a) \;\; $ - cdf of $N(0,1)$
     \end{itemize}
 
     \textbf{N2} - Let $Z_1, Z_2, \dots$ be a sequence of r.v.s with distribution functions $F_{Z_n}$ and moment generating functions $M_{Z_n}, n \geq 1$.
@@ -1526,15 +1269,15 @@
     \\* Then, with probability  $1$, 
     $\frac{X_1 + \dots + X_n}{n} \to \mu$ as $n \to \infty$
 
-\end{multicols*}
+    \begin{center}
+      \fbox{%
+        \parbox{0.8\linewidth}{\centering \textcolor{black}{
+            approximations - $\lim\limits_{n \to \infty} (1-\frac{\lambda}{n})^n = e^{-\lambda} $
+          }
+        }%
+      }
+    \end{center}
 
-\begin{center}
-  \begin{tabular}{ccc}
-    \textbf{commutative} & $E \cup F = F \cup E$ & $E \cap F = F \cap E$ \\
-    \textbf{associative} & $(E \cup F) \cup G = E \cup (F \cup G)$ &  $(E \cap F) \cap G = E \cap (F \cap G)$ \\
-    \textbf{distributive} & $(E \cup F) \cap G = (E \cap F) \cup (F \cap G)$ & $(E \cap F) \cup G = (E \cup F) \cap (F \cup G)$ \\
-    \textbf{DeMorgan's} & $(\bigcup\limits^n_{i=1} E_i)^c = \bigcap\limits^n_{i=1}E_i^c$ & $(\bigcap\limits^n_{i=1}E_i)^c = \bigcup\limits^n_{i=1}E_i^c$ \\
-  \end{tabular}
-\end{center}
+  \end{multicols*}
 
-\end{document}
+  \end{document}
