@@ -1,6 +1,6 @@
-# NUS CS Cheatsheets
+# NUS Cheatsheets
 
-A compilation of my summary sheets & cheatsheets NUS mods (mostly math and computing)
+A compilation of my notes and exam cheatsheets for NUS courses (math/computing/statistics)
 
 If you find any typos please let me know! Thank you :)
 
@@ -17,9 +17,9 @@ If you find any typos please let me know! Thank you :)
 - [x] **AY21/22 S1**
   - CS2100
   - CS2102
-- [ ] **AY21/22 S2** :pencil2:
+- [x] **AY21/22 S2** 
   - CS3230
-  - ST2131
+  - ST2131/MA2216
 
 ## Useful resources
 
