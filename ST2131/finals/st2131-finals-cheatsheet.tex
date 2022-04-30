@@ -967,7 +967,7 @@
 
   for discrete r.v. $X$ and $Y$, the \ildefinition{conditional pdf} of  $X$ given that $Y=y$ is
   \begin{tightcenter}
-    $F_{X \vert Y} (x \vert y) = P(X \leq x \vert Y = y) = \sum\limits_{a \leq x}\frac{P(X = a, Y = y)}{P(Y = y)} = \sum\limits_{a \leq x} P_{X \vert Y} (a \vert y) $
+    $F_{X \vert Y} (x \vert y) = P(X \leq x \vert Y = y) = \sum\limits_{a \leq x}P(X = a, Y = y) = \sum\limits_{a \leq x} P_{X \vert Y} (a \vert y) $
   \end{tightcenter}
 
   \textbf{N0} - equivalent notation: 
@@ -984,7 +984,7 @@
   \begin{tightcenter}
     $f_{X \vert Y} (x \vert y) = \frac{f(x, y)}{f_Y(y)} \quad$ for all $y$ s.t. $f_Y(y) > 0$
 
-    $f_{X \vert Y} (a \vert y) = P(X \leq a \vert Y = y) = \int\limits^a_{-\infty} f_{X \vert Y} (x \vert y) \dx $ 
+    $F_{X \vert Y} (a \vert y) = P(X \leq a \vert Y = y) = \int\limits^a_{-\infty} f_{X \vert Y} (x \vert y) \dx $ 
   \end{tightcenter}
 
   \textbf{N1} - for any set $A$, $P(X \in A \vert Y = y) = \int\limits_A f_{X \vert Y} (x \vert y) \dy$
@@ -1016,8 +1016,6 @@
 
     \section{07. PROPERTIES OF EXPECTATION}
 
-    recap:
-
     \begin{itemize}
       \item for a \textbf{discrete} r.v. $X$, $E(X) = \sum_x x \cdot p(x) = \sum_x \cdot P(X = x)$
       \item for a \textbf{continuous} r.v. $X$, $E(X) = \int^\infty_{-\infty} x \cdot f(x) \dx$
@@ -1027,13 +1025,13 @@
 
     \subsection{Expectations of Sums of Random Variables}
 
-    \begin{center}
+    \begin{tightcenter}
       for $X$ and $Y$ with joint pmf $p(x, y)$ and joint pdf  $f(x, y)$, 
 
       $E[g(x, y)] = \sum\limits_y \sum\limits_x g(x, y) p(x, y)$
 
       $ E[g(x, y)] = \int^\infty_{-\infty} \int^\infty_{-\infty} g(x, y) f(x, y) \dx \dy $
-    \end{center}
+    \end{tightcenter}
 
     \textbf{N2} - if $P(a \leq X \leq b) = 1$, then $a \leq E(X) \leq b$
 
@@ -1088,6 +1086,7 @@
       \item $Cov(X, X) = Var(X)$ 
       \item $Cov(aX, Y) = aCov(X, Y)$
       \item $Cov (\sum\limits^n_{i=1} X_i, \sum\limits^m_{j=1} Y_j) = \sum\limits^n_{i=1} \sum\limits^m_{j-1} Cov(X_i, Y_j) $
+      \item $Cov (I_A, I_B) = P(B) [ P(A \vert B) - P(A) ] $
     \end{enumerate}
 
     for variance:
@@ -1142,7 +1141,7 @@
     \begin{tightcenter}
       discrete case: $E[g(x) \vert Y=y] = \sum\limits_x g(x) P_{X \vert Y} (x \vert y)$
 
-      continuous case: $E[g(x) \vert Y=y] = \int^\infty_{-\infty} g(x) f_{X \vert Y} (x \vert y)$
+      continuous case: $E[g(x) \vert Y=y] = \int^\infty_{-\infty} g(x) f_{X \vert Y} (x \vert y) \dx$
 
       then $E(X) = E_{ \text{w.r.t. } y} (E_{ \text{w.r.t. } X \vert Y=y}(X \vert Y)) $
     \end{tightcenter}
@@ -1223,12 +1222,16 @@
     \textbf{N11} - if $M_X(t)$ exists and is finite in some region about $t=0$, then the distribution of $X$ is \textbf{uniquely} determined.
     $M_X(t) = M_Y(t) \iff X=Y$
 
+    \begin{tightcenter}
+      joint mgf:  $ E[e^{tX+sY}] = \int\int e^{tx+sy} f(x, y) \dy \dx $
+    \end{tightcenter}
+
     \subsubsection{Common mgf's}
 
     \begin{itemize}
       \item $X \sim Normal(0, 1), \quad M(t) = e^{e^2/2}$
       \item $X \sim Binomial(n, p), \quad M(t) = (pe^t + (1-p))^n$
-      \item $X \sim Poisson (\lambda), \quad M(t) \exp [ \lambda (e^t - 1) ] $
+      \item $X \sim Poisson (\lambda), \quad M(t) = \exp [ \lambda (e^t - 1) ] $
       \item $X \sim Exp(\lambda), \quad M(t) = \frac{\lambda}{\lambda - t}$
     \end{itemize}
 
