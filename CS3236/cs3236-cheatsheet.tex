@@ -15,12 +15,12 @@
 \graphicspath{ {./images/} }
 
 \pdfinfo{
-  /Title (MODULE_CODE.pdf)
+  /Title (CS3236.pdf)
   /Creator (TeX)
   /Producer (pdfTeX 1.40.0)
   /Author (Jovyn Tan)
-  /Subject (MODULE_CODE)
-/Keywords (MODULE_CODE, nus,cheatsheet,pdf)}
+  /Subject (CS3236)
+/Keywords (CS3236, nus,cheatsheet,pdf)}
 
 % Turn off header and footer
 \pagestyle{empty}
@@ -300,7 +300,7 @@
     \item $H(X) \geq 0 \quad$ (\textbf{non-negativity})
       \begin{itemize}
         \item $H(X)=0 \iff X$ if deterministic
-        \item proof: information $\log_2\frac{1}{p} \geq 0$ for $p \in [0,1]$, so entropy is the average of a non-negative quantity, and itself is non-negative
+        \item \textit{Proof.} information $\log_2\frac{1}{p} \geq 0$ for $p \in [0,1]$, so entropy is the average of a non-negative quantity, and itself is non-negative
       \end{itemize}
     \item $H(X) \leq \log_2 \vert\mathcal{X}\vert \quad$ (\textbf{upper bound}) \\* if $X$ takes values on a finite alphabet $ \mathcal{X} $
       \begin{itemize}
@@ -317,13 +317,92 @@
       \begin{itemize}
         \item $H(X \vert Y) = H(X) \iff X$ and $Y$ are independent
         \item additional information $Y$ can't increase uncertainty \textit{on average}
-        but \textit{can} have $H(X \vert Y=y) > H(X)$
+          but \textit{can} have $H(X \vert Y=y) > H(X)$
       \end{itemize}
     \item $H(X_1, \dots, X_n) \leq \sum^n_{i=1} H(X_i) \quad$ (\textbf{sub-additivity})
       \begin{itemize}
         \item equality $\iff X$ and $Y$ are independent
       \end{itemize}
   \end{enumerate}
+
+  \subsection{KL Divergence}
+
+  \begin{tightcenter}
+    for two pmfs $P$ and $Q$ on a finite alphabet $\mathcal{X}$, the \ildefinition{Kullback-Leibler (KL) divergence} or \ildefinition{relative entropy} is given by
+    \begin{align*}
+      D(P||Q) &= \sum_x P(x) \log_2 \frac{P(x)}{Q(x)} \\*
+              &= \mathbb{E}_{X \sim P}  \left[ \log_2 \frac{P(X)}{Q(X)} \right]
+    \end{align*}
+  \end{tightcenter}
+
+  \begin{itemize}
+    \item $D(P||Q) \neq D(Q||P)$
+    \item $D(P||Q) \geq 0 \quad$ 
+      \begin{itemize}
+        \item \textit{Proof.} $-D(P||Q) = - \sum_x P(x) \log_2 \frac{P(x)}{Q(x)}$  
+          $\leq \sum_x P(x) (\frac{Q(x)}{P(x)}-1) = \sum_x Q(x) - \sum_x P(x) = 0$ 
+          \\* (using property that $x-1>\ln x$)
+      \end{itemize}
+    \item $D(P||Q) = 0 \iff P=Q$
+      \begin{itemize}
+        \item \textit{Proof.} same as above, using $\ln a = a-1 \iff a=1$ (then $\frac{P(x)}{Q(x)} = 1$)
+      \end{itemize}
+  \end{itemize}
+
+  \section{02. SYMBOL-WISE SOURCE CODING}
+
+  $X$ is a d.r.v. with pmf $P_X$ over an alphabet $\mathcal{X}$ (set of symbols).
+
+  \begin{tightcenter}
+    \textbf{symbol-wise source coding} maps each $x \in \mathcal{X}$ to some binary sequence $C(x)$ of length  $\ell(x)$.
+  \end{tightcenter}
+  \begin{tightcenter}
+    \textbf{average length} of a code $C(\cdot)$, 
+    \\* \( {\displaystyle{ L(C) = \sum_{x \in \mathcal{X}} P_X(x) \ell (x) }} \) 
+  \end{tightcenter}
+
+  \subsubsection{decodability conditions}
+  \begin{itemize}
+    \item \definition{nonsingular property} $C(x) \neq C(x') \iff x\neq x'$
+    \item a code $C(\cdot)$ is \definition{uniquely decodable} no 2 sequences (of equal or differing lengths) of symbols in $\mathcal{X}$ are coded to the same concatenated binary sequence.
+      \begin{itemize}
+        \item $x_1, \dots, x_n$ can be always uniquely identified from the string  $C(x_1) \dots C(x_n)$
+      \end{itemize}
+    \item $C(\cdot)$ is \definition{prefix-free} no codeword is a prefix of another
+      \begin{itemize}
+        \item aka \textbf{instantaneous code}
+      \end{itemize}
+  \end{itemize}
+
+  \subsection{Kraft's Inequality and Entropy Bound}
+
+  \begin{tightcenter}
+    \ildefinition{Kraft's inequality} 
+    \\* $\quad\quad$ if $C(\cdot)$ is \textit{prefix-free}, then \( {\displaystyle{\quad \sum_{x \in \mathcal{X}} 2^{-\ell(x)} \leq 1 }} \) 
+  \end{tightcenter}
+
+  \begin{itemize}
+    \item \textit{Proof.} represent the codewords by a binary tree. If there is a codeword at some point in the tree, there are no codewords further down the tree. probability of branching to a codeword $=2^{-\ell (x)}$ and sum of probabilities cannot exceed 1
+    \item \definition{existence property} if a set of integers $\{ \ell(x) \}_{x \in \mathcal{X}}$ satisfies $\sum_{x \in \mathcal{X}} 2^{-\ell(x)} \leq 1$, 
+      then it is possible to construct a \textit{prefix-free} code that maps each $x \in \mathcal{X}$ to a codeword of length $\ell(x)$.
+  \end{itemize}
+
+  \subsubsection{entropy bound}
+
+  \begin{tightcenter}
+    \ildefinition{entropy bound} \\*
+    expected length, $L(C) \geq H(X)$
+    \\* with equality $\iff P_X(x) = 2^{-\ell(x)}$
+  \end{tightcenter}
+
+  \begin{itemize}
+    \item entropy gives a \textit{fundamental compression limit}
+      \begin{itemize}
+        \item average length is at least equal to entropy
+        \item if all probabilities are negative powers of 2, we can match the entropy bound (optimal code)
+      \end{itemize}
+    \item \textit{Proof.} manipulate to get $L(C) - H(X) \geq D(P_X||Q) \geq 0$
+  \end{itemize}
 
 
 \end{multicols*}
