@@ -349,6 +349,75 @@
       \end{itemize}
   \end{itemize}
 
+  \subsection{Mutual Information}
+
+  \begin{align*}
+    I(X;Y) &= H(Y) - H(Y \vert X) \\*
+           &= H(X) - H(X \vert Y) \\*
+           &= H(X) + H(Y) - H(X, Y) \\*
+           &= D(P_{XY}\vert\vert P_X \times P_Y)
+  \end{align*}
+
+  \begin{itemize}
+
+    \item \definition[, $I(X;Y)$]{mutual information} the amount of information we learn about $Y$ by observing $X$ (on avg)
+      \begin{itemize}
+        \item $H(Y)$ = uncertainty in  $Y$ 
+        \item $H(Y \vert X)$ = (avg) uncertainty in $Y$ after observing $X$
+        \item $D(P_{XY}\vert\vert P_X P_Y)$ = how far $X,Y$ are from being independent
+      \end{itemize}
+    \item $I(X_1;X_2,X_3) \neq I(X_1, X_2;X_3)$ 
+    \item \definition{joint mutual information} 
+      \begin{align*}
+        I(X_1, X_2 ; Y_1, Y_2) = H(Y_1, Y_2) - H(Y_1, Y_2 \vert X_1, X_2)
+      \end{align*}
+    \item \definition{conditional mutual information} 
+      \begin{align*}
+        I(X;Y \vert Z) = H(Y \vert Z) - H(Y \vert X,Z)
+      \end{align*}
+    \item if $X \perp Y$, then $I(X;Y) = 0$ 
+      \begin{itemize}
+        \item \textit{Proof}. $X \perp Y \Rightarrow P_{XY} = P_X \times P_Y \Rightarrow D(P_{XY} \vert \vert P_X \times P_Y) = 0$
+        \item independent variables do not reveal any information about each other
+      \end{itemize}
+    \item if  $X=Y$, then $I(X;Y) = H(Y) = H(X)$
+      \begin{itemize}
+        \item the amount of information a r.v. reveals about itself is the entropy
+      \end{itemize}
+  \end{itemize}
+
+  \subsubsection{properties of mutual information}
+
+  \begin{enumerate}
+    \item $I(X; Y) = I(Y;X) \quad$ (\textbf{symmetry})
+      \begin{itemize}
+        \item $X$ and $Y$ reveal an equal amount of information about each other
+      \end{itemize}
+    \item $I(X;Y) \geq 0 \quad $ (\textbf{non-negativity})
+      \begin{itemize}
+        \item equality $\iff X \perp Y$
+      \end{itemize}
+    \item $I(X;Y)) \leq H(X) \leq \log_2 \vert \mathcal{X} \vert \quad$ (\textbf{upper bounds}) 
+      \\* $I(X;Y)) \leq H(Y) \leq \log_2 \vert \mathcal{Y} \vert$
+      \begin{itemize}
+        \item the information $X$ reveals about $Y$ is \textit{at most} the prior information in $X$ (entropy)
+      \end{itemize}
+    \item (\textbf{chain rule}) 
+      \\* \( {\displaystyle{ I(X_1, \dots, X_n;Y) = \sum^n_{i=1} I(X_i; Y \vert X_1, \dots, X_{i-1}) }} \) 
+      \\* $ \quad\quad = I(X_1;Y) + I(X_2;Y \vert X_1) + \dots$
+    \item (\textbf{data-processing inequality})
+      \\* $I(X;Z) \leq I(X;Y)$ if $X \rightarrow Y \rightarrow Z$ $\quad$  
+      \\* $I(W;Z) \leq I(X;Y)$ if $W \rightarrow X \rightarrow Y \rightarrow Z$ $\quad$  
+      \begin{itemize}
+        \item holds if $Z$ depends on $(X, Y)$ only through $Y$ (i.e. $X \rightarrow Y \rightarrow Z$ forms a \textbf{Markov chain})
+        \item processing $Y$ (to produce $Z$)  cannot increase the information available regarding $X$
+      \end{itemize}
+    \item (\textbf{partial sub-additivity}) 
+      \\*  \( {\displaystyle{ I(X_1, \dots, X_n; Y_1, \dots, Y_n) \leq \sum^n_{i=1} I(X_i;Y_i) }} \) 
+      \\* if $(Y_1, \dots, Y_n)$ are conditionally independent given $(X_1, \dots, X_n)$, and $Y_i$ depends on $(X_1, \dots, X_n)$ only through $X_i$
+  \end{enumerate}
+
+
   \section{02. SYMBOL-WISE SOURCE CODING}
 
   $X$ is a d.r.v. with pmf $P_X$ over an alphabet $\mathcal{X}$ (set of symbols).
@@ -403,6 +472,74 @@
       \end{itemize}
     \item \textit{Proof.} manipulate to get $L(C) - H(X) \geq D(P_X||Q) \geq 0$
   \end{itemize}
+
+
+  \subsection{Shannon-Fano Code}
+
+  \begin{tightcenter}
+    $\ell(x) = \left\lceil \log_2 \frac{1}{P_X(x)} \right\rceil $
+  \end{tightcenter}
+
+  \begin{itemize}
+    \item \textbf{average length}, $L(C)$ satisfies
+      \begin{tightcenter}
+        $H(X) \leq L(C) < H(X) + 1$
+      \end{tightcenter}
+    \item \textbf{Kraft's inequality} holds - 
+      \( {\displaystyle{ \sum_{x \in \mathcal{X}} 2^{-\ell (x)} 
+      \leq \sum_{x \in \mathcal{X}} 2^{-\log_2 \frac{1}{P_X(x)} } = \sum_{x \in \mathcal{X}} P_X(x) = 1 }} \) 
+      \begin{itemize}
+        \item satisfies \textit{Existence property} - we can construct a prefix-free code with these lengths 
+      \end{itemize}
+    \item 1 bit may be significant - e.g. if $H(X)=0.5$
+    \item \textbf{mismatched case} - if the true distribution is $P_X$ but the lengths are chosen according to $Q_X$, 
+      then the Shannon-Fano code satisfies
+  \end{itemize}
+  \begin{tightcenter}
+    $H(X) + D(P_X \vert \vert Q_X) \leq L(C) \leq H(X) + D(P_X \vert \vert Q_X) + 1$
+  \end{tightcenter}
+
+
+  \subsection{Huffman Code}
+
+  \begin{itemize}
+    \item no uniquely decodable symbol code can achieve a smaller length $L(C)$ than the Huffman code.
+      \begin{itemize}
+        \item always prefix-free
+        \item satisfies average length bound (because it is at least as good as Shannon-Fano):
+          $H(X) \leq L(C) < H(X) + 1$
+      \end{itemize}
+  \end{itemize}
+
+  \begin{tightcenter}
+    \includegraphics[width=0.6\linewidth]{cd3236-huffman-code-tree.png} 
+  \end{tightcenter}
+
+  \begin{itemize}
+    \item extension: using blocks of $n$ letters 
+      $nH(X) \leq L(C) < nH(X) + 1$
+      \\* $\quad \Rightarrow $ avg. length per letter $< H(X) + \frac{1}{n}$
+      \begin{itemize}
+        \item but it's harder to accurately know $P_{X_1 \dots X_n}$
+        \item alphabet size increases to $\vert \mathcal{X} \vert^n$ $\Rightarrow$ expensive to sort
+      \end{itemize}
+  \end{itemize}
+
+  \subsection{other codes}
+
+  \begin{itemize}
+    \item \textbf{arithmetic codes} - encodes a sequence $(x_1, \dots, x_n)$ to at most 
+      $\ell(x_1, \dots, x_n) \leq \log_2 \frac{1}{P_{X_1, \dots, X_n} (x_1, \dots, x_n)} + 2$ 
+      \begin{itemize}
+        \item avg. length per letter $\leq H(X) + \frac{2}{n}$
+      \end{itemize}
+    \item \textbf{Lempel-Ziv code} - does not require knowledge of the source distribution 
+      \begin{itemize}
+        \item near-optimal: $O(\frac{\log n}{n})$ instead of $O(\frac{1}{n})$
+      \end{itemize}
+  \end{itemize}
+
+
 
 
 \end{multicols*}
