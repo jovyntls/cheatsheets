@@ -411,6 +411,9 @@
       \begin{itemize}
         \item holds if $Z$ depends on $(X, Y)$ only through $Y$ (i.e. $X \rightarrow Y \rightarrow Z$ forms a \textbf{Markov chain})
         \item processing $Y$ (to produce $Z$)  cannot increase the information available regarding $X$
+          \begin{itemize}
+            \item cannot do data processing to increase information
+          \end{itemize}
       \end{itemize}
     \item (\textbf{partial sub-additivity}) 
       \\*  \( {\displaystyle{ I(X_1, \dots, X_n; Y_1, \dots, Y_n) \leq \sum^n_{i=1} I(X_i;Y_i) }} \) 
@@ -537,6 +540,105 @@
       \begin{itemize}
         \item near-optimal: $O(\frac{\log n}{n})$ instead of $O(\frac{1}{n})$
       \end{itemize}
+  \end{itemize}
+
+
+  \section{03. BLOCK-WISE SOURCE CODING}
+
+  \begin{itemize}
+    \item aka \textbf{fixed-to-fixed} length source coding
+    \item $\mathbb{P}[error] > 0$ (but small)
+      \begin{itemize}
+        \item map likely source strings, fail on unlikely source strings
+      \end{itemize}
+    \item instead of symbol-by-symbol, apply some encoding function to a length-$n$ block $X_1, \dots, X_n$
+      \begin{itemize}
+        \item map a string to some integer $m \in \{1, \dots, M\}$
+      \end{itemize}
+    \item \textbf{discrete memoryless source} $(X_1, \dots, X_n)$ 
+      \begin{itemize}
+        \item \textit{discrete} - the alphabet $\mathcal{X}$ is finite
+        \item \textit{memoryless} - $P_{\underset{\sim}{X}}(\underset{\sim}{x}) = \Pi^n_{i=1} P_X(x_i)$
+          \begin{itemize}
+            \item every letter is independent (unrealistic)
+          \end{itemize}
+      \end{itemize}
+      \includegraphics[width=0.9\linewidth]{cs3236-blockwise-source-coding.png} 
+    \item \textit{decoder} maps $m$ to an estimate $\hat{\underset{\sim}{X}} = g(m)$  (in $\mathcal{X}^n$)
+    \item \definition{error} occurs if $\hat{X} \neq X$
+      \begin{itemize}
+        \item $P_e = \mathbb{P}[\hat{\underset{\sim}{X}} \neq {\underset{\sim}{X}}] = \sum_{\underset{\sim}{x}: \textsc{DEC(ENC($x$))} \neq x} P_{\underset{\sim}{X}}(\underset{\sim}{x})$
+      \end{itemize}
+    \item \definition{rate} $R = \frac{1}{n}\log_2 M$
+      \begin{itemize}
+        \item ratio of compressed length ($\log_2 M$) to source length ($n$)
+          \begin{itemize}
+            \item represents the number of bits per source symbol used to represent encoded value $m$
+          \end{itemize}
+        \item number of strings we can compress to, $M = 2^{nR}$
+        \item lower rate = more compression
+        \item $R \leq H(X) + \epsilon$
+          \begin{itemize}
+            \item \textit{Proof}. $R = \frac{1}{n}\log_2 M = \frac{1}{n}\log_2 (|\mathcal{T}_n(\epsilon)| + 1)$ 
+              \\* $\simeq \frac{1}{n} \log_2 |\mathcal{T}_n(\epsilon)| \leq H(X) + \epsilon$ (using property 3)
+          \end{itemize}
+      \end{itemize}
+  \end{itemize}
+
+  \begin{itemize}
+    \item \definition{fixed length source coding theorem} for any discrete memoryless source with per-symbol distribution $P_X$, 
+      \begin{itemize}
+        \item (\textbf{achievability}) if $R>H(X)$, then for any $\epsilon > 0$, we can get $P_e \leq \epsilon$ for large enough $n$ 
+        \item (\textbf{converse}) if $R<H(X)$, then there exists $\epsilon > 0$ such that $P_e > \epsilon$ for all $n$
+      \end{itemize}
+  \end{itemize}
+
+  \subsection{Typical Sequences}
+
+  for i.i.d. sequence $\mathbf{X} = (X-1, \dots, X_n)$, let $P_X(x) = \Pi^n_{i=1} P_X(x_i)$ be the pmf of $X$.
+
+  \begin{center}
+    \ildefinition{typical set}, \( {\displaystyle{ \mathcal{T}_n(\epsilon) = }} \) 
+    \( {\displaystyle{ \left\{ x \in \mathcal{X}^n : 2^{-n(H(X) + \epsilon)} \leq P_X(x) \leq 2^{-n(H(X)-\epsilon} \right\} }} \) 
+    where $\epsilon > 0$ is a (small) fixed constant
+    \\* i.e. $P_{\underset{\sim}{X}}({\underset{\sim}{x}}) \simeq 2^{-nH({\underset{\sim}{X}})}$
+  \end{center}
+
+  \begin{itemize}
+    \item we only assign a (unique) $m \in \{1, \dots, M\}$ to \textit{some} ${\underset{\sim}{x}}$
+      \begin{itemize}
+        \item choose ${\underset{\sim}{x}}$ such that $\mathbb{P}[{\underset{\sim}{x}} \in \mathcal{T}_n(\epsilon)] \simeq 1$
+      \end{itemize}
+  \end{itemize}
+
+  \subsubsection{properties of a typical set}
+
+  for any fixed $\epsilon > 0$, 
+
+  \begin{enumerate}
+    \item (\textbf{equivalent definition}) $x \in \mathcal{T}_n(\epsilon) \iff$  
+      \( {\displaystyle{ H(X) - \epsilon \leq \frac{1}{n} \sum^n_{i=1} \log_2 \frac{1}{P_X(x_i)} \leq H(X) + \epsilon }} \) 
+      \\* where $x_i$ is the $i$-th entry of $x$
+      \begin{itemize}
+        \item $\mathbb{E}[\log P_X(x_i)] = H(X_i) = H(X)$
+      \end{itemize}
+    \item \( {\displaystyle{ \mathbb{P}[X \in \mathcal{T}_n(\epsilon)] \to 1 \;\; }} \)  as $n \to \infty \quad$ (\textbf{high probability})
+    \item \( {\displaystyle{ \vert \mathcal{T}_n(\epsilon)\vert \leq 2^{n(H(X) + \epsilon)} \quad }} \)  (\textbf{cardinality upper bound})
+    \item \( {\displaystyle{ \vert \mathcal{T}_n(\epsilon)\vert \geq (1-o(1)) 2^{n(H(X) + \epsilon)} \quad }} \)  
+      \\*  where $o(1) \to 0$ as $n \to \infty$ (\textbf{cardinality lower bound})
+      \\* $\quad \Rightarrow$ we can't improve much on property (3)
+  \end{enumerate}
+
+  \subsubsection{asymptotic equipartition property}
+
+  \begin{tightcenter}
+    \ildefinition{asymptotic equipartition property}
+    \\* as $n \to \infty$, the distribution is roughly uniform over $\mathcal{T}_n(\epsilon)$
+  \end{tightcenter}
+
+  \begin{itemize}
+    \item with high probability (property 2), a randomly drawn i.i.d. sequence $X$ will be one of roughly $2^{n(H(X))}$ sequences (property 3 + 4),
+      each of which has probability of roughly $2^{-nH(X)}$ (definition of typical set)
   \end{itemize}
 
 
