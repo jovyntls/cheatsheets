@@ -642,7 +642,26 @@
   \end{itemize}
 
 
+  \subsection{Fano's Inequality}
 
+  let $X$ denote a \textit{generic} r.v., and $\hat{X}$ is any estimate of $X$.
+
+  \begin{tightcenter}
+    \ildefinition{Fano's Inequality}
+    \begin{align*}
+      H(X \vert \hat{X}) &\leq H_2(P_e) + P_e\log_2 (\vert\mathcal{X}\vert -1)  \\*
+                         &\leq 1 + P_2 \log_2 \vert \mathcal{X} \vert
+    \end{align*}
+  \end{tightcenter}
+
+  \begin{itemize}
+    \item intuition: if $H(X \vert \hat{X})$ is large, then $P_2 = \mathbb{P}[\hat{X} \neq X]$ should be large too
+    \item uncertainty in $X$ after observing $\hat{X}$ $\leq$ uncertainty in "is $X = \hat{X}$?" + $(\mathbb{P}$[no]$=P_e)($max uncertainty in the no case$)$
+    \item implications for source coding: proves the \textbf{converse} clause of \textbf{fixed length source coding theorem}
+      \begin{itemize}
+        \item if $R < H(X)$, then $P_e = \mathbb{P}[\hat{X} \neq X]$ cannot be made arbitrarily small as $n \to \infty$
+      \end{itemize}
+  \end{itemize}
 
 \end{multicols*}
 
