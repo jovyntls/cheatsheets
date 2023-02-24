@@ -17,9 +17,13 @@ If you find any typos please let me know! Thank you :)
 - [x] **AY21/22 S1**
   - CS2100
   - CS2102
-- [x] **AY21/22 S2** 
+- [x] **AY21/22 S2**
   - CS3230
   - ST2131/MA2216
+- [ ] **AY22/23 S2** 
+  - CS3223
+  - CS3236
+  - CS4231
 
 ## Useful resources
 
