@@ -341,11 +341,11 @@
       \begin{itemize}
         \item \textit{Proof.} $-D(P||Q) = - \sum_x P(x) \log_2 \frac{P(x)}{Q(x)}$  
           $\leq \sum_x P(x) (\frac{Q(x)}{P(x)}-1) = \sum_x Q(x) - \sum_x P(x) = 0$ 
-          \\* (using property that $x-1>\ln x$)
+          \\* (using property that $\log \alpha \leq \alpha-1$, equality iff $\alpha=1$)
       \end{itemize}
     \item $D(P||Q) = 0 \iff P=Q$
       \begin{itemize}
-        \item \textit{Proof.} same as above, using $\ln a = a-1 \iff a=1$ (then $\frac{P(x)}{Q(x)} = 1$)
+        \item \textit{Proof.} same as above, with $\ln \alpha = \alpha-1 \iff \alpha=1$ (then $\frac{P(x)}{Q(x)} = 1$)
       \end{itemize}
   \end{itemize}
 
@@ -380,9 +380,9 @@
         \item \textit{Proof}. $X \perp Y \Rightarrow P_{XY} = P_X \times P_Y \Rightarrow D(P_{XY} \vert \vert P_X \times P_Y) = 0$
         \item independent variables do not reveal any information about each other
       \end{itemize}
-    \item if  $X=Y$, then $I(X;Y) = H(Y) = H(X)$
+    \item if  $X=Y$, then $I(X;Y) = H(X) = H(Y)$
       \begin{itemize}
-        \item the amount of information a r.v. reveals about itself is the entropy
+        \item amt of information a r.v. reveals about itself is the entropy
       \end{itemize}
   \end{itemize}
 
@@ -397,8 +397,8 @@
       \begin{itemize}
         \item equality $\iff X \perp Y$
       \end{itemize}
-    \item $I(X;Y)) \leq H(X) \leq \log_2 \vert \mathcal{X} \vert \quad$ (\textbf{upper bounds}) 
-      \\* $I(X;Y)) \leq H(Y) \leq \log_2 \vert \mathcal{Y} \vert$
+    \item $I(X;Y) \leq H(X) \leq \log_2 \vert \mathcal{X} \vert \quad$ (\textbf{upper bounds}) 
+      \\* $I(X;Y) \leq H(Y) \leq \log_2 \vert \mathcal{Y} \vert$
       \begin{itemize}
         \item the information $X$ reveals about $Y$ is \textit{at most} the prior information in $X$ (entropy)
       \end{itemize}
@@ -406,7 +406,8 @@
       \\* \( {\displaystyle{ I(X_1, \dots, X_n;Y) = \sum^n_{i=1} I(X_i; Y \vert X_1, \dots, X_{i-1}) }} \) 
       \\* $ \quad\quad = I(X_1;Y) + I(X_2;Y \vert X_1) + \dots$
     \item (\textbf{data-processing inequality})
-      \\* $I(X;Z) \leq I(X;Y)$ if $X \rightarrow Y \rightarrow Z$ $\quad$  
+      \\* $I(X;Z) \leq I(X;Y)$ if $X \rightarrow Y \rightarrow Z$
+      \\* $\quad$ variation: $I(X;Z) \leq I(Y;Z)$ if $X \rightarrow Y \rightarrow Z$
       \\* $I(W;Z) \leq I(X;Y)$ if $W \rightarrow X \rightarrow Y \rightarrow Z$ $\quad$  
       \begin{itemize}
         \item holds if $Z$ depends on $(X, Y)$ only through $Y$ (i.e. $X \rightarrow Y \rightarrow Z$ forms a \textbf{Markov chain})
@@ -426,7 +427,7 @@
   $X$ is a d.r.v. with pmf $P_X$ over an alphabet $\mathcal{X}$ (set of symbols).
 
   \begin{tightcenter}
-    \textbf{symbol-wise source coding} maps each $x \in \mathcal{X}$ to some binary sequence $C(x)$ of length  $\ell(x)$.
+    \ildefinition{symbol-wise source coding} maps each $x \in \mathcal{X}$ to some binary sequence $C(x)$ of length  $\ell(x)$.
   \end{tightcenter}
   \begin{tightcenter}
     \textbf{average length} of a code $C(\cdot)$, 
@@ -436,7 +437,7 @@
   \subsubsection{decodability conditions}
   \begin{itemize}
     \item \definition{nonsingular property} $C(x) \neq C(x') \iff x\neq x'$
-    \item a code $C(\cdot)$ is \definition{uniquely decodable} no 2 sequences (of equal or differing lengths) of symbols in $\mathcal{X}$ are coded to the same concatenated binary sequence.
+    \item $C(\cdot)$ is \definition{uniquely decodable} no 2 sequences (of equal or differing lengths) of symbols in $\mathcal{X}$ are coded to the same concatenated binary sequence.
       \begin{itemize}
         \item $x_1, \dots, x_n$ can be always uniquely identified from the string  $C(x_1) \dots C(x_n)$
       \end{itemize}
@@ -455,7 +456,7 @@
 
   \begin{itemize}
     \item \textit{Proof.} represent the codewords by a binary tree. If there is a codeword at some point in the tree, there are no codewords further down the tree. probability of branching to a codeword $=2^{-\ell (x)}$ and sum of probabilities cannot exceed 1
-    \item \definition{existence property} if a set of integers $\{ \ell(x) \}_{x \in \mathcal{X}}$ satisfies $\sum_{x \in \mathcal{X}} 2^{-\ell(x)} \leq 1$, 
+    \item \definition{existence property} if a given set of integers $\{ \ell(x) \}_{x \in \mathcal{X}}$ satisfies $\sum_{x \in \mathcal{X}} 2^{-\ell(x)} \leq 1$, 
       then it is possible to construct a \textit{prefix-free} code that maps each $x \in \mathcal{X}$ to a codeword of length $\ell(x)$.
   \end{itemize}
 
@@ -464,7 +465,7 @@
   \begin{tightcenter}
     \ildefinition{entropy bound} \\*
     expected length, $L(C) \geq H(X)$
-    \\* with equality $\iff P_X(x) = 2^{-\ell(x)}$
+    \\* with equality $\iff P_X(x) = 2^{-\ell(x)} \quad\; \forall x \in \mathcal{X}$
   \end{tightcenter}
 
   \begin{itemize}
@@ -492,13 +493,14 @@
       \( {\displaystyle{ \sum_{x \in \mathcal{X}} 2^{-\ell (x)} 
       \leq \sum_{x \in \mathcal{X}} 2^{-\log_2 \frac{1}{P_X(x)} } = \sum_{x \in \mathcal{X}} P_X(x) = 1 }} \) 
       \begin{itemize}
-        \item satisfies \textit{Existence property} - we can construct a prefix-free code with these lengths 
+        \item \textbf{Existence property} holds - we can construct a prefix-free code with these lengths 
       \end{itemize}
     \item 1 bit may be significant - e.g. if $H(X)=0.5$
-    \item \textbf{mismatched case} - if the true distribution is $P_X$ but the lengths are chosen according to $Q_X$, 
-      then the Shannon-Fano code satisfies
+    \item \textbf{mismatched case} - 
   \end{itemize}
   \begin{tightcenter}
+    if the true distribution is $P_X$ but the lengths are chosen according to $Q_X$, 
+    then the Shannon-Fano code satisfies
     $H(X) + D(P_X \vert \vert Q_X) \leq L(C) \leq H(X) + D(P_X \vert \vert Q_X) + 1$
   \end{tightcenter}
 
@@ -519,12 +521,13 @@
   \end{tightcenter}
 
   \begin{itemize}
-    \item extension: using blocks of $n$ letters 
-      $nH(X) \leq L(C) < nH(X) + 1$
-      \\* $\quad \Rightarrow $ avg. length per letter $< H(X) + \frac{1}{n}$
+    \item extension: using blocks of $n$ letters; Huffman coding with $\mathcal{X}^n$ 
+      \\* $nH(X) \leq L(C) < nH(X) + 1$
+      \\* $\quad \Rightarrow H(X) \leq$ avg. length per symbol $\leq H(X) + \frac{1}{n}$
       \begin{itemize}
-        \item but it's harder to accurately know $P_{X_1 \dots X_n}$
-        \item alphabet size increases to $\vert \mathcal{X} \vert^n$ $\Rightarrow$ expensive to sort
+        \item $\checkmark$ exploits \textit{memory}, better guarantee (even independent)
+        \item $\times$ but it's harder to accurately know $P_{X_1 \dots X_n}$
+        \item $\times$  alphabet size increases to $\vert \mathcal{X} \vert^n$ $\Rightarrow$ expensive to sort
       \end{itemize}
   \end{itemize}
 
