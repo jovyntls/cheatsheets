@@ -266,12 +266,10 @@
         \item each non-root node contains $m$ entries, $m \in [d, 2d]$
         \item root node contains $[1, 2d]$ entries
       \end{enumerate}
-    \item height-balanced, dynamic
     \item \textbf{equality search}: at each internal node $N$, find the largest $k_i$ s.t. $k \geq k_i$. search subtree at $p_i$ if $k_i$ exists, else $p_0$ 
     \item \textbf{range search}: find first matching record; traverse doubly LL
+      \includegraphics[width=0.9\linewidth]{cs3223-b-tree.png} 
   \end{itemize}
-
-  \subsubsection{operations}
 
   \textbf{insertion: splitting}
   \begin{itemize}
@@ -280,7 +278,7 @@
     \item root node overflows: create new root (parent of current root)
   \end{itemize}
 
-  \textbf{insertion: redistribution} (of leaf nodes)
+  \textbf{insertion: redistribution} (of \textit{leaf nodes only})
   \begin{itemize}
     \item try right sibling first, then left sibling, else use splitting
     \item \definition{sibling} two nodes at the \textit{same level} \& \textit{same parent node}
@@ -307,24 +305,22 @@
 
   \section{03. HASH-BASED INDEXING}
 
-  \begin{minipage}[c]{0.6\linewidth}
-    \includegraphics[width=0.95\linewidth]{cs3223-hash-bucket-pages.png} 
-  \end{minipage}
-  \begin{minipage}[c]{0.37\linewidth}
-    each bucket:
-    \begin{itemize}
-      \item 1 primary data page
-      \item $\geq 0$ overflow data pages
-    \end{itemize}
-
-  \end{minipage}
-
   \subsection{Static Hashing}
 
   \begin{itemize}
     \item hash record to $B_i \in B_0, \dots, B_{N-1}$ with $i = h(k)mod\, N$
     \item when full, reconstruct hash table with more buckets
   \end{itemize}
+  \begin{minipage}[c]{0.55\linewidth}
+    \includegraphics[width=0.95\linewidth]{cs3223-hash-bucket-pages.png} 
+  \end{minipage}
+  \begin{minipage}[c]{0.42\linewidth}
+    each bucket:
+    \begin{itemize}
+      \item 1 primary data page
+      \item $\geq 0$ overflow data pages
+    \end{itemize}
+  \end{minipage}
 
   \subsection{Linear Hashing (Dynamic)}
 
@@ -338,16 +334,24 @@
       \end{enumerate}
     \item file size at the beginning of round $i$, $N_i = 2^iN_0$
     \item at round $i$, hash $x$ = $B_x$ has been split ? $h_i(k)$ : $h_{i+1}(k)$
-    \item \textbf{performance}: 1 disk I/O (no overflow pages)
-      \begin{itemize}
-        \item avg 1.2 I/Os (uniform distribn), worst case linear I/O cost
-      \end{itemize}
-    \item removing bucket (\textbf{deletion}): 
-      \begin{itemize}
-        \item if next $>$ 0: \texttt{next-{}-;}
-        \item else: \texttt{next=} (prev level last bucket); \texttt{level-{}-;}
-      \end{itemize}
   \end{itemize}
+  \begin{minipage}[c]{0.6\linewidth}{\textcolor{black}{
+        \begin{itemize}
+          \item \textbf{performance}: 1 disk I/O \\* (no overflow pages)
+            \begin{itemize}
+              \item avg 1.2 I/Os (uniform distribn), worst case linear I/O cost
+            \end{itemize}
+          \item removing bucket (\textbf{deletion}): 
+            \begin{itemize}
+              \item if next $>$ 0: \texttt{next-{}-;}
+              \item else: \texttt{next=}(prev level last bucket); \texttt{level-{}-;}
+            \end{itemize}
+        \end{itemize}
+    }}
+  \end{minipage}
+  \begin{minipage}[c]{0.37\linewidth}
+    \includegraphics[width=0.95\linewidth]{cs3223-linear-hashing.png} 
+  \end{minipage}
 
   \subsection{Extendible Hashing (Dynamic)}
 
@@ -407,12 +411,19 @@
   \begin{itemize}
     \item sequential I/O - read/write in \textit{buffer blocks} of $b$ pages
     \item one block ($b$ pages) for output, remaining blocks for input
-    \item number of runs merged per pass, $F = \lfloor \frac{B}{b} \rfloor -1$ 
-    \item number of passes = $\lceil \log_F(N_0) \rceil +1$
-      \includegraphics[width=0.8\linewidth]{cs3223-blocked-io-mergesort.png} 
   \end{itemize}
+  \begin{minipage}[c]{0.6\linewidth}{\textcolor{black}{
+        \includegraphics[width=0.97\linewidth]{cs3223-blocked-io-mergesort.png} 
+    }}
+  \end{minipage}
+  \begin{minipage}[c]{0.35\linewidth}
+    \begin{itemize}
+      \item number of runs merged per pass, \\* $F = \lfloor \frac{B}{b} \rfloor -1$ 
+      \item number of passes = $\lceil \log_F(N_0) \rceil +1$
+    \end{itemize}
+  \end{minipage}
 
-  \subsection{Sorting with B$^+$-trees}
+  \subsubsection{Sorting with B$^+$-trees}
 
   \begin{itemize}
     \item when \textit{sort key is a prefix of the index key} of the B$^+$-tree
