@@ -311,6 +311,7 @@
       \begin{itemize}
         \item or $H(X, Y) = H(Y) + H(X\vert Y)$
         \item overall information in $(X, Y)$ is the information in $X$ plus the remaining information in $Y$ after observing $X$.
+        \item with conditioning: $H(X, Y \vert Z) = H(X \vert Z) + H(Y \vert X, Z)$
         \item general chain rule: $H(X_1, \dots, X_n) = \sum^n_{i=1} H(X_i \vert X_1, \dots, X_{i-1})$
       \end{itemize}
     \item $H(X \vert Y) \leq H(X) \quad$ (\textbf{conditioning reduces entropy})
@@ -402,9 +403,9 @@
       \begin{itemize}
         \item the information $X$ reveals about $Y$ is \textit{at most} the prior information in $X$ (entropy)
       \end{itemize}
-    \item (\textbf{chain rule}) 
+    \item  $I(X,Y;Z) = I(X;Z) + I(Y;Z\vert X)$ $\quad$ (\textbf{chain rule})
       \\* \( {\displaystyle{ I(X_1, \dots, X_n;Y) = \sum^n_{i=1} I(X_i; Y \vert X_1, \dots, X_{i-1}) }} \) 
-      \\* $ \quad\quad = I(X_1;Y) + I(X_2;Y \vert X_1) + \dots$
+      \\* $ \quad\quad\quad\quad\quad\quad\quad\quad = I(X_1;Y) + I(X_2;Y \vert X_1) + \dots$
     \item (\textbf{data-processing inequality})
       \\* $I(X;Z) \leq I(X;Y)$ if $X \rightarrow Y \rightarrow Z$
       \\* $\quad$ variation: $I(X;Z) \leq I(Y;Z)$ if $X \rightarrow Y \rightarrow Z$
