@@ -523,9 +523,8 @@
       \( {\displaystyle{ 
           \text{cost}_{\text{leaf}}=
           \begin{cases}
-            \lceil \log_F ( \lceil \frac{||\sigma_{p'}(R)||}{b_d} \rceil )\rceil &\text{if $$I$$ is a format-1 index}\\
-            \lceil \log_F ( \lceil 
-            \frac{||\sigma_{p'}(R)||}{b_i} \rceil )\rceil  &\text{otherwise}
+            \lceil \frac{||\sigma_{p'}(R)||}{b_d} \rceil &\text{if $$I$$ is a format-1 index}\\
+            \lceil \frac{||\sigma_{p'}(R)||}{b_i} \rceil &\text{otherwise}
           \end{cases}
       }} \) 
     \item retrieve qualified data records via RID lookups
@@ -645,7 +644,7 @@
         \item 1 page output, 1 page input, $(B-2)$ pages to read $R$
         \item for each $(B-2)$ pages of $R$: for each $P_S$ of $S$: check r,s
       \end{itemize}
-    \item \textbf{index nested loop join}: $|R| + ||R|| \times \left( \log_F(\lceil \frac{||S||}{b_d} \rceil ) + \lceil \frac{||S||}{b_d ||\pi_{B_j}(S)} \rceil \right)$
+    \item \textbf{index nested loop join}: $|R| + ||R|| \times \left( \log_F(\lceil \frac{||S||}{b_d} \rceil ) + \lceil \frac{||S||}{b_d ||\pi_{B_j}(S)||} \rceil \right)$
       \begin{itemize}
         \item joining $R(A, B) \bowtie_A S(A,C)$ with B+tree index on $S.A$
         \item for each tuple $r \in R$, use $r$ to probe $S$'s index for match
