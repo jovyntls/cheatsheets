@@ -667,6 +667,115 @@
       \end{itemize}
   \end{itemize}
 
+
+  \section{04. CHANNEL CODING}
+
+  \begin{itemize}
+    \item transmit a message $m \in \{1, \dots, M\}$ 
+      \begin{itemize}
+        \item using a fixed-length source code that outputs a length-$k$ sequence, we can set $M=s^k$
+      \end{itemize}
+    \item encoder: message $m \Rightarrow$ channel inputs $x_1, \dots, x_n$
+    \item \definition{codeword} $\mathbf{x}^{(m)} = (x_1^{(m)}, \dots, x_n^{(m)})$
+      \begin{itemize}
+        \item transmitted over the channel in $n$ uses
+      \end{itemize}
+    \item \definition{codebook} $\mathcal{C} = \{\mathbf{x}^{(1)}, \dots, \mathbf{x}^{(M)}\}$
+      \begin{itemize}
+        \item collection of codewords known by both encoder and decoder, but only the encoder knows $m$
+      \end{itemize}
+  \end{itemize}
+
+  \includegraphics[width=0.95\linewidth]{cs3236-full-communication-setup.png} 
+
+  for input $x$, output $y$, input alphabet $\mathcal{X}$, output alphabet $\mathcal{Y}$
+
+  \begin{itemize}
+    \item \definition{channel} medium over which we transmit information
+      \begin{itemize}
+        \item \definition{discrete} input/output alphabets $\mathcal{X}$ and $\mathcal{Y}$ are finite
+        \item \definition{memoryless} outputs are (conditionally) independent: $\mathbb{P}[Y=y \vert X=x] = \Pi^n_{i=1} P_{Y \vert X} (y_i \vert x_i)$
+      \end{itemize}
+  \end{itemize}
+
+  \begin{minipage}[c]{0.3\linewidth}
+    \includegraphics[width=0.95\linewidth]{cs3236-channel-transition-diagram-2.png} 
+  \end{minipage}
+  \begin{minipage}[c]{0.65\linewidth}{\textcolor{black}{
+        \definition{probabilistic modelling approach} when the input is $x \in \mathcal{X}$, a given output $y \in  \mathcal{Y}$ is produced with probability $P_{Y \vert X} (y \vert x)$ 
+        \\$\quad$ - see channel transition diagram
+    }}
+  \end{minipage}
+
+  \begin{itemize}
+    \item \definition{error probability} $P_e = \mathbb{P}[\hat{m} \neq m]$
+      \begin{itemize}
+        \item assuming uniform distribution
+        \item on non-uniform distribution: can use  $P_{e_i \text{max}}$
+      \end{itemize}
+    \item \definition{rate} $R = \frac{1}{n} \log_2 M \quad$ for block length $n$
+      \begin{itemize}
+        \item higher rate = sending faster (opposite of source coding where lower is better)
+        \item = $\frac{k}{n}$ for sending $k$ bits
+        \item $R \leq 1$ for binary channels
+      \end{itemize}
+  \end{itemize}
+
+  \subsection{Channel Capacity}
+
+  \begin{itemize}
+    \item \definition[, $C$]{channel capacity} maximum of all rates $R$ such that, for any target error probability $\epsilon > 0$, there exists a block length $n$ and codebook $\mathcal{C} = \{x^{(1)}, \dots, x^{(M)}\}$ with $M=2^{nR}$ codewords such that $P_e \leq \epsilon$
+  \end{itemize}
+
+  \begin{tightcenter}
+    \ildefinition{channel coding theorem} 
+
+    for any discrete memoryless channel $C(P_{Y \vert X})$,
+    we have \( {\displaystyle{ C=\max_{P_x} I(X;Y) }} \) 
+  \end{tightcenter}
+
+  \begin{itemize}
+    \item \textit{capacity-achieving input distribution}: input distribution $P_X$ that maximises the mutual information
+      \begin{itemize}
+        \item we can maximise $P_X$, but cannot control $I(X;Y)$
+        \item usually (but not always) uniform for "symmetric" channels
+      \end{itemize}
+    \item (\textbf{achievability}) for any $R<C$, there exists a code of rate $\geq R$ with arbitrarily small $P_e$
+    \item (\textbf{converse}) for any $R>C$, any code rate $\geq R$ cannot have arbitrarily small $P_e$ (for any codebook)
+    \item examples
+      \begin{itemize}
+        \item noiseless channel ($\mathcal{X} = \mathcal{Y} = \{0,1\}$) (deterministic): 
+          \( {\displaystyle{ C=\max_{P_X} I(X;Y) = \max_{P_X} H(X) = 1 }} \) 
+        \item binary symmetric channel ($\mathcal{X} = \mathcal{Y} = \{0,1\}$):
+          $P_{Y\vert X}(y \vert x) = \begin{cases} 1-\delta &y=x \\ \delta &y=1-x \end{cases} $
+          \( {\displaystyle{ C = \max_{P_X} I(X;Y) = \max_{P_X} (H(Y) - H_2 (\delta)) }} \) 
+          \( {\displaystyle{ \,\quad = \max_{P_X} (H_2( \mathbb{P}[Y=1]) - H_2 (\delta)) = 1-H_2(\delta) }} \) 
+          \begin{itemize}
+            \item we can't maximise $\mathbb{P}[Y=1]$ directly but we can let $P_X$ be uniform to get $P_Y(1) = \frac{1}{2}$
+          \end{itemize}
+        \item binary erasure channel ($\mathcal{X} = \{0,1\}, \mathcal{Y} = \{0,1,e\}$):
+          \begin{minipage}[c]{0.75\linewidth}
+            \begin{itemize}
+              \item for \textit{erasure probability} $\epsilon$ \\
+                $P_{Y \vert X} (y \vert x) = \begin{cases} 1-\epsilon &y=x \\ \epsilon &y=e \\ 0 &y=1-x \end{cases}$
+            \end{itemize}
+          \end{minipage}
+          \begin{minipage}[c]{0.2\linewidth}
+            \includegraphics[width=0.95\linewidth]{cs3236-binary-erasure-channel.png} 
+          \end{minipage}
+          \( {\displaystyle{ C = \max_{P_X} I(X;Y) = \max_{P_X} ( H(X) - H(X\vert Y) ) }} \) 
+          \( {\displaystyle{ \,\quad = \max_{P_X} (H(X) - \epsilon H(X)) = 1-\epsilon }} \) 
+          \begin{itemize}
+            \item maximising $H(Y)$ doesn't work here - you can't get an arbitrary $P(Y)$ distribution
+          \end{itemize}
+      \end{itemize}
+  \end{itemize}
+
+
+
+
+
+
 \end{multicols*}
 
 \end{document}
