@@ -599,11 +599,11 @@
 
   \subsection{Typical Sequences}
 
-  for i.i.d. sequence $\mathbf{X} = (X-1, \dots, X_n)$, let $P_X(x) = \Pi^n_{i=1} P_X(x_i)$ be the pmf of $X$.
+  for i.i.d. sequence $\mathbf{X} = (X_1, \dots, X_n)$, let $P_X(x) = \Pi^n_{i=1} P_X(x_i)$ be the pmf of $X$.
 
   \begin{center}
     \ildefinition{typical set}, \( {\displaystyle{ \mathcal{T}_n(\epsilon) = }} \) 
-    \( {\displaystyle{ \left\{ x \in \mathcal{X}^n : 2^{-n(H(X) + \epsilon)} \leq P_X(x) \leq 2^{-n(H(X)-\epsilon} \right\} }} \) 
+    \( {\displaystyle{ \left\{ x \in \mathcal{X}^n : 2^{-n(H(X) + \epsilon)} \leq P_X(x) \leq 2^{-n(H(X)-\epsilon)} \right\} }} \) 
     where $\epsilon > 0$ is a (small) fixed constant
     \\* i.e. $P_{\underset{\sim}{X}}({\underset{\sim}{x}}) \simeq 2^{-nH({\underset{\sim}{X}})}$
   \end{center}
@@ -770,6 +770,104 @@
           \end{itemize}
       \end{itemize}
   \end{itemize}
+
+  \subsection{Jointly Typical Sequences}
+
+  \begin{tightcenter}
+    a pair of $(\mathbf{x}, \mathbf{y})$ of length-$n$ input and output sequences is \ildefinition{jointly typical}  wrt a joint distribution $P_{XY}$ if 
+    $2^{-n(H(X)+\epsilon)} \leq P_X(\mathbf{x}) \leq 2^{-n(H(X)-\epsilon)}$
+    $2^{-n(H(Y)+\epsilon)} \leq P_Y(\mathbf{y}) \leq 2^{-n(H(Y)-\epsilon)}$
+    $2^{-n(H(X,Y)+\epsilon)} \leq P_{XY}(\mathbf{x}, \mathbf{y}) \leq 2^{-n(H(X,Y)-\epsilon)}$
+  \end{tightcenter}
+
+  \begin{itemize}
+    \item aka: the $X$ sequence, $Y$ sequence, and joint $(X,Y)$ sequence are all typical
+    \item \definition[, $\mathcal{T}_n(\epsilon)$]{jointly typical set} the set of all jointly typical sequences
+    \item a joint distribution on sequences: $P_{\mathbf{x}, \mathbf{y}}(\mathbf{x}, \mathbf{y}) = \Pi^n_{i=1} P_{XY} (x_i, y_i)$ - independent product
+  \end{itemize}
+
+  \subsubsection{properties}
+
+  \begin{enumerate}
+    \item (\textbf{equivalent definition}) $\quad(\mathbf{x}, \mathbf{y}) \in \mathcal{T}_n(\epsilon) \iff $
+      $\quad H(X) - \epsilon \leq \frac{1}{n} \sum^n_{i=1} \log_2 \frac{1}{P_X(x_i)} \leq H(X) + \epsilon$
+      $\quad H(Y) - \epsilon \leq \frac{1}{n} \sum^n_{i=1} \log_2 \frac{1}{P_Y(y_i)} \leq H(Y) + \epsilon$
+      $H(X, Y) - \epsilon \leq \frac{1}{n} {\displaystyle{\sum^n_{i=1}}} \log_2 \frac{1}{P_Y(x_i, y_i)} \leq H(X, Y) + \epsilon$
+
+    \item (\textbf{high probability}) \\*
+      $\mathbb{P}[(\mathbf{X}, \mathbf{Y}) \in \mathcal{T}_n(\epsilon)] \to 1$ as $n \to \infty$
+      \begin{itemize}
+        \item because law of large numbers on the above 3 
+      \end{itemize}
+    \item (\textbf{cardinality upper bound}) \\*
+      \( {\displaystyle{ \vert \mathcal{T}_n(\epsilon) \vert \leq 2^{n(H(X,Y)+\epsilon)} }} \) 
+    \item (\textbf{probability for independent sequences}) \\*
+      if $(\mathbf{X}', \mathbf{Y}') \sim P_X(\mathbf{x}')P_Y(\mathbf{y}')$ are independent copies of  $(\mathbf{X}, \mathbf{Y})$, then the probability of joint typicality is 
+      $\mathbb{P}[(\mathbf{X}', \mathbf{Y}') \in \mathcal{T}_n(\epsilon)] \leq 2^{-n(I(X;Y)-3\epsilon)}$
+      \begin{itemize}
+        \item intuition: for an independent draw from X and an independent draw from Y (instead of joint distribution), the probability of being typical is much lower
+        \item mutual information (computed from joint distribution): how far X,Y are from being independent
+      \end{itemize}
+  \end{enumerate}
+
+  \subsection{Achievability via Random Coding}
+
+  for codebook $\mathcal{C} = \{ \mathbf{x}^{(1)}, \dots, \mathbf{x}^{(M)} \}$, where $m$ is encoded into length-$n$ sequence $\mathbf{x}^{(m)} = ( x_1^{(m)}, \dots, x_n^{(m)} )$
+
+  \begin{itemize}
+    \item idea: prove the existence of a good codebook without explicitly constructing it 
+      \begin{itemize}
+        \item for some random $\mathcal{C}$, show $\mathbb{E}[P_e(\mathcal{C})] \leq \epsilon$ 
+          \\* (thus $\exists$ some $\mathcal{C}$ with $P_e \leq \epsilon$)
+        \item let each codeword be i.i.d. according to $P_X$
+      \end{itemize}
+    \item \definition{random coding} generate each symbol $X_i^{(m)}$ of each codeword randomly and independently according to some distribution $P_X$.
+      \begin{itemize}
+        \item \textit{encoder}: maps $m$ to $\mathbf{X}^{(m)} = (X_1^{(m)}, \dots, X_n^{(m)})$
+        \item \textit{decoder}: form estimate  $\hat{m}$ from output sequence $\mathbf{Y} = (Y_1, \dots, Y_n)$
+          \begin{itemize}
+            \item if $!\exists m'$ s.t. $(\mathbf{X}^{(m')}, \mathbf{Y}) \in \mathcal{T}_n(\epsilon)$, set $\hat{m} = m'$
+              \begin{itemize}
+                \item if there is a single index where the codeword and received sequence are jointly typical
+              \end{itemize}
+            \item else give up (treat as error)
+          \end{itemize}
+      \end{itemize}
+    \item for $\mathbf{X}^{(m)}$ transmitted (i.e. correct $m$)
+      \begin{itemize}
+        \item $(\mathbf{X}^{(m)}, \mathbf{Y})$ is i.i.d. on $P_{XY} = P_X \times P_{Y \vert X}$
+        \item since $P_{\mathbf{Y} | \mathbf{X}}$ is i.i.d. according to $P_{Y \vert X}$, $\mathbf{X}^{(m)}$ is i.i.d. according to $P_X$ (by construction)
+      \end{itemize}
+    \item for $\mathbf{X}^{(\hat{m})}$ not transmitted (i.e. incorrect $\hat{m}$),
+      \begin{itemize}
+        \item $(\mathbf{X}^{(m')}, \mathbf{Y}) \sim P_\mathbf{X}(\mathbf{x}')P_\mathbf{Y}(\mathbf{y}')$
+        \item joint distribution is an independent product - $\mathbf{Y}$ only depends on $\mathbf{X}^{(m)}$, and $P_{\mathbf{X}}$ is i.i.d.
+      \end{itemize}
+  \end{itemize}
+
+  \subsubsection{error probability}
+
+  \begin{itemize}
+    \item we have $\hat{m} = m$ if:
+      \begin{enumerate}
+        \item $(\mathbf{X}^{(m)}, \mathbf{Y})$ is jointly typical
+        \item none other $(\mathbf{X}^{(\hat{m})}, \mathbf{Y})$ is jointly typical (with $\hat{m} \neq m$)
+      \end{enumerate}
+    \item $\mathbb{P}[$success$] \geq \mathbb{P}[\textcircled{1}$ and $\textcircled{2}]$ $\Rightarrow$ $\mathbb{P}[$failure$] \leq \mathbb{P}[$not $\textcircled{1} \;\cup$ not $\textcircled{2}]$
+  \end{itemize}
+  \begin{align*}
+    P_e &\leq \mathbb{P}[(\mathbf{X}^{\scriptscriptstyle(m)}, \mathbf{Y}) \not\in \mathcal{T}_n(\epsilon) \cup \bigcup_{\scriptscriptstyle m' \neq m} \{ (\mathbf{X}^{\scriptscriptstyle(m')}, \mathbf{Y}) \in \mathcal{T}_n(\epsilon) \} ] 
+     \\ &\leq \mathbb{P}[(\mathbf{X}^{\scriptscriptstyle(m)}, \mathbf{Y}) \not\in \mathcal{T}_n(\epsilon)] + \sum_{\hat{m} \neq m} \mathbb{P}[(\mathbf{X}^{\scriptscriptstyle(\hat{m})}, \mathbf{Y}) \not\in \mathcal{T}_n(\epsilon)]
+     \\ &\leq \delta_n + \sum_{\hat{m} \neq m} 2^{-n(I(X;Y) - 3\epsilon)} \text{ where } \delta\to 0 \text{ as } n\to\infty
+     \\ &\leq \delta_n + M \times 2^{-n(I(X;Y) - 3\epsilon)} 
+  \end{align*}
+
+  \begin{itemize}
+    \item $R < I(X;Y) - 3\epsilon$ since $M = 2^{nR}$ $\Rightarrow$ thus $P_e$ can be arbitrarily small for any rate $R$ arbitrarily close to $I(X;Y)$
+    \item choose $P_X$ to achieve $C = \max_{P_x} I(X;Y)$
+    \item then we can get vanishing error probability rates for rates arbitrarily close to capacity $C$
+  \end{itemize}
+
 
 
 
