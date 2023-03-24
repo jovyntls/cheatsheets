@@ -65,6 +65,7 @@
 
 % adding my commands
 \input{../commands/style-helpers.tex}
+\input{../commands/math.tex}
 
 % -----------------------------------------------------------------------
 
@@ -866,6 +867,132 @@
     \item $R < I(X;Y) - 3\epsilon$ since $M = 2^{nR}$ $\Rightarrow$ thus $P_e$ can be arbitrarily small for any rate $R$ arbitrarily close to $I(X;Y)$
     \item choose $P_X$ to achieve $C = \max_{P_x} I(X;Y)$
     \item then we can get vanishing error probability rates for rates arbitrarily close to capacity $C$
+  \end{itemize}
+
+  \subsection{Converse via Fano's Inequality}
+
+  relates $P_e = \mathbb{P}[\hat{m} \neq m]$ to $H(m \vert \hat{m})$ and thus to $I(m;\hat{m})$
+
+  \textit{Proof.}
+
+  \begin{itemize}
+    \item Fano's inequality: $H(m \vert \hat{m}) \leq H_2(P_e) + P_2\log_2 (M - 1) \leq 1 + P_e\log_2 M$
+      \begin{itemize}
+        \item H(are they equal?) + remaining uncertainty if they're not
+      \end{itemize}
+    \item mutual information: $I(m \vert \hat{m}) = H(m) - H(m \vert \hat{m})$ \\*
+      $= \log_2 M - H(m \vert \hat{m})$ since $m$ is uniform on $\{1,\dots, M\}$ \\*
+      $\geq (1-P_e)\log_2 M -1 \Rightarrow P_e \geq 1-\frac{I(m;\hat{m}) + 1}{\log_2M}$
+    \item data processing inequality: $I(m ; \hat{m}) \leq I(\mathbf{X};\mathbf{Y})$
+      \begin{itemize}
+        \item $\mathbf{X} = \mathbf{X}^{(m)}$ is the transmitted codeword; $\mathbf{Y}$ is the channel output; markov chain $m \rightarrow \mathbf{X} \rightarrow \mathbf{Y} \rightarrow \hat{m}$
+      \end{itemize}
+      \item manipulate: $I(m ; \hat{m}) \leq I(\mathbf{X};\mathbf{Y}) = H(\mathbf{Y}) - H(\mathbf{Y} \vert \mathbf{X})$ \\* 
+         \( {\displaystyle{ \quad \leq \sum^n _{i=1}H(Y_i) - \sum^n_{i=1} H(Y_i \vert \mathbf{X}) = \sum^n_{i=1}I(X_i;Y_i) \leq nC }} \) 
+  \end{itemize}
+
+  \subsubsection{result}
+
+  combine with $\log_2 M = nR$ to get \( {\displaystyle{ P_e \geq 1 - \frac{nC+1}{nR} }} \) 
+  
+  thus if  $R>C$, we can't get $P_e \to 0$ as $n \to \infty$ (for any $x$)
+
+
+  \section{05. CONTINUOUS-ALPHABET CHANNELS}
+
+  \begin{itemize}
+    \item so far $X$ and $Y$ have been discrete/finite
+    \item for continuous, we use \textit{pdf} instead of \textit{pmf}
+  \end{itemize}
+
+  \subsection{Differential Entropy}
+
+  \begin{itemize}
+    \item not directly interpretable as a measure of uncertainty
+  \end{itemize}
+
+  \begin{tightcenter}
+    \ildefinition{differential entropy} of a continuous r.v. $X$ with pdf $f_X$ 
+    \( {\displaystyle{ h(X) = \mathbb{E}_{f_X} \left[ \log_2 \frac{1}{f_X(X)} \right] }} \) 
+    \\* \( {\displaystyle{ = \int_{\mathbb{R}} f_X(x) \log_2 \frac{1}{f_X(x)} \dx }} \) 
+
+    \ildefinition{joint version},  \( {\displaystyle{ h(X,Y) = \mathbb{E} \left[ \log_2 \frac{1}{f_{XY} (x, y)} \right] }} \) 
+
+    \ildefinition{conditional version},  \( {\displaystyle{ h(Y \vert X) = \mathbb{E}_{(X, Y)\sim f_{XY}} \left[ \log_2 \frac{1}{f_{Y \vert X} (Y \vert X)} \right] }} \) 
+    \\* \( {\displaystyle{ = \int_{\mathbb{R}} f_X(x) H(Y \vert X=x) \dx }} \) 
+  \end{tightcenter}
+
+  \subsubsection{properties}
+
+  properties of entropy that still hold:
+
+  \begin{itemize}
+    \item (\textbf{chain rule}) $h(X_1, \dots, X_n) = \sum^n_{i=1} h(X_i \vert X_1, \dots, X_{i-1})$
+    \item (\textbf{conditioning reduces entropy}) $\quad h(X \vert Y) \leq h(X)$
+    \item (\textbf{sub-additivity}) $\quad h(X_1, \dots, X_n) \leq \sum^n_{i=1} h(X_i)$
+    \item $h(X) = h(X+c)$ for a constant  $c$
+  \end{itemize}
+
+  properties of entropy that \textit{do not} hold:
+
+  \begin{itemize}
+    \item non-negativity: we can have $h(X) < 0$
+    \item invariance under one-to-one transformations: we can have $h(X) \neq h(\psi(X))$ even if $\psi$ is invertible
+    \item \textit{counterexample:} let $Y=cX$
+      \begin{itemize}
+          \item then $f_Y(y) = \frac{1}{\vert c \vert} f_X (\frac{y}{c})$, 
+          which gives $h(Y) = \mathbb{E}[\log_2 \frac{1}{f_Y(y)}] = \mathbb{E}[\log_2 \frac{|c|}{f_X(Y/c)}]$ \\* 
+          $\quad\quad = \log_2|c| + h(X)$ $\quad \neq h(\psi(X))$
+        \item violation of non-negativity: $\log_2|c| \to \infty$ as $c \to 0$
+      \end{itemize}
+  \end{itemize}
+
+  \subsubsection{examples}
+
+  \begin{itemize}
+    \item \textbf{uniform} r.v. $X \sim Uniform(a, b)$ for $a<b$
+      \begin{itemize}
+        \item $h(X) = \mathbb{E}[\log_2 \frac{1}{f_X(x)}] = \log_2(b-a)$
+      \end{itemize}
+    \item \textbf{gaussian} $X \sim N(\mu, \sigma^2)$
+      \begin{itemize}
+        \item $h(X) = \frac{1}{2}\log_2 (2\pi e \sigma^2)$
+        \item \textit{Proof.} pdf: $f_X(x) = \frac{1}{\sqrt{2\pi \sigma^2}} e^{\frac{-(x-\mu)^2}{2\sigma^2}}$
+          $\Rightarrow \log_2 \frac{1}{f_X(x)} = \log_2(\sqrt{2\pi\sigma^2}) + \frac{(x-\mu)^2}{2\sigma^2}$
+          \begin{itemize}
+            \item $h(X) = \mathbb{E}[\log_2(\sqrt{2\pi\sigma^2}) + \frac{(x-\mu)^2}{2\sigma^2}]$
+              $\quad\quad = \log_2(\sqrt{2\pi\sigma^2}) + \frac{1}{2\sigma^2}\mathbb{E}[(x-\mu)^2]$
+              $\quad\quad = \frac{1}{2}(\log_2(\sqrt{2\pi\sigma^2}) + 1)$ since variance=1
+              $\quad\quad = \frac{1}{2}(\log_2(2\pi\sigma^2) + 1)$
+
+            \item  $h(X)$ in nats $= \frac{1}{2}(\ln(2\pi\sigma^2) + \ln e) $
+              $\quad\quad = \frac{1}{2}\ln(2\pi e \sigma^2)$
+          \end{itemize}
+      \end{itemize}
+  \end{itemize}
+
+  \subsection{Mutual information \& KL Divergence}
+
+  \centerline{ \ildefinition{mutual information} }
+  \begin{align*}
+    I(X;Y) &= h(Y) - h(Y \vert X) \\
+           &= H(X) - h(X \vert Y) \\
+           &= D(f_{XY} || f_X \times f_Y) \\
+           &= \mathbb{E}_{f_{XY}} \left[ \log_2 \frac{f_{XY} (x,y)}{f_X(x) f_Y(y)} \right]
+  \end{align*}
+
+  \begin{tightcenter}
+    \ildefinition{KL divergence} \\*
+    \( {\displaystyle{ D(f||g) = \int_{\mathbb{R}} f(x) \log_2 \frac{f(x)}{g(x)}\dx }} \) 
+  \end{tightcenter}
+
+  \subsubsection{properties}
+
+  \begin{itemize}
+    \item all key properties are retained, including non-negativity
+    \item $D(f||g) \geq 0, \quad$ equality $\iff f=g$
+    \item $I(X;Y) \geq 0, \quad$ equality $\iff X \perp Y$
+    \item if $\psi(\cdot)$ and $\phi(\cdot)$ are invertible then $I(X;Y) = I(\psi(X);\phi(Y))$
   \end{itemize}
 
 
