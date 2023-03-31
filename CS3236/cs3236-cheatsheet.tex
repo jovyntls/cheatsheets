@@ -993,7 +993,103 @@
     \item $D(f||g) \geq 0, \quad$ equality $\iff f=g$
     \item $I(X;Y) \geq 0, \quad$ equality $\iff X \perp Y$
     \item if $\psi(\cdot)$ and $\phi(\cdot)$ are invertible then $I(X;Y) = I(\psi(X);\phi(Y))$
+    \item $h(\cdot)$ is invariant to shifting by a constant: $h(X+k) = H(X)$, $H(X + Y\vert X) = H(Y)$
   \end{itemize}
+
+  \subsection{Gaussian Random Variables}
+
+  if $X \sim N(\mu, \sigma^2)$, then $ h(X) = \frac{1}{2}\log_2 (2\pi e\sigma^2) $ 
+  \begin{tightcenter}
+    \definition{maximum entropy property} for any r.v. $X$ \\* with density $f_X$ and variance $Var[X]$, we have \\*
+    \( {\displaystyle{ h(X) \leq \frac{1}{2}\log_2 (2\pi e Var[X]) }} \) 
+    \\* with equality $\iff X$ is Gaussian
+  \end{tightcenter}
+
+  \begin{itemize}
+    \item for a given variance, gaussian r.v. has highest entropy $h(\cdot)$
+      \begin{itemize}
+        \item no constraint on values, just a constraint on variance
+        \item discrete: for a given alphabet, uniform maximises $H(\cdot)$
+      \end{itemize}
+    \item if $X \in [a,b]$, then uniform maximises $h(\cdot)$
+      \begin{itemize}
+        \item (constraint on values)
+      \end{itemize}
+  \end{itemize}
+
+  \subsection{Gaussian Channel}
+
+  a continuous channel can be described by conditional pdf $f_{Y \vert X}$
+
+  \subsubsection{additive noise channels}
+
+  \begin{minipage}[c]{0.7\linewidth}{\color{black}{
+        \begin{itemize}
+          \item \definition{additive noise channels} $Y = X + Z$
+            \begin{itemize}
+              \item $Z$ is a noise term independent of $X$
+              \item $f_{Y \vert X} (y \vert x) = f_Z(y-x)$
+            \end{itemize}
+        \end{itemize}
+    }}
+  \end{minipage}
+  \begin{minipage}[c]{0.27\linewidth}
+    \includegraphics[width=0.95\linewidth]{cs3236-additive-noise-channel.png} 
+  \end{minipage}
+
+  \begin{itemize}
+    \item \definition{additive white Gaussian noise (AWGN) channel} $Z \sim N(0, \sigma^2)$ for some noise variance $\sigma^2 > 0$
+      \begin{itemize}
+        \item white = memoryless (independent noise each time)
+      \end{itemize}
+    \item \textbf{power constraint:} $\mathbb{E}[X^2] \leq P$
+      \begin{itemize}
+        \item energy consumed by transmitting $X$ is $\propto X^2$
+        \item (all lead to the same capacity) average over
+          \begin{itemize}
+            \item symbols for each codeword: $\frac{1}{n}\sum^n_{i=1}x^2_i \leq P$ for codewords $\mathbf{x}^{(m)} = ( x_1^{(m)}, \dots, x_n^{(m)} )$
+            \item all codewords: $\frac{1}{M}\sum^M_{m=1}(...)$
+            \item random codebook
+          \end{itemize}
+        \item (not feasible) if $X$ is unconstrained, we can just send different messages using inputs $0, \pm \Delta, \pm 2\Delta, \dots$ for a huge value of  $\Delta$ (e.g. 1 million times of variance)
+      \end{itemize}
+  \end{itemize}
+
+  \subsubsection{Channel Capacity}
+
+  \begin{tightcenter}
+    \textbf{AWGN capacity} \\*
+    $C(P) = \frac{1}{2} \log_2 (1 + \frac{P}{\sigma^2})$ \\*
+    \textbf{general} (non-gaussian) \\*
+    \( {\displaystyle{ C(P) = \max_{f_X : \mathbb{E}_{f_X} [X^2] \leq P} I(X;Y) }} \) 
+  \end{tightcenter}
+
+  \begin{itemize}
+    \item channel capacity $C(P)$ is same as discrete memoryless channels, but codebooks are constrained to satisfy average power constraint
+  \end{itemize}
+
+  \subsubsection{properties of Gaussian channel capacity}
+
+  \begin{itemize}
+    \item depends on $P, \sigma^2$ only through \textit{signal-to-noise ratio} $\frac{P}{\sigma^2}$
+    \item $P=0 \Rightarrow SNR = 0 \Rightarrow$ $C=0$
+    \item as $\sigma^2 \to 0$ for fixed $P$, then $SNR \to \infty, C \to \infty$
+  \end{itemize}
+
+  \begin{minipage}[c]{0.7\linewidth}
+    \color{black}{
+      \begin{itemize}
+        \item diminishing returns of increasing $P$
+          \begin{itemize}
+            \item for small $\frac{P}{\sigma^2}$, we have $C(P) \approx \frac{P}{2\sigma^2}$ $\Rightarrow$ almost proportional to $P$
+            \item for large $\frac{P}{\sigma^2}$, we have $C(P) \approx \frac{1}{2}\log_2 \frac{P}{\sigma^2}$ $\Rightarrow$ diminishing returns, doubling $P$ adds $\frac{1}{2}$ to capacity
+          \end{itemize}
+      \end{itemize}
+    }
+  \end{minipage}
+  \begin{minipage}[c]{0.27\linewidth}
+    \includegraphics[width=0.95\linewidth]{cs3236-capacity-to-snr.png} 
+  \end{minipage}
 
 
 
