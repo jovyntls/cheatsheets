@@ -621,7 +621,7 @@
   for any fixed $\epsilon > 0$, 
 
   \begin{enumerate}
-    \item (\textbf{equivalent definition}) $x \in \mathcal{T}_n(\epsilon) \iff$  
+    \item (\textbf{equivalent definition}) $\mathbf{x} \in \mathcal{T}_n(\epsilon) \iff$  
       \( {\displaystyle{ H(X) - \epsilon \leq \frac{1}{n} \sum^n_{i=1} \log_2 \frac{1}{P_X(x_i)} \leq H(X) + \epsilon }} \) 
       \\* where $x_i$ is the $i$-th entry of $x$
       \begin{itemize}
@@ -887,14 +887,14 @@
       \begin{itemize}
         \item $\mathbf{X} = \mathbf{X}^{(m)}$ is the transmitted codeword; $\mathbf{Y}$ is the channel output; markov chain $m \rightarrow \mathbf{X} \rightarrow \mathbf{Y} \rightarrow \hat{m}$
       \end{itemize}
-      \item manipulate: $I(m ; \hat{m}) \leq I(\mathbf{X};\mathbf{Y}) = H(\mathbf{Y}) - H(\mathbf{Y} \vert \mathbf{X})$ \\* 
-         \( {\displaystyle{ \quad \leq \sum^n _{i=1}H(Y_i) - \sum^n_{i=1} H(Y_i \vert \mathbf{X}) = \sum^n_{i=1}I(X_i;Y_i) \leq nC }} \) 
+    \item manipulate: $I(m ; \hat{m}) \leq I(\mathbf{X};\mathbf{Y}) = H(\mathbf{Y}) - H(\mathbf{Y} \vert \mathbf{X})$ \\* 
+      \( {\displaystyle{ \quad \leq \sum^n _{i=1}H(Y_i) - \sum^n_{i=1} H(Y_i \vert \mathbf{X}) = \sum^n_{i=1}I(X_i;Y_i) \leq nC }} \) 
   \end{itemize}
 
   \subsubsection{result}
 
   combine with $\log_2 M = nR$ to get \( {\displaystyle{ P_e \geq 1 - \frac{nC+1}{nR} }} \) 
-  
+
   thus if  $R>C$, we can't get $P_e \to 0$ as $n \to \infty$ (for any $x$)
 
 
@@ -940,7 +940,7 @@
     \item invariance under one-to-one transformations: we can have $h(X) \neq h(\psi(X))$ even if $\psi$ is invertible
     \item \textit{counterexample:} let $Y=cX$
       \begin{itemize}
-          \item then $f_Y(y) = \frac{1}{\vert c \vert} f_X (\frac{y}{c})$, 
+        \item then $f_Y(y) = \frac{1}{\vert c \vert} f_X (\frac{y}{c})$, 
           which gives $h(Y) = \mathbb{E}[\log_2 \frac{1}{f_Y(y)}] = \mathbb{E}[\log_2 \frac{|c|}{f_X(Y/c)}]$ \\* 
           $\quad\quad = \log_2|c| + h(X)$ $\quad \neq h(\psi(X))$
         \item violation of non-negativity: $\log_2|c| \to \infty$ as $c \to 0$
@@ -976,7 +976,7 @@
   \centerline{ \ildefinition{mutual information} }
   \begin{align*}
     I(X;Y) &= h(Y) - h(Y \vert X) \\
-           &= H(X) - h(X \vert Y) \\
+           &= h(X) - h(X \vert Y) \\
            &= D(f_{XY} || f_X \times f_Y) \\
            &= \mathbb{E}_{f_{XY}} \left[ \log_2 \frac{f_{XY} (x,y)}{f_X(x) f_Y(y)} \right]
   \end{align*}
@@ -1091,7 +1091,216 @@
     \includegraphics[width=0.95\linewidth]{cs3236-capacity-to-snr.png} 
   \end{minipage}
 
+  \section{06. PRACTICAL CHANNEL CODES}
 
+  recap:
+  \definition{parity check} $c = b_1 \oplus \dots \oplus b_m$
+
+  \begin{itemize}
+    \item with vectors, $\oplus$ is bit-by-bit (no carry over)
+    \item an additional bit equalling 1 if the number of 1's in the sequence of bits is odd
+      \begin{itemize}
+        \item $\Rightarrow$ always an even number of 1's in the sequence
+      \end{itemize}
+    \item can detect but not correct a single bit flip
+      \\* $\Rightarrow$ send \textit{multiple} parity checks applied to \textit{different groups of bits}
+    \item \textbf{low storage} (practical) - we only need to store which bits are included in the parity check
+  \end{itemize}
+
+  \subsection{Linear Codes}
+
+  \subsubsection{model}
+
+  message $\mathbf{u} = (u_1, \dots, u_k)$, codeword $\mathbf{x} = (x_1, \dots, x_n)$ where $n \geq k$, sent over a BSC to produce $\mathbf{y} = (y_1, \dots, y_n)$ to construct estimate $\mathbf{\hat{u}} = (\hat{u}_1, \dots, \hat{u}_k)$
+
+  \includegraphics[width=0.95\linewidth]{cs3236-linear-codes-diagram.png} 
+
+  \begin{itemize}
+    \item rate = $\frac{k}{n} = \frac{1}{n}\log_2 (\#\text{messages})$ since \#messages = $2^k$ 
+  \end{itemize}
+
+  \subsubsection{linear codes}
+
+  \begin{tightcenter}
+    \definition{linear code} 
+    if $\mathbf{u}$ and $\mathbf{u}'$ are two different message sequences, with corresponding codewords are $\mathbf{x} = \mathbf{uG}$ and $\mathbf{x}' = \mathbf{u}'\mathbf{G}$, then
+    \begin{align*}
+      \mathbf{x} \oplus \mathbf{x}' &= \mathbf{uG} \oplus \mathbf{u}'\mathbf{G}
+                                 \\ &= (\mathbf{u} \oplus \mathbf{u}') \mathbf{G}
+    \end{align*}
+  \end{tightcenter}
+
+  \begin{itemize}
+    \item \textbf{linear code} is comprised only of parity checks
+      \begin{itemize}
+        \item $\mathbf{y} = \mathbf{x} \oplus \mathbf{z}$, where $\mathbf{z} \in \{0, 1\}^n$ indicates flipped bits
+        \item $\mathbf{x} \oplus \mathbf{x}'$ is also a codeword - (modulo-2) sum of any 2 valid codewords is another valid codeword
+      \end{itemize}
+    \item \definition[parity-check code]{systematic} the first $k$ bits of $\mathbf{x}$ are always the original $k$ bits, and the remaining $n-k$ bits are parity checks
+      $\quad x_i = \begin{cases} u_i &\text{if } i=1,\dots, k, \\ \bigoplus^k_{j=1} u_jg_{j,i} &\text{if } i = k+1,\dots, n \end{cases}$
+      \begin{itemize}
+        \item where $g_{j,i} = 1$ if the parity check in location $i$ includes $u_j$, otherwise 0
+        \item e.g. Hamming code
+      \end{itemize}
+    \item \definition[parity-check code]{general} all $n$ codeword bits may be arbitrary parity checks
+      \begin{itemize}
+        \item $\bigoplus^k_{j=1} u_jg_{j,i}$ for  $i = 1, \dots, n$
+      \end{itemize}
+  \end{itemize}
+
+  \subsubsection{generator matrix}
+
+  \begin{tightcenter}
+    $\mathbf{x} = \mathbf{uG}$ 
+    \\* (in mod-2 arithmetic using $\oplus$ for addition) 
+  \end{tightcenter}
+
+  \begin{tightcenter}
+    \ildefinition{generator matrix (general)} \\*
+    $\mathbf{G} = \begin{bmatrix}
+      g_{1,1} & g_{1,2} & \cdots & g_{1,n} \\
+      g_{2,1} & g_{2,2} & \cdots & g_{2,n} \\
+      \vdots & \vdots & \ddots & \vdots \\
+      g_{k,1} & g_{k,2} & \cdots & g_{k,n}
+    \end{bmatrix} $
+  \end{tightcenter}
+
+  \begin{itemize}
+    \item $g_{j, i} = 1 \iff$ the $j$-th bit is used in the $i$-th parity check
+    \item leftmost $k \times k$ sub-matrix is the identity matrix
+  \end{itemize}
+
+  \begin{tightcenter}
+    \ildefinition{generator matrix (systematic)} \\*
+    \( {\displaystyle{ 
+        \mathbf{G} = \begin{bmatrix}
+          1 & 0 & \cdots & 0 & g_{1,k+1} & \cdots & g_{1,n} \\
+          0 & 1 & \cdots & 0 & g_{2,k+1} & \cdots & g_{2,n} \\
+          \vdots & \vdots & \ddots & 0 & \vdots & \ddots & \vdots \\
+          0 & 0 & \cdots & 1 & g_{k,k+1} & \cdots & g_{k,n}
+        \end{bmatrix}  
+    }} \) 
+  \end{tightcenter}
+
+  \textbf{examples}
+
+  \begin{minipage}[c]{0.45\linewidth}
+    \begin{tightcenter}
+      {\color{black} for a single-parity-check: }
+      $ \mathbf{G}_{\text{parity}} = \left[\begin{smallmatrix}
+          1 & 0 & 0 & 0 & 1 \\
+          0 & 1 & 0 & 0 & 1 \\
+          0 & 0 & 1 & 0 & 1 \\
+          0 & 0 & 0 & 1 & 1 \\
+      \end{smallmatrix}\right] $
+    \end{tightcenter}
+  \end{minipage}
+  \begin{minipage}[c]{0.5\linewidth}
+    \begin{tightcenter}
+      {\color{black} for Hamming code: }
+      $ \mathbf{G}_{\text{Hamming}} = \left[\begin{smallmatrix}
+          1 & 0 & 0 & 0 & 1 & 1 & 0 \\
+          0 & 1 & 0 & 0 & 1 & 0 & 1 \\
+          0 & 0 & 1 & 0 & 0 & 1 & 1 \\
+          0 & 0 & 0 & 1 & 1 & 1 & 1 \\
+      \end{smallmatrix}\right] $
+    \end{tightcenter}
+  \end{minipage}
+
+  \subsubsection{parity-check matrix}
+
+  \begin{itemize}
+    \item $\mathbf{G}$ is used to \textit{generate} $\mathbf{x}$ from $\mathbf{u}$ 
+      \begin{itemize}
+        \item $\mathbf{x}$ is a codeword $\iff \mathbf{x} = \mathbf{uG}$  for some $\mathbf{u}$
+      \end{itemize}
+    \item $\mathbf{H}$ is used to \textit{check} if $\mathbf{x}$ can be generated from \textit{any} $\mathbf{u}$
+      \begin{itemize}
+        \item $\mathbf{H}$ exists for every $\mathbf{G}$
+      \end{itemize}
+  \end{itemize}
+
+  \begin{tightcenter}
+    \ildefinition{parity-check matrix} \\* an $n \times (n-k)$ matrix satisfying \\*
+    $\mathbf{xH} = \mathbf{0} \iff \mathbf{x}$ is a valid codeword \\*
+    $\mathbf{G} = [\; \mathbf{I}_k \;\; \mathbf{P}\;]$ $\;\Longrightarrow\;$ $\mathbf{H} = \begin{bmatrix}
+      \mathbf{P} \\ \mathbf{I}_{n-k}
+    \end{bmatrix}$ \\*
+  \end{tightcenter}
+
+  \begin{itemize}
+    \item where $\mathbf{I}_{m}$ is the $m \times m$ identity matrix, $\mathbf{P}$ is the remaining $k \times (n-k)$ submatrix of $\mathbf{G}$
+    \item derived from $\left( \bigoplus^k_{j=1} x_j g_{j,i} \right) \oplus x_i = 0$ 
+      \\* for $i = k+1, \dots, n$ since $x_i =  \bigoplus^k_{j=1} x_j g_{j,i}$
+  \end{itemize}
+
+  \begin{tightcenter}
+    \ildefinition{parity-check matrix (systematic)} \\*
+    \( {\displaystyle{ 
+        \mathbf{H} = \begin{bmatrix}
+          g_{1,k+1} & g_{1,k+2} & \cdots & g_{1,n} \\
+          g_{2,k+1} & g_{2,k+2} & \cdots & g_{2,n} \\
+          \vdots & \vdots & \ddots & \vdots \\
+          g_{k,k+1} & g_{k,k+2} & \cdots & g_{k,n} \\
+          1 & 0 & \cdots & 0 \\
+          0 & 1 & \cdots & 0 \\
+          \vdots & \vdots & \ddots & \vdots \\
+          0 & 0 & \cdots & 1
+        \end{bmatrix}  
+    }} \) 
+  \end{tightcenter}
+
+  \textbf{examples}
+
+  \begin{minipage}[c]{0.25\linewidth}
+    \begin{tightcenter}
+      {\color{black} for a single-parity-check: }
+      $ \mathbf{G}_{\text{parity}} = \left[\begin{smallmatrix}
+      1 \\ 1 \\ 1 \\ 1 \\ 1 \\ \end{smallmatrix}\right] $
+    \end{tightcenter}
+  \end{minipage}
+  \begin{minipage}[c]{0.35\linewidth}
+    \begin{tightcenter}
+      {\color{black} for Hamming code: }
+      $ \mathbf{G} = \left[\begin{smallmatrix}
+          1 & 1 & 0 \\
+          1 & 0 & 1 \\
+          0 & 1 & 1 \\
+          1 & 1 & 1 \\
+          1 & 0 & 0 \\
+          0 & 1 & 0 \\
+          0 & 0 & 1 
+      \end{smallmatrix}\right] $
+    \end{tightcenter}
+  \end{minipage}
+  \begin{minipage}[c]{0.35\linewidth}
+    for $\mathbf{y=x\oplus z}$ 
+    \\* ($\mathbf{z}$ is the noise),
+    \\* $\mathbf{yH} = (\mathbf{x}\oplus\mathbf{z})\mathbf{H}$
+    \\*$= \mathbf{(xH) \oplus (zH)}$ 
+    \\*$= \mathbf{zH}$
+  \end{minipage}
+
+  \subsection{Distance Properties}
+
+  \begin{itemize}
+    \item \definition{Hamming distance} (between vectors $\mathbf{x}, \mathbf{x}' \in \{0, 1\}^n$) the number of positions in which they differ
+      \begin{itemize}
+        \item $d_H(\mathbf{x}, \mathbf{x}') = \sum^n_{i=1} 1\{x_i \neq x_i'\}$
+      \end{itemize}
+    \item \definition{minimum distance} (codebook $\mathcal{C}$ of length-$n$ codewords)
+      \( {\displaystyle{ d_{\min} = \min_{\mathbf{x} \in \mathcal{C}, \mathbf{x}' \in \mathcal{C}: \mathbf{x} \neq \mathbf{x}'} d_H (\mathbf{x}, \mathbf{x'}) }} \) 
+      \begin{itemize}
+        \item higher $d_{\min}$ = better robustness to noise
+        \item e.g. Hamming code: $d_{\min} = 3$
+      \end{itemize}
+    \item if the minimum distance is $d_{\min}$, then it is possible to correct up to $d_{\min} - 1$ erasures and up to $\frac{d_{\min}-1}{2}$ bit flips.
+    \item if $\mathcal{C}$ is the set of codewords formed by a given linear code with $d_{\min} = 0$, then  \( {\displaystyle{ d_{\min} = \min_{\mathbf{x} \in \mathcal{C}: \mathbf{x} \neq 0} w(\mathbf{x}) }} \) 
+      \begin{itemize}
+        \item where the weight $w(\mathbf{x})$ is the number of 1's in $\mathbf{x}$
+        \item for linear codes, min distance = min weight
+      \end{itemize}
+  \end{itemize}
 
 
 
