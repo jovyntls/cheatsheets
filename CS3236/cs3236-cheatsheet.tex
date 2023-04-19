@@ -66,6 +66,8 @@
 % adding my commands
 \input{../commands/style-helpers.tex}
 \input{../commands/math.tex}
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator*{\argmin}{arg\,min}
 
 % -----------------------------------------------------------------------
 
@@ -1166,6 +1168,7 @@
   \end{tightcenter}
 
   \begin{itemize}
+    \item codewords are linear combinations of the rows of $\mathbf{G}$
     \item $g_{j, i} = 1 \iff$ the $j$-th bit is used in the $i$-th parity check
     \item leftmost $k \times k$ sub-matrix is the identity matrix
   \end{itemize}
@@ -1255,14 +1258,14 @@
   \begin{minipage}[c]{0.25\linewidth}
     \begin{tightcenter}
       {\color{black} for a single-parity-check: }
-      $ \mathbf{G}_{\text{parity}} = \left[\begin{smallmatrix}
+      $ \mathbf{H}_{\text{parity}} = \left[\begin{smallmatrix}
       1 \\ 1 \\ 1 \\ 1 \\ 1 \\ \end{smallmatrix}\right] $
     \end{tightcenter}
   \end{minipage}
   \begin{minipage}[c]{0.35\linewidth}
     \begin{tightcenter}
       {\color{black} for Hamming code: }
-      $ \mathbf{G} = \left[\begin{smallmatrix}
+      $ \mathbf{H} = \left[\begin{smallmatrix}
           1 & 1 & 0 \\
           1 & 0 & 1 \\
           0 & 1 & 1 \\
@@ -1297,11 +1300,59 @@
     \item if the minimum distance is $d_{\min}$, then it is possible to correct up to $d_{\min} - 1$ erasures and up to $\frac{d_{\min}-1}{2}$ bit flips.
     \item if $\mathcal{C}$ is the set of codewords formed by a given linear code with $d_{\min} = 0$, then  \( {\displaystyle{ d_{\min} = \min_{\mathbf{x} \in \mathcal{C}: \mathbf{x} \neq 0} w(\mathbf{x}) }} \) 
       \begin{itemize}
-        \item where the weight $w(\mathbf{x})$ is the number of 1's in $\mathbf{x}$
+        \item \definition[, $w(\mathbf{x})$]{weight} the number of 1's in $\mathbf{x}$
         \item for linear codes, min distance = min weight
       \end{itemize}
   \end{itemize}
 
+  \subsection{Minimum Distance Decoding}
+
+  for $\mathbf{u} \in \{0, 1\}^k = m \in \{1,\dots,M\}$ mapped to codeword $\mathbf{x}^{(m)}$, the channel produces $\mathbf{y}$, and $P_e = \mathbb{P}[\hat{m} \neq m]$
+
+  \subsubsection{maximum likelihood decoding}
+
+  for any channel $P_{\mathbf{Y} \vert \mathbf{X}}$ and any codebook $\{ \mathbf{x}^{(1)}, \dots, \mathbf{x}^{(M)} \}$, 
+
+  \begin{tightcenter}
+    \ildefinition{maximum-likelihood (ML) decoder} 
+    minimises $P_e$
+    \\* \( {\displaystyle{ \hat{m} = \argmax_{j = 1, \dots, M} P_{\mathbf{Y} \vert \mathbf{X}} (\mathbf{y} \vert \mathbf{x}^{(j)}) }} \) 
+  \end{tightcenter}
+
+  \begin{tightcenter}
+    for BSC, ML decoding is equivalent to \\* \textbf{minimum (Hamming) distance decoding}
+    \\* \( {\displaystyle{ \argmax_{j=1,\dots, M} P_{\mathbf{Y}\vert \mathbf{X}} (\mathbf{y} \vert \mathbf{x}^{(j)}) =  \argmin_{j=1,\dots, M} d_H (\mathbf{x}^{(j)}, \mathbf{y}) }} \) 
+  \end{tightcenter}
+
+  \subsubsection{syndrome decoding}
+
+  for linear codes for the BSC, 
+
+  \begin{itemize}
+    \item \definition{syndrome} $\mathbf{S} = \mathbf{zH} = \mathbf{yH}$
+      \begin{itemize}
+        \item $\mathbf{S}$ is a $1 \times (n-k)$ vector
+        \item recall that $\mathbf{yH} = (\mathbf{x} \oplus \mathbf{z}) \mathbf{H} = (\mathbf{xH}) \oplus (\mathbf{zH}) = \mathbf{zH}$
+      \end{itemize}
+    \item for a linear code, for syndrome $\mathbf{S}$, the \textit{minimum-distance codeword} to $\mathbf{y}$ is obtained by
+      \begin{enumerate}
+        \item \( {\displaystyle{ \hat{\mathbf{z}} = \argmin_{\mathbf{z'} : \mathbf{z'H=S}} w(\mathbf{z'}) }} \)  
+          \\* (i.e. $\mathbf{z}'$ with fewest 1's consistent with $\mathbf{y}$)
+        \item $\hat{\mathbf{x}} = \mathbf{y} \oplus \hat{\mathbf{z}}$
+      \end{enumerate}
+      \begin{niceproof}
+        define $\mathbf{z}^{(i)} = \mathbf{x}^{(i)}\oplus \mathbf{y}$ $\Rightarrow$ $d_H (\mathbf{x}^{(i)} \oplus \mathbf{y}) = w(\mathbf{z}^{(i)})$
+      \end{niceproof}
+    \item applications for minimum-distance decoding:
+      \begin{itemize}
+        \item if $\mathbf{S=0}$, then output $\hat{\mathbf{x}} = \mathbf{y}$
+        \item else, iterate through weights (from 1) to find a $\mathbf{z'H=S}$
+          \begin{itemize}
+            \item if found, output $\hat{\mathbf{x}} = \mathbf{y} \oplus \hat{\mathbf{z}}$
+          \end{itemize}
+        \item fast for few flips, slow for large flips
+      \end{itemize}
+  \end{itemize}
 
 
 
