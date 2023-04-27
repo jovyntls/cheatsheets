@@ -135,6 +135,10 @@
 
   \includegraphics[width=0.97\linewidth]{cs3223-notation.png} 
 
+  \textbf{Data entry formats}: \textbf{1.} actual data record; 
+  \textbf{2.} \textbf{(k, RID)} - fixed length \texttt{(k, \textbf{$\bullet$})}; 
+  \textbf{3.} \textbf{(k, RID-list)} - e.g. \texttt{(k, \{RID11, RID12\})}
+
   \section{04.1 SORTING}
 
   \begin{itemize}
@@ -467,9 +471,7 @@
   \textbf{System R Optimiser}
 
   \begin{itemize}
-    \item enumerate only left-deep query plans
-    \item avoid cross-product query plans 
-    \item consider early selections and projections
+    \item enumerate only left-deep query plans; avoid cross-product query plans; consider early selections and projections
     \item DP + \textbf{sort order} $o_i$ of query plan output: $optPlan(S_i, o_i)$
   \end{itemize}
 
@@ -709,8 +711,8 @@
       \begin{itemize}
         \item $\times$ $\not\Rightarrow$ serialisability (some non-serialisable executions)
           \begin{itemize}
-            \item \textbf{write skew} anomaly: $\scriptscriptstyle R_1(x_0), R_2(y_0), W_1(x_1), W_2(y_2)$
-            \item \textbf{read-only txn} anomaly: reads not possible in serial
+            \item \textbf{write skew} anomaly: $\scriptscriptstyle R_1(x_0), R_2(y_0), W_1(y_1), W_2(x_2)$
+            \item \textbf{read-only txn} anomaly: $\scriptscriptstyle T_3 \xdashrightarrow{rw} T_2 \xdashrightarrow{rw} T_1 \xrightarrow{wr} T_3$
           \end{itemize}
         \item $\times$ does not guarantee serialisability
       \end{itemize}
@@ -719,6 +721,7 @@
   \subsubsection{Serialisable Snapshot Isolation (SSI)}
 
   \begin{itemize}
+    \item ensures MVSS
     \item detect $T_i \xdashrightarrow{rw} T_j \xdashrightarrow{rw} T_k$ and abort one of $T_i, T_j, T_k$
       \begin{itemize}
         \item keeps track of \textbf{rw dependencies}; possible false positives
@@ -743,7 +746,7 @@
         \item for each cycle in $DSG(S)$, $\exists T_i, T_j, T_k$ such that
           \begin{itemize}
             \item $T_i \xdashrightarrow{rw} T_j \xdashrightarrow{rw} T_k$ exists
-            \item $T_i$ and $T_k$ may be the same txn
+            \item $T_i$ and $T_k$ may be same txn (eg. write-skew anomaly)
           \end{itemize}
       \end{itemize}
   \end{itemize}
@@ -810,7 +813,7 @@
     \item \definition[protocol]{write-ahead logging (WAL)} do not flush an uncommitted update to the DB until the log record containing its before-image has been flushed to log
       \begin{itemize}
         \item each DB page contains \ildefinition{pageLSN} (LSN of latest update)
-        \item before flushing page P, ensure all log records < P.pageLSN have been flushed to disk
+        \item before flushing page P, ensure all log records $\leq$ P.pageLSN have been flushed to disk
       \end{itemize}
   \end{itemize}
 
