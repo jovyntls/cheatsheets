@@ -376,7 +376,7 @@
         \item if $\ell = d$: directory doubles; $\quad d$\texttt{++}
         \item else $\ell < d$: redistribute and increment $\ell$
       \end{itemize}
-    \item deletion: if bucket $B_i$ becomes empty,
+    \item deletion: if bucket $B_i$ becomes empty or $B_i$ and $B_j$ can merge,
       \begin{itemize}
         \item deallocate $B_i$ and decrement $\ell$\texttt{-{}-} for split image $B_j$
         \item if each pair of corresponding entries point to the same bucket, the directory can be halved
