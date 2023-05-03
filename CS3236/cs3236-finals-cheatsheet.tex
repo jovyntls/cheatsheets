@@ -423,7 +423,7 @@
       \end{itemize}
     \item \( {\displaystyle{ \mathbb{P}[X \in \mathcal{T}_n(\epsilon)] \to 1 \;\; }} \)  as $n \to \infty \quad$ (\textbf{high probability})
     \item \( {\displaystyle{ \vert \mathcal{T}_n(\epsilon)\vert \leq 2^{n(H(X) + \epsilon)} \quad }} \)  (\textbf{cardinality upper bound})
-    \item \( {\displaystyle{ \vert \mathcal{T}_n(\epsilon)\vert \geq (1-o(1)) 2^{n(H(X) + \epsilon)} \quad }} \)  
+    \item \( {\displaystyle{ \vert \mathcal{T}_n(\epsilon)\vert \geq (1-o(1)) 2^{n(H(X) - \epsilon)} \quad }} \)  
       \\*  where $o(1) \to 0$ as $n \to \infty$ (\textbf{cardinality lower bound})
   \end{enumerate}
 
@@ -437,11 +437,19 @@
       each of which has probability of $\approx 2^{-nH(X)}$ (definition of typical set)
   \end{itemize}
 
+  \textbf{weak LoLN:} \( {\displaystyle{ \lim_{n \to \infty} \mathbb{P} \left[ \left\vert \frac{1}{n} \sum^n_{i=1} X_i - \mathbb{E}[X] \right\vert > \epsilon \right] = 0 }} \) 
+
+  \textbf{LoLN:} $ \frac{1}{n}\sum^n_{i=1}X_i \to \mathbb{E}[X] $ as $n \to \infty$
+
 
   \subsection{Fano's Inequality}
 
   \begin{tightcenter}
     \ildefinition{Fano's Inequality}
+    \setlength\abovedisplayskip{0pt}
+    \setlength\belowdisplayskip{0pt}
+    \setlength\abovedisplayshortskip{0pt}
+    \setlength\belowdisplayshortskip{0pt}
     \begin{align*}
       H(X \vert \hat{X}) &\leq H_2(P_e) + P_e\log_2 (\vert\mathcal{X}\vert -1)  \\*
                          &\leq 1 + P_e \log_2 \vert \mathcal{X} \vert
@@ -569,7 +577,7 @@
     \ildefinition{joint version},  \( {\displaystyle{ h(X,Y) = \mathbb{E} \left[ \log_2 \frac{1}{f_{XY} (x, y)} \right] }} \) 
 
     \ildefinition{conditional version},  \( {\displaystyle{ h(Y \vert X) = \mathbb{E}_{(X, Y)\sim f_{XY}} \left[ \log_2 \frac{1}{f_{Y \vert X} (Y \vert X)} \right] }} \) 
-    \\* \( {\displaystyle{ = \int_{\mathbb{R}} f_X(x) H(Y \vert X=x) \dx }} \) 
+    \\* \( {\displaystyle{ = \int_{\mathbb{R}} f_X(x) h(Y \vert X=x) \dx }} \) 
     \\* where $(X,Y)$ have a joint density function $f_{XY}(x,y) = f_X(x)f_{Y|X}(y|x)$
   \end{tightcenter}
 
@@ -879,14 +887,6 @@
       \end{enumerate}
     \item \textit{Proof.} define $\mathbf{z}^{(i)} = \mathbf{x}^{(i)}\oplus \mathbf{y}$ $\Rightarrow$ $d_H (\mathbf{x}^{(i)} \oplus \mathbf{y}) = w(\mathbf{z}^{(i)})$
   \end{itemize}
-
-  \subsubsection{Hamming code}
-
-  \begin{itemize}
-    \item maps length 4 $\Rightarrow$ length 7: sum of bits in each circle is even
-      \includegraphics[width=0.7\linewidth]{cs3236-hamming-example.png} 
-  \end{itemize}
-
 
 \end{multicols*}
 

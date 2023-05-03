@@ -135,7 +135,7 @@
 
   \begin{itemize}
     \item a "transmitter" sends a sequence of 0s and 1s
-    \item a "receiver" sends a sequence \textit{with some corruptions}
+    \item a "receiver" receives a sequence \textit{with some corruptions}
   \end{itemize}
 
   \subsubsection{channel transition diagram}
@@ -168,7 +168,7 @@
     \item fill in $b_1b_2b_3b_4$ and assign $c_1c_2c_3$ such that the sum of bits in each circle is even
       \includegraphics[width=0.8\linewidth]{cs3236-hamming-example.png} 
     \item $ \mathbb{P}[correct] \geq \mathbb{P}[\leq 1\text{bit flips}] = (1-\delta)^7 + 7\delta(1-\delta)^6 $
-    \item with $\delta=1$: Shannon capacity $C\approx 0.531$ 
+    \item with $\delta=0.1$: Shannon capacity $C\approx 0.531$ 
   \end{itemize}
 
   \section{01. INFORMATION MEASURES}
@@ -195,7 +195,7 @@
   \begin{minipage}[c]{0.3\linewidth}
     \includegraphics[width=0.95\linewidth]{cs3236-information-log2-p-graph.png} 
   \end{minipage}
-  \begin{minipage}[c]{0.67\linewidth}
+  \begin{minipage}[c]{0.67\linewidth}\color{black}
     \begin{itemize}
       \item only $\psi(p) = \log_b\frac{1}{p}$  satisfies all axioms
       \item we focus on $b=2$ 
@@ -631,7 +631,7 @@
       \end{itemize}
     \item \( {\displaystyle{ \mathbb{P}[X \in \mathcal{T}_n(\epsilon)] \to 1 \;\; }} \)  as $n \to \infty \quad$ (\textbf{high probability})
     \item \( {\displaystyle{ \vert \mathcal{T}_n(\epsilon)\vert \leq 2^{n(H(X) + \epsilon)} \quad }} \)  (\textbf{cardinality upper bound})
-    \item \( {\displaystyle{ \vert \mathcal{T}_n(\epsilon)\vert \geq (1-o(1)) 2^{n(H(X) + \epsilon)} \quad }} \)  
+    \item \( {\displaystyle{ \vert \mathcal{T}_n(\epsilon)\vert \geq (1-o(1)) 2^{n(H(X) - \epsilon)} \quad }} \)  
       \\*  where $o(1) \to 0$ as $n \to \infty$ (\textbf{cardinality lower bound})
       \\* $\quad \Rightarrow$ we can't improve much on property (3)
   \end{enumerate}
@@ -657,12 +657,12 @@
     \ildefinition{Fano's Inequality}
     \begin{align*}
       H(X \vert \hat{X}) &\leq H_2(P_e) + P_e\log_2 (\vert\mathcal{X}\vert -1)  \\*
-                         &\leq 1 + P_2 \log_2 \vert \mathcal{X} \vert
+                         &\leq 1 + P_e \log_2 \vert \mathcal{X} \vert
     \end{align*}
   \end{tightcenter}
 
   \begin{itemize}
-    \item intuition: if $H(X \vert \hat{X})$ is large, then $P_2 = \mathbb{P}[\hat{X} \neq X]$ should be large too
+    \item intuition: if $H(X \vert \hat{X})$ is large, then $P_e = \mathbb{P}[\hat{X} \neq X]$ should be large too
     \item uncertainty in $X$ after observing $\hat{X}$ $\leq$ uncertainty in "is $X = \hat{X}$?" + $(\mathbb{P}$[no]$=P_e)($max uncertainty in the no case$)$
     \item implications for source coding: proves the \textbf{converse} clause of \textbf{fixed length source coding theorem}
       \begin{itemize}
@@ -676,7 +676,7 @@
   \begin{itemize}
     \item transmit a message $m \in \{1, \dots, M\}$ 
       \begin{itemize}
-        \item using a fixed-length source code that outputs a length-$k$ sequence, we can set $M=s^k$
+        \item using a fixed-length source code that outputs a length-$k$ sequence, we can set $M=2^k$
       \end{itemize}
     \item encoder: message $m \Rightarrow$ channel inputs $x_1, \dots, x_n$
     \item \definition{codeword} $\mathbf{x}^{(m)} = (x_1^{(m)}, \dots, x_n^{(m)})$
@@ -878,7 +878,7 @@
   \textit{Proof.}
 
   \begin{itemize}
-    \item Fano's inequality: $H(m \vert \hat{m}) \leq H_2(P_e) + P_2\log_2 (M - 1) \leq 1 + P_e\log_2 M$
+    \item Fano's inequality: $H(m \vert \hat{m}) \leq H_2(P_e) + P_e\log_2 (M - 1) \leq 1 + P_e\log_2 M$
       \begin{itemize}
         \item H(are they equal?) + remaining uncertainty if they're not
       \end{itemize}
@@ -921,7 +921,7 @@
     \ildefinition{joint version},  \( {\displaystyle{ h(X,Y) = \mathbb{E} \left[ \log_2 \frac{1}{f_{XY} (x, y)} \right] }} \) 
 
     \ildefinition{conditional version},  \( {\displaystyle{ h(Y \vert X) = \mathbb{E}_{(X, Y)\sim f_{XY}} \left[ \log_2 \frac{1}{f_{Y \vert X} (Y \vert X)} \right] }} \) 
-    \\* \( {\displaystyle{ = \int_{\mathbb{R}} f_X(x) H(Y \vert X=x) \dx }} \) 
+    \\* \( {\displaystyle{ = \int_{\mathbb{R}} f_X(x) h(Y \vert X=x) \dx }} \) 
   \end{tightcenter}
 
   \subsubsection{properties}
@@ -995,7 +995,6 @@
     \item $D(f||g) \geq 0, \quad$ equality $\iff f=g$
     \item $I(X;Y) \geq 0, \quad$ equality $\iff X \perp Y$
     \item if $\psi(\cdot)$ and $\phi(\cdot)$ are invertible then $I(X;Y) = I(\psi(X);\phi(Y))$
-    \item $h(\cdot)$ is invariant to shifting by a constant: $h(X+k) = H(X)$, $H(X + Y\vert X) = H(Y)$
   \end{itemize}
 
   \subsection{Gaussian Random Variables}
@@ -1068,6 +1067,7 @@
 
   \begin{itemize}
     \item channel capacity $C(P)$ is same as discrete memoryless channels, but codebooks are constrained to satisfy average power constraint
+    \item for AWGN, capacity-achieving $f_X$ is gaussian: $N(0,P)$
   \end{itemize}
 
   \subsubsection{properties of Gaussian channel capacity}
@@ -1298,7 +1298,7 @@
         \item e.g. Hamming code: $d_{\min} = 3$
       \end{itemize}
     \item if the minimum distance is $d_{\min}$, then it is possible to correct up to $d_{\min} - 1$ erasures and up to $\frac{d_{\min}-1}{2}$ bit flips.
-    \item if $\mathcal{C}$ is the set of codewords formed by a given linear code with $d_{\min} = 0$, then  \( {\displaystyle{ d_{\min} = \min_{\mathbf{x} \in \mathcal{C}: \mathbf{x} \neq 0} w(\mathbf{x}) }} \) 
+    \item if $\mathcal{C}$ is the set of codewords formed by a given linear code with $d_{\min} > 0$, then  \( {\displaystyle{ d_{\min} = \min_{\mathbf{x} \in \mathcal{C}: \mathbf{x} \neq 0} w(\mathbf{x}) }} \) 
       \begin{itemize}
         \item \definition[, $w(\mathbf{x})$]{weight} the number of 1's in $\mathbf{x}$
         \item for linear codes, min distance = min weight
