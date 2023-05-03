@@ -469,18 +469,20 @@
 
   \begin{itemize}
     \item \definition{register} ADT: a single value that can be read and written
-    \item register is \definition{atomic} if the implementation always ensures linearisability of the history
-    \item register is \definition{sequentially consistent} if the implementation always ensures sequential consistency of the history
-    \item register is \definition{regular} when a read
       \begin{itemize}
-        \item not overlap with any write, the read returns the value written by one of the most recent writes
-        \item overlaps with one or more writes, the read returns the value written by one of the most recent writes OR the value written by one of the overlapping writes
-          \\* \includegraphics[width=0.5\linewidth]{cs4231-register-recent-writes.png} 
-      \end{itemize}
-    \item register is \definition{safe} if the implementation always ensures that
-      \begin{itemize}
-        \item when a read does not overlap with any write, it returns the value written by one of the most recent writes
-        \item when a read overlaps with one or more writes, it can return anything
+        \item \definition{atomic} if the implementation always ensures linearisability of the history
+        \item \definition{sequentially consistent} if the implementation always ensures sequential consistency of the history
+        \item \definition{regular} when a read
+          \begin{itemize}
+            \item not overlap with any write, the read returns the value written by one of the most recent writes
+            \item overlaps with one or more writes, the read returns the value written by one of the most recent writes OR the value written by one of the overlapping writes
+              \\* \includegraphics[width=0.5\linewidth]{cs4231-register-recent-writes.png} 
+          \end{itemize}
+        \item \definition{safe} if the implementation always ensures that
+          \begin{itemize}
+            \item when a read does not overlap with any write, it returns the value written by one of the most recent writes
+            \item when a read overlaps with one or more writes, it can return anything
+          \end{itemize}
       \end{itemize}
     \item \attention atomic $\Rightarrow$ regular $\Rightarrow$ safe
     \item regular $\not\Rightarrow$ sequentially consistent; $\quad$ sequentially consistent $\not\Rightarrow$ regular
@@ -684,6 +686,7 @@
         \item upon receiving Marker, process turns red
         \item total $n*(n-1)$ Marker messages
       \end{itemize}
+    \item requires FIFO - marker messages are sent on the same channel as actual messages
     \item \textbf{on-the-fly} messages: sent before sender's local snapshot, received after receiver's local snapshot
   \end{itemize}
   \begin{tightcenter}
@@ -1227,7 +1230,7 @@
       \end{itemize}
     \item \textbf{byzantine consensus threshold} for $n$ processes, $f$ possible byzantine failures
       \begin{itemize}
-        \item if $n \leq f$, then the byzantine consensus problem cannot be solved
+        \item if $n \leq 3f$, then the byzantine consensus problem cannot be solved
       \end{itemize}
   \end{itemize}
 
