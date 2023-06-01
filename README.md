@@ -1,8 +1,8 @@
 # NUS Cheatsheets
 
-A compilation of my notes and exam cheatsheets for NUS courses (math/computing/statistics)
+A compilation of notes and cheatsheets for NUS computing/math/statistics courses :)
 
-If you find any typos please let me know! Thank you :)
+If you find any typos please let me know! Thank you for the support :heart: &nbsp; ![stars](https://img.shields.io/github/stars/jovyntls/cheatsheets?style=social&label=Stars)
 
 ## Contents
 
@@ -20,7 +20,7 @@ If you find any typos please let me know! Thank you :)
 - [x] **AY21/22 S2**
   - CS3230
   - ST2131/MA2216
-- [ ] **AY22/23 S2** 
+- [x] **AY22/23 S2** 
   - CS3223
   - CS3236
   - CS4231
