@@ -1,0 +1,181 @@
+\documentclass[10pt, landscape]{article}
+\usepackage[scaled=0.92]{helvet}
+\usepackage{calc}
+\usepackage{multicol}
+\usepackage[a4paper,margin=3mm,landscape]{geometry}
+\usepackage{amsmath,amsthm,amsfonts,amssymb}
+\usepackage{color,graphicx,overpic}
+\usepackage{hyperref}
+\usepackage{newtxtext} 
+\usepackage{enumitem}
+\usepackage[table]{xcolor}
+\usepackage{mathtools}
+\setlist{nosep}
+% for including images
+\graphicspath{ {./images/} }
+
+\pdfinfo{
+  /Title (ST2132.pdf)
+  /Creator (TeX)
+  /Producer (pdfTeX 1.40.0)
+  /Author (Jovyn Tan)
+  /Subject (ST2132)
+/Keywords (ST2132, nus,cheatsheet,pdf)}
+
+% Turn off header and footer
+\pagestyle{empty}
+
+% redefine section commands to use less space
+\makeatletter
+\renewcommand{\section}{\@startsection{section}{1}{0mm}%
+  {-1ex plus -.5ex minus -.2ex}%
+  {0.5ex plus .2ex}%x
+{\normalfont\large\bfseries}}
+\renewcommand{\subsection}{\@startsection{subsection}{2}{0mm}%
+  {-1explus -.5ex minus -.2ex}%
+  {0.5ex plus .2ex}%
+{\normalfont\normalsize\bfseries}}
+\renewcommand{\subsubsection}{\@startsection{subsubsection}{3}{0mm}%
+  {-1ex plus -.5ex minus -.2ex}%
+  {1ex plus .2ex}%
+{\normalfont\small\bfseries}}%
+\makeatother
+
+\renewcommand{\familydefault}{\sfdefault}
+\renewcommand\rmdefault{\sfdefault}
+%  makes nested numbering (e.g. 1.1.1, 1.1.2, etc)
+\renewcommand{\labelenumii}{\theenumii}
+\renewcommand{\theenumii}{\theenumi.\arabic{enumii}.}
+\renewcommand\labelitemii{•}
+\renewcommand\labelitemiii{•}
+
+\definecolor{mathblue}{cmyk}{1,.72,0,.38}
+\everymath\expandafter{\the\everymath \color{mathblue}}
+
+% Don't print section numbers
+\setcounter{secnumdepth}{0}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0pt plus 0.5ex}
+%% adjust spacing for all itemize/enumerate
+\setlength{\leftmargini}{0.5cm}
+\setlength{\leftmarginii}{0.5cm}
+\setlist[itemize,1]{leftmargin=2mm,labelindent=1mm,labelsep=1mm}
+\setlist[itemize,2]{leftmargin=4mm,labelindent=1mm,labelsep=1mm}
+
+% adding my commands
+\input{../commands/style-helpers.tex}
+\input{../commands/math.tex}
+
+% -----------------------------------------------------------------------
+
+\begin{document}
+\raggedright
+\footnotesize
+\begin{multicols*}{4}
+  % multicol parameters
+  \setlength{\columnseprule}{0.25pt}
+
+  \begin{center}
+    \fbox{%
+      \parbox{0.8\linewidth}{\centering \textcolor{black}{
+          {\Large\textbf{ST2132}}
+        \\ \normalsize{AY23/24 SEM 1}}
+        \\ {\footnotesize \textcolor{gray}{github/jovyntls}}
+      }%
+    }
+  \end{center}
+
+  \section{01. PROBABILITY}
+
+  \begin{itemize}
+    \item \definition[of an event]{probability} the limiting relative frequency of its occurrence as the experiment is repeated many times
+    \item the \textbf{realisation} $x$ is a constant, and $X$ is a generator
+      \begin{itemize}
+        \item running $r$ experiments gives us $r$ realisations $x_1, \dots, x_r$
+      \end{itemize}
+  \end{itemize}
+
+  \subsection{expectation}
+
+  \subsubsection{expectation of $X$}
+
+  \begin{tightcenter}
+    \begin{multicols*}{2}
+      \textbf{discrete}: mass function \\* \( {\displaystyle{ E(X) := \sum^n_{i=1}x_ip_i }} \) 
+      \\ \textbf{continuous}: density function \\* \( {\displaystyle{ E(X) := \int^\infty_{-\infty} xf(x) \dx }} \) 
+    \end{multicols*}
+  \end{tightcenter}
+
+  \subsubsection{expectation of a function $h(X)$}
+
+  \( {\displaystyle{ 
+      E\{h(X)\} = \begin{cases}
+        \sum^n_{i=1} h(x_i)p_i &\text{$X$ is discrete} \\ 
+        \int^\infty_{-\infty} h(x)f(x)\dx &\text{$X$ is continuous} \\ 
+      \end{cases}
+  }} \) 
+
+  \subsection{variance}
+
+  \begin{tightcenter}
+    \textbf{variance}, \( {\displaystyle{ var(X) := E\{(X-\mu)^2\} }} \) 
+    \\ \textbf{standard deviation}, $SD(X) := \sqrt{var(X)}$
+  \end{tightcenter}
+
+  \subsection{law of large numbers}
+
+  \begin{tightcenter}
+    \textbf{LLN:} for a function $h$, as number of realisations $r \to \infty$, 
+
+    $\bar{x} \to E(X)$, $v \to var(X)$
+
+    $ \frac{1}{r} \sum^r_{i=1}h(x_i) \to E\{h(X)\} $
+  \end{tightcenter}
+
+  mean of realisations,  \( {\displaystyle{ \bar{x} := \frac{1}{r} \sum^r_{i=1} x_i }} \) 
+
+  variance of realisations, \( {\displaystyle{ v := \frac{1}{r}\sum^r_{i=1} (x_i - \bar{x})^2 }} \) 
+
+  \subsection{Monte Carlo approximation}
+
+  \begin{tightcenter}
+    \( {\displaystyle{ E\{h(X)\} \approx \frac{1}{r} \sum^r_{i=1} h(x_i) }} \) 
+  \end{tightcenter}
+
+  by LLN, as $r \to \infty$, the approximation becomes exact
+
+  \subsection{joint distribution}
+
+  \begin{itemize}
+    \item \textbf{discrete}: mass function \\* \( {\displaystyle{\text{Pr} ( X = x_i, Y = y_j ) = p_{ij}}} \)  where $x_1, \dots, x_i$ and $y_1, \dots, y_j$ are all possible values of $X$  and $Y$
+    \item \textbf{continuous}: density function \\* \( {\displaystyle{f : \mathbb{R}^2  \to [0, \infty), \int^\infty_{-\infty} f(x, y) \dx \dy = 1}} \) 
+  \end{itemize}
+
+  \begin{tightcenter}
+    for $h : \mathbb{R}^2 \to \mathbb{R}$,
+    \\* \( {\displaystyle{ E\{ h(X,Y)\} = }} \) 
+    \( {\displaystyle{ 
+        \begin{cases}
+          \sum^I_{i=1}\sum^J_{j=1} h(x_i, y_j) p_{ij} & X \text{ is discrete}
+          \\ \int^\infty_{-\infty}\int^\infty_{-\infty} h(x, y) f(x, y) \dx \dy & Y \text{ is continuous}
+        \end{cases}
+    }} \) 
+  \end{tightcenter}
+
+  \subsection{algebra of RV's}
+
+  let $X, Y$ be RVs and $a, b, c$ be constants
+
+  \begin{itemize}
+    \item $Z = aX + bY + c$ is also an RV
+      \begin{itemize}
+        \item $z = ax + by + c$ is a realisation of $Z$
+      \end{itemize}
+    \item linearity of expectation - $E(Z) = aE(X) + bE(Y) + c$
+  \end{itemize}
+
+
+\end{multicols*}
+
+\end{document}
