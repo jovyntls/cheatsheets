@@ -63,6 +63,9 @@
 \setlist[itemize,1]{leftmargin=2mm,labelindent=1mm,labelsep=1mm}
 \setlist[itemize,2]{leftmargin=4mm,labelindent=1mm,labelsep=1mm}
 
+\newcommand{\cov}{\mathop{\mathrm{cov}}}
+\newcommand{\var}{\mathop{\mathrm{var}}}
+
 % adding my commands
 \input{../commands/style-helpers.tex}
 \input{../commands/math.tex}
@@ -119,8 +122,8 @@
   \subsection{variance}
 
   \begin{tightcenter}
-    \textbf{variance}, \( {\displaystyle{ var(X) := E\{(X-\mu)^2\} }} \) 
-    \\ \textbf{standard deviation}, $SD(X) := \sqrt{var(X)}$
+    \textbf{variance}, \( {\displaystyle{ \var(X) := E\{(X-\mu)^2\} }} \) 
+    \\ \textbf{standard deviation}, $SD(X) := \sqrt{\var(X)}$
   \end{tightcenter}
 
   \subsection{law of large numbers}
@@ -128,7 +131,7 @@
   \begin{tightcenter}
     \textbf{LLN:} for a function $h$, as number of realisations $r \to \infty$, 
 
-    $\bar{x} \to E(X)$, $v \to var(X)$
+    $\bar{x} \to E(X)$, $v \to \var(X)$
 
     $ \frac{1}{r} \sum^r_{i=1}h(x_i) \to E\{h(X)\} $
   \end{tightcenter}
@@ -175,6 +178,122 @@
     \item linearity of expectation - $E(Z) = aE(X) + bE(Y) + c$
   \end{itemize}
 
+  \subsection{covariance}
+
+  let $\mu_X = E(X)$, $\mu_Y=E(Y)$.
+
+  \begin{tightcenter}
+    \textbf{covariance}, $\cov(X,Y) = E\{ (X-\mu_X)(Y-\mu_Y) \}$
+  \end{tightcenter}
+
+  \begin{itemize}
+    \item $\cov(X, Y) = E(XY) - \mu_X\mu_Y$
+    \item $\cov(X, Y) = \cov(Y,X)$
+    \item $\cov(X, X) = \var(X)$
+    \item $\cov(W, aX+bY+c) = a\cov(W, X) + b\cov(W, Y)$
+    \item $\var(aX + bY + c) = a^2 \var(X) + b^2 \var(Y) + 2ab\cov(X, Y)$
+  \end{itemize}
+
+  \subsection{joint, marginal \& conditional distributions}
+
+  let $f(x, y)$ be the \textbf{joint} density and $f_X(x), f_Y(y)$ be the \textbf{marginal} densities. then
+
+  \begin{tightcenter}
+    $f(x, y) = f_X(x)f_Y(y \vert x) = f_Y(y) f_X(x \vert y)$,  $\quad x, y \in \mathbb{R}$
+  \end{tightcenter}
+
+  $f_Y(\cdot \vert x)$ is the \textbf{conditional} density of $Y$ given $X=x$
+  $f_X(\cdot \vert y)$ is the \textbf{conditional} density of $X$ given $Y=y$ 
+
+  \subsection{independence}
+
+  $X, Y$ are independent $\iff \forall x, y \in \mathbb{R}$, 
+
+  \begin{enumerate}
+    \item $f(x, y) = f_X(x)f_Y(y)$ 
+    \item $f_Y(y\vert x) = f_Y(y)$
+    \item $f_X(x\vert y) = f_Y(x)$
+  \end{enumerate}
+
+  $X, Y$ are independent  $\Rightarrow$
+  \begin{itemize}
+    \item $E(XY) = E(X)E(Y)$ 
+    \item $\cov(X,Y) = 0$
+  \end{itemize}
+  (the converse does not hold)
+
+  \subsection{Distributions}
+
+  \subsubsection{binomial}
+
+  \begin{tightcenter}
+    $E(X) = np, \quad \var(X) = np(1-p)$
+  \end{tightcenter}
+
+  \subsubsection{multinomial}
+
+  An experiment with $k$ outcomes $E_1, \dots, E_k$, $\; Pr(E_i) = p_i$.
+  For some $1 \leq i \leq k$, let $X_i$ be the number of times $E_i$ occurs in $n$ runs.
+
+  \begin{tightcenter}
+    $(X_1, \dots, X_k)$ has the multinomial distribution:
+    \( {\displaystyle{ Pr(X_1 = x_1, \dots, X_k = x_k) = \binom{n}{x_1 \dots x_k} \Pi^k_{i=1} p_i^{x_i} }} \)   
+  \end{tightcenter}
+
+  \begin{itemize}
+    \item combinatorially, $\binom{n}{x_1 \dots x_k} = \frac{n!}{x_1! x_2! \dots x_k!}$
+  \end{itemize}
+
+  \begin{tightcenter}
+    $E(X) = \begin{bmatrix}np_1 \\ np_2 \\ \vdots \\ np_k\end{bmatrix}$,  
+    $\quad\var(X) = \begin{bmatrix}
+      TODO
+    \end{bmatrix} $
+  \end{tightcenter}
+
+  \begin{itemize}
+    \item $\cov(X_i, X_j) < 0$
+    \item $X_i \sim Bin(n, p_i)$
+      \begin{itemize}
+        \item $E(X_i) = np_i, \quad \var(X_i) = np_i (1-p_i)$
+      \end{itemize}
+    \item $X_i + X_j \sim Bin(n, p_i + p_j)$
+      \begin{itemize}
+        \item $\var(X_i + X_j) = n(p_i + p_j) (1-p_i-p_j)$
+      \end{itemize}
+  \end{itemize}
+
+  \subsection{Conditional expectation}
+
+  \subsubsection{discrete case}
+
+  for r.v.s (X, Y), let $f_Y(\cdot \vert x_i)$ be the conditional mass function of $Y$ given $X = x_i$.
+
+  \begin{tightcenter}
+    \( {\displaystyle{ E[Y \vert x_i] := \sum^J_{j=1} y_j f_Y (y_j \vert x_i) }} \) 
+
+    \( {\displaystyle{ \var[Y\vert x_i] := \sum^J_{j=1} (y_j - E[Y\vert x_i])^2 f_Y (y_j \vert x_i) }} \) 
+  \end{tightcenter}
+
+  $E[Y\vert x_i]$ is like $E(Y)$, with conditional distribution replacing marginal distribution  $f_Y(\cdot)$. 
+  likewise $\var[Y\vert x_i]$ is like $\var(Y)$
+
+  \subsubsection{continuous case}
+
+  \begin{tightcenter}
+    \( {\displaystyle{ E[Y \vert x] := \int^\infty_{-\infty} y f_Y (y \vert x) \dy }} \) 
+
+    \( {\displaystyle{ \var[Y\vert x] := \int^\infty_{-\infty} (y - E[Y\vert x])^2 f_Y (y \vert x) \dy }} \) 
+  \end{tightcenter}
+
+
+  \section{02. PROBABILITY (2)}
+
+  \subsection{mean square error (MSE)}
+
+  \begin{tightcenter}
+    \textbf{mean square error}, $MSE = E\{ (Y-c)^2 \}$
+  \end{tightcenter}
 
 \end{multicols*}
 
