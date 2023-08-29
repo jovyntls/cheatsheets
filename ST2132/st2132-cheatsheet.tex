@@ -224,7 +224,20 @@
 
   \subsection{Distributions}
 
+  if $X$ is iid, then $\var(\sum^n_{i=-1} x_i) = \sum^n_{i=1} \var(x_i)$
+
+  \subsubsection{bernoulli}
+
+  \begin{itemize}
+    \item $X \sim Bernoulli(p) \quad \Rightarrow$ coin flip with probability $p$
+  \end{itemize}
+
   \subsubsection{binomial}
+
+  \begin{itemize}
+    \item $X \sim Bin(n, p) \quad \Rightarrow$ $n$ coin flips with probability $p$
+    \item $X_i \mathop{\sim}\limits^{i.i.d.} Bernoulli(p)$
+  \end{itemize}
 
   \begin{tightcenter}
     $E(X) = np, \quad \var(X) = np(1-p)$
@@ -232,8 +245,13 @@
 
   \subsubsection{multinomial}
 
-  An experiment with $k$ outcomes $E_1, \dots, E_k$, $\; Pr(E_i) = p_i$.
-  For some $1 \leq i \leq k$, let $X_i$ be the number of times $E_i$ occurs in $n$ runs.
+   \begin{itemize}
+    \item $X \sim Multinomial(n, \mathbf{p})$ $\quad \Rightarrow$ $n$ runs of an experiment with $k$ outcomes with probability vector $\mathbf{p}$
+      \begin{itemize}
+        \item An experiment with $k$ outcomes $E_1, \dots, E_k$, $\; Pr(E_i) = p_i$.
+          For some $1 \leq i \leq k$, let $X_i$ be the number of times $E_i$ occurs in $n$ runs.
+      \end{itemize}
+  \end{itemize}
 
   \begin{tightcenter}
     $(X_1, \dots, X_k)$ has the multinomial distribution:
@@ -246,9 +264,13 @@
 
   \begin{tightcenter}
     $E(X) = \begin{bmatrix}np_1 \\ np_2 \\ \vdots \\ np_k\end{bmatrix}$,  
-    $\quad\var(X) = \begin{bmatrix}
-      TODO
-    \end{bmatrix} $
+    $\quad \var(X_i) = np_i (1-p_i)$
+
+    $\var(X) =$ \textit{covariance matrix} $M$ with $m_{ij} = \begin{cases}
+      \var(X_i) & \text{if }i=j
+      \\ \cov(X_i, X_j) & \text{if }i \neq j
+    \end{cases} $
+
   \end{tightcenter}
 
   \begin{itemize}
