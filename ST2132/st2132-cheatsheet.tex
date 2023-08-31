@@ -237,6 +237,7 @@
   \begin{itemize}
     \item $X \sim Bin(n, p) \quad \Rightarrow$ $n$ coin flips with probability $p$
     \item $X_i \mathop{\sim}\limits^{i.i.d.} Bernoulli(p)$
+    \item $E(X) = \sum^n_{k=1} k \binom{n}{k} p^k (1-p)^{n-k}$ 
   \end{itemize}
 
   \begin{tightcenter}
@@ -316,6 +317,155 @@
   \begin{tightcenter}
     \textbf{mean square error}, $MSE = E\{ (Y-c)^2 \}$
   \end{tightcenter}
+
+  \begin{itemize}
+    \item $MSE = \var(Y) + \{ E(Y) - c\}^2$
+    \item $Y$ and $X$ are correlated: 
+      \\* $MSE = \var[Y \vert x] + \{ E[Y\vert x] - c \}^2$
+      \\* $MSE = E[(Y-c)^2 \vert x] = E[\{ Y - E(Y) \}^2 \vert x]$
+      \begin{itemize}
+        \item to predict $Y$, choose $c$ that depends on $x$
+      \end{itemize}
+  \end{itemize}
+
+  \subsubsection{random conditional expectations}
+
+  let $X, Y$ be r.v.s.
+  \begin{itemize}
+    \item $E[Y \vert X]$ is a r.v. which takes value $E[Y \vert x]$ with probability/density $f_X(x)$
+    \item $\var[Y \vert X]$ is a r.v. which takes value $\var[Y \vert x]$ with probability/density $f_X(x)$ 
+    \item $E(E[X_2 \vert X_1]) = E(X_2)$
+    \item $\var(E[X_2 \vert X_1]) + E(\var[X_2 \vert X_1]) = \var(X_2)$
+  \end{itemize}
+
+  \subsubsection{mean MSE}
+
+  \begin{tightcenter}
+    $\frac{1}{n} \sum^n_{i=1}\var[Y \vert x_i] \approx TODO$
+  \end{tightcenter}
+
+  \subsection{cumulative distribution function (cdf)}
+
+  for r.v. $X$, let $F(x) = P(X \leq x)$
+
+  \begin{itemize}
+    \item domain: $\mathbb{R}$; $\;$ codomain: $[0,1]$
+  \end{itemize}
+
+  \begin{tightcenter}
+    $F(x) = \int^\infty_{-\infty} f(x) \dx$
+  \end{tightcenter}
+
+  \subsection{standard normal distribution}
+
+  \begin{tightcenter}
+    $Z \sim N(0, 1)$ has density function \\* 
+    \( {\displaystyle{ \phi(z) = \frac{1}{\sqrt{2\pi}} \exp \{ -\frac{z^2}{2} \}, \quad -\infty < z < \infty }} \) 
+  \end{tightcenter}
+
+  \begin{itemize}
+    \item $E(Z) = 0, \quad \var(Z) = 1$
+      \begin{itemize}
+        \item  $E(Z) = \int^\infty_{-\infty} z\phi(z) \mathop{dz}$
+        \item  $E(Z^2) = \int^\infty_{-\infty} z^2\phi(z) \mathop{dz}$
+        \item $E(Z^k) = \begin{cases} 0 & \text{if $k$ is odd} \\ 1 & \text{if $k$ is even} \end{cases} $
+      \end{itemize}
+    \item CDF, $\Phi(x) = P(Z \leq x), \; x \in \mathbb{R}$
+      \begin{itemize}
+        \item $\Phi(x) = \int^x_{-\infty} \phi(z) \mathop{dz}$
+      \end{itemize}
+  \end{itemize}
+
+  \subsubsection{general normal distribution}
+
+  let  $X \sim N(\mu, \sigma^2)$ and $Y \sim N(\nu, \tau^2)$
+
+  \begin{tightcenter}
+    \textbf{standardisation:} $\frac{X - \mu}{\sigma} \sim N(0, 1)$
+  \end{tightcenter}
+
+  \begin{itemize}
+    \item summations: 
+      \begin{itemize}
+        \item for constants $a, b \neq 0$, 
+          \\* $\quad \; a + bX \sim N(a+b\mu, \; b^2\sigma^2)$
+        \item $X + Y \sim N(\mu + \nu, \; \sigma^2 + \tau^2 + 2\cov(X,Y))$
+          \begin{itemize}
+            \item $\cov(X, Y) = 0$, $\quad \Rightarrow \quad$ $X \perp Y$
+            \item $X \perp Y$ $\quad \Rightarrow \quad$ $X + Y \sim N(\mu + \nu, \; \sigma^2 + \tau^2)$
+          \end{itemize}
+      \end{itemize}
+
+    \item for $W = a + bX$, 
+      \begin{itemize}
+        \item density  $f_W(w) = \frac{d}{dw} F_W(w)$
+        \item cdf $F_W(w) = P(X \leq \frac{w-a}{b}) = \Phi(\frac{w-a}{b})$
+      \end{itemize}
+  \end{itemize}
+
+  \subsection{Central limit theorem}
+
+  let $X_1, \dots, X_n$ be iid rv's with expectation $\mu$ and SD $\sigma$, with $ S_n \sum^n_{i=1} X_i $
+
+  \begin{tightcenter}
+    \textbf{CLT} 
+    \\* as $n \to \infty$, the distribution of the standardised $S_n = \frac{S_n - n\mu}{\sqrt{n}\sigma}$ converges to $N(0,1)$
+  \end{tightcenter}
+
+  \begin{itemize}
+    \item $E(S_n) = n\mu$, $\; \var(S_n) = n\sigma^2$
+    \item for large $n$, approximately $S_n \sim N(n\mu, n\sigma^2)$
+  \end{itemize}
+
+  \subsubsection{Bernoulli}
+
+  let $X_i \sim Bernoulli(p)$. then
+  \begin{itemize}
+    \item $S_n \sim Binom(n, p)$
+      \begin{itemize}
+        \item for large $n$, $S_n = N(np, np(1-p))$
+      \end{itemize}
+    \item CLT: standardised $\frac{S_n - np}{\sqrt{n}\sqrt{p(1-p)}} \to N(0,1)$ as $n \to \infty$
+  \end{itemize}
+
+  \subsection{$\chi^2$ RVs}
+
+  let $Z \sim N(0,1)$. 
+  \begin{tightcenter}
+    $Z^2 \sim \chi^2_1$ \\*
+    $Z^2$ has $\chi^2$ distribution with 1 degree of freedom
+    \\* $E(Z^2) = 1$
+    \\* $\var(Z^2) = E(Z^4) - \{ E(Z^2) \}^2 = 2$
+  \end{tightcenter}
+
+  let $V_1, \dots, V_n$ be iid $\chi^2_1$ RVs. then 
+  \begin{itemize}
+    \item $V = \sum^n_{i=1}V_i$ has a $\chi^2_n$ distribution: $V \sim \chi^2_n$
+    \item $E(V) = n \quad \var(V) = 2n$
+  \end{itemize}
+
+  \subsection{Gamma distribution}
+
+  \begin{tightcenter}
+    let $\alpha, \lambda > 0$. The $Gamma(\alpha, \lambda)$ density is 
+    \\* \( {\displaystyle{ \frac{\lambda^\alpha}{\Gamma(\alpha)} x^{\alpha-1} e^{-\lambda x}, \quad x > 0 }} \) 
+    \\* where $\Gamma(\alpha)$ is a number that makes density integrate to 1
+  \end{tightcenter}
+
+  \begin{itemize}
+    \item density of $\chi_1^2$ RV $= \frac{1}{\sqrt{2\pi}} v^{-1/2} e^{-v/2}, \quad v > 0$
+      \\* $\quad\quad\quad\quad\quad\quad\quad\; = Gamma(\frac{1}{2}, \frac{1}{2})$
+    \item $\chi^2_n$ RV $\sim Gamma(\frac{n}{2}, \frac{1}{2})$
+      \begin{itemize}
+        \item $\chi^2_n$ is a special case of Gamma!
+      \end{itemize}
+    \item if $X_1 \sim Gamma(\alpha_1, \lambda)$ and $X_2 \sim Gamma(\alpha_2, \lambda)$ are independent, then $X_1 + X_2 \sim Gamma(\alpha_1 + \alpha_2, \lambda)$
+  \end{itemize}
+
+
+
+
+
 
 \end{multicols*}
 
