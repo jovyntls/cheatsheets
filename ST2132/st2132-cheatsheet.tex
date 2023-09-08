@@ -101,29 +101,29 @@
 
   \subsection{expectation}
 
-  \subsubsection{expectation of $X$}
-
   \begin{tightcenter}
     \begin{multicols*}{2}
-      \textbf{discrete}: mass function \\* \( {\displaystyle{ E(X) := \sum^n_{i=1}x_ip_i }} \) 
-      \\ \textbf{continuous}: density function \\* \( {\displaystyle{ E(X) := \int^\infty_{-\infty} xf(x) \dx }} \) 
+      \textbf{discrete}: \\* (mass function) \\* \( {\displaystyle{ E(X) := \sum^n_{i=1}x_ip_i }} \) 
+
+      \textbf{continuous}: \\* (density function) \\* \( {\displaystyle{ E(X) := \int^\infty_{-\infty} xf(x) \dx }} \) 
     \end{multicols*}
   \end{tightcenter}
 
   \subsubsection{expectation of a function $h(X)$}
 
-  \( {\displaystyle{ 
-      E\{h(X)\} = \begin{cases}
+  $ E\{h(X)\} = \begin{cases}
         \sum^n_{i=1} h(x_i)p_i &\text{$X$ is discrete} \\ 
         \int^\infty_{-\infty} h(x)f(x)\dx &\text{$X$ is continuous} \\ 
-      \end{cases}
-  }} \) 
+      \end{cases}$ 
 
   \subsection{variance}
 
   \begin{tightcenter}
-    \textbf{variance}, \( {\displaystyle{ \var(X) := E\{(X-\mu)^2\} }} \) 
-    \\ \textbf{standard deviation}, $SD(X) := \sqrt{\var(X)}$
+    \begin{align*}
+      \textbf{variance}, \var(X) &:= E\{(X-\mu)^2\}
+                        \\ &= E(X^2) - E(X)^2
+      \\ \textbf{standard deviation}, SD(X) &:= \sqrt{\var(X)}
+    \end{align*}
   \end{tightcenter}
 
   \subsection{law of large numbers}
@@ -461,6 +461,179 @@
       \end{itemize}
     \item if $X_1 \sim Gamma(\alpha_1, \lambda)$ and $X_2 \sim Gamma(\alpha_2, \lambda)$ are independent, then $X_1 + X_2 \sim Gamma(\alpha_1 + \alpha_2, \lambda)$
   \end{itemize}
+
+  \subsection{t distribution}
+
+  let $Z \sim N(0, 1)$ and $V \sim \chi^2_n$ be independent. 
+
+  \begin{tightcenter}
+    $ t_n = \frac{Z}{\sqrt{V/n}} $
+    \\* has a $t$ distribution with $n$ degrees of freedom.
+  \end{tightcenter}
+
+  \begin{itemize}
+    \item $t$ distribution is symmetric around 0
+    \item $n \to \infty$, $t_n \to Z$
+  \end{itemize}
+
+  \subsection{F distribution}
+
+  let $V \sim \chi^2_m$ and $W \sim \chi^2_n$ be independent. 
+
+  \begin{tightcenter}
+    $F_{m, n} = \frac{V/m}{W/n}$ 
+    \\* has an $F$ distribution with $(m,n)$ degrees of freedom.
+  \end{tightcenter}
+
+  \begin{itemize}
+    \item even if $m, n$, still two r.v.s as they are independent
+    \item for $T \sim t_n$, $T^2 = \frac{Z^2}{V/n} \sim F_{1,n}$
+  \end{itemize}
+
+  \subsection{i.i.d. random variables}
+
+  let $X_1, \dots, X_n$ be iid RVs with mean $\bar{X}$. 
+
+  \begin{tightcenter}
+    sample variance, $S^2 = \frac{1}{n-1} \sum^n_{i=1} (X_i - \bar{X})^2$
+  \end{tightcenter}
+
+  let $X_1, \dots, X_n$ be iid $N(\mu, \sigma^2)$. $\bar{X} = \frac{1}{n} \sum^n_{i=1} X_i$. 
+  \begin{itemize}
+    \item $\bar{X} \sim N(\mu, \frac{\sigma^2}{n})$
+    \item $E(\bar{X}) = \mu$, $\quad\var(\bar{X}) = \frac{\sigma^2}{n}$
+    \item $\frac{\bar{X} - \mu}{\sigma/\sqrt{n}} \sim N(0,1)$
+    \item $\frac{(n-1)S^2}{\sigma^2} \sim \chi^2_{n-1}$
+      \begin{itemize}
+        \item proof: $\sum^n_{i=1}(\frac{X_i - \mu}{\sigma})^2 = \frac{1}{\sigma^2} \sum^n_{i=1} (X_i-\bar{X})^2 + n(\frac{\bar{X} - \mu}{\sigma})^2$
+        \item LHS $\sim\chi^2_n$ by definition
+        \item rightmost term $\sim\chi^2_1$
+      \end{itemize}
+    \item $\bar{X}$ and $S^2$ are independent
+    \item $S$ is an estimate of $\sigma$
+    \item $\frac{\bar{X} - \mu}{S/\sqrt{n}} \sim t_{n-1}$
+  \end{itemize}
+
+  \subsection{Multivariate normal distribution}
+
+  let $\mathbf{\mu}$ be a $k \times 1$ vector and $\mathbf{\Sigma}$ be a positive-definite symmetric $k \times k$ matrix.
+
+  \begin{tightcenter}
+    the random vector $\mathbf{X} = (X_1, \dots, X_k)'$ has a multivariate normal distribution $N(\mathbf{\mu}, \mathbf{\Sigma})$ if its density function is 
+
+    \( {\displaystyle{ \frac{1}{(2\pi)^{k/2} \sqrt{det\mathbf{\Sigma}}} \exp \left(-\frac{(\mathbf{x} - \mathbf{\mu})' \mathbf{\Sigma}^{-1}(\mathbf{x} - \mathbf{\mu})}{2}\right) }} \) 
+  \end{tightcenter}
+
+  \begin{itemize}
+    \item $E(\mathbf{X}) = \mathbf{\mu}, \quad \var(\mathbf{X}) = \mathbf{\Sigma}$
+    \item for any non-zero $k \times 1 $ vector $\mathbf{a}$, 
+      $\mathbf{a'X} \sim N(\mathbf{a'\mu}, \mathbf{a'\Sigma a})$
+      \begin{itemize}
+        \item $\mathbf{a}'\mathbf{\Sigma a} > 0$ because $\mathbf{\Sigma}$ is positive-definite
+        \item $m=1$
+      \end{itemize}
+    \item two multinomial normal random vectors $\mathbf{X}_1$ and $\mathbf{X}_2$, sizes $h$ and $k$, are independent if $\cov (\mathbf{X}_1, \mathbf{X}_2) = 0_{h \times k}$
+  \end{itemize}
+
+  \section{03. POINT ESTIMATION}
+
+  for a variable $v$ in population $N$, 
+  \begin{tightcenter}
+    \( {\displaystyle{ 
+        \mu = \frac{1}{N} \sum^N_{i=1} v_i
+        \quad \quad 
+        \sigma^2 = \frac{1}{N} \sum^N_{i=1} (v_i - \mu)^2
+    }} \) 
+  \end{tightcenter}
+
+  \begin{itemize}
+    \item $\mu, \;\sigma^2$ are \ildefinition{parameters} (unknown constants)
+    \item a \textbf{simple random sample} is used to estimate parameters: individuals drawn from the population at random without replacement
+  \end{itemize}
+
+  \subsubsection{binary variable}
+
+  for variable $v$ with proportion $p$ in the population,
+
+  \begin{tightcenter}
+    $\mu = p, \quad\quad \sigma^2 = p(1-p)$
+  \end{tightcenter}
+
+  \subsubsection{single random draw}
+
+  for variable $v$ (population of size $N$, mean $\mu$, variance $\sigma^2$),
+  let $X$ be the chosen $v$-value.
+
+  \begin{tightcenter}
+    $E(X) = \mu$, $\quad\quad \var(X) = \sigma^2$
+  \end{tightcenter}
+
+  \subsubsection{draws with replacement}
+
+  let $X_1, \dots, X_n$ be random draws with replacement from a population of mean $\mu$ and variance $\sigma^2$.
+
+  \begin{tightcenter}
+    random sample mean, \( {\displaystyle{ \bar{X} = \frac{1}{n}\sum^n_{i=1}X_i }} \) 
+
+    $X_1, \dots, X_n$ are iid with $E(X_i) = \mu$, $\var(X_i) = \sigma^2$
+
+    $E(\bar{X}) = TODO$, $\var(\bar{X}) = TODO$
+  \end{tightcenter}
+
+  let $x_1, \dots, x_n$ be realisations of $n$ random draws with replacement from the population.
+
+  \begin{tightcenter}
+    sample mean, \( {\displaystyle{ \bar{x} = \frac{1}{n} \sum^n_{i=1} x_i }} \) 
+
+  \end{tightcenter}
+
+  \begin{itemize}
+    \item as $n \to \infty$, $\bar{x} \to \mu$  (LLN)
+    \item sample distribution, $x_i$ has the same distribution as $X_i$ and the population distribution 
+  \end{itemize}
+
+  \subsubsection{representativeness}
+
+  \begin{itemize}
+    \item $X_1, \dots, X_n$ is \textbf{representative} of the population
+      \begin{itemize}
+        \item as $n$ gets larger, $\bar{X}$ gets closer to $\mu$
+      \end{itemize}
+    \item $x_1, \dots, x_n$ are \textit{likely} representative of the population
+  \end{itemize}
+
+  \subsection{estimating mean}
+
+  given data $x_1, \dots, x_n$, 
+
+  \begin{itemize}
+    \item sample mean, $ \bar{x} = \frac{1}{n} \sum^n_{i=1} x_i $ is an  \ildefinition{estimate} of $\mu$
+    \item the error in $\bar{x}$ is $\mu - \bar{x}$; $\quad$ it cannot be estimated
+    \item $\bar{x}$ is a realisation of the \textbf{estimator} $\bar{X}$
+      \begin{itemize}
+        \item this realisation is used to estimate $\mu$
+      \end{itemize}
+  \end{itemize}
+
+  \subsubsection{standard error}
+
+  the size of error in estimate $\bar{x}$ is roughly \( {\displaystyle{ SD(\bar{X}) = \frac{\sigma}{\sqrt{n}} }} \)   
+
+  the \textbf{standard error} (SE) in $\bar{x}$ is $\frac{\sigma}{\sqrt{n}}$
+
+  \begin{itemize}
+    \item SE is a constant by definition: $SE = SD(\hat{X}) = \frac{\sigma}{\sqrt{n}}$
+  \end{itemize}
+
+  \subsubsection{estimating $\sigma$}
+
+  intuitive estimate of $\sigma^2$, $\hat{\sigma}^2 = \frac{1}{n} \sum^n_{i=1} (x_i-\bar{x})^2 $
+
+  \begin{tightcenter}
+    sample variance, \( {\displaystyle{ s^2 = \frac{1}{n-1} \sum^n_{i=1} (x_i-\bar{x})^2 }} \) 
+
+    $E(s^2) = \sigma^2$
+  \end{tightcenter}
 
 
 
