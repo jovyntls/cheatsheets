@@ -4,6 +4,7 @@
 \usepackage{multicol}
 \usepackage[a4paper,margin=3mm,landscape]{geometry}
 \usepackage{amsmath,amsthm,amsfonts,amssymb}
+\usepackage{bm}
 \usepackage{color,graphicx,overpic}
 \usepackage{hyperref}
 \usepackage{newtxtext} 
@@ -65,6 +66,17 @@
 
 \newcommand{\cov}{\mathop{\mathrm{cov}}}
 \newcommand{\var}{\mathop{\mathrm{var}}}
+\newcommand{\xbar}{\bar{x}}
+\newcommand{\Xbar}{\bar{X}}
+
+\DeclareRobustCommand{\svdots}{% s for `scaling'
+  \vbox{%
+    \baselineskip=0.33333\normalbaselineskip
+    \lineskiplimit=0pt
+    \hbox{.}\hbox{.}\hbox{.}%
+    \kern-0.2\baselineskip
+  }%
+}
 
 % adding my commands
 \input{../commands/style-helpers.tex}
@@ -99,7 +111,7 @@
       \end{itemize}
   \end{itemize}
 
-  \subsection{expectation}
+  \subsection{Expectation}
 
   \begin{tightcenter}
     \begin{multicols*}{2}
@@ -116,48 +128,60 @@
         \int^\infty_{-\infty} h(x)f(x)\dx &\text{$X$ is continuous} \\ 
       \end{cases}$ 
 
-  \subsection{variance}
+  \subsection{Variance}
 
   \begin{tightcenter}
-    \begin{align*}
-      \textbf{variance}, \var(X) &:= E\{(X-\mu)^2\}
-                        \\ &= E(X^2) - E(X)^2
-      \\ \textbf{standard deviation}, SD(X) &:= \sqrt{\var(X)}
-    \end{align*}
+      \textbf{variance}, $\var(X) := E\{(X-\mu)^2\}$
+
+    \textbf{standard deviation}, $SD(X) := \sqrt{\var(X)}$
   \end{tightcenter}
 
-  \subsection{law of large numbers}
+  \begin{itemize}
+    \item $\var(X) = E(X^2) - E(X)^2$
+    \item $E(X - \mu) = 0$
+  \end{itemize}
+
+  \subsection{Law of Large Numbers}
+
+  mean and variance of $r$ realisations:  
 
   \begin{tightcenter}
-    \textbf{LLN:} for a function $h$, as number of realisations $r \to \infty$, 
-
-    $\bar{x} \to E(X)$, $v \to \var(X)$
-
-    $ \frac{1}{r} \sum^r_{i=1}h(x_i) \to E\{h(X)\} $
+    \( {\displaystyle{ \xbar := \frac{1}{r} \sum^r_{i=1} x_i }} \) 
+    $\quad\quad$
+    \( {\displaystyle{ v := \frac{1}{r}\sum^r_{i=1} (x_i - \xbar)^2 }} \) 
   \end{tightcenter}
 
-  mean of realisations,  \( {\displaystyle{ \bar{x} := \frac{1}{r} \sum^r_{i=1} x_i }} \) 
+  \textbf{LLN:} for a function $h$, as $r \to \infty$, 
 
-  variance of realisations, \( {\displaystyle{ v := \frac{1}{r}\sum^r_{i=1} (x_i - \bar{x})^2 }} \) 
+  \begin{tightcenter}
+    \( {\displaystyle{ \frac{1}{r} \sum^r_{i=1}h(x_i) \to E\{h(X)\}  }} \) 
 
-  \subsection{Monte Carlo approximation}
+    $\xbar \to E(X)$, $\quad v \to \var(X)$
+  \end{tightcenter}
+
+  \subsubsection{Monte Carlo approximation}
+
+  simulate $x_1, \dots, x_r$ from $X$. by LLN, as $r \to \infty$, the approximation becomes exact
 
   \begin{tightcenter}
     \( {\displaystyle{ E\{h(X)\} \approx \frac{1}{r} \sum^r_{i=1} h(x_i) }} \) 
   \end{tightcenter}
 
-  by LLN, as $r \to \infty$, the approximation becomes exact
+  \subsection{Joint Distribution}
 
-  \subsection{joint distribution}
-
-  \begin{itemize}
-    \item \textbf{discrete}: mass function \\* \( {\displaystyle{\text{Pr} ( X = x_i, Y = y_j ) = p_{ij}}} \)  where $x_1, \dots, x_i$ and $y_1, \dots, y_j$ are all possible values of $X$  and $Y$
-    \item \textbf{continuous}: density function \\* \( {\displaystyle{f : \mathbb{R}^2  \to [0, \infty), \int^\infty_{-\infty} f(x, y) \dx \dy = 1}} \) 
-  \end{itemize}
-
+  (\textbf{discrete}) mass function:
   \begin{tightcenter}
-    for $h : \mathbb{R}^2 \to \mathbb{R}$,
-    \\* \( {\displaystyle{ E\{ h(X,Y)\} = }} \) 
+    \( {\displaystyle{P( X = x_i, Y = y_j ) = p_{ij}}} \)  
+  \end{tightcenter}
+
+  (\textbf{continuous}) density function:
+  \begin{tightcenter}
+    \( {\displaystyle{f : \mathbb{R}^2  \to [0, \infty), \int^\infty_{-\infty} f(x, y) \dx \dy = 1}} \) 
+  \end{tightcenter}
+
+  (\textbf{expectation}) for $h : \mathbb{R}^2 \to \mathbb{R}$,
+  \begin{tightcenter}
+    \( {\displaystyle{ E\{ h(X,Y)\} = }} \) 
     \( {\displaystyle{ 
         \begin{cases}
           \sum^I_{i=1}\sum^J_{j=1} h(x_i, y_j) p_{ij} & X \text{ is discrete}
@@ -166,7 +190,7 @@
     }} \) 
   \end{tightcenter}
 
-  \subsection{algebra of RV's}
+  \subsection{Algebra of RV's}
 
   let $X, Y$ be RVs and $a, b, c$ be constants
 
@@ -175,10 +199,11 @@
       \begin{itemize}
         \item $z = ax + by + c$ is a realisation of $Z$
       \end{itemize}
-    \item linearity of expectation - $E(Z) = aE(X) + bE(Y) + c$
+    \item linearity of expectation: $E(Z) = aE(X) + bE(Y) + c$
+    \item any theorem about a RV is true about a constant 
   \end{itemize}
 
-  \subsection{covariance}
+  \subsection{Covariance}
 
   let $\mu_X = E(X)$, $\mu_Y=E(Y)$.
 
@@ -194,103 +219,46 @@
     \item $\var(aX + bY + c) = a^2 \var(X) + b^2 \var(Y) + 2ab\cov(X, Y)$
   \end{itemize}
 
-  \subsection{joint, marginal \& conditional distributions}
+  \subsection{joint $=$ marginal $\times$ conditional distributions}
 
-  let $f(x, y)$ be the \textbf{joint} density and $f_X(x), f_Y(y)$ be the \textbf{marginal} densities. then
-
-  \begin{tightcenter}
-    $f(x, y) = f_X(x)f_Y(y \vert x) = f_Y(y) f_X(x \vert y)$,  $\quad x, y \in \mathbb{R}$
-  \end{tightcenter}
-
-  $f_Y(\cdot \vert x)$ is the \textbf{conditional} density of $Y$ given $X=x$
-  $f_X(\cdot \vert y)$ is the \textbf{conditional} density of $X$ given $Y=y$ 
-
-  \subsection{independence}
-
-  $X, Y$ are independent $\iff \forall x, y \in \mathbb{R}$, 
-
-  \begin{enumerate}
-    \item $f(x, y) = f_X(x)f_Y(y)$ 
-    \item $f_Y(y\vert x) = f_Y(y)$
-    \item $f_X(x\vert y) = f_Y(x)$
-  \end{enumerate}
-
-  $X, Y$ are independent  $\Rightarrow$
-  \begin{itemize}
-    \item $E(XY) = E(X)E(Y)$ 
-    \item $\cov(X,Y) = 0$
-  \end{itemize}
-  (the converse does not hold)
-
-  \subsection{Distributions}
-
-  if $X$ is iid, then $\var(\sum^n_{i=-1} x_i) = \sum^n_{i=1} \var(x_i)$
-
-  \subsubsection{bernoulli}
+  \begin{align*}
+    f(x, y) &= f_X(x)f_Y(y \vert x) 
+         \\ &= f_Y(y) f_X(x \vert y),  \quad x, y \in \mathbb{R}
+  \end{align*}
 
   \begin{itemize}
-    \item $X \sim Bernoulli(p) \quad \Rightarrow$ coin flip with probability $p$
+    \item $f(x, y)$ is the \textit{joint density}
+    \item $f_X(x), f_Y(y)$ are the \textit{marginal densities}
+    \item $f_Y(\cdot \vert x)$ is the \textbf{conditional} density of $Y$ given $X=x$
+    \item $f_X(\cdot \vert y)$ is the \textbf{conditional} density of $X$ given $Y=y$ 
+    \item for discrete case, \textit{density} $\equiv$ \textit{probability}, $x \equiv x_i$, $y \equiv y_j$
   \end{itemize}
 
-  \subsubsection{binomial}
+
+  \subsection{Independence}
 
   \begin{itemize}
-    \item $X \sim Bin(n, p) \quad \Rightarrow$ $n$ coin flips with probability $p$
-    \item $X_i \mathop{\sim}\limits^{i.i.d.} Bernoulli(p)$
-    \item $E(X) = \sum^n_{k=1} k \binom{n}{k} p^k (1-p)^{n-k}$ 
-  \end{itemize}
+    \item $X, Y$ are independent $\iff \forall x, y \in \mathbb{R}$, 
 
-  \begin{tightcenter}
-    $E(X) = np, \quad \var(X) = np(1-p)$
-  \end{tightcenter}
+      \begin{enumerate}
+        \item $f(x, y) = f_X(x)f_Y(y)$ 
+        \item $f_Y(y\vert x) = f_Y(y)$
+        \item $f_X(x\vert y) = f_Y(x)$
+      \end{enumerate}
 
-  \subsubsection{multinomial}
-
-   \begin{itemize}
-    \item $X \sim Multinomial(n, \mathbf{p})$ $\quad \Rightarrow$ $n$ runs of an experiment with $k$ outcomes with probability vector $\mathbf{p}$
+    \item $X, Y$ are independent  $\Rightarrow$
       \begin{itemize}
-        \item An experiment with $k$ outcomes $E_1, \dots, E_k$, $\; Pr(E_i) = p_i$.
-          For some $1 \leq i \leq k$, let $X_i$ be the number of times $E_i$ occurs in $n$ runs.
+        \item $E(XY) = E(X)E(Y)$ 
+        \item $\cov(X,Y) = 0$
       \end{itemize}
-  \end{itemize}
-
-  \begin{tightcenter}
-    $(X_1, \dots, X_k)$ has the multinomial distribution:
-    \( {\displaystyle{ Pr(X_1 = x_1, \dots, X_k = x_k) = \binom{n}{x_1 \dots x_k} \Pi^k_{i=1} p_i^{x_i} }} \)   
-  \end{tightcenter}
-
-  \begin{itemize}
-    \item combinatorially, $\binom{n}{x_1 \dots x_k} = \frac{n!}{x_1! x_2! \dots x_k!}$
-  \end{itemize}
-
-  \begin{tightcenter}
-    $E(X) = \begin{bmatrix}np_1 \\ np_2 \\ \vdots \\ np_k\end{bmatrix}$,  
-    $\quad \var(X_i) = np_i (1-p_i)$
-
-    $\var(X) =$ \textit{covariance matrix} $M$ with $m_{ij} = \begin{cases}
-      \var(X_i) & \text{if }i=j
-      \\ \cov(X_i, X_j) & \text{if }i \neq j
-    \end{cases} $
-
-  \end{tightcenter}
-
-  \begin{itemize}
-    \item $\cov(X_i, X_j) < 0$
-    \item $X_i \sim Bin(n, p_i)$
-      \begin{itemize}
-        \item $E(X_i) = np_i, \quad \var(X_i) = np_i (1-p_i)$
-      \end{itemize}
-    \item $X_i + X_j \sim Bin(n, p_i + p_j)$
-      \begin{itemize}
-        \item $\var(X_i + X_j) = n(p_i + p_j) (1-p_i-p_j)$
-      \end{itemize}
+      (the converse does not hold)
   \end{itemize}
 
   \subsection{Conditional expectation}
 
   \subsubsection{discrete case}
 
-  for r.v.s (X, Y), let $f_Y(\cdot \vert x_i)$ be the conditional mass function of $Y$ given $X = x_i$.
+  let $f_Y(\cdot \vert x_i)$ be the conditional pmf of $Y$ given $X = x_i$.
 
   \begin{tightcenter}
     \( {\displaystyle{ E[Y \vert x_i] := \sum^J_{j=1} y_j f_Y (y_j \vert x_i) }} \) 
@@ -299,34 +267,114 @@
   \end{tightcenter}
 
   $E[Y\vert x_i]$ is like $E(Y)$, with conditional distribution replacing marginal distribution  $f_Y(\cdot)$. 
-  likewise $\var[Y\vert x_i]$ is like $\var(Y)$
+  likewise, $\var[Y\vert x_i]$ like $\var(Y)$.
 
   \subsubsection{continuous case}
 
   \begin{tightcenter}
     \( {\displaystyle{ E[Y \vert x] := \int^\infty_{-\infty} y f_Y (y \vert x) \dy }} \) 
-
-    \( {\displaystyle{ \var[Y\vert x] := \int^\infty_{-\infty} (y - E[Y\vert x])^2 f_Y (y \vert x) \dy }} \) 
   \end{tightcenter}
+
+  \begin{align*}
+    \var[Y\vert x] &:= \int^\infty_{-\infty} (y - E[Y\vert x])^2 f_Y (y \vert x) \dy 
+                \\ &= E(Y^2 \vert x) - \{E(Y \vert x)\}^2
+  \end{align*}
+
+  \subsection{Distributions}
+
+  if $X$ is iid with expectation $\mu$, SD $\sigma$ and $S_n = \sum^n_{i=1}X_i$,
+
+  \begin{itemize}
+    \item  $ E(S_n) = n\mu$
+    \item $SD(S_n) = \sqrt n \sigma $
+    \item variance of sum = sum of variances
+      $ \var(\sum^n_{i=1} X_i) = \sum^n_{i=1} \var(x_i) $ 
+  \end{itemize}
+
+  \subsubsection{bernoulli}
+
+  $X \sim Bernoulli(p) \quad \Rightarrow$ coin flip with probability $p$
+
+  \begin{tightcenter}
+    $E(X_i) = p \quad\quad \var(X_i) = p(1-p)$
+    $E(S_n) = np \quad\quad \var(S_n) = np(1-p)$
+  \end{tightcenter}
+
+  \subsubsection{binomial}
+
+  $X \sim Bin(n, p) \quad \Rightarrow$ 
+  $X_i \mathop{\sim}\limits^{i.i.d.} Bernoulli(p)$
+
+  \begin{tightcenter}
+    $E(X) = np, \quad \var(X) = np(1-p)$
+
+    \( {\displaystyle{ E(X) = \sum^n_{k=1} k \binom{n}{k} p^k (1-p)^{n-k} }} \)  
+  \end{tightcenter}
+
+  \subsubsection{multinomial}
+
+  $X \sim Multinomial(n, \mathbf{p})$ 
+
+  \begin{itemize}
+    \item for $k$ outcomes $E_1, \dots, E_k$, $\; Pr(E_i) = p_i$.
+      For some $1 \leq i \leq k$, $E_i$ occurs $X_i$ times in $n$ runs.
+  \end{itemize}
+
+  $(X_1, \dots, X_k)$ has the \textbf{multinomial distribution:}
+
+  \begin{tightcenter}
+    \( {\displaystyle{ Pr(X_1 = x_1, \dots, X_k = x_k) = \binom{n}{x_1 \dots x_k} \Pi^k_{i=1} p_i^{x_i} }} \)   
+  \end{tightcenter}
+
+  \begin{itemize}
+    \item where $\binom{n}{x_1 \dots x_k} = \frac{n!}{x_1! x_2! \dots x_k!}$
+      \begin{itemize}
+        \item combinatorially, \# of arrangements of $x_1, \dots, x_k$
+        \item $\sum^n_{i=1}x_i = n, \quad x_i \ge 0$
+      \end{itemize}
+  \end{itemize}
+
+  \begin{tightcenter}
+    $E(X) = \left[\begin{smallmatrix}np_1 \\ np_2 \\ \svdots \\ np_k\end{smallmatrix}\right]$,  
+    $\quad \var(X_i) = np_i (1-p_i)$
+
+    $\var(X) =$ \textit{covariance matrix} $M$ with $m_{ij} = \begin{cases}
+      \var(X_i) & \text{if }i=j
+      \\ \cov(X_i, X_j) & \text{if }i \neq j
+    \end{cases} $
+  \end{tightcenter}
+
+  \begin{itemize}
+    \item $\cov(X_i, X_j) < 0$
+    \item $X_i \sim Bin(n, p_i)$
+    \item $X_i + X_j \sim Bin(n, p_i + p_j)$
+  \end{itemize}
 
 
   \section{02. PROBABILITY (2)}
 
-  \subsection{mean square error (MSE)}
+  \subsection{Mean Square Error (MSE)}
 
-  \begin{tightcenter}
-    \textbf{mean square error}, $MSE = E\{ (Y-c)^2 \}$
-  \end{tightcenter}
+  $$MSE = E\{ (Y-c)^2 \}$$
 
   \begin{itemize}
-    \item $MSE = \var(Y) + \{ E(Y) - c\}^2$
+    \item predicting Y:
+      \\* $MSE = \var(Y) + \{ E(Y) - c\}^2$
+      \begin{itemize}
+        \item $\min MSE=\var(Y)$ when $c = E(Y)$
+      \end{itemize}
     \item $Y$ and $X$ are correlated: 
       \\* $MSE = \var[Y \vert x] + \{ E[Y\vert x] - c \}^2$
       \\* $MSE = E[(Y-c)^2 \vert x] = E[\{ Y - E(Y) \}^2 \vert x]$
       \begin{itemize}
-        \item to predict $Y$, choose $c$ that depends on $x$
+        \item $\min MSE = \var(Y \vert x)$ when $c = E[Y \vert x]$
+        \item if $c = E(Y)$ instead of $E(Y \vert x)$ $\Rightarrow$ the MSE increases by $( E(Y \vert x) - E(Y) )^2$
       \end{itemize}
   \end{itemize}
+
+  \subsubsection{mean MSE}
+
+  $$\frac{1}{n} \sum^n_{i=1}\var[Y \vert x_i] \approx E\{ \var[Y \vert X] \}$$
 
   \subsubsection{random conditional expectations}
 
@@ -334,17 +382,15 @@
   \begin{itemize}
     \item $E[Y \vert X]$ is a r.v. which takes value $E[Y \vert x]$ with probability/density $f_X(x)$
     \item $\var[Y \vert X]$ is a r.v. which takes value $\var[Y \vert x]$ with probability/density $f_X(x)$ 
-    \item $E(E[X_2 \vert X_1]) = E(X_2)$
-    \item $\var(E[X_2 \vert X_1]) + E(\var[X_2 \vert X_1]) = \var(X_2)$
   \end{itemize}
 
-  \subsubsection{mean MSE}
-
   \begin{tightcenter}
-    $\frac{1}{n} \sum^n_{i=1}\var[Y \vert x_i] \approx TODO$
+    $E(E[X_2 \vert X_1]) = E(X_2)$
+
+    $\var(E[X_2 \vert X_1]) + E(\var[X_2 \vert X_1]) = \var(X_2)$
   \end{tightcenter}
 
-  \subsection{cumulative distribution function (cdf)}
+  \subsection{CDF (cumulative distribution function)}
 
   for r.v. $X$, let $F(x) = P(X \leq x)$
 
@@ -356,23 +402,24 @@
     $F(x) = \int^\infty_{-\infty} f(x) \dx$
   \end{tightcenter}
 
-  \subsection{standard normal distribution}
+  \subsection{Standard Normal Distribution}
 
   \begin{tightcenter}
     $Z \sim N(0, 1)$ has density function \\* 
     \( {\displaystyle{ \phi(z) = \frac{1}{\sqrt{2\pi}} \exp \{ -\frac{z^2}{2} \}, \quad -\infty < z < \infty }} \) 
   \end{tightcenter}
 
+  $$E(Z) = 0, \quad \var(Z) = 1$$
+
+  \begin{tightcenter}
+    \textbf{CDF}, $\Phi(x) = P(Z \leq x) = \int^x_{-\infty} \phi(z) \mathop{dz}$
+  \end{tightcenter}
+
   \begin{itemize}
-    \item $E(Z) = 0, \quad \var(Z) = 1$
+    \item  $E(Z) = \int^\infty_{-\infty} z\phi(z) \mathop{dz} = 0$
       \begin{itemize}
-        \item  $E(Z) = \int^\infty_{-\infty} z\phi(z) \mathop{dz}$
-        \item  $E(Z^2) = \int^\infty_{-\infty} z^2\phi(z) \mathop{dz}$
-        \item $E(Z^k) = \begin{cases} 0 & \text{if $k$ is odd} \\ 1 & \text{if $k$ is even} \end{cases} $
-      \end{itemize}
-    \item CDF, $\Phi(x) = P(Z \leq x), \; x \in \mathbb{R}$
-      \begin{itemize}
-        \item $\Phi(x) = \int^x_{-\infty} \phi(z) \mathop{dz}$
+        \item  $E(Z^2) = \int^\infty_{-\infty} z^2\phi(z) \mathop{dz} = 1$
+          \item $E(Z^{2k+1}) = 0 \quad \forall k \in \mathbb{Z}_{\ge 0}$
       \end{itemize}
   \end{itemize}
 
@@ -398,14 +445,14 @@
 
     \item for $W = a + bX$, 
       \begin{itemize}
-        \item density  $f_W(w) = \frac{d}{dw} F_W(w)$
-        \item cdf $F_W(w) = P(X \leq \frac{w-a}{b}) = \Phi(\frac{w-a}{b})$
+        \item density,  $f_W(w) = \frac{d}{dw} F_W(w)$
+        \item CDF, $\;\;\; F_W(w) = P(X \leq \frac{w-a}{b}) = \Phi(\frac{w-a}{b})$
       \end{itemize}
   \end{itemize}
 
-  \subsection{Central limit theorem}
+  \subsection{Central Limit Theorem}
 
-  let $X_1, \dots, X_n$ be iid rv's with expectation $\mu$ and SD $\sigma$, with $ S_n \sum^n_{i=1} X_i $
+  let $X_1, \dots, X_n$ be iid rv's with expectation $\mu$ and SD $\sigma$, with $ S_n = \sum^n_{i=1} X_i $
 
   \begin{tightcenter}
     \textbf{CLT} 
@@ -417,34 +464,39 @@
     \item for large $n$, approximately $S_n \sim N(n\mu, n\sigma^2)$
   \end{itemize}
 
-  \subsubsection{Bernoulli}
+  \subsubsection{bernoulli}
 
-  let $X_i \sim Bernoulli(p)$. then
+  let $X_i \sim Bernoulli(p)$. then $S_n \sim Binom(n, p)$
   \begin{itemize}
-    \item $S_n \sim Binom(n, p)$
-      \begin{itemize}
-        \item for large $n$, $S_n = N(np, np(1-p))$
-      \end{itemize}
+    \item for large $n$, $S_n = N(np, np(1-p))$
     \item CLT: standardised $\frac{S_n - np}{\sqrt{n}\sqrt{p(1-p)}} \to N(0,1)$ as $n \to \infty$
   \end{itemize}
 
-  \subsection{$\chi^2$ RVs}
+  \subsection{Distributions}
+
+  \subsubsection{chi-square ($\chi^2$)}
 
   let $Z \sim N(0,1)$. 
+  $\quad\Rightarrow$ then $Z^2 \sim \chi^2_1$
+
+  \begin{itemize}
+    \item $Z^2$ has $\chi^2$ distribution with 1 degree of freedom
+    \item degrees of freedom = number of RVs in the sum
+  \end{itemize}
+
   \begin{tightcenter}
-    $Z^2 \sim \chi^2_1$ \\*
-    $Z^2$ has $\chi^2$ distribution with 1 degree of freedom
-    \\* $E(Z^2) = 1$
+    $E(Z^2) = 1, \quad E(Z^4) = 3$
     \\* $\var(Z^2) = E(Z^4) - \{ E(Z^2) \}^2 = 2$
   \end{tightcenter}
 
-  let $V_1, \dots, V_n$ be iid $\chi^2_1$ RVs. then 
-  \begin{itemize}
-    \item $V = \sum^n_{i=1}V_i$ has a $\chi^2_n$ distribution: $V \sim \chi^2_n$
-    \item $E(V) = n \quad \var(V) = 2n$
-  \end{itemize}
+  let $V_1, \dots, V_n$ be iid $\chi^2_1$ RVs and $V = \sum^n_{i=1}V_i$. then 
+  \begin{tightcenter}
+    $V \sim \chi^2_n$
 
-  \subsection{Gamma distribution}
+    $E(V) = n \quad \var(V) = 2n$
+  \end{tightcenter}
+
+  \subsubsection{gamma}
 
   \begin{tightcenter}
     let $\alpha, \lambda > 0$. The $Gamma(\alpha, \lambda)$ density is 
@@ -453,86 +505,98 @@
   \end{tightcenter}
 
   \begin{itemize}
-    \item density of $\chi_1^2$ RV $= \frac{1}{\sqrt{2\pi}} v^{-1/2} e^{-v/2}, \quad v > 0$
-      \\* $\quad\quad\quad\quad\quad\quad\quad\; = Gamma(\frac{1}{2}, \frac{1}{2})$
     \item $\chi^2_n$ RV $\sim Gamma(\frac{n}{2}, \frac{1}{2})$
       \begin{itemize}
         \item $\chi^2_n$ is a special case of Gamma!
+        \item density of $\chi_1^2$ RV $= \frac{1}{\sqrt{2\pi}} v^{-1/2} e^{-v/2}, \quad v > 0$
+          \\* $\quad\quad\quad\quad\quad\quad\quad\;\; = Gamma(\frac{1}{2}, \frac{1}{2})$
       \end{itemize}
     \item if $X_1 \sim Gamma(\alpha_1, \lambda)$ and $X_2 \sim Gamma(\alpha_2, \lambda)$ are independent, then $X_1 + X_2 \sim Gamma(\alpha_1 + \alpha_2, \lambda)$
   \end{itemize}
 
-  \subsection{t distribution}
+  \subsubsection{t distribution}
 
   let $Z \sim N(0, 1)$ and $V \sim \chi^2_n$ be independent. 
 
   \begin{tightcenter}
-    $ t_n = \frac{Z}{\sqrt{V/n}} $
+    $\frac{Z}{\sqrt{V/n}} \sim t_n $
     \\* has a $t$ distribution with $n$ degrees of freedom.
   \end{tightcenter}
 
   \begin{itemize}
     \item $t$ distribution is symmetric around 0
-    \item $n \to \infty$, $t_n \to Z$
+    \item $t_n \to Z \;$ as $\; n \to \infty$ (because $\frac{V}{n} \to 1$)
   \end{itemize}
 
-  \subsection{F distribution}
+  \subsubsection{\textit{F} distribution}
 
   let $V \sim \chi^2_m$ and $W \sim \chi^2_n$ be independent. 
 
   \begin{tightcenter}
-    $F_{m, n} = \frac{V/m}{W/n}$ 
+    $\frac{V/m}{W/n} \sim F_{m,n}$ 
     \\* has an $F$ distribution with $(m,n)$ degrees of freedom.
   \end{tightcenter}
 
   \begin{itemize}
-    \item even if $m, n$, still two r.v.s as they are independent
+    \item even if $m=n$, still two RVs $V,W$ as they are independent
     \item for $T \sim t_n$, $T^2 = \frac{Z^2}{V/n} \sim F_{1,n}$
   \end{itemize}
 
-  \subsection{i.i.d. random variables}
+  \subsection{IID Random Variables}
 
   let $X_1, \dots, X_n$ be iid RVs with mean $\bar{X}$. 
 
   \begin{tightcenter}
-    sample variance, $S^2 = \frac{1}{n-1} \sum^n_{i=1} (X_i - \bar{X})^2$
+    \textbf{sample variance}, \( {\displaystyle{ S^2 = \frac{1}{n-1} \sum^n_{i=1} (X_i - \bar{X})^2 }} \) 
+
+    $S$ is an estimate of $\sigma$
   \end{tightcenter}
 
   let $X_1, \dots, X_n$ be iid $N(\mu, \sigma^2)$. $\bar{X} = \frac{1}{n} \sum^n_{i=1} X_i$. 
-  \begin{itemize}
-    \item $\bar{X} \sim N(\mu, \frac{\sigma^2}{n})$
-    \item $E(\bar{X}) = \mu$, $\quad\var(\bar{X}) = \frac{\sigma^2}{n}$
-    \item $\frac{\bar{X} - \mu}{\sigma/\sqrt{n}} \sim N(0,1)$
-    \item $\frac{(n-1)S^2}{\sigma^2} \sim \chi^2_{n-1}$
-      \begin{itemize}
-        \item proof: $\sum^n_{i=1}(\frac{X_i - \mu}{\sigma})^2 = \frac{1}{\sigma^2} \sum^n_{i=1} (X_i-\bar{X})^2 + n(\frac{\bar{X} - \mu}{\sigma})^2$
-        \item LHS $\sim\chi^2_n$ by definition
-        \item rightmost term $\sim\chi^2_1$
-      \end{itemize}
-    \item $\bar{X}$ and $S^2$ are independent
-    \item $S$ is an estimate of $\sigma$
-    \item $\frac{\bar{X} - \mu}{S/\sqrt{n}} \sim t_{n-1}$
-  \end{itemize}
-
-  \subsection{Multivariate normal distribution}
-
-  let $\mathbf{\mu}$ be a $k \times 1$ vector and $\mathbf{\Sigma}$ be a positive-definite symmetric $k \times k$ matrix.
-
   \begin{tightcenter}
-    the random vector $\mathbf{X} = (X_1, \dots, X_k)'$ has a multivariate normal distribution $N(\mathbf{\mu}, \mathbf{\Sigma})$ if its density function is 
+    $\bar{X} \sim N(\mu, \frac{\sigma^2}{n})$
 
-    \( {\displaystyle{ \frac{1}{(2\pi)^{k/2} \sqrt{det\mathbf{\Sigma}}} \exp \left(-\frac{(\mathbf{x} - \mathbf{\mu})' \mathbf{\Sigma}^{-1}(\mathbf{x} - \mathbf{\mu})}{2}\right) }} \) 
+    $E(\bar{X}) = \mu$, $\quad\var(\bar{X}) = \frac{\sigma^2}{n}$
+  \end{tightcenter}
+
+  more distributions:
+  \begin{tightcenter}
+    $\frac{\bar{X} - \mu}{\sigma/\sqrt{n}} \sim N(0,1)$
+
+    $\frac{(n-1)S^2}{\sigma^2} \sim \chi^2_{n-1}$
+
+    $\frac{\bar{X} - \mu}{S/\sqrt{n}} \sim t_{n-1}$
   \end{tightcenter}
 
   \begin{itemize}
-    \item $E(\mathbf{X}) = \mathbf{\mu}, \quad \var(\mathbf{X}) = \mathbf{\Sigma}$
-    \item for any non-zero $k \times 1 $ vector $\mathbf{a}$, 
-      $\mathbf{a'X} \sim N(\mathbf{a'\mu}, \mathbf{a'\Sigma a})$
+    \item $\bar{X}$ and $S^2$ are independent
+  \end{itemize}
+
+  \subsection{Multivariate Normal Distribution}
+
+  let $\bm{\mu}$ be a $k \times 1$ vector and $\bm{\Sigma}$ be a \textit{positive-definite} symmetric $k \times k$ matrix.
+
+  \begin{tightcenter}
+    the random vector $\bm{X} = (X_1, \dots, X_k)'$ has a multivariate normal distribution $N(\bm{\mu}, \bm{\Sigma})$ if its density function is 
+
+    \( {\displaystyle{ \frac{1}{(2\pi)^{k/2} \sqrt{det\bm{\Sigma}}} \exp \left(-\frac{(\bm{x} - \bm{\mu})' \bm{\Sigma}^{-1}(\bm{x} - \bm{\mu})}{2}\right) }} \) 
+  \end{tightcenter}
+
+  \begin{itemize}
+    \item $E(\bm{X}) = \bm{\mu}, \quad \var(\bm{X}) = \bm{\Sigma}$
+    \item for any non-zero $k \times 1 $ vector $\bm{a}$, 
+      \begin{tightcenter}
+        $\bm{a'X} \sim N(\bm{a'\mu}, \bm{a'\Sigma a})$
+      \end{tightcenter}
       \begin{itemize}
-        \item $\mathbf{a}'\mathbf{\Sigma a} > 0$ because $\mathbf{\Sigma}$ is positive-definite
-        \item $m=1$
+        \item $\bm{a}'\bm{\Sigma a} > 0$ because $\bm{\Sigma}$ is positive-definite
+        \item the product $\bm{a'X}$ is a scalar (same for $\bm{a'\mu}, \bm{a'\Sigma a}$)
       \end{itemize}
-    \item two multinomial normal random vectors $\mathbf{X}_1$ and $\mathbf{X}_2$, sizes $h$ and $k$, are independent if $\cov (\mathbf{X}_1, \mathbf{X}_2) = 0_{h \times k}$
+    \item two multinomial normal random vectors $\bm{X}_1$ and $\bm{X}_2$, sizes $h$ and $k$, are independent if $\cov (\bm{X}_1, \bm{X}_2) = \bm{0}_{h \times k}$
+      \begin{itemize}
+        \item $(X_1-\Xbar, \dots, X_n - \Xbar)$ has a multivariate normal distribution; $\;$
+          the covariance between $\Xbar$ and $(X_1-\Xbar, \dots, X_n - \Xbar)$ is $0$, thus they are independent
+      \end{itemize}
   \end{itemize}
 
   \section{03. POINT ESTIMATION}
@@ -573,22 +637,22 @@
   let $X_1, \dots, X_n$ be random draws with replacement from a population of mean $\mu$ and variance $\sigma^2$.
 
   \begin{tightcenter}
-    random sample mean, \( {\displaystyle{ \bar{X} = \frac{1}{n}\sum^n_{i=1}X_i }} \) 
+    random sample mean, \( {\displaystyle{ \Xbar = \frac{1}{n}\sum^n_{i=1}X_i }} \) 
 
     $X_1, \dots, X_n$ are iid with $E(X_i) = \mu$, $\var(X_i) = \sigma^2$
 
-    $E(\bar{X}) = TODO$, $\var(\bar{X}) = TODO$
+    $E(\Xbar) = TODO$, $\var(\Xbar) = TODO$
   \end{tightcenter}
 
   let $x_1, \dots, x_n$ be realisations of $n$ random draws with replacement from the population.
 
   \begin{tightcenter}
-    sample mean, \( {\displaystyle{ \bar{x} = \frac{1}{n} \sum^n_{i=1} x_i }} \) 
+    sample mean, \( {\displaystyle{ \xbar = \frac{1}{n} \sum^n_{i=1} x_i }} \) 
 
   \end{tightcenter}
 
   \begin{itemize}
-    \item as $n \to \infty$, $\bar{x} \to \mu$  (LLN)
+    \item as $n \to \infty$, $\xbar \to \mu$  (LLN)
     \item sample distribution, $x_i$ has the same distribution as $X_i$ and the population distribution 
   \end{itemize}
 
@@ -597,7 +661,7 @@
   \begin{itemize}
     \item $X_1, \dots, X_n$ is \textbf{representative} of the population
       \begin{itemize}
-        \item as $n$ gets larger, $\bar{X}$ gets closer to $\mu$
+        \item as $n$ gets larger, $\Xbar$ gets closer to $\mu$
       \end{itemize}
     \item $x_1, \dots, x_n$ are \textit{likely} representative of the population
   \end{itemize}
@@ -607,9 +671,9 @@
   given data $x_1, \dots, x_n$, 
 
   \begin{itemize}
-    \item sample mean, $ \bar{x} = \frac{1}{n} \sum^n_{i=1} x_i $ is an  \ildefinition{estimate} of $\mu$
-    \item the error in $\bar{x}$ is $\mu - \bar{x}$; $\quad$ it cannot be estimated
-    \item $\bar{x}$ is a realisation of the \textbf{estimator} $\bar{X}$
+    \item sample mean, $ \xbar = \frac{1}{n} \sum^n_{i=1} x_i $ is an  \ildefinition{estimate} of $\mu$
+    \item the error in $\xbar$ is $\mu - \xbar$; $\quad$ it cannot be estimated
+    \item $\xbar$ is a realisation of the \textbf{estimator} $\Xbar$
       \begin{itemize}
         \item this realisation is used to estimate $\mu$
       \end{itemize}
@@ -617,9 +681,9 @@
 
   \subsubsection{standard error}
 
-  the size of error in estimate $\bar{x}$ is roughly \( {\displaystyle{ SD(\bar{X}) = \frac{\sigma}{\sqrt{n}} }} \)   
+  the size of error in estimate $\xbar$ is roughly \( {\displaystyle{ SD(\Xbar) = \frac{\sigma}{\sqrt{n}} }} \)   
 
-  the \textbf{standard error} (SE) in $\bar{x}$ is $\frac{\sigma}{\sqrt{n}}$
+  the \textbf{standard error} (SE) in $\xbar$ is $\frac{\sigma}{\sqrt{n}}$
 
   \begin{itemize}
     \item SE is a constant by definition: $SE = SD(\hat{X}) = \frac{\sigma}{\sqrt{n}}$
@@ -627,10 +691,10 @@
 
   \subsubsection{estimating $\sigma$}
 
-  intuitive estimate of $\sigma^2$, $\hat{\sigma}^2 = \frac{1}{n} \sum^n_{i=1} (x_i-\bar{x})^2 $
+  intuitive estimate of $\sigma^2$, $\hat{\sigma}^2 = \frac{1}{n} \sum^n_{i=1} (x_i-\xbar)^2 $
 
   \begin{tightcenter}
-    sample variance, \( {\displaystyle{ s^2 = \frac{1}{n-1} \sum^n_{i=1} (x_i-\bar{x})^2 }} \) 
+    sample variance, \( {\displaystyle{ s^2 = \frac{1}{n-1} \sum^n_{i=1} (x_i-\xbar)^2 }} \) 
 
     $E(s^2) = \sigma^2$
   \end{tightcenter}
