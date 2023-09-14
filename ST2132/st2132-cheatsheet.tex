@@ -147,7 +147,7 @@
 
   \begin{tightcenter}
     \( {\displaystyle{ \xbar := \frac{1}{r} \sum^r_{i=1} x_i }} \) 
-    $\quad\quad$
+    $\qquad$
     \( {\displaystyle{ v := \frac{1}{r}\sum^r_{i=1} (x_i - \xbar)^2 }} \) 
   \end{tightcenter}
 
@@ -296,8 +296,8 @@
   $X \sim Bernoulli(p) \quad \Rightarrow$ coin flip with probability $p$
 
   \begin{tightcenter}
-    $E(X_i) = p \quad\quad \var(X_i) = p(1-p)$
-    $E(S_n) = np \quad\quad \var(S_n) = np(1-p)$
+    $E(X_i) = p \qquad \var(X_i) = p(1-p)$
+    $E(S_n) = np \qquad \var(S_n) = np(1-p)$
   \end{tightcenter}
 
   \subsubsection{binomial}
@@ -509,7 +509,7 @@
       \begin{itemize}
         \item $\chi^2_n$ is a special case of Gamma!
         \item density of $\chi_1^2$ RV $= \frac{1}{\sqrt{2\pi}} v^{-1/2} e^{-v/2}, \quad v > 0$
-          \\* $\quad\quad\quad\quad\quad\quad\quad\;\; = Gamma(\frac{1}{2}, \frac{1}{2})$
+          \\* $\qquad\qquad\qquad\quad\;\; = Gamma(\frac{1}{2}, \frac{1}{2})$
       \end{itemize}
     \item if $X_1 \sim Gamma(\alpha_1, \lambda)$ and $X_2 \sim Gamma(\alpha_2, \lambda)$ are independent, then $X_1 + X_2 \sim Gamma(\alpha_1 + \alpha_2, \lambda)$
   \end{itemize}
@@ -620,7 +620,7 @@
   for variable $v$ with proportion $p$ in the population,
 
   \begin{tightcenter}
-    $\mu = p, \quad\quad \sigma^2 = p(1-p)$
+    $\mu = p, \qquad \sigma^2 = p(1-p)$
   \end{tightcenter}
 
   \subsubsection{single random draw}
@@ -629,7 +629,7 @@
   let $X$ be the chosen $v$-value.
 
   \begin{tightcenter}
-    $E(X) = \mu$, $\quad\quad \var(X) = \sigma^2$
+    $E(X) = \mu$, $\qquad \var(X) = \sigma^2$
   \end{tightcenter}
 
   \subsubsection{draws with replacement}
@@ -641,7 +641,7 @@
 
     $X_1, \dots, X_n$ are iid with $E(X_i) = \mu$, $\var(X_i) = \sigma^2$
 
-    $E(\Xbar) = TODO$, $\var(\Xbar) = TODO$
+    $E(\Xbar) = \mu$, $\var(\Xbar) = \frac{\sigma^2}{n}$
   \end{tightcenter}
 
   let $x_1, \dots, x_n$ be realisations of $n$ random draws with replacement from the population.
@@ -698,6 +698,83 @@
 
     $E(s^2) = \sigma^2$
   \end{tightcenter}
+
+  \section{Point estimation of mean}
+
+  a population (size $N$) has unknown mean $\mu$, variance $\sigma^2$.
+
+  for random draws (without replacement) $x_1,\dots,x_n$: 
+
+  $\xbar$ is a realisation of $\Xbar$, with $E(\Xbar) = \mu$, $\var(\Xbar) = \frac{\sigma^2}{n}$
+
+  \begin{itemize}
+    \item $\mu$ is estimated as $\xbar = \frac{1}{n} \sum^n_{i=1} x_i$ 
+    \item error in $\xbar$ is measured by the SE: $\frac{\sigma}{\sqrt n} = SD(\Xbar)$
+    \item SE is estimated as $\frac{s}{\sqrt n}$
+  \end{itemize}
+
+  $\Rightarrow$ $\mu$ is around $\xbar$, give or take $\frac{s}{\sqrt n}$ 
+
+  \subsubsection{unbiased estimation}
+
+  \begin{itemize}
+    \item since $E(\Xbar) = \mu$, $\Xbar$ is an \textbf{unbiased} estimator of $\mu$. $\xbar$ is an unbiased estimate.
+    \item $S^2$ is unbiased for $\sigma^2$: $E(S^2) = \sigma^2$
+    \item $S$ is \textit{not} unbiased for $\sigma$: $E(S) < \sigma$
+  \end{itemize}
+
+  \subsection{Simple random sampling (SRS)}
+
+  $n$ random draws \textit{without replacement} from a population of mean $\mu$ and variance $\sigma^2$. 
+
+  \begin{itemize}
+    \item for $i = 1, \dots, n$, $E(X_i) = \mu$ and $\var(X_i) = \sigma^2$ 
+    \item for $i \neq j$, $\cov(X_i, X_j) = -\frac{\sigma^2}{N-1}$
+  \end{itemize}
+
+  \begin{itemize}
+    \item if $n/N$ is relatively large, 
+      \begin{itemize}
+        \item multiply SE by correction factor $\sqrt \frac{N-n}{N-1}$
+        \item standard error = $\frac{N-n}{N-1}$ 
+      \end{itemize}
+      $$E(\Xbar) = \mu, \quad \var(\Xbar) = \frac{N-n}{N-1}\frac{\sigma^2}{n}$$
+    \item if $n << N$, then SRS is like sampling \textit{with replacement}
+      (treat the data as if they come from IID RVs $X_1, \dots, X_n$)
+      $$E(\Xbar) = \mu, \quad \var(\Xbar) = \frac{\sigma^2}{n}$$
+  \end{itemize}
+
+  \subsubsection{estimating proportion $p$}
+
+  \begin{itemize}
+    \item in a 0-1 population, $\mu = p$, $\quad \sigma^2 = p(1-p)$
+      \begin{itemize}
+        \item $p$ is estimated as $\xbar$ (sample proportion of 1's)
+      \end{itemize}
+    \item $SE = \frac{\sqrt{p(1-p)}}{\sqrt n} = SD(\hat p)$
+      \begin{itemize}
+        \item estimated by replacing $p$ with $\xbar$
+      \end{itemize}
+    \item unbiased estimator $\hat p$
+      \begin{itemize}
+        \item $E(\hat p) = p, \quad \var(\hat p) = \frac{p(1-p)}{n}, \quad SD(\hat p) = SE$
+      \end{itemize}
+    \item the estimate of $\sigma$ is $\hat{\sigma}$, not $s$
+    \item e.g. if a SRS of size 100 has 78 white balls, $p \approx 0.78 \pm \frac{\sqrt{0.78 \times 0.22}}{\sqrt {100}}$
+  \end{itemize}
+
+  \subsection{Gauss Model}
+
+  Let $x_i$ be a realisation of $X_i$. $X_1, \dots, X_{100}$ are random draws with replacement from an imaginary population with mean $w$ and variance $\sigma^2$.
+  $w$ and $\sigma^2$ are parameters (unknown constants).
+
+  \begin{itemize}
+    \item $E(X_i) = w, \quad \var{X_i} = \sigma^2$ (since $X_i$ is just 1 draw) 
+    \item $E(\Xbar) = w, \quad \var{\Xbar} = \frac{\sigma^2}{100}$  
+  \end{itemize}
+
+
+
 
 
 
