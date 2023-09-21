@@ -68,6 +68,7 @@
 \newcommand{\var}{\mathop{\mathrm{var}}}
 \newcommand{\xbar}{\bar{x}}
 \newcommand{\Xbar}{\bar{X}}
+\newcommand{\seq}[2][n]{#2_1, \dots, #2_{#1}}
 
 \DeclareRobustCommand{\svdots}{% s for `scaling'
   \vbox{%
@@ -107,7 +108,7 @@
     \item \definition[of an event]{probability} the limiting relative frequency of its occurrence as the experiment is repeated many times
     \item the \textbf{realisation} $x$ is a constant, and $X$ is a generator
       \begin{itemize}
-        \item running $r$ experiments gives us $r$ realisations $x_1, \dots, x_r$
+        \item running $r$ experiments gives us $r$ realisations $\seq[r]{x}$
       \end{itemize}
   \end{itemize}
 
@@ -161,7 +162,7 @@
 
   \subsubsection{Monte Carlo approximation}
 
-  simulate $x_1, \dots, x_r$ from $X$. by LLN, as $r \to \infty$, the approximation becomes exact
+  simulate $\seq[r]{x}$ from $X$. by LLN, as $r \to \infty$, the approximation becomes exact
 
   \begin{tightcenter}
     \( {\displaystyle{ E\{h(X)\} \approx \frac{1}{r} \sum^r_{i=1} h(x_i) }} \) 
@@ -217,6 +218,7 @@
     \item $\cov(X, X) = \var(X)$
     \item $\cov(W, aX+bY+c) = a\cov(W, X) + b\cov(W, Y)$
     \item $\var(aX + bY + c) = a^2 \var(X) + b^2 \var(Y) + 2ab\cov(X, Y)$
+    \item $\var(\sum^N_{i=1}a_iX_i) = \sum^N_{i=1}a_i^2\var(X_i) + 2\sum_{1 \leq i < j \leq N} a_ia_j \cov(X_i,X_j)$
   \end{itemize}
 
   \subsection{joint $=$ marginal $\times$ conditional distributions}
@@ -309,6 +311,8 @@
     $E(X) = np, \quad \var(X) = np(1-p)$
 
     \( {\displaystyle{ E(X) = \sum^n_{k=1} k \binom{n}{k} p^k (1-p)^{n-k} }} \)  
+
+    $\cov(X,n-X) = -\var(X)$
   \end{tightcenter}
 
   \subsubsection{multinomial}
@@ -316,20 +320,20 @@
   $X \sim Multinomial(n, \mathbf{p})$ 
 
   \begin{itemize}
-    \item for $k$ outcomes $E_1, \dots, E_k$, $\; Pr(E_i) = p_i$.
+    \item for $k$ outcomes $\seq[k]{E}$, $\; Pr(E_i) = p_i$.
       For some $1 \leq i \leq k$, $E_i$ occurs $X_i$ times in $n$ runs.
   \end{itemize}
 
-  $(X_1, \dots, X_k)$ has the \textbf{multinomial distribution:}
+  $(\seq[k]{X})$ has the \textbf{multinomial distribution:}
 
   \begin{tightcenter}
-    \( {\displaystyle{ Pr(X_1 = x_1, \dots, X_k = x_k) = \binom{n}{x_1 \dots x_k} \Pi^k_{i=1} p_i^{x_i} }} \)   
+    \( {\displaystyle{ Pr(X_1 = x_1, \dots, X_k = x_k) = \binom{n}{\seq[k]{x}} \Pi^k_{i=1} p_i^{x_i} }} \)   
   \end{tightcenter}
 
   \begin{itemize}
-    \item where $\binom{n}{x_1 \dots x_k} = \frac{n!}{x_1! x_2! \dots x_k!}$
+    \item where $\binom{n}{\seq[k]{x}} = \frac{n!}{x_1! x_2! \dots x_k!}$
       \begin{itemize}
-        \item combinatorially, \# of arrangements of $x_1, \dots, x_k$
+        \item combinatorially, \# of arrangements of $\seq[k]{x}$
         \item $\sum^n_{i=1}x_i = n, \quad x_i \ge 0$
       \end{itemize}
   \end{itemize}
@@ -452,7 +456,7 @@
 
   \subsection{Central Limit Theorem}
 
-  let $X_1, \dots, X_n$ be iid rv's with expectation $\mu$ and SD $\sigma$, with $ S_n = \sum^n_{i=1} X_i $
+  let $\seq{X}$ be iid rv's with expectation $\mu$ and SD $\sigma$, with $ S_n = \sum^n_{i=1} X_i $
 
   \begin{tightcenter}
     \textbf{CLT} 
@@ -489,7 +493,7 @@
     \\* $\var(Z^2) = E(Z^4) - \{ E(Z^2) \}^2 = 2$
   \end{tightcenter}
 
-  let $V_1, \dots, V_n$ be iid $\chi^2_1$ RVs and $V = \sum^n_{i=1}V_i$. then 
+  let $\seq{V}$ be iid $\chi^2_1$ RVs and $V = \sum^n_{i=1}V_i$. then 
   \begin{tightcenter}
     $V \sim \chi^2_n$
 
@@ -544,7 +548,7 @@
 
   \subsection{IID Random Variables}
 
-  let $X_1, \dots, X_n$ be iid RVs with mean $\bar{X}$. 
+  let $\seq{X}$ be iid RVs with mean $\bar{X}$. 
 
   \begin{tightcenter}
     \textbf{sample variance}, \( {\displaystyle{ S^2 = \frac{1}{n-1} \sum^n_{i=1} (X_i - \bar{X})^2 }} \) 
@@ -552,7 +556,7 @@
     $S$ is an estimate of $\sigma$
   \end{tightcenter}
 
-  let $X_1, \dots, X_n$ be iid $N(\mu, \sigma^2)$. $\bar{X} = \frac{1}{n} \sum^n_{i=1} X_i$. 
+  let $\seq{X}$ be iid $N(\mu, \sigma^2)$. $\bar{X} = \frac{1}{n} \sum^n_{i=1} X_i$. 
   \begin{tightcenter}
     $\bar{X} \sim N(\mu, \frac{\sigma^2}{n})$
 
@@ -577,7 +581,7 @@
   let $\bm{\mu}$ be a $k \times 1$ vector and $\bm{\Sigma}$ be a \textit{positive-definite} symmetric $k \times k$ matrix.
 
   \begin{tightcenter}
-    the random vector $\bm{X} = (X_1, \dots, X_k)'$ has a multivariate normal distribution $N(\bm{\mu}, \bm{\Sigma})$ if its density function is 
+    the random vector $\bm{X} = (\seq[k]{X})'$ has a multivariate normal distribution $N(\bm{\mu}, \bm{\Sigma})$ if its density function is 
 
     \( {\displaystyle{ \frac{1}{(2\pi)^{k/2} \sqrt{det\bm{\Sigma}}} \exp \left(-\frac{(\bm{x} - \bm{\mu})' \bm{\Sigma}^{-1}(\bm{x} - \bm{\mu})}{2}\right) }} \) 
   \end{tightcenter}
@@ -634,17 +638,17 @@
 
   \subsubsection{draws with replacement}
 
-  let $X_1, \dots, X_n$ be random draws with replacement from a population of mean $\mu$ and variance $\sigma^2$.
+  let $\seq{X}$ be random draws with replacement from a population of mean $\mu$ and variance $\sigma^2$.
 
   \begin{tightcenter}
     random sample mean, \( {\displaystyle{ \Xbar = \frac{1}{n}\sum^n_{i=1}X_i }} \) 
 
-    $X_1, \dots, X_n$ are iid with $E(X_i) = \mu$, $\var(X_i) = \sigma^2$
+    $\seq{X}$ are iid with $E(X_i) = \mu$, $\var(X_i) = \sigma^2$
 
     $E(\Xbar) = \mu$, $\var(\Xbar) = \frac{\sigma^2}{n}$
   \end{tightcenter}
 
-  let $x_1, \dots, x_n$ be realisations of $n$ random draws with replacement from the population.
+  let $\seq{x}$ be realisations of $n$ random draws with replacement from the population.
 
   \begin{tightcenter}
     sample mean, \( {\displaystyle{ \xbar = \frac{1}{n} \sum^n_{i=1} x_i }} \) 
@@ -659,16 +663,16 @@
   \subsubsection{representativeness}
 
   \begin{itemize}
-    \item $X_1, \dots, X_n$ is \textbf{representative} of the population
+    \item $\seq{X}$ is \textbf{representative} of the population
       \begin{itemize}
         \item as $n$ gets larger, $\Xbar$ gets closer to $\mu$
       \end{itemize}
-    \item $x_1, \dots, x_n$ are \textit{likely} representative of the population
+    \item $\seq{x}$ are \textit{likely} representative of the population
   \end{itemize}
 
   \subsection{estimating mean}
 
-  given data $x_1, \dots, x_n$, 
+  given data $\seq{x}$, 
 
   \begin{itemize}
     \item sample mean, $ \xbar = \frac{1}{n} \sum^n_{i=1} x_i $ is an  \ildefinition{estimate} of $\mu$
@@ -703,7 +707,7 @@
 
   a population (size $N$) has unknown mean $\mu$, variance $\sigma^2$.
 
-  for random draws (without replacement) $x_1,\dots,x_n$: 
+  for random draws (without replacement) $\seq{x}$: 
 
   $\xbar$ is a realisation of $\Xbar$, with $E(\Xbar) = \mu$, $\var(\Xbar) = \frac{\sigma^2}{n}$
 
@@ -740,7 +744,7 @@
       \end{itemize}
       $$E(\Xbar) = \mu, \quad \var(\Xbar) = \frac{N-n}{N-1}\frac{\sigma^2}{n}$$
     \item if $n << N$, then SRS is like sampling \textit{with replacement}
-      (treat the data as if they come from IID RVs $X_1, \dots, X_n$)
+      (treat the data as if they come from IID RVs $\seq{X}$)
       $$E(\Xbar) = \mu, \quad \var(\Xbar) = \frac{\sigma^2}{n}$$
   \end{itemize}
 
@@ -765,13 +769,194 @@
 
   \subsection{Gauss Model}
 
-  Let $x_i$ be a realisation of $X_i$. $X_1, \dots, X_{100}$ are random draws with replacement from an imaginary population with mean $w$ and variance $\sigma^2$.
+  Let $x_i$ be a realisation of $X_i$. $\seq[100]{X}$ are random draws with replacement from an imaginary population with mean $w$ and variance $\sigma^2$.
   $w$ and $\sigma^2$ are parameters (unknown constants).
 
   \begin{itemize}
     \item $E(X_i) = w, \quad \var{X_i} = \sigma^2$ (since $X_i$ is just 1 draw) 
     \item $E(\Xbar) = w, \quad \var{\Xbar} = \frac{\sigma^2}{100}$  
   \end{itemize}
+
+  \section{04. ESTIMATION (SE, bias, MSE)}
+
+  let $\seq{x}$ be from random draws $\seq{X}$ with replacement from a population of mean $\mu$ and variance $\sigma^2$.
+
+  \begin{tightcenter}
+    sample mean $\xbar$ is an \textit{unbiased estimate} of $\mu$
+
+    $\xbar = \frac{1}{n} \sum^n_{i=1} x_i$
+
+    SE = $\frac{\sigma}{\sqrt n} \approx \frac{s}{\sqrt n}$ tells us roughly how far $\xbar$ is from $\mu$
+
+    sample variance, $s^2 = \frac{1}{n-1} \sum^n_{i=1} (x_i-\xbar)^2$
+  \end{tightcenter}
+
+  \subsection{MSE and bias}
+
+  suppose measurements were from a population with mean $w + b$ where
+  $b$ is a constant:
+  $\quad x_i = w + b + \epsilon_i$
+  \begin{itemize}
+    \item $E(\Xbar) = w + b$
+    \item $SD(\Xbar) = \frac{\sigma}{\sqrt n}$
+      \begin{itemize}
+        \item $SE = \frac{\sigma}{\sqrt n}$ measures how far $\xbar$ is from $w+b$, not $w$
+      \end{itemize}
+    \item if $b\neq 0$, then $\xbar$ is a biased estimate for $w$
+  \end{itemize}
+
+  \begin{tightcenter}
+    $MSE = E\{(\Xbar - w)^2\} = \frac{\sigma^2}{n} + b^2$
+
+    $MSE = SE^2 + bias^2$
+  \end{tightcenter}
+
+  as $n \to \infty, \; MSE \to b^2$
+
+  \subsubsection{conclusion}
+
+  \begin{tightcenter}
+    let $\theta$ be a parameter (constant) and $\hat \theta$ be an estimator (RV).
+
+    $SE = SD(\hat\theta)$, bias = $E(\hat\theta) - \theta$, 
+
+    MSE = $E\{(\hat\theta - \theta)^2 = SE^2 + bias^2\}$
+  \end{tightcenter}
+
+  \section{05. INTERVAL ESTIMATION}
+
+  let $\seq{x}$ be realisations of IID RVs $\seq{X}$ with unknown $\mu = E(X_i)$ and $\sigma^2 = \var(X_i)$. 
+
+  sample mean, $\xbar = \frac{1}{n} \sum^n_{i=1}x_i$
+
+  sample variance, $s^2 = \frac{1}{n-1} \sum^n_{i=1}(x_i-\xbar)^2$
+
+  standard error, $SE = \frac{s}{\sqrt n}$
+
+  \begin{tightcenter}
+    \textbf{point estimation:} $\mu \approx \xbar$, give or take $\frac{s}{\sqrt n}$
+
+    \textbf{interval estimation:} interval contains $\mu$ with some confidence level
+  \end{tightcenter}
+
+  interval estimation works well if
+  \begin{itemize}
+    \item $X_i$ has a normal distribution, for any $n > 1$ 
+    \item $X_i$ has any other distribution but $n$ is large
+  \end{itemize}
+
+  \subsection{normal ''upper-tail quantile'' $z_p$}
+
+  \begin{tightcenter}
+    let $Z \sim N(0,1)$. for $0 < p < 1$, let $z_p$ be such that 
+
+    $p=\Pr(Z > z_p)$
+  \end{tightcenter}
+
+  \begin{itemize}
+    \item e.g. $z_{0.5} = 0$
+    \item $z_p = (1-p)$-quantile of $Z$ 
+    \item for $0<p<0.5$, $\Pr(-z_p \leq Z \leq z_p) = 1-2p$
+  \end{itemize}
+
+  \subsubsection{(case 1) normal distribution with known $\sigma^2$}
+
+  assume $\seq{X}$ are IID $\sim N(0,1)$ with known $\sigma^2$.
+
+  for $0<\alpha<1$, $\;\Pr(-z_{\frac{\alpha}{2}} \leq Z \leq z_{\frac{\alpha}{2}}) = 1-\alpha$
+
+  \begin{tightcenter}
+    \textbf{confidence interval for $\mu$:}
+    the random interval 
+
+    \( {\displaystyle{ \left( \Xbar-z_{\frac{\alpha}{2}}\frac{\sigma}{\sqrt n}, \Xbar+z_{\frac{\alpha}{2}}\frac{\sigma}{\sqrt n} \right) }} \) 
+
+    contains $\mu$ with probability $1-\alpha$,
+
+    and produces the realisation 
+    $ \left( \xbar-z_{\frac{\alpha}{2}}\frac{\sigma}{\sqrt n}, \xbar+z_{\frac{\alpha}{2}}\frac{\sigma}{\sqrt n} \right) $
+  \end{tightcenter}
+
+  \begin{itemize}
+    \item $1-\alpha$ is the \textbf{confidence level}
+    \item \textit{Proof.} since $\frac{\Xbar - \mu}{\sigma / \sqrt n} \sim N(0,1)$,
+      \begin{itemize}
+        \item $\quad \Pr(-z_{\frac{\alpha}{2}} \leq \frac{\Xbar - \mu}{\sigma / \sqrt n} \leq z_{\frac{\alpha}{2}}) = 1 - \alpha$
+          % \item $\quad \Pr(\mu-z_{\frac{\alpha}{2}}\frac{\sigma}{\sqrt n} \leq \Xbar \leq \mu + z_{\frac{\alpha}{2}}\frac{\sigma}{\sqrt n}) = 1 - \alpha$
+
+        \item $\quad \Pr(\Xbar-z_{\frac{\alpha}{2}}\frac{\sigma}{\sqrt n} \leq \mu \leq \Xbar + z_{\frac{\alpha}{2}}\frac{\sigma}{\sqrt n}) = 1 - \alpha$
+      \end{itemize}
+  \end{itemize}
+
+  \subsubsection{(case 2) normal distribution with unknown $\sigma^2$}
+
+  assume $\seq{X}$ are IID $\sim N(\mu, \sigma^2)$ with unknown $\sigma^2$.
+
+  replace $\sigma$ with $S$:
+
+  \begin{tightcenter}
+    for $0 < p < 1$, let $t_{p,n}$ be such that 
+
+    $\Pr(t_n > t_{p,n}) = p$
+  \end{tightcenter}
+
+  \begin{itemize}
+    \item $t_{p,n}$ is the \textit{upper} $p$ quartile of the $t$ distribution with $n$ degrees of freedom
+      \begin{itemize}
+        \item e.g. $t_{0.1,5} = 1.48$ (using $qt(0.9,5)$)
+      \end{itemize}
+    \item as $n \to \infty, \;\; t_{n,p} \to z_p$
+    \item $\frac{\Xbar - \mu}{S/\sqrt n} \sim t_{n-1}$
+    \item $\Pr( \Xbar - t_{\frac{\alpha}{2}, n-1} \frac{S}{\sqrt n} \leq \mu \leq \Xbar + t_{\frac{\alpha}{2}, n-1} \frac{S}{\sqrt n})$
+  \end{itemize}
+
+  \begin{tightcenter}
+    the random interval
+
+    $\left(\Xbar - t_{\frac{\alpha}{2}, n-1} \frac{S}{\sqrt n},  \Xbar + t_{\frac{\alpha}{2}, n-1} \frac{S}{\sqrt n}\right)$
+
+    contains $\mu$ with probability $1-\alpha$.
+  \end{tightcenter}
+
+  \begin{itemize}
+    \item data $\seq{x}$ give realisations $\xbar$ of $\Xbar$ and $s$ of $S$, thus the random interval gives a $(1-\alpha)$-CI for $\mu$: 
+      $\left(\xbar - t_{\frac{\alpha}{2}, n-1} \frac{s}{\sqrt n},  \xbar + t_{\frac{\alpha}{2}, n-1} \frac{s}{\sqrt n}\right)$
+  \end{itemize}
+
+  \subsubsection{(case 3) general distribution with unknown $\sigma^2$}
+
+  IID $\seq{X}$ with $E(X_i) =\mu$, $\var(X_i) = \sigma^2$ unknown
+
+  \begin{itemize}
+    \item for large $n$, approximately $\frac{S_n - n\mu}{\sqrt n \sigma} \sim N(0,1)$
+    \item since $\frac{S_n - n\mu}{\sqrt n \sigma} \sim N(0,1) =  \frac{\Xbar - \mu}{\sigma / \sqrt n}$,
+      \begin{itemize}
+        \item $\quad \Pr(-z_{\frac{\alpha}{2}} \leq \frac{\Xbar - \mu}{\sigma / \sqrt n} \leq z_{\frac{\alpha}{2}}) \approx 1 - \alpha$
+        \item $\quad \Pr(\Xbar-z_{\frac{\alpha}{2}}\frac{\sigma}{\sqrt n} \leq \mu \leq \Xbar + z_{\frac{\alpha}{2}}\frac{\sigma}{\sqrt n}) \approx 1 - \alpha$
+      \end{itemize}
+  \end{itemize}
+
+  \begin{tightcenter}
+    for large $n$, the random interval
+
+    \( {\displaystyle{ \left( \Xbar-z_{\frac{\alpha}{2}}\frac{S}{\sqrt n}, \Xbar+z_{\frac{\alpha}{2}}\frac{S}{\sqrt n} \right) }} \) 
+
+    contains $\mu$ with probability $\approx 1-\alpha$
+  \end{tightcenter}
+
+  \begin{itemize}
+    \item data $\seq{x}$ give realisations $\xbar$ of $\Xbar$ and $s$ of $S$.
+    \item $ \left( \xbar-z_{\frac{\alpha}{2}}SE, \xbar+z_{\frac{\alpha}{2}}SE \right) $ \\* is an \textit{approximate} $(1-\alpha)$-CI for $\mu$.
+      \begin{itemize}
+        \item $SE = \frac{s}{\sqrt n}$
+        \item for SRS, multiply $SE$ by correction factor $\sqrt{\frac{N-n}{N-1}}$
+      \end{itemize}
+    \item contains $\mu$ with probability $<1-\alpha$
+    \item probability $\to 1-\alpha$ as $n \to \infty$
+    \item \textbf{exception}: for Bernoulli, $\sigma = \sqrt{p(1-p)}$ is not estimated by $s$, but by replacing $p$ with the sample proportion
+  \end{itemize}
+
+
 
 
 
