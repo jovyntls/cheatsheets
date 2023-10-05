@@ -956,6 +956,138 @@
     \item \textbf{exception}: for Bernoulli, $\sigma = \sqrt{p(1-p)}$ is not estimated by $s$, but by replacing $p$ with the sample proportion
   \end{itemize}
 
+  \section{06. METHOD OF MOMENTS}
+
+  modified notation of mass/density functions:
+
+  \begin{itemize}
+    \item \textbf{bernoulli}: $f(x\vert p) = p^x (1-p)^{1-x}, \quad x=0,1$
+      \begin{itemize}
+        \item parameter space is $(0,1)$
+      \end{itemize}
+    \item \textbf{poisson}: $f(x \vert \lambda) = \frac{\lambda^xe^{-\lambda}}{x!}, \quad x=0,1,\dots$
+      \begin{itemize}
+        \item parameter space is $\mathbb{R}_+$
+      \end{itemize}
+  \end{itemize}
+
+  \subsection{parameter estimation}
+
+  assuming data $\seq{x}$ are realisations of IID RVs $\seq{X}$ with mass/density function  $f(x \vert \theta)$, 
+  where $\theta$ is unknown in parameter space $\Theta$.
+
+  \begin{itemize}
+    \item 2 methods to estimate $\theta$ :
+      \begin{itemize}
+        \item method of moments (MOM)
+        \item method of maximum likelihood (MLE)
+      \end{itemize}
+    \item for both:
+      \begin{itemize}
+        \item the estimate of $\theta$ is a realisation of an estimator $\hat \theta$ 
+        \item SE is $SD(\hat \theta)$
+        \item bias is $E(\hat \theta) - \theta$
+      \end{itemize}
+    \item parameter space $\Theta$: set of values that can be used to estimate the real parameter value $\theta$
+  \end{itemize}
+
+  \subsection{Moments of an RV}
+
+  \begin{tightcenter}
+    the $k$-th moment of an RV $X$ is
+
+    $\mu_k = E(X^k)$, $\quad k = 1,2,\dots$
+  \end{tightcenter}
+
+  \subsubsection{estimating moments}
+
+  let $\seq{X}$ be IID with the same distribution as $X$. 
+
+  \begin{tightcenter}
+    the $k$-th sample moment  is
+
+    $\hat{\mu}_k = \frac{1}{n} \sum^n_{i=1}X_i^k$
+  \end{tightcenter}
+
+  \begin{itemize}
+    \item $E(\hat\mu_k) = \mu_k$  $\quad\Rightarrow$ unbiased estimator!
+    \item $\hat{\mu}_k$ is an estimator of $\mu_k$. For realisations $\seq{x}$, the realisation $\frac{1}{n}\sum^n_{i=1} x^k_i$ is an \textit{unbiased} estimate of $\mu_k$.
+    \item hat ($\hat{\phantom x}$) means estimator (random variable)
+      \begin{itemize}
+        \item note that this violates the uppercase=RV, lowercase=(fixed)realisation notation
+        \item $\bar x = \frac{1}{n} \sum^n_{i=1} x_i$
+      \end{itemize}
+  \end{itemize}
+
+  \subsubsection{MOM: Poisson}
+
+  assume $\seq{x}$ are realisations of IID $Poisson(\lambda)$ RVs $\seq{X}$.
+  Let $\lambda$ be the mean number of emissions per 10 seconds ($\lambda$ is a parameter).
+
+  \begin{itemize}
+    \item let $X \sim Poisson(\lambda)$. $\mu_1 = \lambda$. Estimate $\lambda$ by estimating $\mu_1$ using sample mean $\bar x$, which is an estimator of  $\bar X$.
+    \item the MOM estimator is $\hat \lambda = \hat{\mu_1} = \bar X$
+      \begin{itemize}
+        \item the random sample mean
+      \end{itemize}
+    \item $\var(X) = \lambda$, $\var(\bar X) = \frac{\lambda}{n}$, SE = SD of estimator $= \sqrt \frac{\lambda}{n}$
+  \end{itemize}
+
+  \begin{tightcenter}
+    $\lambda \approx \bar x \pm \sqrt\frac{\lambda}{n}$
+  \end{tightcenter}
+
+  \subsubsection{MOM: Bernoulli}
+
+  Assume $\seq{X}$ are iid $Bernoulli(p)$ RVs. 
+
+  Finding MOM estimator of $p$:
+
+  \begin{itemize}
+    \item let $X \sim Bernoulli(p)$. $\quad\Rightarrow \mu_1 = p$
+    \item MOM estimator, $\hat p = \hat{\mu_1} = \bar X$
+      \begin{itemize}
+        \item random sample proportion of 1's
+      \end{itemize}
+    \item SE = SD of estimator $=\sqrt{\var(\hat p)} = \sqrt \frac{p(1-p)}{n}$
+  \end{itemize}
+
+  \subsubsection{MOM: Normal}
+
+  let $\seq{X}$ be iid $N(\mu, \sigma^2)$ with parameters $\mu$, $\sigma^2$
+
+  for $X\sim N(\mu, \sigma^2)$: $\quad$ parameter space, $\Theta = \mathbb{R} \times \mathbb{R}_+$
+
+  \begin{enumerate}
+    \item $\mu_1 = \mu, \quad \mu_2 = \sigma^2 + \mu^2$
+    \item express $\mu = \mu_1$; $\; \sigma^2 = \mu_2 - \mu_1^2$; then add hats
+    \item MOM estimators: 
+      \begin{tightcenter}
+        $\hat\mu = \bar X$
+        $\qquad$
+        $\sigma^2 = \frac{1}{n} \sum^n_{i=1} (X_i - \bar X)^2$
+      \end{tightcenter}
+  \end{enumerate}
+
+  (to construct CI for $\sigma^2$: use  $S^2$ $\quad \Rightarrow$ since $E(S^2) = \sigma^2$)
+
+  \subsubsection{MOM: Geometric}
+
+  let $\seq{x}$ be realisations of IID  $Geometric(p)$ RVs $\seq{X}$ with expectation $1/p$.
+
+  \begin{itemize}
+    \item for $X \sim Geometric(p) \quad \Rightarrow E(X) = \frac{1}{p}$
+      \begin{itemize}
+        \item $\Pr (X=i) = p(1-p)^{i-1}$ for $i=1,2,\dots$
+        \item $E(X) = \sum^\infty_{i=1} ip(1-p)^{i-1} = \frac{1}{p}$
+      \end{itemize}
+    \item $\mu_1 = \frac{1}{p} \quad \Rightarrow p = \frac{1}{\mu_1} \quad \Rightarrow \hat p = \frac{1}{\bar X}$
+    \item MOM estimator, $\hat p = \frac{1}{\bar X}$
+      \begin{itemize}
+        \item then MOM estimate $= \frac{1}{\bar x}$
+      \end{itemize}
+    \item SE = $SD(1/\bar X) \qquad \Rightarrow$ use monte carlo to approximate
+  \end{itemize}
 
 
 
