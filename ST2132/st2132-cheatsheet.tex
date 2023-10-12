@@ -1015,7 +1015,7 @@
     \item hat ($\hat{\phantom x}$) means estimator (random variable)
       \begin{itemize}
         \item note that this violates the uppercase=RV, lowercase=(fixed)realisation notation
-        \item $\bar x = \frac{1}{n} \sum^n_{i=1} x_i$
+        \item $\xbar = \frac{1}{n} \sum^n_{i=1} x_i$
       \end{itemize}
   \end{itemize}
 
@@ -1025,16 +1025,16 @@
   Let $\lambda$ be the mean number of emissions per 10 seconds ($\lambda$ is a parameter).
 
   \begin{itemize}
-    \item let $X \sim Poisson(\lambda)$. $\mu_1 = \lambda$. Estimate $\lambda$ by estimating $\mu_1$ using sample mean $\bar x$, which is an estimator of  $\bar X$.
-    \item the MOM estimator is $\hat \lambda = \hat{\mu_1} = \bar X$
+    \item let $X \sim Poisson(\lambda)$. $\mu_1 = \lambda$. Estimate $\lambda$ by estimating $\mu_1$ using sample mean $\xbar$, which is an estimator of  $\Xbar$.
+    \item the MOM estimator is $\hat \lambda = \hat{\mu_1} = \Xbar$
       \begin{itemize}
         \item the random sample mean
       \end{itemize}
-    \item $\var(X) = \lambda$, $\var(\bar X) = \frac{\lambda}{n}$, SE = SD of estimator $= \sqrt \frac{\lambda}{n}$
+    \item $\var(X) = \lambda$, $\var(\Xbar) = \frac{\lambda}{n}$, SE = SD of estimator $= \sqrt \frac{\lambda}{n}$
   \end{itemize}
 
   \begin{tightcenter}
-    $\lambda \approx \bar x \pm \sqrt\frac{\lambda}{n}$
+    $\lambda \approx \xbar \pm \sqrt\frac{\lambda}{n}$
   \end{tightcenter}
 
   \subsubsection{MOM: Bernoulli}
@@ -1045,7 +1045,7 @@
 
   \begin{itemize}
     \item let $X \sim Bernoulli(p)$. $\quad\Rightarrow \mu_1 = p$
-    \item MOM estimator, $\hat p = \hat{\mu_1} = \bar X$
+    \item MOM estimator, $\hat p = \hat{\mu_1} = \Xbar$
       \begin{itemize}
         \item random sample proportion of 1's
       \end{itemize}
@@ -1063,9 +1063,9 @@
     \item express $\mu = \mu_1$; $\; \sigma^2 = \mu_2 - \mu_1^2$; then add hats
     \item MOM estimators: 
       \begin{tightcenter}
-        $\hat\mu = \bar X$
+        $\hat\mu = \Xbar$
         $\qquad$
-        $\sigma^2 = \frac{1}{n} \sum^n_{i=1} (X_i - \bar X)^2$
+        $\hat{\sigma^2} = \frac{1}{n} \sum^n_{i=1} (X_i - \Xbar)^2$
       \end{tightcenter}
   \end{enumerate}
 
@@ -1081,15 +1081,112 @@
         \item $\Pr (X=i) = p(1-p)^{i-1}$ for $i=1,2,\dots$
         \item $E(X) = \sum^\infty_{i=1} ip(1-p)^{i-1} = \frac{1}{p}$
       \end{itemize}
-    \item $\mu_1 = \frac{1}{p} \quad \Rightarrow p = \frac{1}{\mu_1} \quad \Rightarrow \hat p = \frac{1}{\bar X}$
-    \item MOM estimator, $\hat p = \frac{1}{\bar X}$
+    \item $\mu_1 = \frac{1}{p} \quad \Rightarrow p = \frac{1}{\mu_1} \quad \Rightarrow \hat p = \frac{1}{\Xbar}$
+    \item MOM estimator, $\hat p = \frac{1}{\Xbar}$
       \begin{itemize}
-        \item then MOM estimate $= \frac{1}{\bar x}$
+        \item then MOM estimate $= \frac{1}{\xbar}$
       \end{itemize}
-    \item SE = $SD(1/\bar X) \qquad \Rightarrow$ use monte carlo to approximate
+    \item SE = $SD(1/\Xbar) \qquad \Rightarrow$ use monte carlo to approximate
   \end{itemize}
 
+  \subsubsection{MOM: Gamma}
 
+  let $\seq{X}$ be iid $Gamma(\alpha, \lambda)$ RVs with shape parameter $\alpha>0$, rate parameter $\lambda>0$
+
+  \begin{itemize}
+    \item $X \sim Gamma(\alpha, \lambda)$, $\; E(X) = \frac{\alpha}{\lambda}, \; E(X^2) = \frac{\alpha(\alpha+1)}{\lambda^2}$ 
+    \item express parameters in terms of moments: $\mu_1 = \frac{\alpha}{\lambda},\; \mu_2 - \mu_1^2 = \frac{\alpha}{\lambda^2}$
+      $\quad\Rightarrow \lambda = \frac{\mu_1}{\mu_2 - \mu_1^2}, \alpha = \lambda\mu_1$ 
+    \item MOM estimators: $\hat\alpha = \frac{\Xbar^2}{\hat\sigma^2}, \; \hat \lambda = \frac{\Xbar}{\hat \sigma^2}$
+  \end{itemize}
+
+  \subsubsection{MOM estimators are consistent}
+
+  let $\seq{X}$ be iid with mass/density $f(x \vert \theta)$, where $\theta \in \Theta \subset \mathbb{R}$.
+
+  Suppose $\theta = g(\mu_1)$ for some \textit{continuous} function $g$. 
+
+  Then the MOM estimator is \textbf{consistent} (approaches $\theta$ with more data) 
+
+  \begin{itemize}
+    \item the MOM estimator is $\hat \theta = g(\hat\mu_1)$. as $n \to \infty, \; \hat\mu_1 \to \mu_1$
+    \item since $g$ is continuous, $\quad \hat\theta \to g(\mu_1) = \theta$ 
+      \begin{itemize}
+        \item \ildefinition{asymptotic unbiasedness}: $E(\hat\theta) \to \theta$
+      \end{itemize}
+  \end{itemize}
+
+  \section{07. MLE}
+
+  MOM: works through estimating moments - if no formula is available for $SD(\hat \theta)$ or $E(\hat\theta)$, monte carlo can be used
+
+  MLE: another estimation method
+
+  \subsection{Likelihood function}
+
+  let $\seq x$ be realisations of iid rvs $\seq X$ with density $f(x \vert \theta), \; \theta \in \Theta \subset \mathbb{R}^k$.
+
+  \begin{tightcenter}
+    \ildefinition{likelihood function} $L : \Theta \to \mathbb{R}_+$ is
+      $L(\theta) = f(x_1 \vert \theta) \times \dots \times f(x_n \vert \theta) 
+      = \prod^n_{i=1} f(x_i \vert \theta)$
+
+    \ildefinition{loglikelihood function} $\ell : \Theta \to \mathbb{R}$ is
+      $\ell(\theta) = \log L(\theta) = \sum^n_{i=1}\log f(x_i\vert \theta)$
+  \end{tightcenter}
+
+  \subsection{Maximum Likelihood Estimation (MLE)}
+
+  $$L(\theta) = \prod^n_{i=1} f(x_i \vert \theta)$$ 
+
+  \begin{itemize}
+    \item \definition[of $L$]{maximiser} the maximum likelihood estimate of $\theta$ (a realisation of the MLEstimator $\hat\theta$)
+  \end{itemize}
+
+  \subsubsection{poisson (log)likelihood/MLE}
+
+  $Poisson(\lambda): f(x \vert \lambda) = \frac{\lambda^2e^{-\lambda}}{x!}, \; x = 0,1,2,\dots$
+
+  \begin{itemize}
+    \item let $\seq{x}$ be realisations of iid Poisson($\lambda$) RVs $\seq X$. 
+      the joint probability of data is  $f(x_1 \vert \lambda) \times \dots \times f(x_n\vert \lambda) = \frac{\lambda^{\sum^n_{i=1} x_i} e^{-n\lambda}}{x_1! \dots x_n!}$
+    \item \textbf{likelihood}: probability as a function of only $\lambda$ 
+      $L(\lambda) = \frac{\lambda^{\sum^n_{i=1} x_i} e^{-n\lambda}}{x_1! \dots x_n!}$
+    \item \textbf{loglikelihood:} $\ell(\lambda) = (\sum^n_{i=1} x_i) \log \lambda - n\lambda - \sum^{n}_{i=1}\log(x_i!)$
+    \item \textbf{MLE of $\lambda$} $= \xbar$ $\quad$ (maximiser of $L(\lambda)$)
+
+      \begin{itemize}
+        \item differentiate $\ell(\lambda)$: $\ell'(\lambda) = \frac{\sum^{n}_{i=1} x_i}{\lambda} - n$
+        \item $\ell'(\lambda) = 0 \quad \Rightarrow \lambda = \xbar$ 
+        \item $\ell''(\lambda) < 0$ (thus max point)
+      \end{itemize}
+  \end{itemize}
+
+  \subsubsection{normal (log)likelihood/MLE}
+
+  $N(\mu, \sigma^2)$: for $x \in \mathbb{R}$,
+
+  $f(x \vert \mu, \sigma) = \frac{1}{\sqrt{2\pi} \sigma} e^{-\frac{(x-\mu)^2}{2\sigma^2}} = (2\pi)^{\frac{1}{2}}\sigma^{-1} e^{-\frac{(x-\mu)^2}{2\sigma^2}}$
+
+  \begin{itemize}
+    \item let $\seq{x}$ be realisations of iid N($\mu, \sigma$) RVs $\seq X$. 
+      the joint probability of data is  $f(x_1 \vert \lambda) \times \dots \times f(x_n\vert \lambda) = \frac{\lambda^{\sum^n_{i=1} x_i} e^{-n\lambda}}{x_1! \dots x_n!}$
+    \item \textbf{likelihood} function: joint density as a function of $(\mu, \sigma)$
+  \end{itemize}
+  \begin{align*}
+    L(\mu, \sigma) &= f(x_1 \vert \mu,\sigma) \times \dots \times f(x_n \vert \mu, \sigma) \\
+                   &= (2\pi)^{-\frac{n}{2}} \sigma^{-n} e^{-\frac{1}{2\sigma^2}\sum^n_{i=1}(x_i - \mu)^2}
+  \end{align*}
+
+  \begin{itemize}
+    \item \textbf{loglikelihood:}
+      $\ell(\mu,\sigma) = -\frac{n}{2} \log(2\pi) - n\log\sigma - \frac{1}{2\sigma^2} \sum^n_{i=1}(x_i - \mu)^2$
+    \item \textbf{MLE:}
+      \begin{itemize}
+        \item MLE of $\mu$ $= \xbar$
+        \item MLE of $\sigma$ $= \hat \sigma = \sqrt{ \frac{1}{n} \sum^n_{i=1} (x_i - \xbar)^2 }$
+      \end{itemize}
+  \end{itemize}
 
 
 
