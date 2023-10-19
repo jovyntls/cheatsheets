@@ -1141,6 +1141,9 @@
 
   \begin{itemize}
     \item \definition[of $L$]{maximiser} the maximum likelihood estimate of $\theta$ (a realisation of the MLEstimator $\hat\theta$)
+      \begin{itemize}
+        \item maximiser of loglikelihood $\ell = \log L$ over $\Theta$
+      \end{itemize}
   \end{itemize}
 
   \subsubsection{poisson (log)likelihood/MLE}
@@ -1152,7 +1155,13 @@
       the joint probability of data is  $f(x_1 \vert \lambda) \times \dots \times f(x_n\vert \lambda) = \frac{\lambda^{\sum^n_{i=1} x_i} e^{-n\lambda}}{x_1! \dots x_n!}$
     \item \textbf{likelihood}: probability as a function of only $\lambda$ 
       $L(\lambda) = \frac{\lambda^{\sum^n_{i=1} x_i} e^{-n\lambda}}{x_1! \dots x_n!}$
+      \begin{itemize}
+        \item we can leave out constant factors: $L(\lambda) = \lambda^{\sum^n_{i=1}x_i} e^{n\lambda}$
+      \end{itemize}
     \item \textbf{loglikelihood:} $\ell(\lambda) = (\sum^n_{i=1} x_i) \log \lambda - n\lambda - \sum^{n}_{i=1}\log(x_i!)$
+      \begin{itemize}
+        \item leaving out additive constants: $\ell(\lambda) = (\sum^n_{i=1}x_i) \log \lambda- n \lambda$
+      \end{itemize}
     \item \textbf{MLE of $\lambda$} $= \xbar$ $\quad$ (maximiser of $L(\lambda)$)
 
       \begin{itemize}
@@ -1188,7 +1197,114 @@
       \end{itemize}
   \end{itemize}
 
+  \subsubsection{Gamma distribution}
 
+  $Gamma(\alpha, \lambda): \; f(x \vert \alpha, \lambda) = \frac{\lambda^\alpha}{\Gamma(\alpha)} x^{\alpha-1} e^{\lambda x}, \; x > 0$ 
+
+  \begin{itemize}
+    \item \textbf{log of density:}
+      $\alpha\log\lambda - \log \Gamma(\alpha) + (\alpha-1)\log x - \lambda x$
+    \item \textbf{loglikelihood:} 
+      \( {\displaystyle{ 
+          n\alpha\log\lambda - n\log\Gamma(\alpha) + (\alpha-1) \sum^n_{i=1}\log x_i - \lambda \sum^n_{i=1}x_i 
+      }} \) 
+      \begin{itemize}
+        \item if $\alpha$ is known, then $\ell(\lambda) = n\alpha \log \lambda - \lambda \sum^n_{i=1} x_i$
+      \end{itemize}
+    \item differentiate $\Rightarrow$ the ML estimates of $(\alpha, \lambda)$ satisfy 
+      $\log(\frac{\alpha}{\xbar}) - \frac{\Gamma'(\alpha)}{\Gamma(\alpha)} + \bar y = 0, \;\; \lambda = \frac{\alpha}{\xbar}\;$ 
+      where $\bar y = \frac{1}{n}\sum_{i=1}^n \log x_i$
+    \item the \textbf{ML estimators} $(\hat\alpha, \hat\lambda)$ satisfy
+      $\log(\frac{\alpha}{\Xbar}) - \frac{\Gamma'(\alpha)}{\Gamma(\alpha)} + \bar Y = 0, \;\; \lambda = \frac{\alpha}{\Xbar}\;$ 
+      \begin{itemize}
+        \item $\log(\frac{\hat\alpha}{\Xbar}) - \frac{\Gamma'(\hat\alpha)}{\Gamma(\hat\alpha)} + \bar Y = 0, \;\; \hat\lambda = \frac{\hat\alpha}{\Xbar}\;$ 
+      \end{itemize}
+  \end{itemize}
+
+  \subsection{ML vs MOM}
+
+  \begin{itemize}
+    \item MOM estimates can always be written in terms of the data (sample moments)
+      \begin{itemize}
+        \item ML uses *
+      \end{itemize}
+    \item ML has better (smaller) SE and bias than MOM
+    \item ML estimates are functions of $\xbar$ and $\bar y$. MOM never uses $\bar y$
+  \end{itemize}
+
+  \subsection{Kullback-Liebler divergence (KL)}
+
+  let $\mathbf{q} = (\seq[k]{q})$ and $\mathbf{p} = (\seq[k]{p})$ be strictly positive probability vectors.
+
+  \begin{tightcenter}
+    the \ildefinition{KL divergence} between $\mathbf{q}$ and $\mathbf{p}$ is
+
+    \( {\displaystyle{ d_{KL}(\mathbf{q}, \mathbf{p}) = \sum^k_{i=1}q_i \log (\frac{q_i}{p_i}) }} \) 
+  \end{tightcenter}
+
+  \begin{itemize}
+    \item $d_{KL}(\mathbf{q}, \mathbf{p}) \geq 0$ $\quad$ 
+      (equality $\iff \mathbf{q} = \mathbf{p}$)
+    \item $d_{KL}(\mathbf{q}, \mathbf{p}) \neq d_{KL}(\mathbf{p}, \mathbf{q})$ 
+  \end{itemize}
+
+  \subsubsection{Multinomial}
+
+  let $(\seq{x})$ be strictly positive realisations from $(\seq{X}) \sim Multinomial(n, \mathbf{p})$. 
+
+  \begin{itemize}
+    \item $L(\mathbf{p}) = \Pr (X_1=x_1, \dots, X_k = x_k) = cp_1^{x_1} \dots p_k^{x_k}$
+      $\qquad\; = p_1^{x_1} \dots p_k^{x_k}$ (simplified)
+    \item $\ell (\mathbf{p}) = x_1 \log p_1 + \dots + x_k \log p_k$
+    \item maximising $\ell$ via KL divergence
+      \begin{itemize}
+        \item if $x$ is from $X \sim Binom(n, p)$, the MOM and ML estimates are both $\hat p = \frac{x}{n}$ 
+          \begin{itemize}
+            \item the MOM estimate of $p_i$ is $q_i = \frac{x_i}{n}$. 
+          \end{itemize}
+        \item for any $\mathbf{p}$, $\ell(\mathbf{q}) - \ell(\mathbf{p}) = \sum^k_{i=1}x_i \log q_i - \sum^k_{i=1} x_i \log p_i$ 
+          $\qquad\qquad\qquad = n \, d_{KL}(\mathbf{q}, \mathbf{p}) \geq 0$
+          \begin{itemize}
+            \item $\ell(\mathbf{q}) - \ell(\mathbf{p}) = 0 \iff \mathbf{p} = \mathbf{q}$
+          \end{itemize}
+      \end{itemize}
+  \end{itemize}
+
+  \subsection{Hardy-Weinberg equilibrium (HWE)}
+
+  let $\theta$ be the proportion of $a$. 
+
+  \begin{tightcenter}
+    the population is in \ildefinition{HWE} if 
+
+    $f(aa) = \theta^2,\quad f(aA) = 2\theta(1-\theta),\quad f(AA) = (1-\theta)^2$
+  \end{tightcenter}
+
+  \begin{itemize}
+    \item (e.g. genotypes)
+      Under HWE, the number of $a$ alleles in an individual has a $Binom(2, \theta)$ distribution
+      \begin{itemize}
+        \item for $n$ randomly chosen people, number of $a$ alleles $(AA, Aa, aa) \sim Multinomial(n, \theta)$
+      \end{itemize}
+  \end{itemize}
+
+  \subsubsection{Multinomial ML estimation}
+
+  for $(X_1, X_2, X_3) \sim Multinomial(n, \mathbf{p})$
+
+  where $p_1 = (1-\theta)^2, \, p2 = 2\theta(1-\theta), \, p_3 = \theta^2$
+
+  \begin{itemize}
+    \item $L(\theta) = (1-\theta)^{2x_1} 2^{x_2}\theta^{x_2}(1-\theta)^{x_2}\theta^{2x_3}$
+      $\qquad = 2^{x_2} \, (1-\theta)^{2x_1 + x_2} \, \theta^{x_2 + 2x_3}$
+    \item $\ell(\theta) = x_2 \log 2 + (2x_1 + x_2) \log (1-\theta) + (x_2 + 2x_3)\log \theta$
+    \item ML estimator: $\hat\theta = \frac{X_2 + 2X_3}{2n}$
+    \item SE estimation: $\sqrt{\frac{\theta(1-\theta)}{2n}}$
+      \begin{itemize}
+        \item $X_2 + 2X_3$ is the number of $a$ alleles: $Binom(2n, \theta)$
+        $\quad \Rightarrow \var(\hat\theta) = \frac{\theta(1-\theta)}{2n}$
+      \end{itemize}
+  \end{itemize}
 
 
 
