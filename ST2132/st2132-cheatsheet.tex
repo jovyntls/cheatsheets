@@ -13,7 +13,7 @@
 \usepackage{mathtools}
 \setlist{nosep}
 % for including images
-\graphicspath{ {./images/} }
+% \graphicspath{ {./images/} }
 
 \pdfinfo{
   /Title (ST2132.pdf)
@@ -1199,7 +1199,7 @@
 
   \subsubsection{Gamma distribution}
 
-  $Gamma(\alpha, \lambda): \; f(x \vert \alpha, \lambda) = \frac{\lambda^\alpha}{\Gamma(\alpha)} x^{\alpha-1} e^{\lambda x}, \; x > 0$ 
+  $Gamma(\alpha, \lambda): \; f(x \vert \alpha, \lambda) = \frac{\lambda^\alpha}{\Gamma(\alpha)} x^{\alpha-1} e^{-\lambda x}, \; x > 0$ 
 
   \begin{itemize}
     \item \textbf{log of density:}
@@ -1305,6 +1305,277 @@
         $\quad \Rightarrow \var(\hat\theta) = \frac{\theta(1-\theta)}{2n}$
       \end{itemize}
   \end{itemize}
+
+  \section{08. LARGE-SAMPLE DISTRIBUTION OF MLEs}
+
+  let $\seq{X}$ be iid $Geometric(0.5)$ RVs,
+  with mean $\Xbar_n = \frac{1}{n}\sum^n_{i=1}X_i$.
+
+  by CLT, $\Xbar_n$ and $\frac{1}{\Xbar_n}$ have a normal distribution.
+
+  \subsection{asymptotic normality of ML estimator}
+
+  let $\hat\theta_n$ be the ML estimator of $\theta \in \Theta \subset \mathbb{R}$, based on iid RVs $\seq{X}$ with density $f(x \vert \theta)$. 
+
+  \begin{tightcenter}
+    for large $n$, the distribution of $\hat\theta_n$ is approximately 
+    $N(\theta, \frac{\mathcal{I}(\theta)^{-1}}{n})$ 
+
+    where $\mathcal{I}(\theta)$ is the Fisher information derived from $f(x \vert \theta)$
+  \end{tightcenter}
+
+  \begin{itemize}
+    \item $\hat\theta_n$ is asymptotically unbiased (like MOM)
+      \begin{itemize}
+        \item $E(\hat\theta_n) \neq \theta \quad$ (biased)
+      \end{itemize}
+  \end{itemize}
+
+  \subsection{Fisher Information}
+
+  let $X$ have density $f(x \vert \theta)$, $\theta \in \Theta \subset \mathbb{R}^p$.
+
+  \begin{tightcenter}
+    the \ildefinition{Fisher information} is the $p\times p$ matrix
+    $\mathcal{I}(\theta) = -E\left[ \frac{d^2\log f(X \vert \theta)}{d \theta^2} \right]$
+  \end{tightcenter}
+
+  \begin{itemize}
+    \item $\mathcal{I}(\theta)$ is symmetric, with $(i j)$-entry $-E\left[ \frac{\delta^2\log f(X \vert \theta)}{\delta \theta_i \delta \theta_j} \right]$
+    \item $\mathcal{I}(\theta)$ measures the information about $\theta$ in one sample $X$.
+  \end{itemize}
+
+  \subsubsection{Asymptotic normality: Bernoulli}
+
+  $X \sim Bernoulli(p): \; f(x \vert p) = p^x(1-p)^{1-x}, \; x=0,1 $
+
+  \textbf{Fisher information}
+
+  \begin{itemize}
+    \item $\log f(X \vert p) = X\log p + (1-X) \log (1-p)$
+    \item differentiate $\frac{d}{dp}$: $\frac{X}{p} - \frac{1-X}{1-p}$
+    \item differentiate $\frac{d^2}{dp^2}$: $-\frac{X}{p^2} - \frac{1-X}{(1-p)^2}$
+    \item $\mathcal{I}(p) = -E(\frac{d^2\log f(X \vert p)}{dp^2}) = \frac{1}{p(1-p)}$
+      \begin{itemize}
+        \item minimised at $p=0.5$
+      \end{itemize}
+  \end{itemize}
+
+  \textbf{Asymptotic normality}
+
+  for $\seq{X}$ iid $Bernoulli(p)$ RVs, 
+
+  Fisher information in each $X_i$: $\mathcal{I}(p) = \frac{1}{p(1-p)}$
+
+  \begin{itemize}
+    \item ML estimator $\hat p = \Xbar$
+    \item for large $n$, $\hat p \approx N\left(p, \frac{p(1-p)}{n}\right)$
+      \begin{itemize}
+        \item $E(\hat p) = p$, $\quad \var(\hat p) = \frac{p(1-p)}{n}$
+      \end{itemize}
+  \end{itemize}
+
+  \subsubsection{Asymptotic normality: Geometric}
+
+  $X \sim Geometric(p): \; f(x \vert p) = p(1-p)^{1-x}$
+
+  \textbf{Fisher information}
+
+  \begin{itemize}
+    \item $\log f(X \vert p) = \log p + (X-1) \log (1-p)$
+    \item differentiate $\frac{d}{dp}$: $\frac{1}{p} - \frac{X-1}{1-p}$
+    \item differentiate $\frac{d^2}{dp^2}$: $-\frac{1}{p^2} - \frac{X-1}{(1-p)^2}$
+    \item $\mathcal{I}(p) = -E(\frac{d^2\log f(X \vert p)}{dp^2}) = \frac{1}{p(1-p)} + \frac{1}{p^2} = \frac{1}{p^2(1-p)}$
+  \end{itemize}
+
+  \textbf{Asymptotic normality}
+
+  for $\seq{X}$ iid $Geometric(p)$ RVs,
+
+  Fisher information in each $X_i, \; \mathcal{I}(p) = \frac{1}{p^2(1-p)}$
+
+  \begin{itemize}
+    \item ML estimator $\hat p = \frac{1}{\Xbar}$ 
+    \item for large $n$, $\hat p \approx N\left( p, \frac{p^2(1-p)}{n} \right)$
+      \begin{itemize}
+        \item $E(\hat p) > p$ since $E(\hat p) = E(\frac{1}{\Xbar}) > \frac{1}{E(\Xbar)} = p$
+        \item likely $\var(\hat p) \neq \frac{p^2(1-p)}{n}$
+      \end{itemize}
+  \end{itemize}
+
+  \subsubsection{Asymptotic normality: Normal}
+
+  \textbf{Fisher information}
+
+  $X \sim N(\mu, \sigma^2), \theta = (\mu, \sigma).$
+
+  $f(x \vert p) = \frac{1}{\sqrt{2\pi} \sigma} \exp \{ -\frac{(x-\mu)^2}{2\sigma^2} \}, \quad x \in \mathbb{R}$
+
+  \begin{itemize}
+    \item $\log f(X \vert p) = \frac{1}{2}\log{2\pi} - \log \sigma - \frac{(x-\mu)^2}{2\sigma^2n}$
+      $\qquad = c - \log\sigma - \frac{(X-\mu)^2}{2\sigma^2n}$
+    \item differentiate $\frac{d}{dp}$: $\quad \frac{\delta}{\delta \mu} = \frac{X-\mu}{\sigma^2}$,
+      $\quad \frac{\delta}{\delta \sigma} = -\frac{1}{\sigma} + \frac{(X-\mu)^2}{\sigma^3}$
+    \item differentiate $\frac{d^2}{dp^2}$: 
+      $ \begin{bmatrix}
+        \frac{\delta^2}{\delta \mu^2} & \frac{\delta^2}{\delta \mu \delta \sigma} \\
+        \frac{\delta^2}{\delta\sigma\delta\mu} & \frac{\delta^2}{\delta\sigma^2}
+      \end{bmatrix} $
+    \item $\mathcal{I}(p) = -E(\frac{d^2\log f(X \vert \theta)}{d\theta^2}) = 
+      \begin{bmatrix}
+        \frac{1}{\sigma^2} & 0 \\
+        0 & \frac{2}{\sigma^2}
+      \end{bmatrix}$
+  \end{itemize}
+
+  \textbf{Asymptotic normality}
+
+  for $\seq{X}$ iid $N(\mu, \sigma^2)$ RVs,  $\theta = (\mu, \sigma)$,
+
+  Fisher information in each $X_i : \mathcal{I}(\theta) = 
+  \begin{bmatrix}
+    \frac{1}{\sigma^2} & 0 \\
+    0 & \frac{2}{\sigma^2}
+  \end{bmatrix}$
+
+  \begin{itemize}
+    \item ML estimator $\hat\theta = \begin{bmatrix} \Xbar \\ \hat\sigma \end{bmatrix}$
+    \item for large $n$, $\hat\theta \approx N\left( 
+        \begin{bmatrix} \mu \\ \sigma \end{bmatrix},
+        \begin{bmatrix}
+          \frac{\sigma^2}{n} & 0 \\
+          0 & \frac{\sigma^2}{2n}
+      \end{bmatrix} \right)$
+  \end{itemize}
+
+  \textbf{are expectation and variance exact?}
+
+  \begin{itemize}
+    \item a random variable cannot be exactly normal! (cannot be negative)
+      \begin{itemize}
+        \item $\Xbar \sim N(\mu, \frac{\sigma^2}{n})$
+        \item $\hat\sigma \sim N(\sigma, \frac{\sigma^2}{2n})$ approximately; $E(\hat\sigma) \neq \sigma$
+      \end{itemize}
+  \end{itemize}
+
+  \textbf{normal data}
+
+  for $\seq x$ IID $N(\mu, \sigma^2)$ RVs with large $n$,
+
+  ML estimates of  $\mu$ and $\sigma$ are $\xbar = \dots$ and  $\hat\sigma = \dots$
+
+  \begin{itemize}
+    \item for approximate variance 
+      $\begin{bmatrix}
+        \frac{\sigma^2}{n} & 0 \\
+        0 & \frac{\sigma^2}{2n}
+      \end{bmatrix}$, 
+
+      SEs of $\xbar$ and $\hat\sigma$ are estimated as $\frac{\hat \sigma}{\sqrt n}$ and $\frac{\hat \sigma}{\sqrt{2n}}$
+    \item approximate $(1-\alpha)$-CI:
+      $\quad \mu : \left( \xbar - z_{\frac{\alpha}{2}} \frac{\hat\sigma}{\sqrt n}, \xbar + z_{\frac{\alpha}{2}} \frac{\hat\sigma}{\sqrt n} \right)$
+      $\quad \sigma : \left( \hat\sigma - z_{\frac{\alpha}{2}} \frac{\hat\sigma}{\sqrt{2n}}, \hat\sigma + z_{\frac{\alpha}{2}} \frac{\hat\sigma}{\sqrt{2n}} \right)$
+  \end{itemize}
+
+
+  \subsection{Gamma distribution}
+
+  $X \sim Gamma(\alpha, \lambda)$, 
+  $\quad f(x\vert \alpha, \lambda) = \frac{\lambda^\alpha}{\Gamma(\alpha)} x^{\alpha-1} e^{-\lambda x}, \; x>0$
+  $\quad \log f(X) = \alpha \log \lambda - \log \Gamma(\alpha) + (\alpha-1)\log X - \lambda X$
+
+  let $\psi(\alpha) = \frac{d}{d\alpha}\log \Gamma(\alpha)$:
+
+  $\quad$ ($\psi(\alpha) =$ digamma function, $\psi'(\alpha) =$ trigamma function)
+
+  \begin{itemize}
+    \item $\frac{\delta\log f(X)}{\delta \alpha} = \log \lambda - \psi (\alpha) + \log X$
+    \item $\frac{\delta \log f(X)}{\delta \lambda} = \frac{\alpha}{\lambda} - X$
+    \item $\frac{\delta^2\log f(X)}{\delta \alpha^2} = - \psi' (\alpha)$
+    \item $\frac{\delta^2\log f(X)}{\delta \lambda^2} = - \frac{\alpha}{\lambda^2}$
+    \item $\frac{\delta^2\log f(X)}{\delta\alpha\delta\lambda} = \frac{\delta^2\log f(X)}{\delta \lambda\delta\alpha} = \frac{1}{\lambda}$
+  \end{itemize}
+
+  \begin{tightcenter}
+    $\mathcal{I}(\alpha, \lambda) = 
+    \begin{bmatrix}
+      \psi'(\alpha) & -\frac{1}{\lambda} \\
+      -\frac{1}{\lambda} & \frac{\alpha}{\lambda^2}
+    \end{bmatrix}$
+  \end{tightcenter}
+
+  \subsection{Approximate CI with ML estimate}
+
+  $\hat\theta_n$ is the ML estimator of $\theta \in \Theta \subset \mathbb{R}$ based on iid RVs $\seq X$. $0 < \alpha < 1$
+
+  \begin{itemize}
+    \item for large $n$, approximately $\hat\theta_n \sim N(\theta, \frac{\mathcal{I}(\theta)^{-1}}{n})$.
+
+      for $0<\alpha<1$, $\quad 1-\alpha \approx \Pr \left( -z_{\frac{\alpha}{2}} \leq \frac{\hat\theta_n - \theta}{\sqrt{ \mathcal{I}(\theta)^{-1}/n }} \leq z_{\frac{\alpha}{2}} \right)$
+
+    \item the random interval 
+      $\left( \hat\theta_n - z_{\frac{\alpha}{2}} \sqrt \frac{\mathcal{I}(\theta)^{-1}}{n}, \hat\theta_n + z_{\frac{\alpha}{2}} \sqrt \frac{\mathcal{I}(\theta)^{-1}}{n} \right)$ 
+
+      covers $\theta$ with probability $\approx 1-\alpha$
+
+    \item \textbf{MLE}: ML estimate of $\theta$,  
+      \textbf{SE}: $\sqrt{ \frac{\mathcal{I}(\theta)^{-1}}{n} }$
+      with $\theta$ replaced by MLE
+      \begin{itemize}
+        \item approxiate $(1-\alpha)-CI$ for $\theta$ is $(MLE - z_{\frac{\alpha}{2}} SE, MLE + z_{\frac{\alpha}{2}} SE)$
+      \end{itemize}
+  \end{itemize}
+
+  \subsection{Scope of asymptotic normality of ML estimators}
+
+  \begin{itemize}
+    \item for iid normal RVs, let $\hat\sigma$ be the ML estimator of $\sigma$. then  $\hat\sigma^2$ is the ML estimator of $\sigma^2$ 
+      \begin{itemize}
+        \item both $\hat\sigma$ and $\hat\sigma^2$ are asymptotically normal
+        \item $\frac{1}{\hat\sigma}$ is also asymptotically normal
+      \end{itemize}
+    \item let $\hat\theta^n$ be the ML estimator of $\theta$. For strictly increasing or strictly decreasing $h : \Theta \to \mathbb{R}$, $h(\hat\theta^n)$ is the ML estimator of $h(\theta)$.
+      \begin{itemize}
+        \item for large $n$, $h(\hat\theta^n)$ is approximately normal
+      \end{itemize}
+  \end{itemize}
+
+  \subsection{population mean vs parameter}
+
+  for $n$ random draws with replacement from a population with mean $\mu$ and variance $\sigma^2$,
+
+  \begin{tightcenter}\begin{tabular}{r|ccc}
+    Estimator & $E$ & $\var$ & Distribution \\ \hline
+    {\tiny random sample mean}, $\hat\mu$ & $\mu$ & $\frac{\sigma^2}{n}$ & $\approx$ normal \\
+    {\tiny ML estimator}, $\hat\theta_n$ & $\approx \theta$ & $\approx\frac{\mathcal{I}(\theta)^{-1}}{n}$ & $\approx$ normal
+  \end{tabular}\end{tightcenter}
+
+  $\hat\theta_n$ is not normal (but may approach normal for large $n$)
+
+  \subsection{summary}
+
+  \begin{tightcenter}
+    let $X$ have density $f(x \vert \theta), \theta \in \Theta \subset \mathbb{R}^k$. 
+
+    The \textbf{Fisher information} at $\theta$ in $X$ is the $k \times k$ matrix $-E\left[ \frac{d^2\log f(X \vert \theta)}{d\theta^2} \right]$.
+  \end{tightcenter}
+
+  \begin{tightcenter}
+    let $\hat\theta_n$ be the ML estimator of $\theta$ based on iid RVs $\seq X$ with density  $f(x \vert \theta)$. 
+
+    For large $n$, the distribution of $\hat\theta_n$ is approximately
+    $N\left( \theta, \frac{\mathcal{I}(\theta)^{-1}}{n} \right)$
+  \end{tightcenter}
+
+  $\Rightarrow$ SE can be estimated without monte carlo
+  $\Rightarrow$ accurate CIs are available
+
+  (skipped cos out of syllabus?)
+
+
+
+
+
 
 
 
