@@ -1568,9 +1568,193 @@
   \end{tightcenter}
 
   $\Rightarrow$ SE can be estimated without monte carlo
+
   $\Rightarrow$ accurate CIs are available
 
-  (skipped cos out of syllabus?)
+  skipped: Fisher information in IID samples;
+  binomial fisher information, MLE; HWE trinomial fisher information
+
+  $E( \frac{d\log f(X \vert \lambda)}{d\lambda} ) = 0$
+
+
+  \section{09. HYPOTHESIS TESTING}
+
+  let $\seq x$ be realisations of IID $N(\mu, \sigma^2)$ RVs $\seq X$ 
+  where $\mu$ is a parameter and $\sigma$ is known.
+
+  \begin{tightcenter}
+    \ildefinition{null hypothesis}, $H_0 : \mu = \mu_0$
+
+    \ildefinition{alternative hypothesis}, $H_1 : \mu = \mu_1$
+  \end{tightcenter}
+
+  It is believed that $\mu = \mu_0$, but it might be $\mu_1$. 
+  2 methods to test if $H_0$ should be rejected in favour of $H_1$ using $\xbar$:
+
+  \begin{itemize}
+    \item if $\xbar$ falls inside the \textbf{rejection region}, we reject $H_0$
+      \begin{itemize}
+        \item based on a choice of $\alpha$ (type $I$ error)
+      \end{itemize}
+    \item \definition{$P$ value} the probability that $\Xbar$ is more extreme than $\xbar$, assuming $H_0$ is true. (if small, doubt $H_0$)
+      \begin{itemize}
+        \item based on an observed test statistic
+      \end{itemize}
+  \end{itemize}
+
+  if $\sigma$ is unknown or $\seq x \not\sim N(\mu,\sigma^2)$, we can use CLT
+
+  \subsection{Rejection region}
+
+  $\seq x$ are from IID $N(\mu, \sigma^2)$ RVs, with $\sigma$ known
+
+  \subsubsection{One-tailed test}
+
+  \begin{tightcenter}
+    $H_0: \mu = \mu_0$, $\quad H_1 : \mu = \mu_1 > \mu_0$
+
+    \smallskip
+
+    under $H_0$,
+
+    $\Xbar \sim N(\mu_0, \frac{\sigma^2}{n})$, $\quad  \frac{\Xbar - \mu_0}{\sigma / \sqrt n} \sim N(0,1)$
+
+    \smallskip
+
+    $\alpha = P_{H_0} (\Xbar > \mu_0 + c) = \Pr (Z > \frac{c}{\sigma/\sqrt n}) \quad \Rightarrow c = z_\alpha$
+  \end{tightcenter}
+
+  \begin{itemize}
+    \item reject $H_0$ if $\xbar - \mu_0 > c\;\;$ (for some $c > 0$)
+      \begin{itemize}
+        \item $\xbar$ is the \textbf{test statistic}
+        \item interval  $(\mu_0 + z_\alpha \frac{\sigma}{\sqrt n}, \; \infty)$ is the \textbf{rejection region}
+          \begin{itemize}
+            \item for a test of \textbf{size} $\alpha$, $c = z_\alpha \frac{\sigma}{\sqrt n}$
+          \end{itemize}
+      \end{itemize}
+  \end{itemize}
+
+  \begin{tightcenter}\begin{tabular}{c|cc}
+    Hypothesis & $\xbar < \mu_0 + c$ & $\xbar > \mu_0 + c$ \\\hline
+    $H_0 : \mu = \mu_0$ & $\checkmark$ not reject $H_0$ & {$\color{red}\times (I)$ } reject $H_0$ \\
+    $H_1 : \mu = \mu_1$ & $\color{red}\times (II)$ not reject $H_0$ & $\checkmark$ reject $H_0$
+  \end{tabular}\end{tightcenter}
+
+  \begin{itemize}
+    \item type $\color{red}I$ error: rejecting  $H_0$ when it is true
+    \item type $\color{red}II$ error: not rejecting $H_0$ when it is false
+  \end{itemize}
+
+  \subsubsection{Size and power}
+
+  \begin{itemize}
+    \item \definition[of a test]{size} probability of a Type $I$ error
+      \begin{itemize}
+        \item $\alpha := P_{H_0} (\Xbar > \mu_0 + c)$
+        \item aka \ildefinition{level}
+      \end{itemize}
+    \item \definition[of a test]{power} $1-$ probability of a Type $II$ error
+      \begin{itemize}
+        \item $\beta := P_{H_1} (\Xbar > \mu_0 + c)$ $\quad \Rightarrow \text{power} = 1-\beta$
+        \item as $n \to \infty$, \ power $\to 1$
+          \begin{itemize}
+            \item increasing power of rejecting $H_0$
+          \end{itemize}
+      \end{itemize}
+    \item $\alpha$ and $\beta$ are both about the same event ($\Xbar$ is in the rejection region), but calculated under different hypotheses ($H_0, H_1$)
+    \item $\uparrow c : \quad \downarrow \alpha, \downarrow \beta \;$ ($\downarrow$ type $I$ error, $\uparrow$ type  $II$ error)
+    \item commonly $\alpha = 0.05$
+      \begin{itemize}
+        \item keep $\alpha$ small since $H_0$ is the default hypothesis
+      \end{itemize}
+  \end{itemize}
+
+  \subsubsection{Two-tailed test}
+
+  $\seq x$ are from iid $N(\mu, \sigma^2)$ RVs, $\sigma$ known
+
+  \begin{tightcenter}
+    $H_0: \mu = \mu_0$, $\quad H_0 : \mu = \mu_0, H_1 : \mu = \mu_1 \neq \mu_0$
+  \end{tightcenter}
+
+  \begin{itemize}
+    \item reject $H_0$ if $\vert \xbar - \mu_0 \vert > c$, \ for some  $c>0$
+      \begin{itemize}
+        \item \textbf{rejection region:} $\; (-\infty,\; \mu_0 - c)$ and $(\mu_0 + c, \infty)$
+      \end{itemize}
+    \item $\alpha = P_{H_0} ( \vert \Xbar - \mu_0 \vert > c ) = \Pr \left( \vert Z \vert > \frac{c}{\sigma/\sqrt n} \right)$
+      $\quad = 2\Pr \left( Z > \frac{c}{\sigma/\sqrt n} \right)$
+    \item $c = z_{\frac{\alpha}{2}} \frac{\sigma}{\sqrt n}$
+      \begin{itemize}
+        \item \textbf{rejection region:} $\scriptstyle (-\infty,\; \mu_0 - z_{\frac{\alpha}{2}}\frac{\sigma}{\sqrt n})$ $\land$ $\scriptstyle (\mu_0 + z_{\frac{\alpha}{2}}\frac{\sigma}{\sqrt n}, \infty)$
+      \end{itemize}
+  \end{itemize}
+
+  \subsection{Composite hypothesis}
+
+  \begin{itemize}
+    \item \definition[hypothesis]{simple} specify a single value 
+      ($H_0 : \mu = \mu_0, H_1 : \mu = \mu_1$)
+    \item \definition[hypothesis]{composite} range of values 
+      \begin{itemize}
+        \item one-tailed test: $\; H_0 : \mu = \mu_0, \; H_1 : \mu > \mu_0$
+          \begin{itemize}
+            \item rejection region: $(\mu_0 + z_{\alpha}\frac{\sigma}{\sqrt n}, \; \infty)$ 
+              \\* $\Rightarrow$ no change since it doesn't involve $\mu_1$
+          \end{itemize}
+        \item two-tailed test: $\; H_0 : \mu = \mu_0, \; H_1 : \mu \neq \mu_0$
+          \begin{itemize}
+            \item rejection region: 
+              \\* $\scriptstyle (-\infty,\; \mu_0 - z_{\frac{\alpha}{2}}\frac{\sigma}{\sqrt n})$ $\land$ $\scriptstyle (\mu_0 + z_{\frac{\alpha}{2}}\frac{\sigma}{\sqrt n}, \infty)$
+              \\* $\Rightarrow$ no change since it doesn't involve $\mu_1$
+            \item if $\xbar$ falls \textit{outside} the rejection region, i.e.
+              \\* $\mu_0 - z_{\frac{\alpha}{2}}\frac{\sigma}{\sqrt n} \leq \xbar \leq \mu_0 + z_{\frac{\alpha}{2}}\frac{\sigma}{\sqrt n}$
+              \begin{itemize}
+                \item then $H_0$ is NOT rejected at level $\alpha$
+                \item $\mu_0$ lies in the $(1-\alpha)$-CI for $\mu$
+              \end{itemize}
+          \end{itemize}
+        \item as $n \to \infty$, power  $\to 1$
+      \end{itemize}
+  \end{itemize}
+
+  \subsection{Hypothesis testing and CI}
+
+  \begin{tightcenter}
+    the $(1-\alpha)$-CI for $\mu$, 
+    $\left( \xbar - z_{\frac{\alpha}{2}} \frac{\hat\sigma}{\sqrt n}, \xbar + z_{\frac{\alpha}{2}} \frac{\hat\sigma}{\sqrt n} \right)$
+
+    consists of the values $\mu_0$ for which the test
+
+    $H_0 : \mu = \mu_0, \; H_1 : \mu \neq \mu_0$
+    is not rejected at level $\alpha$.
+  \end{tightcenter}
+
+  \subsection{$P$-value}
+
+  \begin{itemize}
+    \item \definition{$P$-value} the probability under $H_0$ that the random test statistic is more extreme than the observed test statistic
+      \begin{itemize}
+        \item small $p$-value = more "extreme" (more doubt)
+      \end{itemize}
+    \item reject $H_0$ at level $\alpha \iff P<\alpha$
+    \item generally, $P$-value for two-tailed test is double that of one-tailed test
+  \end{itemize}
+
+  \subsubsection{formulae for $P$-value}
+
+  $H_1 : \mu > \mu_0$ 
+
+  $\qquad$ $P = P_{H_0} (\Xbar > \xbar) = \Pr \left( Z > \frac{\xbar - \mu_0}{\sigma / \sqrt n} \right)$
+
+  $H_1 : \mu < \mu_0$ 
+
+  $\qquad$ $P = P_{H_0} (\Xbar < \xbar) = \Pr \left( Z < \frac{\xbar - \mu_0}{\sigma / \sqrt n} \right)$
+
+  $H_1 : \mu \neq \mu_0$
+
+  $\quad$ $P = P_{H_0} (| \Xbar-\mu_0 | > | \xbar-\mu_0 |) = \Pr \left( |Z| > \frac{|\xbar - \mu_0|}{\sigma / \sqrt n} \right)$
 
 
 
