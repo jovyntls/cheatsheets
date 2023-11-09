@@ -13,7 +13,7 @@
 \usepackage{mathtools}
 \setlist{nosep}
 % for including images
-% \graphicspath{ {./images/} }
+\graphicspath{ {./images/} }
 
 \pdfinfo{
   /Title (ST2132.pdf)
@@ -1148,7 +1148,7 @@
 
   \subsubsection{poisson (log)likelihood/MLE}
 
-  $Poisson(\lambda): f(x \vert \lambda) = \frac{\lambda^2e^{-\lambda}}{x!}, \; x = 0,1,2,\dots$
+  $Poisson(\lambda): f(x \vert \lambda) = \frac{\lambda^x e^{-\lambda}}{x!}, \; x = 0,1,2,\dots$
 
   \begin{itemize}
     \item let $\seq{x}$ be realisations of iid Poisson($\lambda$) RVs $\seq X$. 
@@ -1670,6 +1670,10 @@
       \end{itemize}
   \end{itemize}
 
+  \begin{tightcenter}
+    \includegraphics[width=0.65\linewidth]{st2132-hypothesis-testing-c.png} 
+  \end{tightcenter}
+
   \subsubsection{Two-tailed test}
 
   $\seq x$ are from iid $N(\mu, \sigma^2)$ RVs, $\sigma$ known
@@ -1756,12 +1760,210 @@
 
   $\quad$ $P = P_{H_0} (| \Xbar-\mu_0 | > | \xbar-\mu_0 |) = \Pr \left( |Z| > \frac{|\xbar - \mu_0|}{\sigma / \sqrt n} \right)$
 
+  \section{10. GOODNESS-OF-FIT}
 
+  \begin{itemize}
+    \item \definition[(LR) test]{likelihood ratio} based on the ratio of likelihoods
+      \begin{itemize}
+        \item $P$-value can be approximated using $\chi^2$ distribution for a large sample size
+      \end{itemize}
+  \end{itemize}
 
+  \subsection{multinomial}
 
+  let $X \sim Trinomial(n, \mathbf{p})$. 
+  by HWE, $\mathbf{p}$ is a function of $\theta$ as follows: $p_1 = (1-\theta)^2, \;p_2 = 2\theta(1-\theta), \; p_3 = \theta^2$
 
+  let $L_1$ and $L_0$ be the maximum likelihood value for the general model ($Trinomial(n, \mathbf{p})$) and the HWE.
 
+  \begin{itemize}
+    \item $L_1 \geq L_0$ $\quad$ ($L_0$ is the maximum over a subset of $L_1$)
+      \begin{itemize}
+        \item general trinomial
+          \begin{itemize}
+            \item likelihood, $L(\mathbf{p}) = p_1^{x_1}p_2^{x_2}p_3^{x_3}$
+            \item ML estimate of $\mathbf{p}$ is $\frac{x}{n}$
+            \item $\log L_1 = x_1 \log (\frac{x_1}{n}) + x_2 \log (\frac{x_2}{n}) + x_3 \log (\frac{x_3}{n})$
+          \end{itemize}
+        \item HWE: 
+          \begin{itemize}
+            \item likelihood, $L(\theta) = p_1(\theta)^{x_1} p_2(\theta)^{x_2} p_3(\theta)^{x_3}$
+            \item ML estimate of $\theta$ is $\frac{x_2 + 2x_3}{2n}$
+          \end{itemize}
+      \end{itemize}
+    \item larger $L_1 / L_0 \Rightarrow$ poorer fit for HWE
+  \end{itemize}
 
+  \subsubsection{LR test}
+
+  \begin{itemize}
+    \item null hypothesis: HWE holds
+      $\quad H_0: p_1 = (1-\theta)^2, \; p_2 = 2\theta(1-\theta), \; p_3 = \theta^2$
+    \item LR test statistic: 
+      $\quad 2 \log \left( \frac{L_1}{L_0} \right) = 2( \log L_1 - \log L_0 )$
+    \item degree of freedom $=$ difference in the number of parameters between the models
+      \begin{itemize}
+        \item general model has 2 params, HWE has 1 param
+      \end{itemize}
+    \item $P$-value  $= \Pr \left(\chi_1^2 > 2\log(\frac{L_1}{L_0})\right)$
+  \end{itemize}
+
+  \subsubsection{Nested models}
+
+  \begin{tightcenter}
+    the set of all $Trinomial(n, \mathbf{p})$ distributions \\* can be represented by 
+    $\Omega_1 = \left\{ (p_1, p_2, p_3) : p_i > 0, \; \sum^3_{i=1}p_i = 1 \right\}$ 
+
+    which has dimension 2 $\quad$ ($\dim\Omega_1 = 2$)
+  \end{tightcenter}
+
+  \begin{itemize}
+    \item by HWE, $\mathbf{p}$ is in the subset 
+      $\quad \Omega_0 = \left\{ ( (1-\theta)^2, 2\theta(1-\theta), \theta^2 ) : 0 < \theta < 1 \right\}$
+      $\quad$ ($\dim\Omega_0 = 1$)
+    \item $\Omega_0$ is \ildefinition{nested} in $\Omega_1$
+    \item measure goodness-of-fit of HWE by testing $H_0 : \mathbf{p} \in \Omega_0$
+  \end{itemize}
+
+  \subsection{General Multinomial LR test}
+
+  let $(\seq[k]{X}) \sim Multinomial(n, \mathbf{p})$. 
+  then $\mathbf{p} \in \Omega_1$, the set of all positive probability vectors of length $k$.
+
+  \smallskip
+  to test if $\mathbf{p}$ is in a subspace
+  $\quad\Omega_0 = \left\{ (p_1(\theta), \dots, p_k(\theta)) : \theta \in \Theta \subset \mathbb{R}^h \right\}$ 
+
+  with $\dim\Omega_0 < \dim\Omega_1 = k-1$
+
+  \begin{tightcenter}
+
+    let $L_j$ be the maximum likelihood value under $\Omega_j$. 
+
+    To test $H_0 : \mathbf{p} \in \Omega_0$, we use the \ildefinition{LR statistic}, $G = 2\log(\frac{L_1}{L_0})$
+  \end{tightcenter}
+
+  \begin{itemize}
+    \item for $\Omega_1$: $\log L_1 = \sum^k_{i=1} X_i \log (\frac{X_i}{n})$
+    \item for $\Omega_0$: $\log L_0 = \sum^k_{i=1} X_i \log p_i(\hat\theta)$
+  \end{itemize}
+
+  \begin{tightcenter}
+    $G = 2\sum^k_{i=1} X_i \log \left( \frac{X_i}{np_i(\hat\theta)} \right)$
+  \end{tightcenter}
+
+  given data $(\seq x)$, let $g$ be a realisation of $G$. 
+  $P$-value $P_{H_0} (G > g)$ is approximately $\Pr (\chi^2_{k-1-\dim\Omega_0} > g)$ for large $n$.
+
+  \begin{itemize}
+    \item to compute $g$, replace
+      \begin{itemize}
+        \item $X_i$ with \textit{observed count} $x_i$
+        \item $np_i(\hat\theta)$ with \textit{expected count}, calculated using ML estimate of  $\theta$
+      \end{itemize}
+  \end{itemize}
+
+  \subsection{Test of independence}
+
+  for a population with attributes $q$ and $r$, 
+  let $p_{ij}$ be the population proportion of people with $q=q_i$ and $r=r_j$.
+  for any $i, j$, $p_{ij} = q_i \times r_j$.
+
+  \begin{itemize}
+    \item let $(X_{ij}, 1 \leq i \leq I, 1 \leq j \leq J) \sim Multinomial(n, \mathbf{p})$.
+      $\mathbf{p} \in \Omega_1$, where $\dim \Omega_1 = IJ - 1 = k-1$.
+    \item $H_0 : $ the two categories $q,r$ are independent
+      \begin{itemize}
+        \item if $q,r$ are independent, then $\exists $ positive numbers $\sum^I_{i=1}q_i = \sum^J_{j=1}r_j = 1$
+          such that $p_{ij} = q_i \times r_j$, $\; 1 \leq i \leq I, 1 \leq j \leq J$
+      \end{itemize}
+    \item $\dim\Omega_0 = (I-1) + (J-1) = I+J-2$
+    \item $\dim\Omega_1 - \dim\Omega_0 = (I-1)(J-1)$
+    \item under independence ($H_0$), for large  $n$, approximately $G \sim \chi^2_{(I-1)(J-1)}$
+  \end{itemize}
+
+  \subsubsection{G statistic}
+
+  for any $i$, let $X_{i+} = \sum^J_{j=1}X_{ij}$. 
+
+  for any $j$, let $X_{+j} = \sum^I_{i=1}X_{ij}$.
+
+  \begin{itemize}
+    \item $\Omega_1$ : $\log L_1 = \sum_{ij} X_{ij} \log \left( \frac{X_{ij}}{n} \right)$
+    \item $\Omega_0$ : $\log L_0 = \sum_i X_{i+} \log \left( \frac{X_{i+}}{n} \right) + \sum_{+j} X_{+j} \log \left( \frac{X_{+j}}{n} \right)$
+    \item $G = 2(\log L_1 - \log L_0) = 2\sum_{ij} X_{ij} \log \left( \frac{X_{ij}}{X_{i+} X_{+j}/n} \right)$ 
+    \item the data $x_{ij}$ are the \textit{observed counts}
+    \item the data $x_{i+} x_{+j}/n$ are the \textit{expected counts}
+    \item $P$-value $= \Pr\left(\chi^2_{(I-1)(J-1)} > g\right)$
+  \end{itemize}
+
+  \subsection{General LR test}
+
+  we have $n$ iid RVs with density defined by $\theta \in \Omega_1$ of dimension $k_1$;
+  nested in $\Omega_1$ is a smaller model $\Omega_0$ of dimension $k_0$.
+
+  \begin{tightcenter}
+    $H_0 : \theta \in \Omega_0 \qquad H_1 : \theta \in \Omega_1 \backslash \Omega_0$
+
+    to test $H_0 : \theta \in \Omega_0$, we use LR statistic 
+
+    $G = 2\log \left(\frac{L_1}{L_0}\right)$
+
+    where $L_j$ is the maximum likelihood value over $\Omega_j$.
+  \end{tightcenter}
+
+  for large $n$, the $P$-value can be approximately computed, because:
+
+  \begin{tightcenter}
+    if $\theta \in \Omega_0$, as $n \to \infty$, 
+
+    the distribution of $G$ converges to $\chi^2_{k_1-k_0}$
+  \end{tightcenter}
+
+  \subsubsection{Normal LR test}
+
+  $\seq x$ are form iid $N(\mu, \sigma^2)$ RVs.
+  to test $H_0 : \mu = 0$:
+
+  $ \begin{array}{c|c|c|c|c}
+    \sigma & \Omega_1 & k_1 & \Omega_0 & k_0 \\\hline
+    \text{known} & \mathbb{R} & 1 & \{0\} & 0 \\
+    \text{unknown} & \mathbb{R}\times \mathbb{R}_+ & 2 & \{0\} \times \mathbb{R}_+ & 1
+  \end{array} $
+
+  under $H_0$, for large $n$, approximately $G \sim \chi^2_1$
+
+  \begin{itemize}
+    \item \textbf{case 1}: $\sigma$ known
+      \begin{itemize}
+        \item $\Omega_1 : \log L_1 = -\frac{n\hat\sigma^2}{2\sigma^2}$
+        \item $\Omega_0 : \log L_0 = -\frac{n\hat\mu^2}{2\sigma^2}$ 
+        \item $G = 2(\log L_1 - \log L_0) = \frac{n\Xbar^2}{\sigma^2}$
+          \begin{itemize}
+            \item if $H_0$ holds ($\mu = 0$), then $\Xbar \sim N(0, \frac{\sigma^2}{n})$. 
+              for any $n$, $G \sim \chi^2_1$ exactly.
+          \end{itemize}
+      \end{itemize}
+
+    \item \textbf{case 2}: $\sigma$ unknown
+      \begin{itemize}
+        \item $\Omega_1 : \log L_1 = -\frac{n}{2} \log \hat\sigma^2 - \frac{n}{2}$
+        \item $\Omega_0 : \log L_0 = -\frac{n}{2} \log \hat\mu_2 - \frac{n}{2}$
+        \item $G = 2(\log L_1 - \log L_0) = n\log ( \frac{\hat\mu_2}{\hat\sigma^2} )$
+        \item if $H_0$ holds ($\mu = 0$), for large $n$, $G \sim \chi^2_1$ approximately
+      \end{itemize}
+  \end{itemize}
+
+  \subsection{Summary}
+
+  \begin{itemize}
+    \item LR test applies when the investigator wants to know the goodness-of-fit of a model relative to a larger model, of dimensions $k_0 < k_1$.
+    \item test statistic, $G = 2\log \left( \frac{L_1}{L_0} \right)$
+      \begin{itemize}
+        \item $L_0, L_1$ are the maximum likelihood value under the small and large models
+      \end{itemize}
+    \item if $n$ is large, the $P$-value $\Pr (G > g)$ (computed provided $H_0$ is true) can be approximated by a $\chi^2_{k_1-k_0}$ distribution
+  \end{itemize}
 
 
 
