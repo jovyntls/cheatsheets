@@ -102,40 +102,53 @@
     }
   \end{center}
 
+  \begin{tightcenter}
+    \fcolorbox{red}{white}{\parbox{0.24\linewidth}{worth knowing}}
+    \fcolorbox{cyan}{white}{\parbox{0.37\linewidth}{given in formula sheet}}
+    \fcolorbox{teal}{white}{\parbox{0.2\linewidth}{will be given}}
+  \end{tightcenter}
+
   \renewcommand{\fbox}[2][0.9\linewidth]{\begin{tightcenter}
       \fcolorbox{red}{white}{\parbox{#1}{\color{black}#2}}
-    \end{tightcenter}}
+  \end{tightcenter}}
 
   \newcommand{\fboxblue}[2][0.9\linewidth]{\begin{tightcenter}
-      \fcolorbox{blue}{white}{\parbox{#1}{\color{black}#2}}
-    \end{tightcenter}}
+      \fcolorbox{cyan}{white}{\parbox{#1}{\color{black}#2}}
+  \end{tightcenter}}
 
+  \newcommand{\fboxteal}[2][0.9\linewidth]{\begin{tightcenter}
+      \fcolorbox{teal}{white}{\parbox{#1}{\color{black}#2}}
+  \end{tightcenter}}
 
   \section{01. PROBABILITY}
 
   \subsection{Expectation}
 
-  \begin{tightcenter}
-    \begin{multicols*}{2}
-      \textbf{discrete}: (mass) \\* \( {\displaystyle{ E(X) := \sum^n_{i=1}x_ip_i }} \) 
-
-      \textbf{continuous}: (density) \\* \( {\displaystyle{ E(X) := \int^\infty_{-\infty} xf(x) \dx }} \) 
-    \end{multicols*}
-  \end{tightcenter}
-
-  \subsubsection{expectation of a function $h(X)$}
+  \subsubsection{for a function $h$}
 
   $ E\{h(X)\} = \begin{cases}
     \sum^n_{i=1} h(x_i)p_i &\text{$X$ is discrete} \\ 
     \int^\infty_{-\infty} h(x)f(x)\dx &\text{$X$ is continuous} \\ 
   \end{cases}$ 
 
+  \subsubsection{for joint distribution}
+
+  \begin{tightcenter} 
+    for $h : \mathbb{R}^2 \to \mathbb{R}, \quad  E\{ h(X,Y)\} = $
+    \( {\displaystyle{ 
+        \begin{cases}
+          \sum^I_{i=1}\sum^J_{j=1} h(x_i, y_j) p_{ij} & X \text{ is discrete}
+          \\ \int^\infty_{-\infty}\int^\infty_{-\infty} h(x, y) f(x, y) \dx \dy & Y \text{ is continuous}
+        \end{cases}
+    }} \) 
+  \end{tightcenter} 
+
   \subsection{Variance}
 
   \fbox{
     \begin{tightcenter} 
       \vspace{-\baselineskip}\begin{align*}
-        \textbf{variance}, 
+        {\color{black}\textbf{variance}}, 
         \var(X) &:= E\{(X-\mu)^2\} \\
                 &= E(X^2) - E(X)^2
       \end{align*}
@@ -147,8 +160,10 @@
   \subsubsection{useful cases}
 
   \begin{itemize}
-    \item $E\{ X(X-\mu) \} = E(X^2) - \mu^2$
     \item $\var(X-c) = \var(X)$
+    \item $\var(X) = \cov(X,X)$
+    \item $ \var(\sum^N_{i=1}a_iX_i) = $ 
+      $\sum^N_{i=1}a_i^2\var(X_i) + 2\sum_{1 \leq i < j \leq N} a_ia_j \cov(X_i,X_j)$ 
     \item variance of sum = sum of variances
       $ \var(\sum^n_{i=1} X_i) = \sum^n_{i=1} \var(x_i) $ 
   \end{itemize}
@@ -156,68 +171,31 @@
   \subsection{Law of Large Numbers}
 
   \fbox{
-    \textbf{LLN:} for a function $h$, as realisations $r \to \infty$, 
-
     \begin{tightcenter}
+      \ildefinition{LLN}: for a function $h$, as realisations $r \to \infty$, 
+
       \( {\displaystyle{ \frac{1}{r} \sum^r_{i=1}h(x_i) \to E\{h(X)\}  }} \) 
 
       $\xbar \to E(X)$, $\quad v \to \var(X)$
     \end{tightcenter}
   }
 
-  \subsubsection{Monte Carlo approximation}
-
+  \textbf{monte carlo approximation}: 
   simulate $\seq[r]{x}$ from $X$. by LLN, as $r \to \infty$, the approximation becomes exact
-
-  \fbox{
-    \begin{tightcenter} 
-      \( {\displaystyle{ E\{h(X)\} \approx \frac{1}{r} \sum^r_{i=1} h(x_i) }} \) 
-    \end{tightcenter} 
-  }
-
-  \subsection{Joint Distribution}
-
-  (\textbf{discrete}) mass function:
-  \begin{tightcenter}
-    \( {\displaystyle{P( X = x_i, Y = y_j ) = p_{ij}}} \)  
-  \end{tightcenter}
-
-  (\textbf{continuous}) density function:
-  \begin{tightcenter}
-    \( {\displaystyle{f : \mathbb{R}^2  \to [0, \infty), \int^\infty_{-\infty} f(x, y) \dx \dy = 1}} \) 
-  \end{tightcenter}
-
-  (\textbf{expectation}) for $h : \mathbb{R}^2 \to \mathbb{R}$,
-  \fbox{\begin{tightcenter} 
-      \( {\displaystyle{ E\{ h(X,Y)\} = }} \) 
-      \( {\displaystyle{ 
-          \begin{cases}
-            \sum^I_{i=1}\sum^J_{j=1} h(x_i, y_j) p_{ij} & X \text{ is discrete}
-            \\ \int^\infty_{-\infty}\int^\infty_{-\infty} h(x, y) f(x, y) \dx \dy & Y \text{ is continuous}
-          \end{cases}
-      }} \) 
-  \end{tightcenter} }
 
   \subsection{Covariance}
 
   let $\mu_X = E(X)$, $\mu_Y=E(Y)$.
 
-  \fbox{
+  \fbox[0.93\linewidth]{
     \begin{tightcenter}
       \textbf{covariance}
       \begin{align*}
         \cov(X,Y) &= E\{ (X-\mu_X)(Y-\mu_Y) \}
                \\ &= E(XY) - \mu_X\mu_Y
                \\ &= \cov(Y,X)
-        \\ \cov(W, aX+bY+c) &= a\cov(W, X) + b\cov(W, Y)
       \end{align*}
-
-      \textbf{variance}
-
-      $\var(X) = \cov(X,X)$
-
-      \( {\scriptstyle{ \var(\sum^N_{i=1}a_iX_i) = }} \) 
-      \( {\scriptstyle{  \sum^N_{i=1}a_i^2\var(X_i) + 2\sum_{1 \leq i < j \leq N} a_ia_j \cov(X_i,X_j) }} \) 
+      \( {\displaystyle{ \cov(W, aX+bY+c) = a\cov(W, X) + b\cov(W, Y) }} \) 
     \end{tightcenter}
   }
 
@@ -229,14 +207,6 @@
            \\ &= f_Y(y) f_X(x \vert y),  \quad x, y \in \mathbb{R}
     \end{align*}
   }
-
-  \begin{itemize}
-    \item $f(x, y)$ is the \textit{joint density}
-    \item $f_X(x), f_Y(y)$ are the \textit{marginal densities}
-    \item $f_X(\cdot \vert y)$ is the \textbf{conditional} density of $X$ given $Y=y$ 
-    \item for discrete case, \textit{density} $\equiv$ \textit{probability}, $x \equiv x_i$, $y \equiv y_j$
-  \end{itemize}
-
 
   \subsection{Independence}
 
@@ -263,27 +233,20 @@
 
   \subsubsection{discrete case}
 
-  let $f_Y(\cdot \vert x_i)$ be the conditional pmf of $Y$ given $X = x_i$.
-
   \begin{tightcenter}
-    \( {\displaystyle{ E[Y \vert x_i] := \sum^J_{j=1} y_j f_Y (y_j \vert x_i) }} \) 
+    $ E[Y \vert x_i] := \sum^J_{j=1} y_j f_Y (y_j \vert x_i) $
 
-    \( {\displaystyle{ \var[Y\vert x_i] := \sum^J_{j=1} (y_j - E[Y\vert x_i])^2 f_Y (y_j \vert x_i) }} \) 
+    $ \var[Y\vert x_i] := \sum^J_{j=1} (y_j - E[Y\vert x_i])^2 f_Y (y_j \vert x_i) $
   \end{tightcenter}
-
-  $E[Y\vert x_i]$ is like $E(Y)$, with conditional distribution replacing marginal distribution  $f_Y(\cdot)$. 
-  likewise, $\var[Y\vert x_i]$ like $\var(Y)$.
 
   \subsubsection{continuous case}
 
   \begin{tightcenter}
-    \( {\displaystyle{ E[Y \vert x] := \int^\infty_{-\infty} y f_Y (y \vert x) \dy }} \) 
-  \end{tightcenter}
+    $ E[Y \vert x] := \int^\infty_{-\infty} y f_Y (y \vert x) \dy $
 
-  \begin{align*}
-    \var[Y\vert x] &:= \int^\infty_{-\infty} (y - E[Y\vert x])^2 f_Y (y \vert x) \dy 
-                \\ &= E(Y^2 \vert x) - \{E(Y \vert x)\}^2
-  \end{align*}
+    $\var[Y\vert x] := \int^\infty_{-\infty} (y - E[Y\vert x])^2 f_Y (y \vert x) \dy$ 
+    $= E(Y^2 \vert x) - \{E(Y \vert x)\}^2$
+  \end{tightcenter}
 
   \subsection{Distributions}
 
@@ -322,8 +285,7 @@
     \item multinomial: tally of $k$ possible outcomes ($n$ events)
       \begin{itemize}
         \item $\cov(X_i, X_j) < 0$
-        \item $X_i \sim Bin(n, p_i)$
-        \item $X_i + X_j \sim Bin(n, p_i + p_j)$
+        \item $X_i \sim Bin(n, p_i)$, $\; X_i + X_j \sim Bin(n, p_i + p_j)$
       \end{itemize}
   \end{itemize}
 
@@ -332,22 +294,26 @@
 
   \subsection{Mean Square Error (MSE)}
 
-  \fcolorbox{red}{white}{\parbox{0.94\linewidth}{\begin{tightcenter}\color{black}
-        \vspace{-\baselineskip}
-        \begin{align*}
-          MSE &= E\{ (Y-c)^2 \} \\
-              &= \var(Y) + \{ E(Y) - c\}^2
-        \end{align*}
+  \fbox[0.94\linewidth]{\begin{tightcenter}
+      \vspace{-\baselineskip}
+      \begin{align*}
+        MSE &= E\{ (Y-c)^2 \} \\
+            &= \var(Y) + \{ E(Y) - c\}^2
+      \end{align*}
 
-        $\min MSE=\var(Y)$ when $c = E(Y)$
+      $\min MSE=\var(Y)$ when $c = E(Y)$
 
-        if $Y$ and $X$ are correlated: 
-        $MSE = \var[Y \vert x] + \{ E[Y\vert x] - c \}^2$
-  \end{tightcenter}}}
+      if $Y$ and $X$ are correlated: 
+      $MSE = \var[Y \vert x] + \{ E[Y\vert x] - c \}^2$
+  \end{tightcenter}}
 
   \subsubsection{mean MSE}
 
-  $$\frac{1}{n} \sum^n_{i=1}\var[Y \vert x_i] \approx E\{ \var[Y \vert X] \}$$
+  $Y$ is predicted from realisations $\seq x$
+
+  \fbox{
+    $$\frac{1}{n} \sum^n_{i=1}\var[Y \vert x_i] \approx E\{ \var[Y \vert X] \}$$
+  }
 
   \subsubsection{random conditional expectations}
 
@@ -364,26 +330,24 @@
 
   \subsection{CDF (cumulative distribution function)}
 
-  for r.v. $X$, let $F(x) = P(X \leq x)$
-
   \begin{itemize}
     \item domain: $\mathbb{R}$; $\;$ codomain: $[0,1]$
   \end{itemize}
 
-  \begin{tightcenter}
-    $F(x) = \int^\infty_{-\infty} f(x) \dx$
-  \end{tightcenter}
+  \fbox{
+    \begin{tightcenter}
+      \ildefinition{cdf}, $F(x) = P(X \leq x) = \int^x_{-\infty} f(x) \dx$
+
+      $\Rightarrow$ density,  $f_W(w) = \frac{d}{dw} F_W(w)$
+    \end{tightcenter}
+  }
 
   \subsection{Standard Normal Distribution}
 
   \begin{tightcenter}
     $Z \sim N(0, 1)$ has density function \\* 
     \( {\displaystyle{ \phi(z) = \frac{1}{\sqrt{2\pi}} \exp \{ -\frac{z^2}{2} \}, \quad -\infty < z < \infty }} \) 
-  \end{tightcenter}
 
-  $$E(Z) = 0, \quad \var(Z) = 1$$
-
-  \begin{tightcenter}
     \textbf{CDF}, $\Phi(x) = P(Z \leq x) = \int^x_{-\infty} \phi(z) \mathop{dz}$
   \end{tightcenter}
 
@@ -393,17 +357,11 @@
 
   \subsubsection{general normal distribution}
 
-  \begin{tightcenter}
-    \textbf{standardisation:} $\frac{X - \mu}{\sigma} \sim N(0, 1)$
-  \end{tightcenter}
-
-  \begin{itemize}
-    \item for $W = a + bX$, 
-      \begin{itemize}
-        \item density,  $f_W(w) = \frac{d}{dw} F_W(w)$
-        \item CDF, $\;\;\; F_W(w) = P(X \leq \frac{w-a}{b}) = \Phi(\frac{w-a}{b})$
-      \end{itemize}
-  \end{itemize}
+  \fbox[0.75\linewidth]{
+    \begin{tightcenter}
+      \textbf{standardisation:} $\frac{X - \mu}{\sigma} \sim N(0, 1)$
+    \end{tightcenter}
+  }
 
   \subsection{Central Limit Theorem}
 
@@ -431,8 +389,9 @@
   \end{tightcenter}
 
   \fbox{
-    let $\seq{V} \mathop{\sim}\limits^{i.i.d.} \chi^2_1$ and $V = \sum^n_{i=1}V_i$. then 
     \begin{tightcenter}
+      let $\seq{V} \mathop{\sim}\limits^{i.i.d.} \chi^2_1$ and $V = \sum^n_{i=1}V_i$. then 
+
       $V \sim \chi^2_n$
 
       $E(V) = n \quad \var(V) = 2n$
@@ -501,26 +460,23 @@
 
   more distributions:
   \begin{tightcenter}
-    \begin{tabular}{cc}
-      \fcolorbox{blue}{white}{\parbox{0.45\linewidth}{\begin{tightcenter}\color{black}
-            $\frac{(n-1)S^2}{\sigma^2} \sim \chi^2_{n-1}$
+    \fcolorbox{cyan}{white}{\parbox{0.45\linewidth}{\begin{tightcenter}\color{black}
+          $\frac{(n-1)S^2}{\sigma^2} \sim \chi^2_{n-1}$
 
-            $\bar{X}$ and $S^2$ are independent
-      \end{tightcenter}}}
-      &
-      \fcolorbox{red}{white}{\parbox{0.38\linewidth}{\begin{tightcenter}\color{black}
-            $\frac{\bar{X} - \mu}{\sigma/\sqrt{n}} \sim N(0,1)$
+          $\bar{X}$ and $S^2$ are independent
+    \end{tightcenter}}}
+    \fcolorbox{red}{white}{\parbox{0.38\linewidth}{\begin{tightcenter}\color{black}
+          $\frac{\bar{X} - \mu}{\sigma/\sqrt{n}} \sim N(0,1)$
 
-            $\frac{\bar{X} - \mu}{S/\sqrt{n}} \sim t_{n-1}$
-      \end{tightcenter}}}
-    \end{tabular}
+          $\frac{\bar{X} - \mu}{S/\sqrt{n}} \sim t_{n-1}$
+    \end{tightcenter}}}
   \end{tightcenter}
 
   \subsection{Multivariate Normal Distribution}
 
   let $\bm{\mu}$ be a $k \times 1$ vector and $\bm{\Sigma}$ be a \textit{positive-definite} symmetric $k \times k$ matrix.
 
-  \fbox{\begin{tightcenter}
+  \fboxteal{\begin{tightcenter}
       the random vector $\bm{X} = (\seq[k]{X})'$ has a 
 
       multivariate normal distribution $N(\bm{\mu}, \bm{\Sigma})$
@@ -583,7 +539,7 @@
   \fbox{\begin{tightcenter}
       SE is a constant by definition:
 
-      $SE = SD(\hat{X}) = \frac{\sigma}{\sqrt{n}}$
+      $SE = SD(\Xbar) = \frac{\sigma}{\sqrt{n}}$
 
       point estimation of mean: SE ($\xbar$) is estimated as $\frac{s}{\sqrt n}$
   \end{tightcenter} }
@@ -711,7 +667,7 @@
 
   \begin{itemize}
     \item CLT: for large $n$, approximately $\frac{S_n - n\mu}{\sqrt n \sigma} \sim N(0,1)$
-    \item since $\frac{S_n - n\mu}{\sqrt n \sigma} =  \frac{\Xbar - \mu}{\sigma / \sqrt n}$,
+    \item since $\frac{S_n - n\mu}{\sqrt n \sigma} =  \frac{\Xbar - \mu}{\sigma / \sqrt n}$ and $S \approx \sigma$ for large $n$,
   \end{itemize}
 
   \fbox{\begin{tightcenter}
@@ -725,7 +681,9 @@
   \begin{itemize}
     \item for SRS, multiply $SE$ by correction factor $\sqrt{\frac{N-n}{N-1}}$
     \item contains $\mu$ with probability $<1-\alpha$
-    \item probability $\to 1-\alpha$ as $n \to \infty$
+      \begin{itemize}
+        \item probability $\to 1-\alpha$ as $n \to \infty$
+      \end{itemize}
     \item \textbf{exception}: for Bernoulli, $\sigma = \sqrt{p(1-p)}$ is not estimated by $s$, but by replacing $p$ with the sample proportion
   \end{itemize}
 
@@ -815,7 +773,7 @@
 
       \ildefinition{loglikelihood function} $\ell : \Theta \to \mathbb{R}$ is
 
-      \( {\displaystyle{ \ell(\theta) = \log L(\theta) = \sum^n_{i=1}\log f(x_n \vert \theta) }} \) 
+      \( {\displaystyle{ \ell(\theta) = \log L(\theta) = \sum^n_{i=1}\log f(x_i \vert \theta) }} \) 
 
       (can omit additive constants ($\ell$)/constant factors ($L$))
   \end{tightcenter} }
@@ -829,12 +787,14 @@
       \end{itemize}
   \end{itemize}
 
-  find the value of $\theta$ that maximises (log)likelihood:
-  \begin{enumerate}
-    \item calculate likelihood $L$, loglikelihood $\ell$
-    \item differentiate loglikelihood $\ell$: $\ell'(\theta) = 0$
-    \item confirm max point: $\ell''(\theta) < 0$
-  \end{enumerate}
+  \fbox{
+    find the value of $\theta$ that maximises (log)likelihood:
+    \begin{enumerate}
+      \item calculate likelihood $L$, loglikelihood $\ell$
+      \item differentiate loglikelihood $\ell$: $\ell'(\theta) = 0$
+      \item confirm max point: $\ell''(\theta) < 0$
+    \end{enumerate}
+  }
 
   \subsection{ML vs MOM}
 
@@ -854,13 +814,15 @@
 
   let $\mathbf{q} = (\seq[k]{q})$ and $\mathbf{p} = (\seq[k]{p})$ be strictly positive probability vectors.
 
-  \fbox{
+  \fboxteal{
     \begin{tightcenter}
       the \ildefinition{KL divergence} between $\mathbf{q}$ and $\mathbf{p}$ is
 
       \( {\displaystyle{ d_{KL}(\mathbf{q}, \mathbf{p}) = \sum^k_{i=1}q_i \log (\frac{q_i}{p_i}) }} \) 
     \end{tightcenter}
+  }
 
+  \fbox{
     \begin{itemize}
       \item $d_{KL}(\mathbf{q}, \mathbf{p}) \geq 0$ $\quad$ 
         (equality $\iff \mathbf{q} = \mathbf{p}$)
@@ -882,7 +844,7 @@
 
   let $\theta$ be the proportion of $a$. 
 
-  \fbox[0.95\linewidth]{
+  \fboxteal[0.95\linewidth]{
     \begin{tightcenter}
       the population is in \ildefinition{HWE} if 
 
@@ -942,15 +904,6 @@
     \item $\mathcal{I}(\theta)$ measures the information about $\theta$ in one sample $X$.
   \end{itemize}
 
-  \subsection{Asymptotic normality: general}
-
-  \begin{enumerate}
-    \item obtain \textbf{fisher information}, $\mathcal{I}(\theta) = -E\left( \frac{d^2\log f(X \vert \theta)}{d \theta^2} \right)$
-    \item \textbf{asymptotic normality}: for large $n$, approximately
-      $\hat\theta_n \sim N(\theta, \frac{\mathcal{I}(\theta)^{-1}}{n})$ 
-      $\quad$ (not necessarily exact)
-  \end{enumerate}
-
   \subsection{Approximate CI with ML estimate}
 
   $\hat\theta_n$ is the ML estimator of $\theta$ based on iid RVs $\seq X$.
@@ -985,7 +938,7 @@
 
   \subsection{Cram\'er-Rao inequality}
 
-  \fbox{
+  \fboxteal{
     \begin{tightcenter}
       if $\hat\theta_n$ is unbiased, then 
       $\var(\hat\theta_n) \geq \frac{\mathcal{I}(\theta)^{-1}}{n}$ 
@@ -1032,7 +985,7 @@
       \item \textbf{rejection region}: reject $H_0$ if $\dots$
         \begin{itemize}
           \item $\xbar \in \left( \mu_0 + c, \infty \, \right)$
-            \item $\xbar \in (-\infty,\; \mu_0 - c) \cup (\mu_0 + c, \infty)$
+          \item $\xbar \in (-\infty,\; \mu_0 - c) \cup (\mu_0 + c, \infty)$
         \end{itemize}
     \end{enumerate}
   }
@@ -1072,12 +1025,18 @@
         \item $\beta := P_{H_1} (\Xbar > \mu_0 + c)$ $\quad \Rightarrow \text{power} = 1-\beta$
         \item as $n \to \infty$, \ power $\to 1$
       \end{itemize}
-    \item $\uparrow c : \quad \downarrow \alpha, \downarrow \beta \;$ ($\downarrow$ type $I$ error, $\uparrow$ type  $II$ error)
   \end{itemize}
 
-  \begin{tightcenter}
-    \includegraphics[width=0.65\linewidth]{st2132-hypothesis-testing-c.png} 
-  \end{tightcenter}
+  \begin{minipage}[c]{0.5\linewidth}
+    \begin{tightcenter}
+      \includegraphics[width=0.95\linewidth]{st2132-hypothesis-testing-c.png} 
+    \end{tightcenter}
+  \end{minipage}
+  \begin{minipage}[c]{0.45\linewidth}
+    $\uparrow c : \quad \downarrow \alpha, \downarrow \beta$ 
+
+    ($\downarrow$ type $I$ err, $\uparrow$ type  $II$ err)   
+  \end{minipage}
 
   \subsection{09.2. $P$-value}
 
@@ -1114,7 +1073,7 @@
 
   \section{10. GOODNESS-OF-FIT}
 
-  \subsection{General LR test}
+  \subsection{Likelihood Ratio (LR) test}
 
   \begin{itemize}
     \item $n$ iid RVs with density defined by $\theta \in \Omega_1$
@@ -1142,13 +1101,13 @@
     \end{tightcenter}
   }
 
-  \subsubsection{LR test}
+  \subsubsection{LR test: general}
 
   \fbox[0.95\linewidth]{
     \begin{enumerate}
+      \item null hypothesis, $H_0 :$ the tighter model holds
       \item LR test statistic, 
         \\* $G = 2 \log \left( \frac{L_1}{L_0} \right) = 2( \log L_1 - \log L_0 )$
-      \item null hypothesis, $H_0 :$ the tighter model holds
       \item approximate $P$-value to $\chi^2$-distribution:
         \begin{itemize}
           \item $P \approx \Pr \left( \chi^2_{deg} > G \right)$
@@ -1158,7 +1117,7 @@
     \end{enumerate}
   }
 
-  \subsection{General Multinomial LR test}
+  \subsection{LR test: Multinomial}
 
   let $(\seq[k]{X}) \sim Multinomial(n, \mathbf{p})$. 
   then $\mathbf{p} \in \Omega_1$, the set of all positive probability vectors of length $k$.
@@ -1168,7 +1127,7 @@
   $\quad$ to test $H_0 : \mathbf{p} \in \Omega_0$
 
   \begin{itemize}
-    \item $G = 2\sum^k_{i=1} X_i \log \left( \frac{X_i}{np_i(\hat\theta)} \right)$
+    \item $G = 2\sum^k_{i=1} X_i \log \left( \frac{X_i}{np_i(\hat\theta)} \right)$ $\quad$ (ML estimate of $\mathbf{p}$ is $\frac{\mathbf{x}}{n}$)
       \begin{itemize}
         \item for $\Omega_1$: $\log L_1 = \sum^k_{i=1} X_i \log (\frac{X_i}{n})$
         \item for $\Omega_0$: $\log L_0 = \sum^k_{i=1} X_i \log p_i(\hat\theta)$
@@ -1181,19 +1140,19 @@
       \end{itemize}
   \end{itemize}
 
-  \subsection{Test of independence}
+  \subsection{LR test: Independence}
 
   for a population with attributes $q$ and $r$, 
-  let $p_{ij} = q_i \times r_j$ be the population proportion of people with $q=q_i$ and $r=r_j$.
+  let $p_{ij}$ be the population proportion of people with $q=q_i$ and $r=r_j$.
+
+  let $(X_{ij}: {\scriptscriptstyle 1 \leq i \leq I, 1 \leq j \leq J}) \sim Multinomial(n, \mathbf{p})$.
+
+  $H_0 : $ the two attributes $q,r$ are independent
 
   \begin{itemize}
-    \item let $(X_{ij}, 1 \leq i \leq I, 1 \leq j \leq J) \sim Multinomial(n, \mathbf{p})$.
-      $\mathbf{p} \in \Omega_1$, where $\dim \Omega_1 = IJ - 1 = k-1$.
-    \item $H_0 : $ the two categories $q,r$ are independent
-      \begin{itemize}
-        \item if $q,r$ are independent, then $\exists $ positive numbers $\sum^I_{i=1}q_i = \sum^J_{j=1}r_j = 1$
-          such that $p_{ij} = q_i \times r_j$, $\; 1 \leq i \leq I, 1 \leq j \leq J$
-      \end{itemize}
+    \item $\mathbf{p} \in \Omega_1$, $\quad \dim \Omega_1 = IJ - 1 = k-1$.
+    \item if $q,r$ are independent, then $\exists \, \seq[i]{q}, \seq[j]{r}$ such that $\sum^I_{i=1}q_i = \sum^J_{j=1}r_j = 1$
+      and $p_{ij} = q_i \times r_j$
     \item under $H_0$, for large  $n$, approximately $G \sim \chi^2_{(I-1)(J-1)}$
       \begin{itemize}
         \item $\dim\Omega_0 = (I-1) + (J-1) = I+J-2$
@@ -1211,7 +1170,7 @@
       \end{itemize}
   \end{itemize}
 
-  \subsubsection{Normal LR test}
+  \subsubsection{LR test: Normal}
 
   $\seq{X} \mathop{\sim}\limits^{i.i.d.} N(\mu, \sigma^2)$.
   to test $H_0 : \mu = 0$:
@@ -1243,9 +1202,6 @@
         \item if $H_0$ holds ($\mu = 0$), for large $n$, $G \sim \chi^2_1$ approximately
       \end{itemize}
   \end{itemize}
-
-
-
 
 \end{multicols*}
 
