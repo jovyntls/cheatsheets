@@ -403,7 +403,7 @@
   \end{itemize}
 
   \begin{tightcenter}
-    $F(x) = \int^\infty_{-\infty} f(x) \dx$
+    $F(x) = \int^x_{-\infty} f(x) \dx$
   \end{tightcenter}
 
   \subsection{Standard Normal Distribution}
@@ -472,7 +472,7 @@
 
   let $X_i \sim Bernoulli(p)$. then $S_n \sim Binom(n, p)$
   \begin{itemize}
-    \item for large $n$, $S_n = N(np, np(1-p))$
+    \item for large $n$, $S_n \sim N(np, np(1-p))$
     \item CLT: standardised $\frac{S_n - np}{\sqrt{n}\sqrt{p(1-p)}} \to N(0,1)$ as $n \to \infty$
   \end{itemize}
 
@@ -690,7 +690,7 @@
   the \textbf{standard error} (SE) in $\xbar$ is $\frac{\sigma}{\sqrt{n}}$
 
   \begin{itemize}
-    \item SE is a constant by definition: $SE = SD(\hat{X}) = \frac{\sigma}{\sqrt{n}}$
+    \item SE is a constant by definition: $SE = SD(\Xbar) = \frac{\sigma}{\sqrt{n}}$
   \end{itemize}
 
   \subsubsection{estimating $\sigma$}
@@ -703,7 +703,7 @@
     $E(s^2) = \sigma^2$
   \end{tightcenter}
 
-  \section{Point estimation of mean}
+  \subsection{Point estimation of mean}
 
   a population (size $N$) has unknown mean $\mu$, variance $\sigma^2$.
 
@@ -929,7 +929,7 @@
 
   \begin{itemize}
     \item for large $n$, approximately $\frac{S_n - n\mu}{\sqrt n \sigma} \sim N(0,1)$
-    \item since $\frac{S_n - n\mu}{\sqrt n \sigma} \sim N(0,1) =  \frac{\Xbar - \mu}{\sigma / \sqrt n}$,
+    \item since $\frac{S_n - n\mu}{\sqrt n \sigma} \sim N(0,1) =  \frac{\Xbar - \mu}{\sigma / \sqrt n}$ and $S \approx \sigma$ for large $n$,
       \begin{itemize}
         \item $\quad \Pr(-z_{\frac{\alpha}{2}} \leq \frac{\Xbar - \mu}{\sigma / \sqrt n} \leq z_{\frac{\alpha}{2}}) \approx 1 - \alpha$
         \item $\quad \Pr(\Xbar-z_{\frac{\alpha}{2}}\frac{\sigma}{\sqrt n} \leq \mu \leq \Xbar + z_{\frac{\alpha}{2}}\frac{\sigma}{\sqrt n}) \approx 1 - \alpha$
@@ -952,7 +952,9 @@
         \item for SRS, multiply $SE$ by correction factor $\sqrt{\frac{N-n}{N-1}}$
       \end{itemize}
     \item contains $\mu$ with probability $<1-\alpha$
-    \item probability $\to 1-\alpha$ as $n \to \infty$
+      \begin{itemize}
+        \item probability $\to 1-\alpha$ as $n \to \infty$
+      \end{itemize}
     \item \textbf{exception}: for Bernoulli, $\sigma = \sqrt{p(1-p)}$ is not estimated by $s$, but by replacing $p$ with the sample proportion
   \end{itemize}
 
@@ -1292,7 +1294,7 @@
 
   for $(X_1, X_2, X_3) \sim Multinomial(n, \mathbf{p})$
 
-  where $p_1 = (1-\theta)^2, \, p2 = 2\theta(1-\theta), \, p_3 = \theta^2$
+  where $p_1 = (1-\theta)^2, \, p_2 = 2\theta(1-\theta), \, p_3 = \theta^2$
 
   \begin{itemize}
     \item $L(\theta) = (1-\theta)^{2x_1} 2^{x_2}\theta^{x_2}(1-\theta)^{x_2}\theta^{2x_3}$
@@ -1396,7 +1398,7 @@
 
   \begin{itemize}
     \item ML estimator $\hat p = \frac{1}{\Xbar}$ 
-    \item for large $n$, $\hat p \approx N\left( p, \frac{p^2(1-p)}{n} \right)$
+    \item for large $n$, distribution of $\hat p \approx N\left( p, \frac{p^2(1-p)}{n} \right)$
       \begin{itemize}
         \item $E(\hat p) > p$ since $E(\hat p) = E(\frac{1}{\Xbar}) > \frac{1}{E(\Xbar)} = p$
         \item likely $\var(\hat p) \neq \frac{p^2(1-p)}{n}$
@@ -1409,19 +1411,19 @@
 
   $X \sim N(\mu, \sigma^2), \theta = (\mu, \sigma).$
 
-  $f(x \vert p) = \frac{1}{\sqrt{2\pi} \sigma} \exp \{ -\frac{(x-\mu)^2}{2\sigma^2} \}, \quad x \in \mathbb{R}$
+  $f(x \vert \theta) = \frac{1}{\sqrt{2\pi} \sigma} \exp \{ -\frac{(x-\mu)^2}{2\sigma^2} \}, \quad x \in \mathbb{R}$
 
   \begin{itemize}
-    \item $\log f(X \vert p) = \frac{1}{2}\log{2\pi} - \log \sigma - \frac{(x-\mu)^2}{2\sigma^2n}$
+    \item $\log f(X \vert \theta) = \frac{1}{2}\log{2\pi} - \log \sigma - \frac{(x-\mu)^2}{2\sigma^2n}$
       $\qquad = c - \log\sigma - \frac{(X-\mu)^2}{2\sigma^2n}$
-    \item differentiate $\frac{d}{dp}$: $\quad \frac{\delta}{\delta \mu} = \frac{X-\mu}{\sigma^2}$,
+    \item differentiate $\frac{d}{d\theta}$: $\quad \frac{\delta}{\delta \mu} = \frac{X-\mu}{\sigma^2}$,
       $\quad \frac{\delta}{\delta \sigma} = -\frac{1}{\sigma} + \frac{(X-\mu)^2}{\sigma^3}$
-    \item differentiate $\frac{d^2}{dp^2}$: 
+    \item differentiate $\frac{d^2}{d\theta^2}$: 
       $ \begin{bmatrix}
         \frac{\delta^2}{\delta \mu^2} & \frac{\delta^2}{\delta \mu \delta \sigma} \\
         \frac{\delta^2}{\delta\sigma\delta\mu} & \frac{\delta^2}{\delta\sigma^2}
       \end{bmatrix} $
-    \item $\mathcal{I}(p) = -E(\frac{d^2\log f(X \vert \theta)}{d\theta^2}) = 
+    \item $\mathcal{I}(\theta) = -E(\frac{d^2\log f(X \vert \theta)}{d\theta^2}) = 
       \begin{bmatrix}
         \frac{1}{\sigma^2} & 0 \\
         0 & \frac{2}{\sigma^2}
@@ -1451,10 +1453,10 @@
   \textbf{are expectation and variance exact?}
 
   \begin{itemize}
-    \item a random variable cannot be exactly normal! (cannot be negative)
+    \item a positive random variable cannot be exactly normal! 
       \begin{itemize}
-        \item $\Xbar \sim N(\mu, \frac{\sigma^2}{n})$
-        \item $\hat\sigma \sim N(\sigma, \frac{\sigma^2}{2n})$ approximately; $E(\hat\sigma) \neq \sigma$
+        \item $\Xbar \sim N(\mu, \frac{\sigma^2}{n})$ $\quad \Rightarrow$ exact
+        \item $\hat\sigma \sim N(\sigma, \frac{\sigma^2}{2n})$ $\quad \Rightarrow$ not exact! $E(\hat\sigma) \neq \sigma$ since $\sigma \geq 0$
       \end{itemize}
   \end{itemize}
 
@@ -1576,6 +1578,15 @@
 
   $E( \frac{d\log f(X \vert \lambda)}{d\lambda} ) = 0$
 
+  \subsection{Cram\'er-Rao inequality}
+
+  \begin{tightcenter}
+    if $\hat\theta_n$ is unbiased, then 
+    $\var(\hat\theta_n) \geq \frac{\mathcal{I}(\theta)^{-1}}{n}$ 
+
+    \ildefinition{efficient} $\iff$ equality
+  \end{tightcenter}
+
 
   \section{09. HYPOTHESIS TESTING}
 
@@ -1621,7 +1632,7 @@
 
     \smallskip
 
-    $\alpha = P_{H_0} (\Xbar > \mu_0 + c) = \Pr (Z > \frac{c}{\sigma/\sqrt n}) \quad \Rightarrow c = z_\alpha$
+    $\alpha = P_{H_0} (\Xbar > \mu_0 + c) = \Pr (Z > \frac{c}{\sigma/\sqrt n}) \quad \Rightarrow c = z_\alpha \frac{\sigma}{\sqrt n}$
   \end{tightcenter}
 
   \begin{itemize}
@@ -1679,7 +1690,7 @@
   $\seq x$ are from iid $N(\mu, \sigma^2)$ RVs, $\sigma$ known
 
   \begin{tightcenter}
-    $H_0: \mu = \mu_0$, $\quad H_0 : \mu = \mu_0, H_1 : \mu = \mu_1 \neq \mu_0$
+    $H_0: \mu = \mu_0$, $\quad H_1 : \mu = \mu_1 \neq \mu_0$
   \end{tightcenter}
 
   \begin{itemize}
