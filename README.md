@@ -24,6 +24,8 @@ If you find any typos please let me know! Thank you for the support :heart: &nbs
   - CS3223
   - CS3236
   - CS4231
+- [x] **AY23/24 S1** 
+  - ST2132
 
 ## Useful resources
 
