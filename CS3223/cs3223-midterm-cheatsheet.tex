@@ -447,7 +447,7 @@
       \begin{itemize}
         \item more selective = fewer pages retrieved
       \end{itemize}
-    \item index $I$ is a \definition[for query $Q$]{covering index} if all attributes referenced in $Q$ are part of the key of $I$ 
+    \item index $I$ is a \definition[for query $Q$]{covering index} if all attributes referenced in $Q$ are part of the key of or include columns of $I$ 
       \begin{itemize}
         \item $Q$ can be evaluated using $I$ without any RID lookup (\ildefinition{index-only} plan)
       \end{itemize}

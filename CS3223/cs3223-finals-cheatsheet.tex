@@ -102,15 +102,15 @@
   \mathrel{%   
     \mathop{\da@bars}\limits
     \ifx\\#1\\%
-  \else
-    _{\copy0}%
-  \fi
-  \ifx\\#2\\%
-\else
-  ^{\copy2}%
-\fi
-}%   
-\mathrel{#4}%
+    \else
+      _{\copy0}%
+    \fi
+    \ifx\\#2\\%
+    \else
+      ^{\copy2}%
+    \fi
+  }%   
+  \mathrel{#4}%
 }
 \makeatother
 
@@ -134,7 +134,7 @@
   \end{center}
 
   \includegraphics[width=0.97\linewidth]{cs3223-notation.png} 
-
+  \vspace{-0.1cm}
   \textbf{Data entry formats}: \textbf{1.} actual data record; 
   \textbf{2.} \textbf{(k, RID)} - fixed length \texttt{(k, \textbf{$\bullet$})}; 
   \textbf{3.} \textbf{(k, RID-list)} - e.g. \texttt{(k, \{RID11, RID12\})}
@@ -189,7 +189,7 @@
   \begin{itemize}
     \item $\sigma_p(R)$ selects rows from relation $R$ satisfying predicate $p$
     \item \definition[of an access path]{selectivity} number of index \& data pages retrieved (more selective = fewer pages retrieved)
-    \item \definition[for $Q$]{covering index $I$} if all attributes referenced in $Q$ are part of the key of $I$ 
+    \item \definition[for $Q$]{covering index $I$} if all attributes referenced in $Q$ are part of the key of or include columns of $I$ 
       (\ildefinition{index-only plan}: no RID lookup) 
   \end{itemize}
 
@@ -199,6 +199,7 @@
     \item \definition{term} of form $R.A \;\mathrm{op}\; c$ or $R.A_i \;\mathrm{op}\; R.A_j$
     \item \definition{conjunct} $\geq 1$ terms connected by $\lor$ (\ildefinition{disjunctive}: $>1$)
     \item \definition{CNF predicate} one or more conjuncts connected by $\land$
+      \vspace{-0.1cm}
       \includegraphics[width=0.95\linewidth]{cs3223-cnf-predicate.png} 
   \end{itemize}
 
@@ -206,7 +207,8 @@
 
   \begin{itemize}
     \item for index $I=(K_1, K_2, \dots, K_n)$ and non-disjunctive CNF predicate $p$, $I$ matches $p$ if $p$ is of the form 
-      \includegraphics[width=0.9\linewidth]{cs3223-btree-matching-predicate.png} 
+      \includegraphics[width=0.8\linewidth]{cs3223-btree-matching-predicate.png} 
+      \vspace{-0.1cm}
     \item matching index: matching records are in contiguous pages
   \end{itemize}
 
