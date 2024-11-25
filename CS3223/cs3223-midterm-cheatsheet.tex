@@ -547,7 +547,7 @@
     \item \textbf{format-1}: $\quad$ cost to retrieve data records $ \geq \lceil\frac{||\sigma_{p'}(R)||}{b_d}\rceil $
     \item \textbf{format-2}: $\quad$ cost to retrieve data entries $ \geq \lceil\frac{||\sigma_{p'}(R)||}{b_i}\rceil $ 
       \\* cost to retrieve data records = $ \begin{cases} 0 \quad \text{if $$I$$ is a covering index,}\\
-        ||\sigma_{p'}(R)||  \quad \text{otherwise}
+        ||\sigma_{p_c}(R)||  \quad \text{otherwise}
       \end{cases} $
   \end{itemize}
 
@@ -577,7 +577,7 @@
   \begin{itemize}
     \item if $B>\sqrt{|\pi^*_L(R)|}$, same I/O cost as hash-based approach
       \begin{itemize}
-        \item $N_0 = \lfloor \frac{|R|}{B} \rfloor \approx \sqrt{|\pi^*_L(R)|}$ initial sorted runs 
+        \item $N_0 = \lceil \frac{|R|}{B} \rceil \approx \sqrt{|\pi^*_L(R)|}$ initial sorted runs 
         \item $\log_{B-1}(N_0) \approx 1$ merge passes
       \end{itemize}
   \end{itemize}
@@ -611,7 +611,7 @@
       \end{itemize}
     \item partition overflow: recursively apply partitioning
       \begin{itemize}
-        \item to avoid, $B>$ size of hash table for $R_i$ = $\frac{|\pi^*_L(R)|}{B_1} \times f$
+        \item to avoid, $B>$ size of hash table for $R_i$ = $\frac{|\pi^*_L(R)|}{B-1} \times f$
           \begin{itemize}
             \item  approximately $B> \sqrt{f\times |\pi^*_L(R)|}$
           \end{itemize}
